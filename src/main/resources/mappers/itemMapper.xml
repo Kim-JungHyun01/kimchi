@@ -4,7 +4,7 @@
 <mapper namespace="com.kr.kimchi.itemMapper">
 
 	<!-- 제품정보(전체) -->
-	<select id="itmesAll" resultType="com.kr.kimchi.vo.ItemVO">
+	<select id="itmeAll" resultType="com.kr.kimchi.vo.ItemVO">
 		select * from item
 	</select>
 
@@ -17,14 +17,18 @@
 	<!-- 제품등록_bom제외 -->
 	<insert id="itemInsert" parameterType="com.kr.kimchi.vo.ItemVO">
 		insert into item
-		(item_category, item_name, item_price, item_unit,
+		(item_category, item_name, item_price,
+		item_unit, item_bomRegistered,
 		item_specifications, item_stockquantity, item_availablestock,
 		item_basicstock, item_storage, item_productionDate, attachment_no)
 		values
-		(#{item_category}, #{item_name}, #{item_price}, #{item_unit},
-		#{item_specifications}, #{item_stockquantity},
+		(#{item_category}, #{item_name}, #{item_price},
+		#{item_unit},#{item_bomRegistered}
+		#{item_specifications},
+		#{item_stockquantity},
 		#{item_availablestock},
-		#{item_basicstock}, #{item_storage},
+		#{item_basicstock},
+		#{item_storage},
 		#{item_productionDate}, #{attachment_no})
 	</insert>
 
@@ -33,13 +37,16 @@
 		update item set
 		item_category = #{item_category}, item_name = #{item_name},
 		item_price= #{item_price}, item_unit=#{item_unit},
-		item_specifications = #{item_specifications},
+		item_specifications
+		= #{item_specifications},
 		item_stockquantity = #{item_stockquantity},
 		item_availablestock=#{item_availablestock},
-		item_basicstock = #{item_basicstock},
+		item_basicstock =
+		#{item_basicstock},
 		item_storage = #{item_storage},
 		item_productionDate=#{item_productionDate},
-		attachment_no= #{attachment_no}
+		attachment_no=
+		#{attachment_no}
 		where item_no = #{item_no}
 	</update>
 

@@ -26,4 +26,22 @@ public class PaDAO {
 	public List<PaVO> paAllList() {
 		return session.selectList(namespace+".paAllList");
 	}
-}
+	
+	
+//	 페이퍼 추가
+	public void paInsert(PaVO pa) {
+		session.selectOne(namespace+".paInsert", pa);
+	}//end
+	
+//	 페이퍼 수정
+	public void paUpdate(PaVO pa) {
+		session.selectOne(namespace+".paUpdate", pa);
+	}//end
+	
+//	페이처 체크
+	public void paCheck(PaVO pa) {
+		session.selectOne(namespace+".paCheck", pa);
+	}//end
+	
+	
+}//end class
