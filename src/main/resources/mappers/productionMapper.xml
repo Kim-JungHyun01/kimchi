@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kr.kimchi.ProductionMapper">
+<mapper namespace="com.kr.kimchi.productionMapper">
 
 
 	<!-- 생산계획 보기_전체 -->

@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kr.kimchi.ObtainMapper">
+<mapper namespace="com.kr.kimchi.obtainMapper">
 
 	<!-- 조달계획 보기_전체 -->
 	<select id="obtainAll" resultType="com.kr.kimchi.vo.ObtainVO">

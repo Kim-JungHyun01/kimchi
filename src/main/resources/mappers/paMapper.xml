@@ -110,7 +110,7 @@
 	 -->
 					
 	<!-- 페이퍼 추가 -->
-	<insert id="paInsert" parameterType="com.kr.kimchi.vo.ObtainVO">
+	<insert id="paInsert" parameterType="com.kr.kimchi.vo.PaVO">
 		insert into pa
 		(user_id, code_id, pa_issueDate,
 		pa_checkStatus, pa_referenceNo, pa_notes)
@@ -120,7 +120,7 @@
 	</insert>
 
 	<!-- 페이퍼 수정 -->
-	<update id="paUpdate" parameterType="com.kr.kimchi.vo.ObtainVO">
+	<update id="paUpdate" parameterType="com.kr.kimchi.vo.PaVO">
 		update pa set
 		pa_notes = #{pa_notes}
 		where pa_no = #{pa_no}
