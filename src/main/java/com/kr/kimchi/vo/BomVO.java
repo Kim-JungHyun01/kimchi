@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class BomVO {
 	
-	private int items_no; //기본키 & 외래키
+	private int item_no; //湲곕낯�궎 & �쇅�옒�궎
 	private int bom_schedule;
 	private String bom_other;
 	
