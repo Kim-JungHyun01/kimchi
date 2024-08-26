@@ -109,7 +109,32 @@
 	</select>
 	 -->
 					
+	<!-- 페이퍼 추가 -->
+	<insert id="paInsert" parameterType="com.kr.kimchi.vo.ObtainVO">
+		insert into pa
+		(user_id, code_id, pa_issueDate,
+		pa_checkStatus, pa_referenceNo, pa_notes)
+		values
+		(#{user_id}, #{code_id}, #{pa_issueDate},
+		#{pa_checkStatus}, #{pa_referenceNo}, #{pa_notes})
+	</insert>
 
+	<!-- 페이퍼 수정 -->
+	<update id="paUpdate" parameterType="com.kr.kimchi.vo.ObtainVO">
+		update pa set
+		pa_notes = #{pa_notes}
+		where pa_no = #{pa_no}
+	</update>
+	
+	<!-- 페이처 체크 -->
+	<update id="paCheck">
+		update pa set
+		pa_checkStatus = #{pa_checkStatus}
+		where pa_no = #{pa_no}
+	</update>
+	
+	
+	
 
 
 </mapper>

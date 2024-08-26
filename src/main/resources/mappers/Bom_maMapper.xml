@@ -1,0 +1,40 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kr.kimchi.Bom_maMapper">
+
+	<!-- bom정보_자재 -->
+	<select id="bom_maSelect" resultType="com.kr.kimchi.vo.Bom_maVO">
+		select ma_id, bom_ma_amount, bom_ma_process from bom_ma
+		where item_no = #{item_no}
+	</select>
+
+	<!-- bom정보_자재 추가 -->
+	<insert id="bom_maInsert"
+		parameterType="com.kr.kimchi.vo.Bom_maVO">
+		insert into bom_ma(item_no, ma_id, bom_ma_amount,
+		bom_ma_process) values 
+		(#{item_no}, #{ma_id}, #{bom_ma_amount}, #{bom_ma_process})
+	</insert>
+
+	<!-- bom정도_자재 수정 -->
+	<update id="bom_maUpdate" parameterType="com.kr.kimchi.vo.Bom_maVO">
+		 update bom_ma set
+		 bom_ma_amount = #{bom_ma_amount}, bom_ma_process = #{bom_ma_process} 
+		 where item_no=#{item_no} and ma_id=#{ma_id}
+	</update>
+	
+	<!-- bom정보_자재 선택적삭제 -->
+	<delete id="bom_maDeleteSelect">
+	delete from bom_ma 
+	where item_no = #{item_no} and ma_id=#{ma_id}
+	</delete>
+	
+	
+	<!-- bom정보_자재 삭제(bom & item 삭제시) -->
+	<delete id="bom_maDeleteAll">
+		delete from bom_ma 
+		where item_no = #{item_no}
+	</delete>
+
+</mapper>
