@@ -1,7 +1,6 @@
 package com.kr.kimchi.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -12,15 +11,15 @@ import com.kr.kimchi.vo.ItemVO;
 
 @Repository
 public class ItemDAO {
-
-	private final static String namespace = "com.kr.kimchi.mappers.itemMapper";
-
 	@Inject
 	private SqlSession session;
+
+	private final static String namespace = "com.kr.kimchi.itemMapper";
+
 	
 //	제품정보(전체)
-	public List<ItemVO> itmeAll(Map<String, Object> list) {
-		return session.selectList(namespace+".itmeAll", list);
+	public List<ItemVO> itemAll() {
+		return session.selectList(namespace+".itemAll");
 	}//end
 	
 //	제품정보(상세)

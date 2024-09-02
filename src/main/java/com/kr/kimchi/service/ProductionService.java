@@ -1,7 +1,6 @@
 package com.kr.kimchi.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,8 +16,8 @@ public class ProductionService {
 	private ProductionDAO prodao;
 
 //	생산계획 보기_전체
-	public List<ProductionVO> productionAll(Map<String, Object> prolist) {
-		return prodao.productionAll(prolist);
+	public List<ProductionVO> productionAll() {
+		return prodao.productionAll();
 	}// end
 
 //	생산계획 보기_상세

@@ -1,7 +1,6 @@
 package com.kr.kimchi.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,8 +17,8 @@ public class ObtainService {
 
 
 //	조달계획 보기_전체
-	public List<ObtainVO> obtainAll(Map<String, Object> oblist) {
-		return obtaindao.obtainAll(oblist);
+	public List<ObtainVO> obtainAll() {
+		return obtaindao.obtainAll();
 	}// end
 
 //	조달계획 보기_상세

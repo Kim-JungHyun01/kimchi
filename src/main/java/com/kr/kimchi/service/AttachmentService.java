@@ -1,7 +1,6 @@
 package com.kr.kimchi.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,8 +16,8 @@ public class AttachmentService {
 	private AttachmentDAO attdao;
 	
 //	첨부파일 보기
-	public List<AttachmentVO> attachmentAll(Map<String, Object> attmap) {
-		return attdao.attachmentAll(attmap);
+	public List<AttachmentVO> attachmentAll() {
+		return attdao.attachmentAll();
 	}//end
 	public AttachmentVO attachmentSelect(int item_no) {
 		return attdao.attachmentSelect(item_no);

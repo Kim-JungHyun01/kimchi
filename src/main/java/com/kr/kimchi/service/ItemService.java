@@ -1,7 +1,6 @@
 package com.kr.kimchi.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,8 +16,8 @@ public class ItemService {
 	private ItemDAO itemdao;
 	
 //	제품정보(전체)
-	public List<ItemVO> itmeAll(Map<String, Object> list) {
-		return itemdao.itmeAll(list);
+	public List<ItemVO> itemAll() {
+		return itemdao.itemAll();
 	}//end
 	
 //	제품정보(상세)

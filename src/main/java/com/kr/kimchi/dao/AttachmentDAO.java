@@ -1,7 +1,6 @@
 package com.kr.kimchi.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,14 +12,14 @@ import com.kr.kimchi.vo.AttachmentVO;
 @Repository
 public class AttachmentDAO {
 	
-	private final static String namespace = "com.kr.kimchi.mappers.attachmentMapper";
+	private final static String namespace = "com.kr.kimchi.attachmentMapper";
 
 	@Inject
 	private SqlSession session;
 	
 //	첨부파일 보기
-	public List<AttachmentVO> attachmentAll(Map<String, Object> attmap) {
-		return session.selectList(namespace+".attachmentAll", attmap);
+	public List<AttachmentVO> attachmentAll() {
+		return session.selectList(namespace+".attachmentAll");
 	}//end
 	public AttachmentVO attachmentSelect(int item_no) {
 		return session.selectOne(namespace+".attachmentSelect", item_no);

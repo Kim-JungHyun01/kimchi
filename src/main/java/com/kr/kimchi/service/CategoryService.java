@@ -1,7 +1,6 @@
 package com.kr.kimchi.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -16,8 +15,8 @@ public class CategoryService {
 	@Inject
 	private CategoryDAO catedao;
 
-	public List<CategoryVO> cateAll(Map<String, Object> cate){
-		return catedao.cateAll(cate);
+	public List<CategoryVO> cateAll(){
+		return catedao.cateAll();
 	}//end
 	
 }//end class

@@ -8,14 +8,14 @@
 		resultType="com.kr.kimchi.vo.ContractsVO">
 		select * from contracts
 	</select>
-	
+
 	<!-- 계약 보기_상세 -->
 	<select id="contractsSelect"
 		resultType="com.kr.kimchi.vo.ContractsVO">
 		select * from contracts
 		where contracts_no = #{contracts_no}
 	</select>
-	
+
 	<!-- 계약 추가 -->
 	<insert id="contractsInsert"
 		parameterType="com.kr.kimchi.vo.ContractsVO">
@@ -26,10 +26,11 @@
 		item_no, partner_taxid, user_id)
 		values
 		(#{contracts_quantity},
-		#{contracts_price},#{contracts_deliveryDate},#{contracts_status},#{contracts_details},
-		#{contracts_registrationDate},#{contracts_document},#{item_no},#{partner_taxid},#{user_id})
+		#{contracts_price},#{contracts_deliveryDate}, '게약확인중'
+		,#{contracts_details},
+		now(),0,#{item_no},#{partner_taxid},#{user_id})
 	</insert>
-	
+
 	<!-- 계약 수정_계약갯수, 계약가격, 납기일, 상새내역 -->
 	<update id="contractsUpdate"
 		parameterType="com.kr.kimchi.vo.ContractsVO">
@@ -37,11 +38,9 @@
 		contracts_quantity =
 		#{contracts_quantity},
 		contracts_price = #{contracts_price},
-		contracts_deliveryDate =
-		#{contracts_deliveryDate},
-		contracts_details =
-		#{contracts_details}
-		where contracts_no #{contracts_no}
+		contracts_deliveryDate = #{contracts_deliveryDate},
+		contracts_details = #{contracts_details}
+		where contracts_no= #{contracts_no}
 	</update>
 
 	<!-- 계약 승인 & 취소 -->

@@ -1,7 +1,6 @@
 package com.kr.kimchi.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,14 +12,14 @@ import com.kr.kimchi.vo.ContractsVO;
 @Repository
 public class ContractsDAO {
 	
-	private final static String namespace = "com.kr.kimchi.mappers.contractsMapper";
+	private final static String namespace = "com.kr.kimchi.contractsMapper";
 
 	@Inject
 	private SqlSession session;
 	
 //	계약 보기_전체
-	public List<ContractsVO> contractsAll(Map<String, Object> conlist){
-		return session.selectList(namespace+".contractsAll",conlist);
+	public List<ContractsVO> contractsAll(){
+		return session.selectList(namespace+".contractsAll");
 	}//end
 	
 //	계약 보기_상세 

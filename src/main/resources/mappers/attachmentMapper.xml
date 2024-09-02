@@ -4,12 +4,12 @@
 <mapper namespace="com.kr.kimchi.attachmentMapper">
 
 	<!-- 첨부파일 보기 -->
-	<select id="attachmentAll">
+	<select id="attachmentAll" resultType="com.kr.kimchi.vo.AttachmentVO">
 		select * from attachment 
 	</select>
 
 	<!-- 첨부파일 보기 -->
-	<select id="attachmentSelect">
+	<select id="attachmentSelect" resultType="com.kr.kimchi.vo.AttachmentVO">
 		select * from attachment 
 		where item_no = #{item_no}
 	</select>

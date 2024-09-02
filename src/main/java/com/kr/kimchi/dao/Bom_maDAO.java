@@ -11,7 +11,7 @@ import com.kr.kimchi.vo.Bom_maVO;
 @Repository
 public class Bom_maDAO {
 
-	private final static String namespace = "com.kr.kimchi.mappers.bom_maMapper";
+	private final static String namespace = "com.kr.kimchi.bom_maMapper";
 
 	@Inject
 	private SqlSession session;

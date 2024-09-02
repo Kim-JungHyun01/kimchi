@@ -11,7 +11,7 @@ import com.kr.kimchi.vo.BomVO;
 @Repository
 public class BomDAO {
 	
-private final static String namespace="com.kr.kimchi.mappers.bomMapper";
+private final static String namespace="com.kr.kimchi.bomMapper";
 	
 	@Inject
 	private SqlSession session;

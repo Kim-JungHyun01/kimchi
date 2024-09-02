@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.kimchi.service.PaService;
-import com.kr.kimchi.vo.CategoryVO;
 import com.kr.kimchi.vo.PaPageLIst;
 import com.kr.kimchi.vo.PaPageVO;
 import com.kr.kimchi.vo.PaVO;
@@ -27,10 +26,10 @@ public class PaController {
 	@GetMapping(value="/pa")
 	public ModelAndView pa(@RequestParam(defaultValue = "1") int pageNum) {
 		
-		// °¹¼ö¸¦ ±¸ÇÏ±â À§ÇÑ ÀüÃ¼ ¸®½ºÆ®
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½Æ®
 		List<PaVO> allList = paService.paAllList();
 		
-		// ÆäÀÌÁö ÂÊ¼ö Ã³¸®
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¼ï¿½ Ã³ï¿½ï¿½
 		PaPageVO pageVO = new PaPageVO(pageNum, allList.size());
 		System.out.println("PaController page : "+ pageVO.getPageNum());
 		
@@ -42,8 +41,8 @@ public class PaController {
 		System.out.println("PaController startPage : " + pageVO.getStartPage() );
 		System.out.println("PaController endPage : " + pageVO.getEndPage() );
 		
-		// ¸®½ºÆ®¸¦ ºÐÇÒ·Î ¹ÞÀ½
-		params.putIfAbsent("ca_id", 3); // ±¸¸Å¹ßÁÖ¼­¶ó 3À¸·Î °íÁ¤
+		// ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ò·ï¿½ ï¿½ï¿½ï¿½ï¿½
+		params.putIfAbsent("ca_id", 3); // ï¿½ï¿½ï¿½Å¹ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		List<PaVO> pageAllList = paService.paList(params);
 		System.out.println("PaController pageAllList : " + pageAllList);
 		

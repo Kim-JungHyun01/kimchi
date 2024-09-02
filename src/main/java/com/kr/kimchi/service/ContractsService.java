@@ -1,7 +1,6 @@
 package com.kr.kimchi.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,8 +16,8 @@ public class ContractsService {
 	private ContractsDAO condao;
 	
 //	계약 보기_전체
-	public List<ContractsVO> contractsAll(Map<String, Object> conlist){
-		return condao.contractsAll(conlist);
+	public List<ContractsVO> contractsAll(){
+		return condao.contractsAll();
 	}//end
 	
 //	계약 보기_상세 

@@ -1,7 +1,6 @@
 package com.kr.kimchi.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -12,14 +11,14 @@ import com.kr.kimchi.vo.ObtainVO;
 
 @Repository
 public class ObtainDAO {
-	private final static String namespace = "com.kr.kimchi.mappers.obtainMapper";
+	private final static String namespace = "com.kr.kimchi.obtainMapper";
 
 	@Inject
 	private SqlSession session;
 
 //	조달계획 보기_전체
-	public List<ObtainVO> obtainAll(Map<String, Object> oblist) {
-		return session.selectList(namespace + ".obtainAll", oblist);
+	public List<ObtainVO> obtainAll() {
+		return session.selectList(namespace + ".obtainAll");
 	}// end
 
 //	조달계획 보기_상세
