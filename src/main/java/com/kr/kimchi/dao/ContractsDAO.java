@@ -41,5 +41,10 @@ public class ContractsDAO {
 	public void contractsCheck(ContractsVO contr) {
 		session.selectOne(namespace+".contractsCheck", contr);
 	}//end
+	
+//	계약서 보기
+	public String documentView(int ca_id, int pa_referenceNo) {
+		return session.selectOne(namespace+".documentView");
+	}//end
 
 }// end class

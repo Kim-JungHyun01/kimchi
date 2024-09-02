@@ -4,7 +4,7 @@
 <mapper namespace="com.kr.kimchi.codeMapper">
 
 	<!-- 코드추가 -->
-	<insert id="codeInsert" parameterType="com.kr.kimchi.vo.CodeVO">
+	<insert id="codeInsert" parameterType="com.kr.kimchi.vo.CodeVO" useGeneratedKeys="true" keyProperty="code_id">
 		insert into code
 		(ca_id,code_name) values
 		(#{ca_id}, #{code_name})

@@ -105,20 +105,33 @@
 			<c:when test="${con.contracts_status eq '계약확인중'}">
 				<a type="button"
 					href="${contextPath}/contracts/contractsUpdateForm?contracts_no=${con.contracts_no}">계약수정</a>
-				<button type="button">계약승인</button>
-				<button type="button">계약취소</button>
+				<form action="contractsCheck" method="post" id="checkForm"
+					name="checkForm">
+					<input type="hidden" name="contracts_no" id="contracts_no" value="${con.contracts_no}">
+					<input type="hidden" name="contracts_status" id="contracts_status" value="">
+					<button type="button" onclick="submitCheck('계약승인')">계약승인</button>
+					<button type="button" onclick="submitCheck('계약취소')">계약취소</button>
+				</form>
 			</c:when>
 			<c:otherwise>
-				<button type="button">계약서확인</button>
+				<form action="documentView" method = "get">
+					<button type="button">계약서확인</button>
+				</form>
 			</c:otherwise>
 		</c:choose>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
 <!-- Required vendors -->
+<script>
+	//계약승인 & 취소
+	function submitCheck(contracts_status) {
+		document.getElementById("contracts_status").value = contracts_status;
+		document.getElementById("checkForm").submit();
+	}//end
+</script>
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
 <script src="${contextPath}/resources/js/quixnav-init.js"></script>
 <script src="${contextPath}/resources/js/custom.min.js"></script>
-
 <script
 	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

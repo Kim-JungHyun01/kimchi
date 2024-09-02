@@ -124,7 +124,8 @@ button {
 		</div>
 		<div>
 			<p>계약협력회사</p>
-			<input name="partner_taxid" id="partner_taxid" type="text"
+			<input name="partner_taxid" id="partner_taxid" type="text">
+			<!-- <input name="partner_taxid" id="partner_taxid" type="text"
 				placeholder="협력회사선택" onclick="openpartnerModal()"> <input
 				name="partner_companyname" id="partner_companyname" type="text"
 				placeholder="협력회사선택" onclick="openpartnerModal()"> <input
@@ -133,14 +134,14 @@ button {
 				name="partner_number" id="partner_number" type="text"
 				placeholder="협력회사선택" onclick="openpartnerModal()"> <input
 				name="partner_email" id="partner_email" type="text"
-				placeholder="협력회사선택" onclick="openpartnerModal()">
-		</div>
+				placeholder="협력회사선택" onclick="openpartnerModal()">-->
+		</div> 
 		<div>
 			<p>계약담당자</p>
-			<input name="user_id" id="user_id" type="hidden"> <input
+			<input name="user_id" id="user_id" type="text"> <!-- <input
 				name="user_email" id="user_email" type="text"> <input
 				name="user_name" id="user_name" type="text"> <input
-				name="user_number" id=user_number type="text">
+				name="user_number" id=user_number type="text"> -->
 		</div>
 		<div>
 			<button type="submit">계약등록</button>

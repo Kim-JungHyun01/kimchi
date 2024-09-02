@@ -26,7 +26,7 @@
 		item_no, partner_taxid, user_id)
 		values
 		(#{contracts_quantity},
-		#{contracts_price},#{contracts_deliveryDate}, '게약확인중'
+		#{contracts_price},#{contracts_deliveryDate}, '계약확인중'
 		,#{contracts_details},
 		now(),0,#{item_no},#{partner_taxid},#{user_id})
 	</insert>
@@ -39,7 +39,8 @@
 		#{contracts_quantity},
 		contracts_price = #{contracts_price},
 		contracts_deliveryDate = #{contracts_deliveryDate},
-		contracts_details = #{contracts_details}
+		contracts_details =
+		#{contracts_details}
 		where contracts_no= #{contracts_no}
 	</update>
 
@@ -47,10 +48,18 @@
 	<update id="contractsCheck"
 		parameterType="com.kr.kimchi.vo.ContractsVO">
 		update contracts set
-		contracts_status = #{contracts_status}
+		contracts_status =
+		#{contracts_status},
 		contracts_registrationDate = now(),
-		contracts_document = #{contracts_document}
-		where contracts_no = #{contracts_no}
+		contracts_document = if(#{contracts_status} = '계약승인', 1, 0)
+		where
+		contracts_no = #{contracts_no}
 	</update>
+
+	<!-- 계약서 보기 -->
+	<select id="documentView" resultType="string">
+		select code.code_name from pa join code on pa.code_id = code.code_id
+		where code.ca_id = #{ca_id} and pa.pa_referenceNo=#{pa_referenceNo};
+	</select>
 
 </mapper>

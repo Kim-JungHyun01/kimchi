@@ -17,7 +17,7 @@ public class CodeDAO {
 	
 //	코드추가
 	public void codeInsert(CodeVO code) {
-		session.selectOne(namespace+".codeInsert", code);
+		session.insert(namespace+".codeInsert", code);
 	}//end
 	
 //	코드삭제

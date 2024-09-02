@@ -2,139 +2,143 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kr.kimchi.mappers.paMapper">
-	
+<mapper namespace="com.kr.kimchi.paMapper">
+
 	<!-- LIst size 확인을 위한 메소드 -->
 	<select id="paAllList" resultType="com.kr.kimchi.vo.PaVO">
 		select * from pa;
 	</select>
-	
+
 	<!-- paper 선택 리스트 -->
 	<resultMap type="com.kr.kimchi.vo.ItemVO" id="ItemVO">
-		<result column="item_no" property="item_no"/>
-		<result column="item_name" property="item_name"/>
+		<result column="item_no" property="item_no" />
+		<result column="item_name" property="item_name" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.PartnerVO" id="PartnerVO">
-		<result column="partner_taxid" property="partner_taxid"/>
-		<result column="partner_companyname" property="partner_companyname"/>
+		<result column="partner_taxid" property="partner_taxid" />
+		<result column="partner_companyname"
+			property="partner_companyname" />
 	</resultMap>
-	<resultMap type="com.kr.kimchi.vo.ContractsVO" id="ContractsVO">
-		<result column="contracts_no" property="contracts_no"/>
-		<result column="contracts_price" property="contracts_price"/>
-		<collection property="partnerVO" ofType="com.kr.kimchi.vo.PartnerVO" resultMap="PartnerVO"/>
-		<collection property="itemVO" ofType="com.kr.kimchi.vo.ItemVO" resultMap="ItemVO"/>
+	<resultMap type="com.kr.kimchi.vo.ContractsVO"
+		id="ContractsVO">
+		<result column="contracts_no" property="contracts_no" />
+		<result column="contracts_price" property="contracts_price" />
+		<collection property="partnerVO"
+			ofType="com.kr.kimchi.vo.PartnerVO" resultMap="PartnerVO" />
+		<collection property="itemVO"
+			ofType="com.kr.kimchi.vo.ItemVO" resultMap="ItemVO" />
 	</resultMap>
-	<resultMap type="com.kr.kimchi.vo.ProductionVO" id="ProductionVO">
-		<result column="production_no" property="production_no"/>
-		<association property="contractsVO" javaType="com.kr.kimchi.vo.ContractsVO" resultMap="ContractsVO"/>
+	<resultMap type="com.kr.kimchi.vo.ProductionVO"
+		id="ProductionVO">
+		<result column="production_no" property="production_no" />
+		<association property="contractsVO"
+			javaType="com.kr.kimchi.vo.ContractsVO" resultMap="ContractsVO" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.MaterialVO" id="MaterialVO">
-		<result column="ma_id" property="ma_id"/>
-		<result column="ma_name" property="ma_name"/>
+		<result column="ma_id" property="ma_id" />
+		<result column="ma_name" property="ma_name" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.ObtainVO" id="ObtainVO">
-		<result column="obtain_no" property="obtain_no"/>
-		<association property="materialVO" javaType="com.kr.kimchi.vo.MaterialVO" resultMap="MaterialVO"/>
-		<collection property="productionVO" ofType="com.kr.kimchi.vo.ProductionVO" resultMap="ProductionVO"/>
+		<result column="obtain_no" property="obtain_no" />
+		<association property="materialVO"
+			javaType="com.kr.kimchi.vo.MaterialVO" resultMap="MaterialVO" />
+		<collection property="productionVO"
+			ofType="com.kr.kimchi.vo.ProductionVO" resultMap="ProductionVO" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.CategoryVO" id="CategoryVO">
-		<result column="ca_id" property="ca_id"/>
-		<result column="ca_name" property="ca_name"/>
+		<result column="ca_id" property="ca_id" />
+		<result column="ca_name" property="ca_name" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.CodeVO" id="CodeVO">
-		<result column="code_id" property="code_id"/>
-		<association property="categoryVO" javaType="com.kr.kimchi.vo.CategoryVO" resultMap="CategoryVO"/>
+		<result column="code_id" property="code_id" />
+		<association property="categoryVO"
+			javaType="com.kr.kimchi.vo.CategoryVO" resultMap="CategoryVO" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.PaVO" id="PaVO">
-		<result column="pa_no" property="pa_no"/>
-		<result column="user_id" property="user_id"/>
-		<result column="pa_issueDate" property="pa_issueDate"/>
-		<result column="pa_checkStatus" property="pa_checkStatus"/>
-		<result column="pa_notes" property="pa_notes"/>
-		<collection property="codeVo" ofType="com.kr.kimchi.vo.CodeVO" resultMap="CodeVO"/>
-		<collection property="obtainVo" ofType="com.kr.kimchi.vo.ObtainVO" resultMap="ObtainVO"/>
+		<result column="pa_no" property="pa_no" />
+		<result column="user_id" property="user_id" />
+		<result column="pa_issueDate" property="pa_issueDate" />
+		<result column="pa_checkStatus" property="pa_checkStatus" />
+		<result column="pa_notes" property="pa_notes" />
+		<collection property="codeVo"
+			ofType="com.kr.kimchi.vo.CodeVO" resultMap="CodeVO" />
+		<collection property="obtainVo"
+			ofType="com.kr.kimchi.vo.ObtainVO" resultMap="ObtainVO" />
 	</resultMap>
-	
+
 	<select id="paList" resultMap="PaVO">
 		select
-			a.pa_no,
-			a.user_id,
-			a.code_id,
-			a.pa_issueDate,
-			a.pa_checkStatus,
-			a.pa_referenceNo,
-			a.pa_notes,
-			b.ca_id,
-			b.code_name,
-			c.ca_name,
-			d.ma_id,
-			d.production_no,
-			e.Ma_Name, 
-			f.contracts_no,
-			g.contracts_price,
-			g.partner_taxid,
-			g.item_no,
-			h.partner_companyname,
-			item_name
-		from pa a 
-			join code b on a.code_id = b.code_id
-			join category c on b.ca_id = c.ca_id
-			join obtain d on a.pa_referenceNo = d.obtain_no
-			join material e on d.ma_id = e.ma_id
-			join production f on d.production_no = f.production_no
-			join contracts g on f.contracts_no = g.contracts_no
-			join partner h on g.partner_taxid = h.partner_taxid
-			join item i on g.item_no = i.item_no
+		a.pa_no,
+		a.user_id,
+		a.code_id,
+		a.pa_issueDate,
+		a.pa_checkStatus,
+		a.pa_referenceNo,
+		a.pa_notes,
+		b.ca_id,
+		b.code_name,
+		c.ca_name,
+		d.ma_id,
+		d.production_no,
+		e.Ma_Name,
+		f.contracts_no,
+		g.contracts_price,
+		g.partner_taxid,
+		g.item_no,
+		h.partner_companyname,
+		item_name
+		from pa a
+		join code b on a.code_id =
+		b.code_id
+		join category c on b.ca_id = c.ca_id
+		join obtain d on
+		a.pa_referenceNo = d.obtain_no
+		join material e on d.ma_id = e.ma_id
+		join production f on d.production_no = f.production_no
+		join contracts g
+		on f.contracts_no = g.contracts_no
+		join partner h on g.partner_taxid =
+		h.partner_taxid
+		join item i on g.item_no = i.item_no
 		where b.ca_id = 3
 		order by a.pa_no desc
 		limit #{start},#{end};
 	</select>
-		
-		
 
-	<!-- 구매발주서 페이지 발주서 리스트
-	<select id="paList" resultType="com.kr.kimchi.vo.PaVO">
-		select * from pa
-			<where>
-				pa_category = 2
-				<if test = "pa_checkStatus != null">
-						pa_checkStatus
-						= #{pa_checkStatus}
-					
-					<if test="PO_checkStatus != 2">
-					</if>
-				</if>
-			</where>
-		limit  #{start},#{end};	
-	</select>
-	 -->
-					
+
+
+	<!-- 구매발주서 페이지 발주서 리스트 <select id="paList" resultType="com.kr.kimchi.vo.PaVO"> 
+		select * from pa <where> pa_category = 2 <if test = "pa_checkStatus != null"> 
+		pa_checkStatus = #{pa_checkStatus} <if test="PO_checkStatus != 2"> </if> 
+		</if> </where> limit #{start},#{end}; </select> -->
+
 	<!-- 페이퍼 추가 -->
 	<insert id="paInsert" parameterType="com.kr.kimchi.vo.PaVO">
 		insert into pa
-		(user_id, code_id, pa_issueDate,
-		pa_checkStatus, pa_referenceNo, pa_notes)
+		(user_id,
+		code_id, pa_issueDate, pa_checkStatus, pa_referenceNo)
 		values
-		(#{user_id}, #{code_id}, #{pa_issueDate},
-		#{pa_checkStatus}, #{pa_referenceNo}, #{pa_notes})
+		(#{user_id}, #{code_id}, #{pa_issueDate}, 0, #{pa_referenceNo})
 	</insert>
 
 	<!-- 페이퍼 수정 -->
 	<update id="paUpdate" parameterType="com.kr.kimchi.vo.PaVO">
 		update pa set
-		pa_notes = #{pa_notes}
+		pa_notes =
+		#{pa_notes}
 		where pa_no = #{pa_no}
 	</update>
-	
+
 	<!-- 페이처 체크 -->
-	<update id="paCheck">
+	<update id="paCheck" parameterType="com.kr.kimchi.vo.PaVO">
 		update pa set
 		pa_checkStatus = #{pa_checkStatus}
-		where pa_no = #{pa_no}
+		where
+		pa_no = #{pa_no}
 	</update>
-	
-	
-	
+
+
+
 
 
 </mapper>
