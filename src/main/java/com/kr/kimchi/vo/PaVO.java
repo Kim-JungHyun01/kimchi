@@ -16,4 +16,5 @@ public class PaVO {
 	
 	private CodeVO codeVo;
 	private ObtainVO obtainVo;
+	private UserVO userVO;
 }

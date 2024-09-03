@@ -4,12 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kr.kimchi.mappers.paMapper">
 	
-	<!-- LIst size 확인을 위한 메소드 -->
+	<!-- 구매발주서 LIst size 확인을 위한 메소드 -->
 	<select id="paAllList" resultType="com.kr.kimchi.vo.PaVO">
-		select * from pa;
+		select * from pa a
+		join code b on a.code_id = b.code_id
+		where b.ca_id = 3; 
 	</select>
 	
 	<!-- paper 선택 리스트 -->
+	<resultMap type="com.kr.kimchi.vo.UserVO" id="UserVO">
+		<result column="user_name" property="user_name"/>
+	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.ItemVO" id="ItemVO">
 		<result column="item_no" property="item_no"/>
 		<result column="item_name" property="item_name"/>
@@ -31,9 +36,12 @@
 	<resultMap type="com.kr.kimchi.vo.MaterialVO" id="MaterialVO">
 		<result column="ma_id" property="ma_id"/>
 		<result column="ma_name" property="ma_name"/>
+		<result column="ma_price" property="ma_price"/>
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.ObtainVO" id="ObtainVO">
 		<result column="obtain_no" property="obtain_no"/>
+		<result column="obtain_deliveryDate" property="obtain_deliveryDate"/>
+		<result column="obtain_quantity" property="obtain_quantity" />
 		<association property="materialVO" javaType="com.kr.kimchi.vo.MaterialVO" resultMap="MaterialVO"/>
 		<collection property="productionVO" ofType="com.kr.kimchi.vo.ProductionVO" resultMap="ProductionVO"/>
 	</resultMap>
@@ -43,6 +51,7 @@
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.CodeVO" id="CodeVO">
 		<result column="code_id" property="code_id"/>
+		<result column="code_name" property="code_name"/>
 		<association property="categoryVO" javaType="com.kr.kimchi.vo.CategoryVO" resultMap="CategoryVO"/>
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.PaVO" id="PaVO">
@@ -53,6 +62,7 @@
 		<result column="pa_notes" property="pa_notes"/>
 		<collection property="codeVo" ofType="com.kr.kimchi.vo.CodeVO" resultMap="CodeVO"/>
 		<collection property="obtainVo" ofType="com.kr.kimchi.vo.ObtainVO" resultMap="ObtainVO"/>
+		<collection property="userVO" ofType="com.kr.kimchi.vo.UserVO" resultMap="UserVO" />
 	</resultMap>
 	
 	<select id="paList" resultMap="PaVO">
@@ -68,14 +78,18 @@
 			b.code_name,
 			c.ca_name,
 			d.ma_id,
+			d.obtain_quantity,
+			d.obtain_deliveryDate,
 			d.production_no,
 			e.Ma_Name, 
+			e.ma_price,
 			f.contracts_no,
 			g.contracts_price,
 			g.partner_taxid,
 			g.item_no,
 			h.partner_companyname,
-			item_name
+			i.item_name,
+			j.user_name
 		from pa a 
 			join code b on a.code_id = b.code_id
 			join category c on b.ca_id = c.ca_id
@@ -85,6 +99,7 @@
 			join contracts g on f.contracts_no = g.contracts_no
 			join partner h on g.partner_taxid = h.partner_taxid
 			join item i on g.item_no = i.item_no
+			join user j on j.user_id = a.user_id
 		where b.ca_id = 3
 		order by a.pa_no desc
 		limit #{start},#{end};

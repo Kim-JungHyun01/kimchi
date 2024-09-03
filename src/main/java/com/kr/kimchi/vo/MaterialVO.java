@@ -12,13 +12,22 @@ public class MaterialVO {
 	private String ma_category; 
 	private int ma_price; 
 	private String ma_unit;
+	private String ma_weight;
 	private String ma_specifications;
-	private int ma_StockQuantity; 
-	private int ma_AvailableStock; 
-	private int ma_BasicStock; 
-	private String ma_stock_value; 
+	private Date ma_expiryDate; 
+	private String ma_origin; 
+	private int ma_stockQuantity; 
+	private int ma_availableStock; 
+	private int ma_basicStock; 
+	private String ma_stockValue; 
 	private String ma_storage;
-	private Date ma_updateDate; 
+	private Date ma_date; 
 	private int attachment_no;
 
+	
+	
+
+
+
+	
 }
