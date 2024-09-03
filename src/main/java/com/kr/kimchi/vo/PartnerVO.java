@@ -13,6 +13,7 @@ public class PartnerVO {
 	private String partner_ownername;
 	private String partner_fax;
 	private String partner_email;
-	private String partner_approval;
+	private String partner_add;
+	private int partner_approval;
 	
 }

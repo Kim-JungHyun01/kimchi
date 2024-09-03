@@ -105,7 +105,6 @@
 		</div>
 	</form>
 </div>
-
 <%@include file="../include/footer.jsp"%>
 <!-- Required vendors -->
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>

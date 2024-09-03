@@ -37,8 +37,8 @@ public class ObtainDAO {
 	}// end
 
 //	조달계획 승인 
-	public void obainCheck(ObtainVO obt) {
-		session.selectOne(namespace+".obainCheck", obt);
+	public void obtainCheck(ObtainVO obt) {
+		session.selectOne(namespace+".obtainCheck", obt);
 	}// end
 
 }// end class

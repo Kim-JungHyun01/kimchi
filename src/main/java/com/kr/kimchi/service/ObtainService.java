@@ -37,8 +37,8 @@ public class ObtainService {
 	}// end
 
 //	조달계획 승인 
-	public void obainCheck(ObtainVO obt) {
-		obtaindao.obainCheck(obt);
+	public void obtainCheck(ObtainVO obt) {
+		obtaindao.obtainCheck(obt);
 	}// end
 	
 	

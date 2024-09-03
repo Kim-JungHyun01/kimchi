@@ -19,7 +19,7 @@
 		</tr>
 		<c:forEach var="prolist" items="${prolist}">
 			<tr>
-				<td><a href="${contextPath}/productionSelect?production_no=${prolist.production_no}">${prolist.production_no}</a></td>
+				<td><a href="${contextPath}/production/productionSelect?production_no=${prolist.production_no}">${prolist.production_no}</a></td>
 				<td>${prolist.production_quantity}</td>
 				<td>${prolist.production_deliveryDate}</td>
 				<td>${prolist.production_status}</td>

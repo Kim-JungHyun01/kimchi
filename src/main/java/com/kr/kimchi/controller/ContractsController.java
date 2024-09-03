@@ -16,10 +16,14 @@ import com.kr.kimchi.service.CodeService;
 import com.kr.kimchi.service.ContractsService;
 import com.kr.kimchi.service.ItemService;
 import com.kr.kimchi.service.PaService;
+import com.kr.kimchi.service.PartnerService;
+import com.kr.kimchi.service.UserService;
 import com.kr.kimchi.vo.CodeVO;
 import com.kr.kimchi.vo.ContractsVO;
 import com.kr.kimchi.vo.ItemVO;
 import com.kr.kimchi.vo.PaVO;
+import com.kr.kimchi.vo.PartnerVO;
+import com.kr.kimchi.vo.UserVO;
 
 @Controller
 public class ContractsController {
@@ -32,6 +36,10 @@ public class ContractsController {
 	private CodeService codeservice;
 	@Inject
 	private PaService paservice;
+	@Inject
+	private UserService userservice;
+	@Inject
+	private PartnerService partservice;
 
 //	계약 보기_전체
 	@GetMapping(value = "contracts/contractsAll")
@@ -48,10 +56,13 @@ public class ContractsController {
 	public ModelAndView contractsSelect(int contracts_no) {
 		ContractsVO con = conservice.contractsSelect(contracts_no);
 		ItemVO item = itemservice.itemSelect(con.getItem_no());
-//		partner, user 정보불러오기
+		UserVO user = userservice.userSelect(con.getUser_id());
+		PartnerVO partner = partservice.partnerSelect(con.getPartner_taxid());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("con", con);
 		mav.addObject("item", item);
+		mav.addObject("user", user);
+		mav.addObject("partner", partner);
 		mav.setViewName("contracts/contractsSelect");
 		return mav;
 	}// end
@@ -60,10 +71,12 @@ public class ContractsController {
 	@GetMapping(value = "contracts/contractsInsertForm")
 	public ModelAndView contractsInsertForm() {
 		List<ItemVO> itemlist = itemservice.itemAll();
-//		user=> 선택 or 로그인이 되어 있는 상태에서 들어가는 것?
-//		parter 정보 보여주는 것
+		List<PartnerVO> partnerlist = partservice.partnerAll();
+		List<UserVO> userlist = userservice.userAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("itemlist", itemlist);
+		mav.addObject("partnerlist", partnerlist);
+		mav.addObject("userlist", userlist);
 		mav.setViewName("contracts/contractsInsertForm");
 		return mav;
 	}// end

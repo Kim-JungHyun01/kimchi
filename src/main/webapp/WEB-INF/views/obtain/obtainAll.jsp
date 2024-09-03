@@ -10,8 +10,9 @@
 	<table>
 		<tr>
 			<td>조달계획코드</td>
-			<td>조달계획 물품</td>
+			<td>조달계획물품</td>
 			<td>조달량</td>
+			<td>조달가격</td>
 			<td>조달계획납기일</td>
 			<td>조달계획상태</td>
 			<td>조달계획등록일</td>
@@ -26,6 +27,7 @@
 					href="${contextPath}/obtain/obtainSelect?obtain_no=${oblist.obtain_no}">${oblist.obtain_no}</a></td>
 				<td>${oblist.ma_id}</td>
 				<td>${oblist.obtain_quantity}</td>
+				<td>${oblist.obtain_price}</td>
 				<td>${oblist.obtain_deliveryDate}</td>
 				<td>${oblist.obtain_status}</td>
 				<td>${oblist.obtain_registrationDate}</td>

@@ -17,28 +17,29 @@
 	<!-- 조달계획 추가 -->
 	<insert id="obtainInsert" parameterType="com.kr.kimchi.vo.ObtainVO">
 		insert into obtain
-		(ma_id, obtain_quantity, obtain_deliveryDate, obtain_status, obtain_registrationDate,
+		(ma_id, obtain_quantity, obtain_deliveryDate, obtain_status, obtain_registrationDate, obtain_price,
 		 obtain_document, user_id, production_no, partner_taxid) 
 		 values
-		 (#{ma_id}, #{obtain_quantity}, #{obtain_deliveryDate}, #{obtain_status}, #{obtain_registrationDate},
-		  #{obtain_document}, #{user_id}, #{production_no}, #{partner_taxid})
+		 (#{ma_id}, #{obtain_quantity}, #{obtain_deliveryDate}, '조달계획확인중', now(), #{obtain_price},
+		  0, #{user_id}, #{production_no}, #{partner_taxid})
 	</insert>
 
 	<!-- 조달계획 수정 -->
 	<update id="obtainUpdate" parameterType="com.kr.kimchi.vo.ObtainVO">
 		update obtain set 
-		obtain_quantity = #{obtain_quantity}, 
-		obtain_deliveryDate = #{obtain_deliveryDate}, 
-		partner_taxid = #{partner_taxid}
+		obtain_quantity = #{obtain_quantity},
+		obtain_price=#{obtain_price},
+		obtain_deliveryDate = #{obtain_deliveryDate},
+		obtain_registrationDate = now()
 		where obtain_no = #{obtain_no}
 	</update>
 
 	<!-- 조달계획 승인 -->
-	<update id="obainCheck" parameterType="com.kr.kimchi.vo.ObtainVO">
+	<update id="obtainCheck" parameterType="com.kr.kimchi.vo.ObtainVO">
 		update obtain set 
 		obtain_status = #{obtain_status},
 		obtain_registrationDate = now(),
-		obtain_document = #{obtain_document}
+		obtain_document = if(#{obtain_status}='조달계획확인완료', 1,0)
 		where obtain_no = #{obtain_no}
 	</update>
 

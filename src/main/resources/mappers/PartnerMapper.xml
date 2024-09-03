@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kr.kimchi.PartnerMapper">
+	<!-- 협력회사 로그인 -->
+	<select id="partnerLogin" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select partner_taxid, partner_id, partner_pw, partner_approval from partner 
+		where partner_id = #{partner_id} and partner_pw = #{partner_pw}
+	</select>
+
+	<!-- 협력회사 전체 -->
+	<select id="partnerAll" resultType="com.kr.kimchi.vo.PartnerVO">
+		select * from partner
+	</select>
+
+	<!-- 협력회사 상세 -->
+	<select id="partnerSelect"
+		resultType="com.kr.kimchi.vo.PartnerVO">
+		select * from partner
+		where partner_taxid = #{partner_taxid}
+	</select>
+
+	<!-- 협력회사 등록 -->
+	<insert id="partnerInsert"
+		parameterType="com.kr.kimchi.vo.PartnerVO">
+		insert into partner(partner_taxid, partner_id,
+		partner_pw, partner_companyname, partner_number, partner_ownername,
+		partner_fax, partner_email, partner_add, partner_approval) values
+		(#{partner_taxid}, #{partner_id},
+		#{partner_pw},#{partner_companyname},#{partner_number},#{partner_ownername},
+		#{partner_fax},#{partner_email},#{partner_add},0)
+	</insert>
+
+	<!-- 협력회사 수정_상호, 명칭및 인터넷도메인, 대표자명, 업종, 사업장 -->
+	<update id="partnerUpdate"
+		parameterType="com.kr.kimchi.vo.PartnerVO">
+		update partner set
+		partner_companyname =
+		#{partner_companyname},
+		partner_ownername=#{partner_ownername},
+		partner_number=#{partner_number},
+		partner_fax = #{partner_fax},
+		partner_email = #{partner_email},
+		partner_add = #{partner_add}
+		where
+		partner_taxid = #{partner_taxid}
+	</update>
+
+	<!-- 협력회사 승인 -->
+	<update id="partnerApproval"
+		parameterType="com.kr.kimchi.vo.PartnerVO">
+		update partner set
+		partner_approval = #{partner_approval}
+		where partner_taxid = #{partner_taxid}
+	</update>
+
+
+</mapper>

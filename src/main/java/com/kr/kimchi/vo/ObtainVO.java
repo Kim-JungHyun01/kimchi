@@ -10,7 +10,8 @@ public class ObtainVO {
 	private int obtain_no; 
 	private int ma_id; 
 	private int obtain_quantity; 
-	private Date obtain_deliveryDate; 
+	private int obtain_price;
+	private String obtain_deliveryDate; 
 	private String obtain_status; 
 	private Date obtain_registrationDate; 
 	private int obtain_document; 

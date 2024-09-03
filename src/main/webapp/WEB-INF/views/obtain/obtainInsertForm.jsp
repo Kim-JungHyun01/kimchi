@@ -2,43 +2,48 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <%@include file="../include/header.jsp"%>
 <%@include file="../include/nav.jsp"%>
 <div class="content-body">
 	<div>
-		<h3>계약 등록</h3>
-		<form action="contractsInsert" method="post"
-			name="contractsInsertForm" id="contractsInsertForm">
+		<h3>조달계획 등록</h3>
+		<form action="obtainInsert" method="post" id="obtainInsertForm"
+			name="obtainInsertForm">
 			<div>
-				<h4>물품 상세</h4>
-				<label>계약물품코드</label> <input name="item_no" id="item_no"
-					type="number" placeholder="물품선택" onclick="openitemModal()"><br>
-				<label>계약물품분류</label> <input name="item_category" id="item_category"
-					type="text" placeholder="물품선택" onclick="openitemModal()"><br>
-				<label>계약물품명</label> <input name="item_name" id="item_name"
-					type="text" placeholder="물품선택" onclick="openitemModal()"><br>
-				<label>계약물품단가</label> <input name="item_price" id="item_price"
-					type="number" placeholder="물품선택" onclick="openitemModal()">
+				<h4>생산계획 상세</h4>
+				<label>생산계획코드</label> <input name="production_no" id="production_no"
+					type="number" placeholder="생산계획선택" onclick="openproductionModal()"><br>
+				<label>생산량</label> <input name="production_quantity"
+					id="production_quantity" type="number" placeholder="생산계획선택"
+					onclick="openproductionModal()"><br> <label>생산납기일</label>
+				<input name="production_deliveryDate" id="production_deliveryDate"
+					type="date" placeholder="생산계획선택" onclick="openproductionModal()"
+					readonly>
 			</div>
 			<div>
-				<label>계약수량</label> <input name="contracts_quantity"
-					id="contracts_quantity" type="number">
+				<h4>조달자재 상세</h4>
+				<label>자재코드</label> <input name="ma_id" id="ma_id" type="number"
+					placeholder="자재선택" onclick="openmaModal()"><br> <label>자재분류</label>
+				<input name="ma_category" id="ma_category" type="text"
+					placeholder="자재선택" onclick="openmaModal()"><br> <label>자재명</label>
+				<input name="ma_name" id="ma_name" type="text" placeholder="자재선택"
+					onclick="openmaModal()"><br> <label>자재원산지</label> <input
+					name="ma_origin" id="ma_origin" type="text" placeholder="자재선택"
+					onclick="openmaModal()"><br> <label>자재단가</label> <input
+					name="ma_price" id="ma_price" type="number" placeholder="자재선택"
+					onclick="openmaModal()">
 			</div>
 			<div>
-				<label>계약가격</label> <input name="contracts_price"
-					id="contracts_price" type="number">
+				<h4>조달게획 상세</h4>
+				<label>자재조달량</label> <input name="obtain_quantity"
+					id="obtain_quantity" type="number"><br> <label>조달계획가격</label>
+				<input name="obtain_price" id="obtain_price" type="number"><br>
+				<label>조달계획납기일</label> <input name="obtain_deliveryDate"
+					id="obtain_deliveryDate" type="date">
 			</div>
 			<div>
-				<label>계약납기일</label> <input name="contracts_deliveryDate"
-					id="contracts_deliveryDate" type="date">
-			</div>
-			<div>
-				<label>계약상세</label>
-				<textarea id="contracts_details" rows="8" name="contracts_details"
-					placeholder="계약상세내용"></textarea>
-			</div>
-			<div>
-				<h4>계약협력회사 상세정보</h4>
+				<h4>조달계획 협력회사 상세정보</h4>
 				<label>협력회사 사업자번호</label> <input name="partner_taxid"
 					id="partner_taxid" type="text" placeholder="협력회사선택"
 					onclick="openpartnerModal()"><br> <label>협력회사
@@ -66,23 +71,22 @@
 					placeholder="담당자선택" onclick="openuserModal()">
 			</div>
 			<div>
-				<button type="submit">계약등록</button>
+				<button type="submit">조달계획등록</button>
 				<button type="reset">초기화</button>
 			</div>
 		</form>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
-<!-- 물품 모달창 -->
-<jsp:include page="../item/itemModal.jsp" />
+<!-- 자재모달창 -->
+<jsp:include page="../material/maModal.jsp" />
+<!-- 생산계획모달창 -->
+<jsp:include page="../production/productionModal.jsp" />
 <!-- 협력회사 모달창 -->
 <jsp:include page="../partner/partnerModal.jsp" />
 <!-- 담당자 모달창 -->
 <jsp:include page="../user/userModal.jsp" />
 <!-- Required vendors -->
-<script>
-	
-</script>
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
 <script src="${contextPath}/resources/js/quixnav-init.js"></script>
 <script src="${contextPath}/resources/js/custom.min.js"></script>
