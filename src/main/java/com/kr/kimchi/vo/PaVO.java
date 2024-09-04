@@ -11,7 +11,8 @@ public class PaVO {
 	private String user_id; 
 	private int code_id; 
 	private Date pa_issueDate; 
-	private int pa_checkStatus; 
+	private int pa_checkStatus;
+	private int pa_referenceNo;
 	private String pa_notes;
 	
 	private CodeVO codeVo;

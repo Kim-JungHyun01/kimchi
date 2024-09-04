@@ -21,10 +21,9 @@ import com.kr.kimchi.vo.PaPageVO;
 import com.kr.kimchi.vo.PaVO;
 import com.kr.kimchi.vo.PrpVO;
 
-
 @Controller
 public class PaController {
-	
+
 	@Inject
 	private PaService paService;
 	
@@ -47,7 +46,7 @@ public class PaController {
 		
 		System.out.println("pageNum :" + pageNum);
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("start", (pageVO.getPageNum()-1)*pageVO.getListcnt());
+		params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
 		System.out.println("PaController start : " + pageVO.getStart());
 		params.put("end", pageVO.getListcnt());
 		System.out.println("PaController listcnt : " + pageVO.getListcnt() );
@@ -145,4 +144,23 @@ public class PaController {
 	}
 	
 	
+	}// end
+
+	@GetMapping(value = "contracts/paSelect")
+	public ModelAndView paSelect(@RequestParam("ca_id") int ca_id,
+			@RequestParam("pa_referenceNo") int pa_referenceNo) {
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("ca_id", ca_id);
+		params.put("pa_referenceNo", pa_referenceNo);
+		PaVO palist = paService.paSelect(params);
+		
+		paService.paCheck(palist.getPa_no());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("palist", palist);
+		mav.setViewName("contracts/paSelect");
+		return mav;
+	}// end
+
 }
