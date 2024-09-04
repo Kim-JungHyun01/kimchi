@@ -1,4 +1,4 @@
-package kr.co.kim;
+package com.kr.kimchi;
 
 import java.text.DateFormat;
 import java.util.Date;

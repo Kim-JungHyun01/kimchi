@@ -1,4 +1,4 @@
-package kr.co.kim.vo;
+package com.kr.kimchi.vo;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ public class PaPageLIst {
 	private List<PaVO> povoList;
 	private PaPageVO pageVO;
 	
-	// ╠Бе╦ ©Д╪р╣И
+	// О©╫О©╫е╦ О©╫О©╫р╣О©╫
 	
 	public List<PaVO> getPovoList() {
 		return povoList;

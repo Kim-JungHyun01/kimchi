@@ -1,4 +1,4 @@
-package kr.co.kim.dao;
+package com.kr.kimchi.dao;
 
 import javax.inject.Inject;
 

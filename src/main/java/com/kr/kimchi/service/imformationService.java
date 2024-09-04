@@ -1,4 +1,4 @@
-package kr.co.kim.service;
+package com.kr.kimchi.service;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import kr.co.kim.dao.imformationDAO;
-import kr.co.kim.vo.IOVO;
-import kr.co.kim.vo.ObtainVO;
+import com.kr.kimchi.dao.imformationDAO;
+import com.kr.kimchi.vo.IOVO;
+import com.kr.kimchi.vo.ObtainVO;
 
 @Service
 public class imformationService {

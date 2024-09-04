@@ -1,15 +1,15 @@
-package kr.co.kim.vo;
+package com.kr.kimchi.vo;
 
 public class PaPageVO {
-	private int startPage;	// ½ÃÀÛÆäÀÌÁö
-	private int endPage;	// ¸¶Áö¸· ÆäÀÌÁö
+	private int startPage;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int endPage;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private boolean prev, next;
-	private int pageNum; // ÇöÀç ÆäÀÌÁö
-	private int total; // ÃÑ ÆäÀÌÁö
+	private int pageNum; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private int total; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	
-	private int start = 1; //ÆäÀÌÂ¡ ½ÃÀÛ
-	private int end = 2; //ÇÑ¹ø¿¡ º¸¿©ÁÙ ÆäÀÌÂ¡ ¹øÈ£ °¹¼ö basic : 5
-	private int listcnt = 2; //ÇÑÆäÀÌÁö¿¡ º¸¿©ÁÙ ¸®½ºÆ® ¼ö basic : 10
+	private int start = 1; //ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½ï¿½ï¿½
+	private int end = 2; //ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Â¡ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ basic : 5
+	private int listcnt = 2; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ basic : 10
 	
 	
 	public PaPageVO(int pageNum, int list) {

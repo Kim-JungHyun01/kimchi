@@ -1,4 +1,4 @@
-package kr.co.kim.vo;
+package com.kr.kimchi.vo;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package kr.co.kim.dao;
+package com.kr.kimchi.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import kr.co.kim.vo.MaterialVO;
+import com.kr.kimchi.vo.MaterialVO;
 
 @Repository
 public class invenDAO {
@@ -18,24 +18,24 @@ public class invenDAO {
 	
 	private final static String namespaces="kr.co.kim.mappers.matrial_invenMapper";
 	
-	public List<MaterialVO> ma_list(){//ÀüÃ¼ ÀÚÀç°Ë»ö
+	public List<MaterialVO> ma_list(){//ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½Ë»ï¿½
 		
 		return Session.selectList(namespaces+".material_all");
 	}
 	
-	public MaterialVO ma_serch(String value) {//»ó¼¼ ÀÚÀç°Ë»ö
+	public MaterialVO ma_serch(String value) {//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ë»ï¿½
 		
 		return Session.selectOne(namespaces+".material_serch", value);
 	}
 	
 	
 	
-	public Map<String, Object> detail(String id){//ÀÚÀç »ó¼¼º¸±â
+	public Map<String, Object> detail(String id){//ï¿½ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½
 		
 		return Session.selectOne(namespaces+".material_detail", id);
 	}
 	
-	public int ma_insert(MaterialVO vo) {//ÀÚÀçÃß°¡
+	public int ma_insert(MaterialVO vo) {//ï¿½ï¿½ï¿½ï¿½ï¿½ß°ï¿½
 		
 		return Session.insert(namespaces+".material_add", vo);
 	}
