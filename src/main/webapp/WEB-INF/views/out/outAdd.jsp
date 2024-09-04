@@ -11,10 +11,13 @@
         <h2>출고 등록</h2>
     </div>
     
-    <form id="outForm" action="${contextPath}/out/outAdd" method="post">
+    <form id="outForm" action="${contextPath}/out/outAdd" method="post">                 
         조달계획번호: <input type="number" name="obtain_no" required><br>
-        자재번호: <input type="number" id="ma_id" name="ma_id" required><br>
-        자재명: <input type="text" id="ma_name" name="ma_name" required ><br>
+        
+        자재번호: <input name="ma_id" id="ma_id" type="number"
+               placeholder="자재선택" onclick="openoutModal()"><br>
+               
+        자재명: <input type="text" id="ma_name" name="ma_name" onclick="openoutModal()"><br>
         수량: <input type="number" name="io_quantity" required min="1"><br>
         출고일: <input type="date" name="io_date" required><br>
         상세내역: <input type="text" name="io_information"><br>
@@ -28,6 +31,7 @@
 <%@ include file="../include/footer.jsp" %>
 
 <!-- 필수 벤더 스크립트 -->
+<jsp:include page="../out/outModal.jsp" />
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
 <script src="${contextPath}/resources/js/quixnav-init.js"></script>
 <script src="${contextPath}/resources/js/custom.min.js"></script>
