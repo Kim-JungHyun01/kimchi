@@ -1,4 +1,4 @@
-package com.kr.kimchi;
+package kr.co.kim;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -32,14 +32,6 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
-	}
-	
-	@RequestMapping(value = "/start", method = RequestMethod.GET)
-	public String startPage(Locale locale, Model model) {
-		logger.info("TEst start!");
-		
 		
 		return "start/startPage";
 	}

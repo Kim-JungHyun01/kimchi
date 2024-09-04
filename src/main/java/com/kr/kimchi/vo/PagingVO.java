@@ -1,4 +1,4 @@
-package com.kr.kimchi.vo;
+package kr.co.kim.vo;
 
 public class PagingVO {
 	

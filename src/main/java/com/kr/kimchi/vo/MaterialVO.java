@@ -1,14 +1,14 @@
-package com.kr.kimchi.vo;
+package kr.co.kim.vo;
 
 import lombok.Data;
 
 @Data
 public class MaterialVO {
-
-	private int ma_id; 
+	
+	private int ma_id;
 	private String ma_name;
-	private String ma_category; 
-	private int ma_price; 
+	private String ma_category;
+	private int ma_price;
 	private String ma_unit;
 	private String ma_weight;
 	private String ma_specifications;

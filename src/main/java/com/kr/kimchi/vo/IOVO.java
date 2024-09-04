@@ -1,8 +1,5 @@
-package com.kr.kimchi.vo;
+package kr.co.kim.vo;
 
-import lombok.Data;
-
-@Data
 public class IOVO {
 
 	private int io_id;  

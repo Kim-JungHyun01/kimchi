@@ -1,4 +1,4 @@
-package com.kr.kimchi.vo;
+package kr.co.kim.vo;
 
 import lombok.Getter;
 import lombok.Setter;
