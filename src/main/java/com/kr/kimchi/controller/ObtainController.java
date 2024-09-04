@@ -66,7 +66,7 @@ public class ObtainController {
 	public ModelAndView obtainInsertForm() {
 		List<ProductionVO> prolist = proservice.productionAll();
 		List<PartnerVO> partnerlist = partservice.partnerAll();
-		List<MaterialVO> malist = maservice.maList();
+		List<MaterialVO> malist = maservice.maList(0, 10);
 		List<UserVO> userlist = userservice.userAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("prolist", prolist);
