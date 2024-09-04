@@ -36,4 +36,8 @@
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</bean>
+	
+	<context:component-scan base-package="com.kr.kimchi.service, com.kr.kimchi.dao">
+	</context:component-scan>
+	
 </beans>

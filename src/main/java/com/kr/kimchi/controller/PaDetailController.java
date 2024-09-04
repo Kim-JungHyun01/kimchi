@@ -29,7 +29,7 @@ public class PaDetailController {
 
 	@PostMapping(value="/paDetail")
 	public ModelAndView paPop(@RequestParam("pa_no") Integer pa_no, HttpSession session) {
-		// ÅäÅ«¹ßÇà
+		// í† í°ë°œí–‰
 		String token = UUID.randomUUID().toString();
 		session.setAttribute("token", token);
 		
@@ -41,7 +41,7 @@ public class PaDetailController {
 		mav.addObject("paVO", paVO);
 		mav.addObject("prpList", prpList);
 		mav.addObject("pa_no", pa_no);
-		//ÅäÅ«
+		//í† í°
 		mav.addObject("token", token);
 		mav.setViewName("pa/paDetail");
 		return mav;
@@ -51,11 +51,11 @@ public class PaDetailController {
 	@PostMapping(value="/paDetailUpdate")
 	public ModelAndView paDetailUpdate(@RequestParam("pa_no") Integer pa_no, PrpVO prpVO,
 			@RequestParam("token") String token,HttpSession session) {
-		// ÅäÅ« °Ë»ç
+		// í† í° ê²€ì‚¬
 		String sessionToken = (String) session.getAttribute("token");
 		
 		if (sessionToken != null && sessionToken.equals(token)) {
-			// »ç¿ë ÈÄ ÅäÅ« Á¦°Å
+			// ì‚¬ìš© í›„ í† í° ì œê±°
             session.removeAttribute("token"); 
             
             ModelAndView mav = new ModelAndView();
@@ -90,7 +90,7 @@ public class PaDetailController {
 //	@ResponseBody
 //	@PostMapping(value="/paDetail",  consumes = MediaType.APPLICATION_JSON_VALUE)
 //	public List<PrpVO> paPrp(@RequestBody PrpVO prpVO) {
-//		System.out.println("paDetail ajax ¿Ô³Ä?");
+//		System.out.println("paDetail ajax ì™”ëƒ?");
 //
 //		
 //		System.out.println("PaDetailController ajax : " +prpVO);

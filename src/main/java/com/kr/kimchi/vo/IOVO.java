@@ -7,7 +7,7 @@ public class IOVO {
 
 	private int io_id;  
 	private String io_status;  
-	private String io_quantity;
+	private Integer io_quantity;
 	private String io_date; 
 	private String io_information; 
 	private String io_return_date; 
@@ -15,5 +15,8 @@ public class IOVO {
 	private int ma_id; 
 	private int obtain_no;
 	
-	
+	private String ma_name;
+	private String ma_category;
+	private int ma_price;
+	//===================
 }

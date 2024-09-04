@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace ="com.kr.kimchi.mappers.MaterialMapper">
+
+	<!-- 전체 -->
+	<select id="maList" resultType="com.kr.kimchi.vo.MaterialVO">
+		SELECT * FROM material ORDER BY ma_id DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+
+	<!-- 선택 -->
+	<select id="maView" parameterType="int" resultType="com.kr.kimchi.vo.MaterialVO">
+    	SELECT * FROM material WHERE ma_id = #{ma_id}
+	</select>
+
+	<!-- 추가 -->
+	 <insert id="maAdd" parameterType="com.kr.kimchi.vo.MaterialVO">
+		INSERT INTO material
+			(ma_name, ma_category, ma_price, ma_unit, ma_weight, ma_specifications, ma_expiryDate, ma_origin,
+			 ma_stockQuantity, ma_availableStock, ma_basicStock, ma_stockValue, ma_storage, ma_date, attachment_no)
+		VALUES
+			( #{ma_name}, #{ma_category}, #{ma_price}, #{ma_unit}, #{ma_weight}, #{ma_specifications}, #{ma_expiryDate}, #{ma_origin}, 
+			#{ma_stockQuantity}, #{ma_availableStock},	#{ma_basicStock}, #{ma_stockValue}, #{ma_storage}, #{ma_date}, #{attachment_no})
+	</insert>  
+
+	<!-- 수정 -->
+	<update id="maUpdate" parameterType="com.kr.kimchi.vo.MaterialVO">
+		UPDATE material
+		SET ma_name = #{ma_name},
+			ma_category = #{ma_category},
+			ma_price = #{ma_price},
+			ma_unit = #{ma_unit},
+			ma_weight = #{ma_weight},
+			ma_specifications = #{ma_specifications},
+			ma_expiryDate = #{ma_expiryDate},
+			ma_origin = #{ma_origin},
+			ma_stockQuantity = #{ma_stockQuantity},
+			ma_availableStock = #{ma_availableStock},
+			ma_basicStock = #{ma_basicStock},
+			ma_stockValue = #{ma_stockValue},
+			ma_storage = #{ma_storage},
+			ma_date = #{ma_date},
+			attachment_no = #{attachment_no}
+		WHERE ma_id = #{ma_id}
+	</update>
+	
+	<!-- 금액 현황 리포트 // 상품코드 상품명 총수량 총액 -->
+	<select id="maReport" parameterType="map" resultType="com.kr.kimchi.vo.MaterialVO">
+	    SELECT ma_id, ma_category, ma_name, ma_price,   
+	        SUM(ma_stockQuantity) AS totalQuantity,
+	        SUM(ma_stockValue) AS totalValue,
+	        SUM(ma_stockValue) AS totalPrice
+	    FROM material
+	    WHERE 1=1 <!-- 결과값 true기본 -->
+	    LIMIT #{startRow}, #{pageSize}
+	    
+	    <!-- 날짜 기준으로 조회 -->
+	    <if test="startDate != null and endDate != null">
+	        AND ma_date BETWEEN #{startDate} AND #{endDate}  
+	    </if>
+	    
+	    <!-- 재료명 기준으로 조회 -->
+	    <if test="ma_name != null and ma_name != ''">
+	        AND ma_name = #{ma_name} 
+	    </if>
+	    
+	    GROUP BY ma_id, ma_category, ma_name, ma_price <!-- 공통그룹 -->
+	    ORDER BY ma_category; <!-- 정렬기준 -->
+	</select>
+	
+	<!-- 전체 maList의 총 개수 조회 -->
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM material;
+    </select>
+
+</mapper>
