@@ -4,7 +4,7 @@
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
-  <%@include file="include/header.jsp" %>
+  <%@include file="../include/header.jsp" %>
   
   
         <!--**********************************
@@ -16,7 +16,7 @@
         ***********************************-->
         
         
-  <%@include file="include/nav.jsp" %>
+  <%@include file="../include/nav.jsp" %>
         
         <!--**********************************
             Sidebar end
@@ -25,39 +25,55 @@
         <!--**********************************
             Content body start
         ***********************************-->
-        <div class="content-body">
-     
-        <div class="row">
-        
-        <!-- left column -->
-        
-        <div class="col-md-12">
-        
-        <!-- general form elements -->
-        
-        <div class="box">
-        
-        <div class="box-header with-border">
-          <h3 class="box-title">HOME PAGE</h3>
-        </div>
-        
-        </div>
-        
-        </div>
-        
-        </div>
-     
-        </div>
+      
         <!--**********************************
             Content body end
         ***********************************-->
 
 
+   <div class="content-body">
+
+
+      
+
+
+<form role="form" method="post">
+	<div class="box-body">
+		<div class="form-group">
+			<label for="exampleInputEmail">Title</label> <input type="text"
+				name='board_title' class="from-control" placeholder="Enter Title">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputPassword1">Content</label>
+			<textarea class="from-control" name="board_content" rows="3" placeholder=""Enter ..."></textarea>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputEmail1">Comment</label> <input type="text"
+				name="board_comment" class="form-control" placeholder="Enter Writer">
+		</div>
+		
+	
+		
+		</div>
+		<!-- /.box-body -->
+		
+		<div class="box-footer">
+			<button type="submit" class="btn btn-primary">
+				Submit
+				</button>
+		</div>
+		
+</form>
+
+  
+        
+</div>
+
         <!--**********************************
             Footer start
         ***********************************-->
      
-       <%@include file="include/footer.jsp" %>
+       <%@include file="../include/footer.jsp" %>
      
         <!--**********************************
             Footer end

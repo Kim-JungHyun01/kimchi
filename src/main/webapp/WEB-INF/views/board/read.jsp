@@ -4,7 +4,7 @@
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
-  <%@include file="include/header.jsp" %>
+  <%@include file="../include/header.jsp" %>
   
   
         <!--**********************************
@@ -16,7 +16,7 @@
         ***********************************-->
         
         
-  <%@include file="include/nav.jsp" %>
+  <%@include file="../include/nav.jsp" %>
         
         <!--**********************************
             Sidebar end
@@ -27,27 +27,74 @@
         ***********************************-->
         <div class="content-body">
      
-        <div class="row">
-        
-        <!-- left column -->
-        
-        <div class="col-md-12">
-        
-        <!-- general form elements -->
-        
-        <div class="box">
-        
-        <div class="box-header with-border">
-          <h3 class="box-title">HOME PAGE</h3>
-        </div>
-        
-        </div>
-        
-        </div>
-        
-        </div>
+     <form role="form" method="post">
+     
+     <input type='hidden' name='board_no' value="${boardVO.board_no}">
+     
+     </form>
+
+      <div class="box-body">
+      
+      <div class="form-group">
+         <label for="exampleInputEmail1">Title</label>
+         <input type="text" name="board_title" class="form-control" value="${boardVO.board_title}" readonly="readonly">
+      </div>
+      
+      <div class="form-group">
+          <label for="exampleInputPassword1">Content</label>
+          <textarea class="form-control" name="board_content" rows="3" readonly="readonly">
+          ${boardVO.board_content}</textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="exampleInputEmail1">Comment</label>
+          <input type="text" name="board_comment" class="form-control" value="${boardVO.board_comment}" readonly="readonly">
+      
+      </div>
+      
+           
+      </div>
+      <!-- /.box-body -->
+
+     <div class="box-footer">
+       
+       <button type="submit" class="btn btn-warning">Modify</button>
+       <button type="submit" class="btn btn-danger">REMOVE</button>
+       <button type="submit" class="btn btn-primary">LIST ALL</button>    
+     </div>
+
      
         </div>
+        
+        
+   <script>
+        
+        $(document).ready(function(){
+        	
+        	var formObj = $("form[role='form']");
+        	
+        	console.log(formObj);
+        	
+        	
+        	$(".btn-warning").on("click",function(){
+        		formObj.attr("action","/board/modify");
+        		formObj.attr("method", "get");
+        		formObj.submit();
+        	});
+        	
+        	$(".btn-danger").on("click",function(){
+        		formObj.attr("action","/board/remove");
+        		formObj.submit();
+        	});
+        	
+        	$(".btn-primary").on("click",function(){
+        		self.location = "/board/listAll";
+        	});
+        	
+        });
+
+   </script>
+        
         <!--**********************************
             Content body end
         ***********************************-->
@@ -57,7 +104,7 @@
             Footer start
         ***********************************-->
      
-       <%@include file="include/footer.jsp" %>
+       <%@include file="../include/footer.jsp" %>
      
         <!--**********************************
             Footer end
