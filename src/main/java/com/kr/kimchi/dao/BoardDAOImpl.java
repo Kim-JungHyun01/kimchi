@@ -15,8 +15,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Inject 
 	private SqlSession session;
 	
-	private static String namespace
-	= "com.kr.kimchi.mappers.BoardMapper";
+	private static String namespace = "com.kr.kimchi.mappers.BoardMapper";
 	
 	@Override
 	public void create(BoardVO vo) throws Exception {
