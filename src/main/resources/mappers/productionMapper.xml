@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kr.kimchi.mappers.productionMapper">
+
+
+	<!-- 생산계획 보기_전체 -->
+	<select id="productionAll" resultType="com.kr.kimchi.vo.ProductionVO">
+		select * from production
+	</select>
+	
+	<!-- 생산계획 보기_상세 -->
+	<select id="productionSelect" resultType="com.kr.kimchi.vo.ProductionVO">
+		select * from production 
+		where production_no = #{production_no}
+	</select>
+	
+	<!-- 생산계획 추가 -->
+	<insert id="productionInsert" parameterType="com.kr.kimchi.vo.ProductionVO">
+		insert into production
+		(production_quantity, production_deliveryDate, production_status, 
+		production_registrationDate, user_id, contracts_no) values
+		(#{production_quantity}, #{production_deliveryDate}, '생산계획확인중',
+		 now(), #{user_id}, #{contracts_no})
+	</insert>
+	
+	
+	<!-- 생산계획 수정_생산량, 생산납기일-->
+	<update id="productionUpdate" parameterType="com.kr.kimchi.vo.ProductionVO">
+		update production set 
+		production_quantity = #{production_quantity}, 
+		production_deliveryDate = #{production_deliveryDate},
+		production_registrationDate = now()
+		where production_no = #{production_no}
+	</update>
+	
+	
+	<!-- 생산계획 승인여부 -->
+	<update id="productionCheck" parameterType="com.kr.kimchi.vo.ProductionVO">
+		update production set 
+		production_status = #{production_status},
+		production_registrationDate = now()
+		where production_no = #{production_no}
+	</update>
+
+
+</mapper>
