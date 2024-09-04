@@ -85,7 +85,8 @@
 				<input type = "text" name = "prp_progress" value = "0"  readonly>
 				<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
 				<p>비고</p>
-				<input type="text" name="prp_notes">
+				<input type="text" id="prp_notes" name="prp_notes">
+				<input type="hidden" name="token" value="${token}" />
 				<button>저장</button>
 			</form>
 		</div>
@@ -98,6 +99,7 @@
 			<td>검수일자</td>
 			<td>${prpList.prp_issueDate }</td>
 			<td><button data-prp_no=${prpList.prp_no } onclick="prpPop(this)">검수결과</button>
+			<button>발송</button>
 		</tr>
 		<tr>
 			<td>검수자</td>
@@ -228,7 +230,12 @@ function today() {
 	document.getElementById("date").setAttribute("min",formatToday);
 }
 
-
+function checkForm() {
+	if(!date.value){
+		alert("날짜를 선택해주세요.")
+		return false;
+	}
+}
 </script>
 
 <style>

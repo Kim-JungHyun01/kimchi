@@ -83,6 +83,7 @@
 				<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
 				<p>비고</p>
 				<input type="text" name="prp_notes">
+				<input type="hidden" name="token" value="${token}" />
 				<button>저장</button>
 			</form>
 		</div>
