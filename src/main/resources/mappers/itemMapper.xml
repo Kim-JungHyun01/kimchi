@@ -36,16 +36,10 @@
 		update item set
 		item_category = #{item_category}, item_name = #{item_name},
 		item_price= #{item_price}, item_unit=#{item_unit},
-		item_specifications
-		= #{item_specifications},
-		item_stockquantity = #{item_stockquantity},
-		item_availablestock=#{item_availablestock},
-		item_basicstock =
-		#{item_basicstock},
+		item_specifications = #{item_specifications},
+		item_basicstock = #{item_basicstock},
 		item_storage = #{item_storage},
-		item_productionDate=#{item_productionDate},
-		attachment_no=
-		#{attachment_no}
+		attachment_no= #{attachment_no}
 		where item_no = #{item_no}
 	</update>
 

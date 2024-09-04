@@ -45,12 +45,12 @@
 			value="">
 		<c:if test="${user.user_approval eq 0 }">
 			<div>
-				<button type="button" onclick="">사용자 승인부여</button>
+				<button type="button" onclick="checkApproval(1)">사용자 승인부여</button>
 			</div>
 		</c:if>
 		<c:if test="${user.user_approval eq 1 }">
 			<div>
-				<button type="button" onclick="">사용자 승인부여해제</button>
+				<button type="button" onclick="checkApproval(0)">사용자 승인부여해제</button>
 			</div>
 		</c:if>
 	</form>
@@ -59,7 +59,8 @@
 <!-- Required vendors -->
 <script>
 	function checkApproval(user_approval) {
-		
+		document.getElementById("user_approval").value = user_approval;
+		document.getElementById("userApprovalForm").submit();
 	}//end
 </script>
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>

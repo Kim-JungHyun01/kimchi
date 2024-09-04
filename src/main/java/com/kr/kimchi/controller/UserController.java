@@ -47,7 +47,7 @@ public class UserController {
 	@PostMapping(value = "user/userInsert")
 	public String userInsert(UserVO user) {
 		userserivce.userInsert(user);
-		return "redirect:/";
+		return "redirect:/login/loginForm";
 	}// end
 
 //	사용자 정보 수정

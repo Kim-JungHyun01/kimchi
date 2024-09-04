@@ -69,7 +69,7 @@ button {
 				<td>담당자 부서</td>
 			</tr>
 			<c:forEach var="userlist" items="${userlist}">
-				<c:if test="${userlist.user_approval eq 1 }">
+				<c:if test="${userlist.user_approval eq 1 and userlist.user_department ne '관리자' }">
 					<!-- 승인된 사람만 -->
 					<tr
 						onclick="selectUser('${userlist.user_id}','${userlist.user_name }' ,'${userlist.user_number }','${userlist.user_email }','${userlist.user_department }')">

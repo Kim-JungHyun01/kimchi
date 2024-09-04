@@ -114,8 +114,13 @@
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="documentView" method = "get">
-					<button type="button">계약서확인</button>
+			<a href="${contextPath }/contracts/paSelect?ca_id=1&pa_referenceNo=${con.contracts_no}">계약서보기</a>
+			<!-- 결과값 ${palist.pa_no} , ${palist.codeVo.code_name}-->
+			
+				<form action="${contextPath }/pa/paSelect" method = "get">
+				<input name = "ca_id" id = "ca_id" type = "number" value=1>
+				<input name = "pa_referenceNo" id = "pa_referenceNo"  type = "number" value = "${con.contracts_no}">
+					<button type="submit">계약서확인</button>
 				</form>
 			</c:otherwise>
 		</c:choose>

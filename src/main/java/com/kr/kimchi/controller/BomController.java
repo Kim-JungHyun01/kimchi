@@ -28,7 +28,7 @@ public class BomController {
 	@PostMapping(value = "bomInsert")
 	public String bomInsert(BomVO bom){
 		bomservice.bomInsert(bom);
-		return "redirect:/itemSelect?items_no="+bom.getItem_no();
+		return "redirect:/item/itemSelect?items_no="+bom.getItem_no();
 	}//end
 	
 //	bom정보_스케줄 수정
@@ -44,7 +44,7 @@ public class BomController {
 	@PostMapping(value = "bomUpdate")
 	public String bomUpdate(BomVO bom) {
 		bomservice.bomUpdate(bom);
-		return "redirect:/itemSelect?items_no="+bom.getItem_no();
+		return "redirect:/item/itemSelect?items_no="+bom.getItem_no();
 	}//end
 	
 //	bom정보_스케줄 삭제
@@ -52,7 +52,7 @@ public class BomController {
 	public String bomDelete(int item_no) {
 		bom_maservice.bom_maDeleteAll(item_no);
 		bomservice.bomDelete(item_no);
-		return "redirect:/itemSelect?items_no="+item_no;
+		return "redirect:/item/itemSelect?items_no="+item_no;
 	}//end
 
 }// end class

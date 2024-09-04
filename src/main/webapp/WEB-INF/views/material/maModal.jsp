@@ -49,12 +49,16 @@ button {
 		document.getElementById("maModal").style.display = "none";
 	}//end
 	//계약 정보가져오기
-	function selectMaterial(id, category, name, origin, price) {
+	function selectMaterial(id, category, name, origin, unit, weight, stockQuantity, price, specifications,) {
 		document.getElementById("ma_id").value = id;
 		document.getElementById("ma_category").value = category;
 		document.getElementById("ma_name").value = name;
 		document.getElementById("ma_origin").value = origin;
+		document.getElementById("ma_unit").value = unit;
+		document.getElementById("ma_weight").value = weight;
+		document.getElementById("ma_stockQuantity").value = stockQuantity;
 		document.getElementById("ma_price").value = price;
+		document.getElementById("ma_specifications").value = specifications;
 		closecmaModal(); // 모달 닫기
 	}//end
 </script>
@@ -67,25 +71,32 @@ button {
 				<th>분류</th>
 				<th>자재명</th>
 				<th>원산지</th>
+				<td>자재단위</td>
+				<td>자재무게</td>
 				<th>재고수량</th>
 				<th>자재단가</th>
+				<td>자재규격</td>
 			</tr>
 			<c:forEach var="malist" items="${malist }">
-				<tr
-					onclick="selectMaterial('${malist.ma_id}','${malist.ma_category}','${malist.ma_name}','${malist.ma_origin}','${malist.ma_price}')">
+				<tr onclick="selectMaterial('${malist.ma_id}', '${malist.ma_category}', '${malist.ma_name}', '${malist.ma_origin}', '${malist.ma_unit }', '${malist.ma_weight }', '${malist.ma_stockQuantity}', '${malist.ma_price}', '${malist.ma_specifications }')">
 					<td>${malist.ma_id}</td>
 					<td>${malist.ma_category}</td>
 					<td>${malist.ma_name}</td>
 					<td>${malist.ma_origin}</td>
+					<td>${malist.ma_unit }</td>
+					<td>${malist.ma_weight }</td>
 					<td>${malist.ma_stockQuantity}</td>
 					<td>${malist.ma_price}</td>
+					<td>${malist.ma_specifications }</td>
 				</tr>
 			</c:forEach>
 		</table>
 		<button onclick="closecmaModal()">닫기</button>
 	</div>
 </div>
+<div id = >
 
+</div>
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
 <script src="${contextPath}/resources/js/quixnav-init.js"></script>
 <script src="${contextPath}/resources/js/custom.min.js"></script>

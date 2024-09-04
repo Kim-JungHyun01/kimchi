@@ -50,15 +50,16 @@
 		<result column="ca_name" property="ca_name" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.CodeVO" id="CodeVO">
-		<result column="code_id" property="code_id" />
+		<result column="code_id" property="code_id" javaType="int"/>
+		<result column="code_name" property="code_name" jdbcType="VARCHAR" />
 		<association property="categoryVO"
 			javaType="com.kr.kimchi.vo.CategoryVO" resultMap="CategoryVO" />
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.PaVO" id="PaVO">
-		<result column="pa_no" property="pa_no" />
+		<result column="pa_no" property="pa_no" javaType="int"/>
 		<result column="user_id" property="user_id" />
 		<result column="pa_issueDate" property="pa_issueDate" />
-		<result column="pa_checkStatus" property="pa_checkStatus" />
+		<result column="pa_checkStatus" property="pa_checkStatus" javaType="int"/>
 		<result column="pa_notes" property="pa_notes" />
 		<collection property="codeVo"
 			ofType="com.kr.kimchi.vo.CodeVO" resultMap="CodeVO" />
@@ -124,18 +125,25 @@
 	<!-- 페이퍼 수정 -->
 	<update id="paUpdate" parameterType="com.kr.kimchi.vo.PaVO">
 		update pa set
-		pa_notes =
-		#{pa_notes}
+		pa_notes = #{pa_notes}
 		where pa_no = #{pa_no}
 	</update>
 
 	<!-- 페이처 체크 -->
-	<update id="paCheck" parameterType="com.kr.kimchi.vo.PaVO">
+	<update id="paCheck" parameterType="int">
 		update pa set
-		pa_checkStatus = #{pa_checkStatus}
-		where
-		pa_no = #{pa_no}
+		pa_checkStatus = 1
+		where pa_no = #{pa_no}
 	</update>
+
+	<!-- 서류보기 -->
+	<select id="paSelect" resultMap="PaVO">
+		select pa.pa_no, code.code_name
+		from pa
+		left join code on code.code_id = pa.code_id
+		where code.ca_id = #{ca_id}
+		and pa.pa_referenceNo = #{pa_referenceNo}
+	</select>
 
 
 

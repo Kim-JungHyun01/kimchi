@@ -104,23 +104,31 @@
 			</tr>
 		</table>
 	</div>
-	<div>
-		<c:if test="${obtain.obtain_status eq '조달계획확인중'}">
-		<a href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획 수정</a>
-			<form action="obtainCheck" method="post" id="checkForm" name="checkForm">
-				<input type="hidden" name="obtain_no" id="obtain_no" value="${obtain.obtain_no}"> 
-				<input type="hidden" name="obtain_status" id="obtain_status" value="">
-				<button type="button" onclick="submitCheck('조달계획확인완료')">조달계획승인</button>
-				<button type="button" onclick="submitCheck('조달계획취소')">조달계획취소</button>
-			</form>
-		</c:if>
-		<a href="${contextPath}/production/productionSelect?production_no=${obtain.production_no}">생산계획보기</a>
-	</div>
+	<c:choose>
+		<div>
+			<c:when test="${obtain.obtain_status eq '조달계획확인중'}">
+				<a href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획 수정</a>
+				<form action="obtainCheck" method="post" id="checkForm" name="checkForm">
+					<input type="hidden" name="obtain_no" id="obtain_no"
+						value="${obtain.obtain_no}"> <input type="hidden"
+						name="obtain_status" id="obtain_status" value="">
+					<button type="button" onclick="submitCheck('조달계획확인완료')">조달계획승인</button>
+					<button type="button" onclick="submitCheck('조달계획취소')">조달계획취소</button>
+				</form>
+			</c:when>
+		</div>
+		<c:otherwise>
+			<div>
+			<a href="${contextPath}">구매발주서 발행</a>
+				<a href="${contextPath}/production/productionSelect?production_no=${obtain.production_no}">생산계획보기</a>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </div>
 <%@include file="../include/footer.jsp"%>
 <!-- Required vendors -->
 <script>
-//조달계획확인 & 취소
+	//조달계획확인 & 취소
 	function submitCheck(obtain_status) {
 		document.getElementById("obtain_status").value = obtain_status;
 		document.getElementById("checkForm").submit();

@@ -68,13 +68,15 @@ button {
 				<td>물품 단가</td>
 			</tr>
 			<c:forEach var="itemlist" items="${itemlist}">
-				<tr
-					onclick="selectItem('${itemlist.item_no}', '${itemlist.item_category}', '${itemlist.item_name}', '${itemlist.item_price}')">
-					<td>${itemlist.item_no}</td>
-					<td>${itemlist.item_category}</td>
-					<td>${itemlist.item_name}</td>
-					<td>${itemlist.item_price}</td>
-				</tr>
+				<c:if test="${itemlist.item_bomRegistered eq 1}">
+					<tr
+						onclick="selectItem('${itemlist.item_no}', '${itemlist.item_category}', '${itemlist.item_name}', '${itemlist.item_price}')">
+						<td>${itemlist.item_no}</td>
+						<td>${itemlist.item_category}</td>
+						<td>${itemlist.item_name}</td>
+						<td>${itemlist.item_price}</td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</table>
 		<button onclick="closeitemModal()">닫기</button>

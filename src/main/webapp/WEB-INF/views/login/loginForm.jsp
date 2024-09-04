@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
 	<form method="post" id="loginForm" name="loginForm">
 		<input type="checkbox" value="사용자" id="user" name="user" checked
@@ -18,6 +16,7 @@
 				placeholder="사용자 비밀번호">
 			<div>
 				<button type="button" onclick="checkSubmit('user')">사용자 로그인</button>
+				<a href="${contextPath}/user/userInsertForm">사용자 회원가입</a>
 			</div>
 		</div>
 
@@ -32,7 +31,6 @@
 		</div>
 	</form>
 </div>
-<%@include file="../include/footer.jsp"%>
 <!-- Required vendors -->
 <script>
 	function checkLoginForm(selected) {
@@ -83,8 +81,3 @@
 		}
 	}//end
 </script>
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

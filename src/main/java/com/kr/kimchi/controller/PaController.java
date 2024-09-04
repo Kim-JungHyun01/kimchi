@@ -16,41 +16,57 @@ import com.kr.kimchi.vo.PaPageLIst;
 import com.kr.kimchi.vo.PaPageVO;
 import com.kr.kimchi.vo.PaVO;
 
-
 @Controller
 public class PaController {
-	
+
 	@Inject
 	private PaService paService;
-	
-	@GetMapping(value="/pa")
+
+	@GetMapping(value = "/pa")
 	public ModelAndView pa(@RequestParam(defaultValue = "1") int pageNum) {
-		
+
 		// ������ ���ϱ� ���� ��ü ����Ʈ
 		List<PaVO> allList = paService.paAllList();
-		
+
 		// ������ �ʼ� ó��
 		PaPageVO pageVO = new PaPageVO(pageNum, allList.size());
-		System.out.println("PaController page : "+ pageVO.getPageNum());
-		
+		System.out.println("PaController page : " + pageVO.getPageNum());
+
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("start", (pageVO.getPageNum()-1)*pageVO.getListcnt());
+		params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
 		System.out.println("PaController start : " + pageVO.getStart());
 		params.put("end", pageVO.getListcnt());
-		System.out.println("PaController listcnt : " + pageVO.getListcnt() );
-		System.out.println("PaController startPage : " + pageVO.getStartPage() );
-		System.out.println("PaController endPage : " + pageVO.getEndPage() );
-		
+		System.out.println("PaController listcnt : " + pageVO.getListcnt());
+		System.out.println("PaController startPage : " + pageVO.getStartPage());
+		System.out.println("PaController endPage : " + pageVO.getEndPage());
+
 		// ����Ʈ�� ���ҷ� ����
 		params.putIfAbsent("ca_id", 3); // ���Ź��ּ��� 3���� ����
 		List<PaVO> pageAllList = paService.paList(params);
 		System.out.println("PaController pageAllList : " + pageAllList);
-		
+
 		PaPageLIst poPageList = new PaPageLIst(pageAllList, pageVO);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("paPageList", poPageList);
 		mav.setViewName("pa");
 		return mav;
-	}
-	
+	}// end
+
+	@GetMapping(value = "contracts/paSelect")
+	public ModelAndView paSelect(@RequestParam("ca_id") int ca_id,
+			@RequestParam("pa_referenceNo") int pa_referenceNo) {
+		
+		Map<String, Object> params = new HashMap<>();
+		params.put("ca_id", ca_id);
+		params.put("pa_referenceNo", pa_referenceNo);
+		PaVO palist = paService.paSelect(params);
+		
+		paService.paCheck(palist.getPa_no());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("palist", palist);
+		mav.setViewName("contracts/paSelect");
+		return mav;
+	}// end
+
 }

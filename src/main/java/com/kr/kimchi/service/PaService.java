@@ -36,8 +36,13 @@ public class PaService {
 	}//end
 	
 //	페이처 체크
-	public void paCheck(PaVO pa) {
-		padao.paCheck(pa);
+	public void paCheck(int pa_no) {
+		padao.paCheck(pa_no);
+	}//end
+	
+//	페이퍼보기
+	public PaVO paSelect(Map<String, Object> params){
+		return padao.paSelect(params);
 	}//end
 	
 }//end class

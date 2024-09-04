@@ -21,9 +21,9 @@ public class PartnerController {
 //	협력회사 전체
 	@GetMapping(value = "partner/partnerAll")
 	public ModelAndView partnerAll() {
-		List<PartnerVO> partlist = partservice.partnerAll();
+		List<PartnerVO> partnerlist = partservice.partnerAll();
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("partlist", partlist);
+		mav.addObject("partnerlist", partnerlist);
 		mav.setViewName("partner/partnerAll");
 		return mav;
 	}// end
@@ -40,14 +40,18 @@ public class PartnerController {
 
 //	협력회사 회원가입
 	@GetMapping(value = "partner/partnerInsertForm")
-	public String partnerInsertForm() {
-		return "partnerInsertForm";
+	public ModelAndView partnerInsertForm() {
+		List<PartnerVO> partnerlist = partservice.partnerAll();//taxid, id중복확인
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("partnerlist", partnerlist);
+		mav.setViewName("partner/partnerInsertForm");
+		return mav;
 	}// end
 
 	@PostMapping(value = "partner/partnerInsert")
 	public String partnerInsert(PartnerVO part) {
 		partservice.partnerInsert(part);
-		return "redirect:/";
+		return "redirect:/login/loginForm";
 	}// end
 
 //	협력회사 정보 수정

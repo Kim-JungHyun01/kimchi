@@ -39,9 +39,15 @@ public class PaDAO {
 	}//end
 	
 //	페이처 체크
-	public void paCheck(PaVO pa) {
-		session.selectOne(namespace+".paCheck", pa);
+	public void paCheck(int pa_no) {
+		session.selectOne(namespace+".paCheck", pa_no);
 	}//end
+	
+//	페이퍼 보기
+	public PaVO paSelect(Map<String, Object> params){
+		return session.selectOne(namespace+".paSelect", params);
+	}//end
+	
 	
 	
 }//end class

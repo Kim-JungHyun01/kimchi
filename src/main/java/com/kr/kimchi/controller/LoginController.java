@@ -55,7 +55,7 @@ public class LoginController {
 	@GetMapping(value = "login/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/login/loginForm";
 	}// end
 
 }// end class

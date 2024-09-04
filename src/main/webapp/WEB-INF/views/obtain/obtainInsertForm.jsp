@@ -33,6 +33,10 @@
 					onclick="openmaModal()"><br> <label>자재단가</label> <input
 					name="ma_price" id="ma_price" type="number" placeholder="자재선택"
 					onclick="openmaModal()">
+					<input id = "ma_unit" name = "ma_unit" type = "hidden">
+					<input id = "ma_weight" name = "ma_weight" type = "hidden">
+					<input id = "ma_stockQuantity" name = "ma_stockQuantity" type = "hidden">
+					<input id = "ma_specifications" name = "ma_specifications" type = "hidden">
 			</div>
 			<div>
 				<h4>조달게획 상세</h4>

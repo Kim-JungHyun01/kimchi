@@ -6,7 +6,6 @@
 <script>
 	//날짜 나타내는 함수
 	//나타내지 않으면 오류 일어남
-
 </script>
 <%@include file="../include/header.jsp"%>
 <%@include file="../include/nav.jsp"%>
@@ -82,30 +81,23 @@
 			<tr>
 				<td>물품 생산일</td>
 				<td><input name="item_productionDate" type="date"
-					value="${item.item_productionDate}"></td>
+					value="${item.item_productionDate}" readonly></td>
 			</tr>
 			<tr>
 				<td>물품 첨부파일</td>
 				<td><input name="attachment_no" type="text"
-					value="${item.attachment_no}"></td>
+					value="${item.attachment_no}" onclick="openModal()"></td>
 			</tr>
 		</table>
 		<div>
-			<input name="item_stockquantity" type="hidden"
-				value="${item.item_stockquantity }">
-			<!-- 재고수량 -->
-			<input name="item_availablestock" type="hidden"
-				value="${item.item_availablestock }">
-			<!-- 가용재고 -->
-			<input name="item_bomRegistered" type="hidden"
-				value="${item.item_bomRegistered }">
-			<!-- bom등록여부 -->
 			<button onclick="submint">물품수정</button>
 			<button onclick="reset">초기화</button>
 		</div>
 	</form>
 </div>
 <%@include file="../include/footer.jsp"%>
+<!-- 첨부파일 모달창 -->
+<jsp:include page="../attachment/attachmentModal.jsp" />
 <!-- Required vendors -->
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
 <script src="${contextPath}/resources/js/quixnav-init.js"></script>
