@@ -5,7 +5,7 @@
 <div class="content-body">
 	
 		<input type="hidden" name="prp_no" id="prp_no" value="${prpVO.prp_no}">
-		<input type="hidden" name="pa_no" id="pa_no" value=<%=Integer.parseInt(request.getParameter("pa_no"))%>>
+		<input type="hidden" name="pa_no" id="pa_no" value="${prpVO.pa_no}">
 
 		<h2>진척검수결과</h2>
 		계획 검수 일자 : <input type="text" readonly id ="prp_issueDate" value="${prpVO.prp_issueDate }"><br/> 

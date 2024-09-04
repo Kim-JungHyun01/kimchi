@@ -69,7 +69,7 @@
 		<div class="modal-content">
 			<span class = "close">&times;</span>
 			
-			<form action="/pa" method="post">
+			<form action="/pa" method="post" onsubmit="return checkForm()">
 				<h2>진척검수</h2>
 				납기 일자 : <input type="date" name="prp_issueDate" id="date" min=""> 
 				<p>검수자</p>
@@ -83,7 +83,8 @@
 				<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
 				<p>비고</p>
 				<input type="text" name="prp_notes">
-				<button onclick="modalForm()">저장</button>
+				<button>저장</button>
+			</form>
 		</div>
 	</div>
 	
@@ -131,7 +132,21 @@
     <!-- Circle progress -->
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+function showModal(button) {
+	var modal = document.querySelector(".modal");
+	modal.style.display ="block";
+	
+	var close = document.querySelector(".close");
+	close.addEventListener("click", function(){
+		modal.style.display ="none";
+	});
+	
+	var pa_no = button.getAttribute("data-pa_no");
+	document.getElementById("pa_no").value = pa_no;
+}
+
 $(document).ready(function(){
 	$(".paginate_button a").on("click",function(e){
 		e.preventDefault();
@@ -170,18 +185,6 @@ function paPop(button) {
     form.submit();
 }
 
-function showModal(button) {
-	var modal = document.querySelector(".modal");
-	modal.style.display ="block";
-	
-	var close = document.querySelector(".close");
-	close.addEventListener("click", function(){
-		modal.style.display ="none";
-	});
-	
-	var pa_no = button.getAttribute("data-pa_no");
-	document.getElementById("pa_no").value = pa_no;
-}
 
 function showSliderValue(slider) {
     var value = slider.value;
@@ -213,25 +216,38 @@ function submitForm(pa_no) {
     form.submit();
 }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
+
 $(document).ready(function(){today();});
-	function today() {
-		var now = new Date();
-	 	var year = now.getFullYear();
-	 	var month = now.getMonth() + 1;
-	 	var day = now.getDate();
-	 	
-	 	if (month < 10) month = '0' + month;
-        if (day < 10) day = '0' + day;
-	 	
-	 	var formatToday = year + "-" + month + "-" + day;
-	 	console.log(formatToday);
-		document.getElementById("date").setAttribute("min",formatToday);
+function today() {
+	var now = new Date();
+ 	var year = now.getFullYear();
+ 	var month = now.getMonth() + 1;
+ 	var day = now.getDate();
+ 	
+ 	if (month < 10) month = '0' + month;
+       if (day < 10) day = '0' + day;
+ 	
+ 	var formatToday = year + "-" + month + "-" + day;
+ 	console.log(formatToday);
+	document.getElementById("date").setAttribute("min",formatToday);
+}
+
+function checkForm() {
+	if(!date.value){
+		alert("날짜를 선택해주세요.")
+		return false;
 	}
+}
 </script>
+
+
+
+
 <style>
+
+li{
 display : inline;
+}
 
 
 .modal {

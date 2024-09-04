@@ -92,7 +92,7 @@ public class PaController {
 		PaPageLIst paPageList = new PaPageLIst(pageAllList, pageVO);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("paPageList", paPageList);
-		mav.setViewName("pa/pa");
+		mav.setViewName("redirect:pa");
 		return mav;
 	}
 	
