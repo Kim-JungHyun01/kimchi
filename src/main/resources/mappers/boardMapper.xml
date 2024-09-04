@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kr.kimchi.mappers.BoardMapper">
+  
   <insert id="create" parameterType="com.kr.kimchi.vo.BoardVO">
   insert into board (board_title, board_content, board_comment, board_createdDate, board_modifiedDate, attachment_no, user_id)
   values(#{board_title}, #{board_content}, #{board_comment}, now(), now(), #{attachment_no}, #{user_id})

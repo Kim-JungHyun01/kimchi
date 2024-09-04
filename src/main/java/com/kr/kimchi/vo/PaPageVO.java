@@ -8,8 +8,8 @@ public class PaPageVO {
 	private int total; // 총 페이지
 	
 	private int start = 1; //페이징 시작
-	private int end = 5; //한번에 보여줄 페이징 번호 갯수
-	private int listcnt = 10; //한페이지에 보여줄 리스트 수
+	private int end = 2; //한번에 보여줄 페이징 번호 갯수 basic : 5
+	private int listcnt = 2; //한페이지에 보여줄 리스트 수 basic : 10
 	
 	
 	public PaPageVO(int pageNum, int list) {
