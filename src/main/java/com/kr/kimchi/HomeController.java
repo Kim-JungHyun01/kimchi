@@ -33,14 +33,6 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
-	}
-	
-	@RequestMapping(value = "/start", method = RequestMethod.GET)
-	public String startPage(Locale locale, Model model) {
-		logger.info("TEst start!");
-		
-		
 		return "start/startPage";
 	}
 	

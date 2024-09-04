@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kr.kimchi.mappers.prpMapper">
+	
+	<!-- prpInserst -->
+	<insert id="prpInsert" parameterType="com.kr.kimchi.vo.PrpVO">
+	insert into prp 
+	(user_id, pa_no, prp_issueDate, PRP_revisionDate, prp_progress, prp_notes) 
+	values 
+	(#{user_id},#{pa_no},#{prp_issueDate},null,#{prp_progress},#{prp_notes});
+	</insert>
+	
+	<!-- 진척리스트 -->
+	<select id="prpList" resultType="com.kr.kimchi.vo.PrpVO">
+		select * from prp where pa_no = #{pa_no}; 
+	</select>
+					
+
+
+
+</mapper>
