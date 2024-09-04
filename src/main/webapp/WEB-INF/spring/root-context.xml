@@ -19,7 +19,7 @@
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/kimchi" />
 		<property name="username" value="root" />
-		<property name="password" value="12345" />
+		<property name="password" value="794658" />
 	</bean>
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -36,4 +36,8 @@
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</bean>
+	
+	<context:component-scan base-package="com.kr.kimchi.service, com.kr.kimchi.dao">
+	</context:component-scan>
+	
 </beans>
