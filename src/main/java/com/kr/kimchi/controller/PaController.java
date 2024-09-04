@@ -21,128 +21,142 @@ import com.kr.kimchi.vo.PaPageVO;
 import com.kr.kimchi.vo.PaVO;
 import com.kr.kimchi.vo.PrpVO;
 
-
 @Controller
 public class PaController {
-	
+
 	@Inject
 	private PaService paService;
-	
+
 	@Inject
 	private PrpService prpaService;
-	
-	@GetMapping(value="/pa")
-	public ModelAndView pa(@RequestParam(defaultValue = "1") int pageNum,HttpSession session) {
-		// ÅäÅ«¹ßÇà
+
+	@GetMapping(value = "/pa")
+	public ModelAndView pa(@RequestParam(defaultValue = "1") int pageNum, HttpSession session) {
+		// í† í°ë°œí–‰
 		String token = UUID.randomUUID().toString();
 		session.setAttribute("token", token);
-		
-		
-		// °¹¼ö¸¦ ±¸ÇÏ±â À§ÇÑ ÀüÃ¼ ¸®½ºÆ®
+
+		// ê°¯ìˆ˜ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ ì „ì²´ ë¦¬ìŠ¤íŠ¸
 		List<PaVO> allList = paService.paAllList();
-		
-		// ÆäÀÌÁö ÂÊ¼ö Ã³¸®
+
+		// í˜ì´ì§€ ìª½ìˆ˜ ì²˜ë¦¬
 		PaPageVO pageVO = new PaPageVO(pageNum, allList.size());
-		System.out.println("PaController page : "+ pageVO.getPageNum());
-		
+		System.out.println("PaController page : " + pageVO.getPageNum());
+
 		System.out.println("pageNum :" + pageNum);
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("start", (pageVO.getPageNum()-1)*pageVO.getListcnt());
+		params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
 		System.out.println("PaController start : " + pageVO.getStart());
 		params.put("end", pageVO.getListcnt());
-		System.out.println("PaController listcnt : " + pageVO.getListcnt() );
-		System.out.println("PaController startPage : " + pageVO.getStartPage() );
-		System.out.println("PaController endPage : " + pageVO.getEndPage() );
-		System.out.println("PaController total : " + pageVO.getTotal() );
-		System.out.println("PaController listcnt : " + pageVO.getListcnt() );
-		
-		// ¸®½ºÆ®¸¦ ºĞÇÒ·Î ¹ŞÀ½
-		params.putIfAbsent("ca_id", 3); // ±¸¸Å¹ßÁÖ¼­¶ó 3À¸·Î °íÁ¤
+		System.out.println("PaController listcnt : " + pageVO.getListcnt());
+		System.out.println("PaController startPage : " + pageVO.getStartPage());
+		System.out.println("PaController endPage : " + pageVO.getEndPage());
+		System.out.println("PaController total : " + pageVO.getTotal());
+		System.out.println("PaController listcnt : " + pageVO.getListcnt());
+
+		// ë¦¬ìŠ¤íŠ¸ë¥¼ ë¶„í• ë¡œ ë°›ìŒ
+		params.putIfAbsent("ca_id", 3); // êµ¬ë§¤ë°œì£¼ì„œë¼ 3ìœ¼ë¡œ ê³ ì •
 		List<PaVO> pageAllList = paService.paList(params);
 		System.out.println("PaController pageAllList : " + pageAllList);
-		
+
 		PaPageLIst paPageList = new PaPageLIst(pageAllList, pageVO);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("paPageList", paPageList);
-		
-		//ÅäÅ«
+
+		// í† í°
 		mav.addObject("token", token);
 		mav.setViewName("pa/pa");
 		return mav;
 	}
-	
-	@PostMapping(value="/pa")
-	public ModelAndView prpSave(PrpVO prpVO,@RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam("token") String token,HttpSession session) {
-		// ÅäÅ« °Ë»ç
+
+	@PostMapping(value = "/pa")
+	public ModelAndView prpSave(PrpVO prpVO, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam("token") String token, HttpSession session) {
+		// í† í° ê²€ì‚¬
 		String sessionToken = (String) session.getAttribute("token");
-		
+
 		if (sessionToken != null && sessionToken.equals(token)) {
-			// »ç¿ë ÈÄ ÅäÅ« Á¦°Å
-            session.removeAttribute("token"); 
-		
+			// ì‚¬ìš© í›„ í† í° ì œê±°
+			session.removeAttribute("token");
+
 			System.out.println("prpController prpVo :" + prpVO);
 			prpaService.prpInsert(prpVO);
-			// °¹¼ö¸¦ ±¸ÇÏ±â À§ÇÑ ÀüÃ¼ ¸®½ºÆ®
+			// ê°¯ìˆ˜ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ ì „ì²´ ë¦¬ìŠ¤íŠ¸
 			List<PaVO> allList = paService.paAllList();
-			
-			// ÆäÀÌÁö ÂÊ¼ö Ã³¸®
+
+			// í˜ì´ì§€ ìª½ìˆ˜ ì²˜ë¦¬
 			PaPageVO pageVO = new PaPageVO(pageNum, allList.size());
-			System.out.println("PaController page : "+ pageVO.getPageNum());
-			
+			System.out.println("PaController page : " + pageVO.getPageNum());
+
 			System.out.println("pageNum :" + pageNum);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("start", (pageVO.getPageNum()-1)*pageVO.getListcnt());
+			params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
 			System.out.println("PaController start : " + pageVO.getStart());
 			params.put("end", pageVO.getListcnt());
-			System.out.println("PaController listcnt : " + pageVO.getListcnt() );
-			System.out.println("PaController startPage : " + pageVO.getStartPage() );
-			System.out.println("PaController endPage : " + pageVO.getEndPage() );
-			System.out.println("PaController total : " + pageVO.getTotal() );
-			System.out.println("PaController listcnt : " + pageVO.getListcnt() );
-			
-			// ¸®½ºÆ®¸¦ ºĞÇÒ·Î ¹ŞÀ½
-			params.putIfAbsent("ca_id", 3); // ±¸¸Å¹ßÁÖ¼­¶ó 3À¸·Î °íÁ¤
+			System.out.println("PaController listcnt : " + pageVO.getListcnt());
+			System.out.println("PaController startPage : " + pageVO.getStartPage());
+			System.out.println("PaController endPage : " + pageVO.getEndPage());
+			System.out.println("PaController total : " + pageVO.getTotal());
+			System.out.println("PaController listcnt : " + pageVO.getListcnt());
+
+			// ë¦¬ìŠ¤íŠ¸ë¥¼ ë¶„í• ë¡œ ë°›ìŒ
+			params.putIfAbsent("ca_id", 3); // êµ¬ë§¤ë°œì£¼ì„œë¼ 3ìœ¼ë¡œ ê³ ì •
 			List<PaVO> pageAllList = paService.paList(params);
 			System.out.println("PaController pageAllList : " + pageAllList);
-			
+
 			PaPageLIst paPageList = new PaPageLIst(pageAllList, pageVO);
 			ModelAndView mav = new ModelAndView();
 			mav.addObject("paPageList", paPageList);
 			mav.setViewName("pa/pa");
 			return mav;
-		}else {
-			// °¹¼ö¸¦ ±¸ÇÏ±â À§ÇÑ ÀüÃ¼ ¸®½ºÆ®
+		} else {
+			// ê°¯ìˆ˜ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ ì „ì²´ ë¦¬ìŠ¤íŠ¸
 			List<PaVO> allList = paService.paAllList();
-			
-			// ÆäÀÌÁö ÂÊ¼ö Ã³¸®
+
+			// í˜ì´ì§€ ìª½ìˆ˜ ì²˜ë¦¬
 			PaPageVO pageVO = new PaPageVO(pageNum, allList.size());
-			System.out.println("PaController page : "+ pageVO.getPageNum());
-			
+			System.out.println("PaController page : " + pageVO.getPageNum());
+
 			System.out.println("pageNum :" + pageNum);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("start", (pageVO.getPageNum()-1)*pageVO.getListcnt());
+			params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
 			System.out.println("PaController start : " + pageVO.getStart());
 			params.put("end", pageVO.getListcnt());
-			System.out.println("PaController listcnt : " + pageVO.getListcnt() );
-			System.out.println("PaController startPage : " + pageVO.getStartPage() );
-			System.out.println("PaController endPage : " + pageVO.getEndPage() );
-			System.out.println("PaController total : " + pageVO.getTotal() );
-			System.out.println("PaController listcnt : " + pageVO.getListcnt() );
-			
-			// ¸®½ºÆ®¸¦ ºĞÇÒ·Î ¹ŞÀ½
-			params.putIfAbsent("ca_id", 3); // ±¸¸Å¹ßÁÖ¼­¶ó 3À¸·Î °íÁ¤
+			System.out.println("PaController listcnt : " + pageVO.getListcnt());
+			System.out.println("PaController startPage : " + pageVO.getStartPage());
+			System.out.println("PaController endPage : " + pageVO.getEndPage());
+			System.out.println("PaController total : " + pageVO.getTotal());
+			System.out.println("PaController listcnt : " + pageVO.getListcnt());
+
+			// ë¦¬ìŠ¤íŠ¸ë¥¼ ë¶„í• ë¡œ ë°›ìŒ
+			params.putIfAbsent("ca_id", 3); // êµ¬ë§¤ë°œì£¼ì„œë¼ 3ìœ¼ë¡œ ê³ ì •
 			List<PaVO> pageAllList = paService.paList(params);
 			System.out.println("PaController pageAllList : " + pageAllList);
-			
+
 			PaPageLIst paPageList = new PaPageLIst(pageAllList, pageVO);
 			ModelAndView mav = new ModelAndView();
 			mav.addObject("paPageList", paPageList);
 			mav.setViewName("pa/pa");
 			return mav;
 		}
-		
+
 	}
-	
-	
+
+
+	@GetMapping(value = "contracts/paSelect")
+	public ModelAndView paSelect(@RequestParam("ca_id") int ca_id, @RequestParam("pa_referenceNo") int pa_referenceNo) {
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("ca_id", ca_id);
+		params.put("pa_referenceNo", pa_referenceNo);
+		PaVO palist = paService.paSelect(params);
+
+		paService.paCheck(palist.getPa_no());
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("palist", palist);
+		mav.setViewName("contracts/paSelect");
+		return mav;
+	}// end
+
 }

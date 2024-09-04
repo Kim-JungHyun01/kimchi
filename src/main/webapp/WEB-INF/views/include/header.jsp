@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
@@ -16,7 +17,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="${contextPath}/resources/images/favicon.png">
     <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -46,9 +47,9 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="${contextPath}/resources/images/logo.png" alt="">
-                <img class="logo-compact" src="${contextPath}/resources/images/logo-text.png" alt="">
-                <img class="brand-title" src="${contextPath}/resources/images/logo-text.png" alt="">
+               
+ 
+                <img src="${contextPath}/resources/images/thekimchi.jpg">
             </a>
 
          
