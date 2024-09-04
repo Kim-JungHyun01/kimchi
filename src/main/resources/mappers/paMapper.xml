@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kr.kimchi.paMapper">
+<mapper namespace="com.kr.kimchi.mappers.paMapper">
 
 	<!-- LIst size 확인을 위한 메소드 -->
 	<select id="paAllList" resultType="com.kr.kimchi.vo.PaVO">

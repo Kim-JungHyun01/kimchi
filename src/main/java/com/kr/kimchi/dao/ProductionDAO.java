@@ -12,7 +12,7 @@ import com.kr.kimchi.vo.ProductionVO;
 @Repository
 public class ProductionDAO {
 
-	private final static String namespace="com.kr.kimchi.productionMapper";
+	private final static String namespace="com.kr.kimchi.mappers.productionMapper";
 	
 	@Inject
 	private SqlSession session;

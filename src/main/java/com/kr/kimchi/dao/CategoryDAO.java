@@ -11,7 +11,7 @@ import com.kr.kimchi.vo.CategoryVO;
 
 @Repository
 public class CategoryDAO {
-	private final static String namespace = "com.kr.kimchi.categoryMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.categoryMapper";
 
 	@Inject
 	private SqlSession session;

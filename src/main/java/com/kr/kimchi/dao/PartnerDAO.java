@@ -13,7 +13,7 @@ import com.kr.kimchi.vo.PartnerVO;
 @Repository
 public class PartnerDAO {
 	
-	private final static String namespace = "com.kr.kimchi.PartnerMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.PartnerMapper";
 
 	@Inject
 	private SqlSession session;

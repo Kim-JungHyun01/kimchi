@@ -12,7 +12,7 @@ import com.kr.kimchi.vo.ContractsVO;
 @Repository
 public class ContractsDAO {
 	
-	private final static String namespace = "com.kr.kimchi.contractsMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.contractsMapper";
 
 	@Inject
 	private SqlSession session;

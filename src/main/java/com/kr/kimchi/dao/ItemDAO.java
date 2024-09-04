@@ -14,7 +14,7 @@ public class ItemDAO {
 	@Inject
 	private SqlSession session;
 
-	private final static String namespace = "com.kr.kimchi.itemMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.itemMapper";
 
 	
 //	제품정보(전체)

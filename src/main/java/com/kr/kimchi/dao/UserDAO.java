@@ -13,7 +13,7 @@ import com.kr.kimchi.vo.UserVO;
 @Repository
 public class UserDAO {
 	
-	private final static String namespace = "com.kr.kimchi.UserMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.UserMapper";
 
 	@Inject
 	private SqlSession session;

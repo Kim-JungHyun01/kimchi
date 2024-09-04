@@ -12,7 +12,7 @@ import com.kr.kimchi.vo.AttachmentVO;
 @Repository
 public class AttachmentDAO {
 	
-	private final static String namespace = "com.kr.kimchi.attachmentMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.attachmentMapper";
 
 	@Inject
 	private SqlSession session;

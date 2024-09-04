@@ -10,7 +10,7 @@ import com.kr.kimchi.vo.CodeVO;
 @Repository
 public class CodeDAO {
 
-	private final static String namespace = "com.kr.kimchi.codeMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.codeMapper";
 
 	@Inject
 	private SqlSession session;

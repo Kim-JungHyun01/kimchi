@@ -11,7 +11,7 @@ import com.kr.kimchi.vo.ObtainVO;
 
 @Repository
 public class ObtainDAO {
-	private final static String namespace = "com.kr.kimchi.obtainMapper";
+	private final static String namespace = "com.kr.kimchi.mappers.obtainMapper";
 
 	@Inject
 	private SqlSession session;

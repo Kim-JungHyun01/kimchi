@@ -14,7 +14,7 @@ import com.kr.kimchi.vo.PaVO;
 @Repository
 public class PaDAO {
 	
-	private final static String namespace="com.kr.kimchi.paMapper";
+	private final static String namespace="com.kr.kimchi.mappers.paMapper";
 	
 	@Inject
 	private SqlSession session;
