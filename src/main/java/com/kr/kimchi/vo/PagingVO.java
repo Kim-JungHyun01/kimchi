@@ -1,14 +1,14 @@
-package com.kr.kimchi.vo;
+package kr.co.kim.vo;
 
 public class PagingVO {
 	
-	private int nowpage;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	private int startpage;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	private int endPage;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	private int total;//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	private int cntPerPage;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	private int lastPage;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	private int start;//SQL ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ start
+	private int nowpage;//ÇöÀç ÆäÀÌÁö
+	private int startpage;//½ÃÀÛ ÆäÀÌÁö
+	private int endPage;//³¡ÆäÀÌÁö
+	private int total;//°Ô½Ã±Û ÃÑ °¹¼ö
+	private int cntPerPage;//ÆäÀÌÁö´ç ±Û °¹¼ö
+	private int lastPage;//¸¶Áö¸· ÆäÀÌÁö
+	private int start;//SQL Äõ¸®¿¡ ¾µ start
 	private int end;// end
 	private int cntPage=5;
 	
@@ -31,7 +31,7 @@ public class PagingVO {
 	
 	public void calcLastPage(int total, int cntPerPage) {
 		setLastPage((int)Math.ceil((double)total/(double)cntPerPage));	
-	}// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ceil-> ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½
+	}// Á¦ÀÏ ¸¶Áö¸· ÆäÀÌÁö °è»ê ceil-> ÀÚ¸´¼ö ¿Ã¸²
 	
 	public void clacStartEndPage(int nowPage, int cntPage) {
 		setEndPage(((int)Math.ceil((double)nowPage / (double)cntPage)) * cntPage);
@@ -45,14 +45,14 @@ public class PagingVO {
 			setStartpage(1);
 		}
 		
-	} //ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	} //½ÃÀÛ, ³¡ ÆäÀÌÁö °è»ê
 	
 	
 	public void calcStartEnd(int nowPage, int cntPerPage) {
 		
 		setEnd(nowPage*cntPerPage);
 		setStart(getEnd()-cntPerPage+1);
-	}// DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ start, endï¿½ï¿½ ï¿½ï¿½ï¿½
+	}// DB Äõ¸®¿¡¼­ »ç¿ëÇÒ start, end°ª °è»ê
 
 
 
