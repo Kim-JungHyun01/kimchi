@@ -35,7 +35,7 @@
 				<td>${status.count + (paPageList.pageVO.pageNum-1) * paPageList.pageVO.listcnt }</td>
 				<td><a href="#" onclick="submitForm(${paList.pa_no})">${paList.codeVo.code_name}</a></td>
 				<td><fmt:formatDate value="${paList.pa_issueDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-				<td><fmt:formatDate value="${paList.obtainVo.obtain_deliveryDate}" pattern="yyyy년 MM월 dd일 " /></td>
+				<td>${paList.obtainVo.obtain_deliveryDate}</td>
 				<td>${paList.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}</td>
 				<td>${paList.obtainVo.materialVO.ma_name}</td>
 				<td><fmt:formatNumber value="${paList.obtainVo.materialVO.ma_price * paList.obtainVo.obtain_quantity}" pattern="###,###,###,###" />원</td>				

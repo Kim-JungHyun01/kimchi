@@ -72,6 +72,7 @@ public class PaController {
 	@PostMapping(value = "/pa")
 	public ModelAndView prpSave(PrpVO prpVO, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam("token") String token, HttpSession session) {
+		
 		// 토큰 검사
 		String sessionToken = (String) session.getAttribute("token");
 
@@ -112,7 +113,6 @@ public class PaController {
 		} else {
 			// 갯수를 구하기 위한 전체 리스트
 			List<PaVO> allList = paService.paAllList();
-
 			// 페이지 쪽수 처리
 			PaPageVO pageVO = new PaPageVO(pageNum, allList.size());
 			System.out.println("PaController page : " + pageVO.getPageNum());

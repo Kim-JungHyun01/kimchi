@@ -30,7 +30,7 @@
 		   </tr> 
 		   <tr>
 		   		<td>납기일</td>
-		  		<td><fmt:formatDate value="${paVO.obtainVo.obtain_deliveryDate}" pattern="yyyy-MM-dd" /></td>
+		  		<td>${paVO.obtainVo.obtain_deliveryDate}</td>
 		   </tr> 
 		    <tr>
 			   <td>공급업체</td> 
@@ -94,10 +94,12 @@
 	
 	
 	<c:forEach var="prpList" items="${prpList}">
+	
 	<table>
 		<tr>
 			<td>검수일자</td>
 			<td>${prpList.prp_issueDate }</td>
+			
 			<td><button data-prp_no=${prpList.prp_no } onclick="prpPop(this)">검수결과</button>
 			<button>발송</button>
 		</tr>
@@ -140,6 +142,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 팝업창에서 정보 받아옴 -->
 <script>
+
+
  function receiveData(prp_no, prp_revisionDate, prp_progress, prp_notes, pa_no) {
      $.ajax({
          type: 'POST',
