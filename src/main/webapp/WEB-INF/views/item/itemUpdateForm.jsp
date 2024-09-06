@@ -8,7 +8,6 @@
 	//나타내지 않으면 오류 일어남
 </script>
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
 	<form method="post" action="itemUpdate" name="itemUpdateForm"
 		id="itemUpdateForm">
@@ -98,9 +97,3 @@
 <%@include file="../include/footer.jsp"%>
 <!-- 첨부파일 모달창 -->
 <jsp:include page="../attachment/attachmentModal.jsp" />
-<!-- Required vendors -->
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
 	<div>
 		<h3>계약 등록</h3>
@@ -79,12 +78,3 @@
 <jsp:include page="../partner/partnerModal.jsp" />
 <!-- 담당자 모달창 -->
 <jsp:include page="../user/userModal.jsp" />
-<!-- Required vendors -->
-<script>
-	
-</script>
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

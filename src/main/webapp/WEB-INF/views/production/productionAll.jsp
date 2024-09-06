@@ -4,7 +4,6 @@
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
 	<h3>생산계획 목록</h3>	
 	<table>
@@ -31,9 +30,3 @@
 	</table>
 </div>
 <%@include file="../include/footer.jsp"%>
-<!-- Required vendors -->
-    <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-    <script src="${contextPath}/resources/js/quixnav-init.js"></script>
-    <script src="${contextPath}/resources/js/custom.min.js"></script>
-
-    <script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>>

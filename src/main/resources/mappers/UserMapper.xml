@@ -19,7 +19,7 @@
 
 	<!-- 사용자 상세 -->
 	<select id="userSelect" resultType="com.kr.kimchi.vo.UserVO">
-		select * from user 
+		select * from user
 		where user_id =#{user_id}
 	</select>
 
@@ -35,17 +35,18 @@
 
 	<!-- 사용자 정보 수정 -->
 	<update id="userUpdate" parameterType="com.kr.kimchi.vo.UserVO">
-			update user set
-			user_email = #{user_email}, user_name = #{user_name}, 
-			user_number = #{user_number}, user_department = #{user_department}
-			where user_id = #{user_id}
+		update user set
+		user_email = #{user_email}, user_name = #{user_name},
+		user_number = #{user_number}, user_department = #{user_department}
+		where user_id = #{user_id}
 	</update>
 
 	<!-- 사용자 승인 -->
 	<update id="userApproval"
 		parameterType="com.kr.kimchi.vo.UserVO">
 		update user set
-		user_approval = if(#{user_approval} = 0 ? 1, 0)
+		user_approval = case when
+		#{user_approval} = 0 then 1 else 0 end
 		where user_id = #{user_id}
 	</update>
 

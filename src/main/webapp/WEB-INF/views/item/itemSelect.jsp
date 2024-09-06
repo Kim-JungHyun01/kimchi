@@ -4,9 +4,6 @@
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <%@include file="../include/header.jsp"%>
-
-<%@include file="../include/nav.jsp"%>
-
 <div class="content-body">
 	<div>
 		<h3>물품상세보기</h3>
@@ -116,8 +113,7 @@
 				</table>
 			</div>
 			<div>
-				<button
-					onclick="${contextPath}/bom/bomUpdateForm?item_no=${item.item_no}">bom수정</button>
+				<button onclick="openbomUpdateModal()">bom수정</button>
 			</div>
 		</c:when>
 		<c:otherwise>
@@ -125,19 +121,16 @@
 				<p>bom정보가 존재하지 않습니다.</p>
 			</div>
 			<div>
-				<button type = "button" onclick="${contextPath}/bom/bomInsertForm?item_no=${item.item_no}">bom추가</button>
+				<button onclick="openbomInsertModal()">bom추가</button>
 			</div>
 		</c:otherwise>
 	</c:choose>
 	<div>
-		<a href="${contextPath}/item/itemUpdateForm?item_no=${item.item_no}">수정_a</a>
+		<a href="${contextPath}/item/itemUpdateForm?item_no=${item.item_no}">수정</a>
 	</div>
 </div>
-
 <%@include file="../include/footer.jsp"%>
-<!-- Required vendors -->
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
+<!-- bom모달창 -->
+<jsp:include page="../bom/bomInsertModal.jsp" />
+<!-- 자재모달창 -->
+<jsp:include page="../material/maModal.jsp" />

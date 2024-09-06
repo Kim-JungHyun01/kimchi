@@ -67,18 +67,19 @@ button {
 		<h3>자재 조회</h3>
 		<table>
 			<tr>
-				<th>자재코드</th>
-				<th>분류</th>
-				<th>자재명</th>
-				<th>원산지</th>
+				<td>자재코드</td>
+				<td>분류</td>
+				<td>자재명</td>
+				<td>원산지</td>
 				<td>자재단위</td>
 				<td>자재무게</td>
-				<th>재고수량</th>
-				<th>자재단가</th>
+				<td>재고수량</td>
+				<td>자재단가</td>
 				<td>자재규격</td>
 			</tr>
-			<c:forEach var="malist" items="${malist }">
-				<tr onclick="selectMaterial('${malist.ma_id}', '${malist.ma_category}', '${malist.ma_name}', '${malist.ma_origin}', '${malist.ma_unit }', '${malist.ma_weight }', '${malist.ma_stockQuantity}', '${malist.ma_price}', '${malist.ma_specifications }')">
+			<c:forEach var="malist" items="${malist}">
+				<tr
+					onclick="selectMaterial('${malist.ma_id}', '${malist.ma_category}', '${malist.ma_name}', '${malist.ma_origin}', '${malist.ma_unit }', '${malist.ma_weight }', '${malist.ma_stockQuantity}', '${malist.ma_price}', '${malist.ma_specifications}')">
 					<td>${malist.ma_id}</td>
 					<td>${malist.ma_category}</td>
 					<td>${malist.ma_name}</td>
@@ -94,11 +95,3 @@ button {
 		<button onclick="closecmaModal()">닫기</button>
 	</div>
 </div>
-<div id = >
-
-</div>
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

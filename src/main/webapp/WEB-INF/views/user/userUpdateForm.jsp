@@ -4,7 +4,6 @@
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
 	<form action="userUpdate" method = post id = "userUpdateForm" name = "userUpdateForm">
 		<h3>사용자 수정목록</h3>
@@ -33,14 +32,8 @@
 	</form>
 </div>
 <%@include file="../include/footer.jsp"%>
-<!-- Required vendors -->
 <script>
 	function checkApproval(user_approval) {
 
 	}//end
 </script>
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
