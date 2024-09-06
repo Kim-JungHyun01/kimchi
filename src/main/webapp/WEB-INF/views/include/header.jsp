@@ -72,11 +72,21 @@
 							<!-- 검색기능삭제 -->
 						</div>
 						<ul class="navbar-nav header-right">
-							<li class="nav-item dropdown header-profile">
-							<a href="${contextPath}/login/logout" class="dropdown-item"> <i
-									class="icon-key"></i> <span class="ml-2">Logout </span>
-							</a>
-								<div class="dropdown-menu dropdown-menu-right"></div></li>
+							<c:if test="${user == null}">
+								<li class="nav-item dropdown header-profile"><a
+									href="${contextPath}/login/loginForm" class="dropdown-item">
+										<i class="icon-key"></i> <span class="ml-2">Login </span>
+								</a></li>
+							</c:if>
+							<c:if test="${user != null}">
+								<li class="nav-item dropdown header-profile"><a href="#"
+									class="dropdown-item"> <i class="icon-key"></i> <span
+										class="ml-2">${user.user_name}</span></a> <a
+									href="${contextPath}/login/logout" class="dropdown-item"> <i
+										class="icon-key"></i> <span class="ml-2">Logout </span>
+								</a>
+									<div class="dropdown-menu dropdown-menu-right"></div></li>
+							</c:if>
 						</ul>
 					</div>
 				</nav>

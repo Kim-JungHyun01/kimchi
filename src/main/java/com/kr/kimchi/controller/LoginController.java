@@ -46,7 +46,7 @@ public class LoginController {
 		if (part == null) {// 로그인 실패
 			return "redirect:/login/loginForm";
 		} else {// 로그인 성공
-			session.setAttribute("user", part);
+			session.setAttribute("part", part);
 			return "redirect:/";
 		} // end
 	}// end

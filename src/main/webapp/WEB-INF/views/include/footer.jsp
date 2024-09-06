@@ -39,7 +39,14 @@
 	<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
 	<script src="${contextPath}/resources/js/quixnav-init.js"></script>
 	<script src="${contextPath}/resources/js/custom.min.js"></script>
-	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("ul#menu a").on('click',function(){
+				$("ul#menu a").removeClass("mm-active");
+				$(this).addClass("mm-active");
+			})
+		})
+	</script>
 </body>
 	
 </html>
