@@ -5,7 +5,6 @@
 <%@ page session="true"%>
 
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 
 <div class="content-body">
 
@@ -31,22 +30,15 @@
 	        <td>${out.io_information}</td>
 	        <td>${out.invoice_issuance_status}</td>
 	    </tr>
+	    <tr>
+	    	<td colspan="5"><a href="${contextPath}/out/outList">목록</a></td> 
+	    </tr>
     </table>
 </div>
 
 <%@include file="../include/footer.jsp"%>
 
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
 <script>
-	var actionForm = $("#actionForm");
-	$(".paginate_button a").on("click", function(e) {
-		e.preventDefault();
-		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-		actionForm.submit();
-	});
 	
 	$(document).ready(function() {
         $('.price').each(function() { // 가격 포맷팅

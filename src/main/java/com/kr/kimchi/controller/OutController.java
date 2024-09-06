@@ -12,9 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kr.kimchi.service.MaterialService;
+import com.kr.kimchi.service.ObtainService;
 import com.kr.kimchi.service.OutService;
 import com.kr.kimchi.vo.IOVO;
 import com.kr.kimchi.vo.MaterialVO;
+import com.kr.kimchi.vo.ObtainVO;
 import com.kr.kimchi.vo.PaginationVO;
 
 @Controller
@@ -25,6 +27,9 @@ public class OutController {
 
     @Autowired 
     private MaterialService maService;
+    
+    @Autowired 
+    private ObtainService obService; 
     
     // 전체 출고 목록
     @GetMapping(value = "/out/outList")
@@ -62,11 +67,18 @@ public class OutController {
     public ModelAndView outAddForm(Model model) {
         model.addAttribute("out", new IOVO());
         List<MaterialVO> malist = maService.maList(0, 10);
+        List<ObtainVO> obList = obService.obtainAll();
         
         model.addAttribute("malist", malist);
+        model.addAttribute("obList", obList);
         
         ModelAndView mav = new ModelAndView();
         mav.addObject("malist", malist);
+        mav.addObject("obList", obList);
+        
+        System.out.println(malist);
+        System.out.println(obList);
+        
         mav.setViewName("out/outAdd"); 
         return mav; 
     }

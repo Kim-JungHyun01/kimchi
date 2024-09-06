@@ -4,37 +4,78 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <%@ include file="../include/header.jsp" %>
-<%@ include file="../include/nav.jsp" %>
 
+<style>
+    .content-body form input, 
+    .content-body form select {
+        margin-bottom: 4px; /* 입력 필드 간의 간격 조정 */
+        padding: 8px; /* 패딩 추가 */
+        width: 70%; 
+        margin: 0 auto; /* 수평 가운데 정렬 */
+        display: block; /* 블록 요소로 설정 */
+        box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 조정 */
+    }
+
+    .table {
+        border-collapse: collapse; /* 경계가 겹치지 않도록 설정 */
+    }
+
+    .table, .table td {
+        border: none; /* 테이블과 셀의 경계를 없앰 */
+    }
+
+    .table td {
+        text-align: center; /* 가운데 정렬 */
+    }
+</style>
+
+<html>
 <div class="content-body">
     <div>
         <h2>출고 등록</h2>
     </div>
     
-    <form id="outForm" action="${contextPath}/out/outAdd" method="post">                 
-        조달계획번호: <input type="number" name="obtain_no" required><br>
-        
-        자재번호: <input name="ma_id" id="ma_id" type="number"
-               placeholder="자재선택" onclick="openoutModal()"><br>
-               
-        자재명: <input type="text" id="ma_name" name="ma_name" onclick="openoutModal()"><br>
-        수량: <input type="number" name="io_quantity" required min="1"><br>
-        출고일: <input type="date" name="io_date" required><br>
-        상세내역: <input type="text" name="io_information"><br>
-        거래명세서 발행여부: <input type="text" name="invoice_issuance_status" required><br>
-        출고처리: <input type="text" name="io_status" value="출고" ReadOnly><br>
-        
+    <form id="outForm" action="${contextPath}/out/outAdd" method="post"> 
+      <table class="table">
+      		<tr>
+      		<td>조달계획번호</td>
+      		<td><input type="number" id = "obtain_no" name="obtain_no" placeholder="조달계획번호 선택" required onclick="openoutModal()"></td>
+      	</tr>
+      	<tr>
+      		<td>자재명</td>
+      		<td><input type="text" id="ma_name" name="ma_name" placeholder="자재명"></td>
+      	</tr>
+      	<tr>
+      		<td>수량</td>
+      		<td><input type="number" name="io_quantity" placeholder="수량 입력" required min="1"></td>
+      	</tr>
+      	<tr>
+      		<td>출고일</td>
+      		<td><input type="date" name="io_date" required></td>
+      	</tr>
+      	<tr>
+      		<td>상세내역</td>
+      		<td><input type="text" name="io_information" placeholder="상세내역 입력"></td>
+      	</tr>
+      	<tr>
+      		<td>거래명세서 발행여부</td>
+      		<td>
+                <select name="invoice_issuance_status" required>
+                    <option value="발행">발행</option>
+                    <option value="미발행">미발행</option>
+                </select>
+            </td>
+      	</tr>
+      </table>              
+       
+        <input type="hidden" name="io_status" value="출고" readonly>
+        <input name="ma_id" id="ma_id" type="hidden">
+
         <input type="submit" value="출고처리">    
     </form>
 </div>
 
 <%@ include file="../include/footer.jsp" %>
-
-<!-- 필수 벤더 스크립트 -->
-<jsp:include page="../out/outModal.jsp" />
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
+<jsp:include page="outModal.jsp" />
 
 </html>

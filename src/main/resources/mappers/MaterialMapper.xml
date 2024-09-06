@@ -47,28 +47,21 @@
 		WHERE ma_id = #{ma_id}
 	</update>
 	
-	<!-- 금액 현황 리포트 // 상품코드 상품명 총수량 총액 -->
+	<!-- 금액 현황 리포트 -->
 	<select id="maReport" parameterType="map" resultType="com.kr.kimchi.vo.MaterialVO">
-	    SELECT ma_id, ma_category, ma_name, ma_price,   
-	        SUM(ma_stockQuantity) AS totalQuantity,
-	        SUM(ma_stockValue) AS totalValue,
-	        SUM(ma_stockValue) AS totalPrice
-	    FROM material
-	    WHERE 1=1 <!-- 결과값 true기본 -->
-	    LIMIT #{startRow}, #{pageSize}
-	    
-	    <!-- 날짜 기준으로 조회 -->
-	    <if test="startDate != null and endDate != null">
-	        AND ma_date BETWEEN #{startDate} AND #{endDate}  
+	    SELECT ma_id, ma_category, ma_name, ma_price, 
+	           SUM(ma_stockQuantity) AS totalQuantity, 
+	           SUM(ma_stockValue) AS totalValue 
+	    FROM material 
+	    WHERE 1=1
+	    <if test="startDate != null and endDate != null"> 
+	        AND ma_date BETWEEN #{startDate} AND #{endDate} 
 	    </if>
-	    
-	    <!-- 재료명 기준으로 조회 -->
-	    <if test="ma_name != null and ma_name != ''">
+	    <if test="ma_name != null and ma_name != ''"> 
 	        AND ma_name = #{ma_name} 
 	    </if>
-	    
-	    GROUP BY ma_id, ma_category, ma_name, ma_price <!-- 공통그룹 -->
-	    ORDER BY ma_category; <!-- 정렬기준 -->
+	    GROUP BY ma_id, ma_category, ma_name, ma_price 
+	    ORDER BY ma_category; 
 	</select>
 	
 	<!-- 전체 maList의 총 개수 조회 -->

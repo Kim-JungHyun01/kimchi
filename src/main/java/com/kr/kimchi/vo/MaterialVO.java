@@ -22,7 +22,6 @@ public class MaterialVO {
 	private String ma_date; 	
 	private int attachment_no;
 	
-	
 
 	// ma_stockValue 계산
 	public void calStockValue() {
@@ -33,4 +32,6 @@ public class MaterialVO {
 	private Integer totalQuantity; // 총수량
 	private Integer totalValue; // 항목별 총액
 	private Integer totalPrice; // 전체 재고 총합계액
+	
+	
 }

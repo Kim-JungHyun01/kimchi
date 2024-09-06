@@ -6,7 +6,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
 <%@include file="../include/header.jsp" %>
-<%@include file="../include/nav.jsp" %>
 
 <div class="content-body">
     <div>
@@ -36,11 +35,5 @@
 </div>
 
 <%@include file="../include/footer.jsp"%>
-
-<!-- 필수 벤더 스크립트 -->
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
 
 </html>
