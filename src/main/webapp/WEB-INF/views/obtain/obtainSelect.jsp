@@ -107,9 +107,7 @@
 		<c:choose>
 			<c:when test="${obtain.obtain_status eq '조달계획확인중'}">
 				<div>
-					<a
-						href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획
-						수정</a>
+					<a href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획수정</a>
 					<form action="obtainCheck" method="post" id="checkForm"
 						name="checkForm">
 						<input type="hidden" name="obtain_no" id="obtain_no"

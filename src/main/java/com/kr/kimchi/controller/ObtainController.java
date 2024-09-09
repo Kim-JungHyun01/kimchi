@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,8 +20,6 @@ public class ObtainController {
 	@Inject
 	private ObtainService obtservice;
 	@Inject
-	private ItemService itemservice;
-	@Inject
 	private UserService userservice;
 	@Inject
 	private PartnerService partservice;
@@ -32,6 +31,10 @@ public class ObtainController {
 	private CodeService codeservice;
 	@Inject
 	private PaService paservice;
+	@Inject
+	private ContractsService conservice;
+	@Inject
+	private Bom_maService bom_maservice;
 
 //	조달계획 보기_전체
 	@GetMapping(value = "obtain/obtainAll")
@@ -63,20 +66,23 @@ public class ObtainController {
 
 //	조달계획 추가
 	@GetMapping(value = "obtain/obtainInsertForm")
-	public ModelAndView obtainInsertForm() {
-		List<ProductionVO> prolist = proservice.productionAll();
-		List<PartnerVO> partnerlist = partservice.partnerAll();
+	public ModelAndView obtainInsertForm(int production_no) {
+		ProductionVO pro = proservice.productionSelect(production_no);
+		ContractsVO con = conservice.contractsSelect(pro.getContracts_no());
+		List<PartnerVO> partnerlist = partservice.partnerAll(0,10);
 		List<MaterialVO> malist = maservice.maList(0, 10);
+		List<Bom_maVO> bom_malist = bom_maservice.bom_maSelect(con.getItem_no());
 		List<UserVO> userlist = userservice.userAll();
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("prolist", prolist);
+		mav.addObject("pro", pro);
 		mav.addObject("partnerlist", partnerlist);
 		mav.addObject("malist", malist);
 		mav.addObject("userlist", userlist);
+		mav.addObject("bom_malist", bom_malist);
 		mav.setViewName("obtain/obtainInsertForm");
 		return mav;
 	}// end
-
+	
 	@PostMapping(value = "obtain/obtainInsert")
 	public String obtainInsert(ObtainVO ob) {
 		obtservice.obtainInsert(ob);

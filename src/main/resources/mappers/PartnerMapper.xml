@@ -5,13 +5,14 @@
 	<!-- 협력회사 로그인 -->
 	<select id="partnerLogin" parameterType="java.util.Map"
 		resultType="java.util.Map">
-		select partner_taxid, partner_id, partner_pw, partner_companyname, partner_approval from partner 
-		where partner_taxid=#{partner_taxid}, partner_id = #{partner_id} and partner_pw = #{partner_pw}
+		select partner_taxid, partner_id, partner_pw, partner_approval from partner 
+		where partner_id = #{partner_id} and partner_pw = #{partner_pw}
 	</select>
 
-	<!-- 협력회사 전체 -->
+	<!-- 협력회사 전체 + 페이징 -->
 	<select id="partnerAll" resultType="com.kr.kimchi.vo.PartnerVO">
 		select * from partner
+		 LIMIT #{startRow}, #{pageSize}
 	</select>
 
 	<!-- 협력회사 상세 -->
@@ -54,6 +55,10 @@
 		partner_approval = #{partner_approval}
 		where partner_taxid = #{partner_taxid}
 	</update>
-
+	
+	<!-- 전체 레코드 수 -->
+	<select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM partner;
+    </select>
 
 </mapper>

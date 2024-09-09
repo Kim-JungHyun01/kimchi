@@ -18,6 +18,7 @@ import com.kr.kimchi.service.ItemService;
 import com.kr.kimchi.service.PaService;
 import com.kr.kimchi.service.PartnerService;
 import com.kr.kimchi.service.UserService;
+import com.kr.kimchi.vo.BomVO;
 import com.kr.kimchi.vo.CodeVO;
 import com.kr.kimchi.vo.ContractsVO;
 import com.kr.kimchi.vo.ItemVO;
@@ -71,7 +72,7 @@ public class ContractsController {
 	@GetMapping(value = "contracts/contractsInsertForm")
 	public ModelAndView contractsInsertForm() {
 		List<ItemVO> itemlist = itemservice.itemAll();
-		List<PartnerVO> partnerlist = partservice.partnerAll();
+		List<PartnerVO> partnerlist = partservice.partnerAll(0,10);
 		List<UserVO> userlist = userservice.userAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("itemlist", itemlist);

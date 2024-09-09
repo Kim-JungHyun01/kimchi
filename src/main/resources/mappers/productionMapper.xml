@@ -3,45 +3,93 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kr.kimchi.mappers.productionMapper">
 
+<resultMap type="com.kr.kimchi.vo.ProductionVO" id="ProductionVO">
+    <id property="production_no" column="production_no" />
+    <result property="contracts_no" column="contracts_no" />
+    <result property="production_deliveryDate" column="production_deliveryDate" />
+    <result property="production_quantity" column="production_quantity" />
+    <result property="production_status" column="production_status" />
+    <result property="production_registrationDate" column="production_registrationDate" />
+    <result property="user_id" column="user_id" />
+    <collection property="contractsVO" ofType="com.kr.kimchi.vo.ContractsVO" resultMap="ContractsVO" />
+</resultMap>
+
+	<resultMap type="com.kr.kimchi.vo.ContractsVO" id="ContractsVO">
+	    <result property="contracts_no" column="contracts_no" />
+	    <result property="item_no" column="item_no" />
+	    <collection property="itemVO" ofType="com.kr.kimchi.vo.ItemVO" resultMap="ItemVO" />
+	</resultMap>
+	
+	<resultMap type="com.kr.kimchi.vo.ItemVO" id="ItemVO">
+	    <result property="item_no" column="item_no" />
+	    <result property="item_name" column="item_name" />
+	</resultMap>
 
 	<!-- 생산계획 보기_전체 -->
-	<select id="productionAll" resultType="com.kr.kimchi.vo.ProductionVO">
-		select * from production
+	<select id="productionAll" resultType="ProductionVO">
+		SELECT
+		p.*,
+		c.*,
+		i.item_no,
+		i.item_name
+		FROM
+		Production p
+		LEFT JOIN
+		Contracts c ON p.contracts_no = c.contracts_no
+		LEFT JOIN
+		Item i ON c.item_no = i.item_no
 	</select>
-	
+
 	<!-- 생산계획 보기_상세 -->
 	<select id="productionSelect" resultType="com.kr.kimchi.vo.ProductionVO">
-		select * from production 
+		select * from production
 		where production_no = #{production_no}
 	</select>
-	
+
 	<!-- 생산계획 추가 -->
-	<insert id="productionInsert" parameterType="com.kr.kimchi.vo.ProductionVO">
+	<insert id="productionInsert"
+		parameterType="com.kr.kimchi.vo.ProductionVO">
 		insert into production
-		(production_quantity, production_deliveryDate, production_status, 
+		(production_quantity,
+		production_deliveryDate, production_status,
 		production_registrationDate, user_id, contracts_no) values
 		(#{production_quantity}, #{production_deliveryDate}, '생산계획확인중',
-		 now(), #{user_id}, #{contracts_no})
+		now(),
+		#{user_id}, #{contracts_no})
 	</insert>
-	
-	
-	<!-- 생산계획 수정_생산량, 생산납기일-->
-	<update id="productionUpdate" parameterType="com.kr.kimchi.vo.ProductionVO">
-		update production set 
-		production_quantity = #{production_quantity}, 
-		production_deliveryDate = #{production_deliveryDate},
-		production_registrationDate = now()
-		where production_no = #{production_no}
-	</update>
-	
-	
-	<!-- 생산계획 승인여부 -->
-	<update id="productionCheck" parameterType="com.kr.kimchi.vo.ProductionVO">
-		update production set 
-		production_status = #{production_status},
-		production_registrationDate = now()
+
+
+	<!-- 생산계획 수정_생산량, 생산납기일 -->
+	<update id="productionUpdate"
+		parameterType="com.kr.kimchi.vo.ProductionVO">
+		update production set
+		production_quantity =
+		#{production_quantity},
+		production_deliveryDate =
+		#{production_deliveryDate},
+		production_registrationDate = now(),
+		user_id = #{user_id}
 		where production_no = #{production_no}
 	</update>
 
+
+	<!-- 생산계획 승인여부 -->
+	<update id="productionCheck"
+		parameterType="com.kr.kimchi.vo.ProductionVO">
+		update production, contracts set
+		contracts.contracts_status =
+		case
+		when #{production_status} = '생산계획환인완료'
+		then '생산계획진행중'
+		else contracts.contracts_status
+		end,
+		production.production_status = #{production_status},
+		contracts.contracts_registrationDate = now(),
+		production.production_registrationDate = now()
+		where
+		production.production_no = #{production_no}
+		and contracts.contracts_no
+		= production.contracts_no;
+	</update>
 
 </mapper>

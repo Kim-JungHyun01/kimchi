@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kr.kimchi.service.Bom_maService;
 import com.kr.kimchi.service.ContractsService;
 import com.kr.kimchi.service.ItemService;
 import com.kr.kimchi.service.ProductionService;
 import com.kr.kimchi.service.UserService;
+import com.kr.kimchi.vo.Bom_maVO;
 import com.kr.kimchi.vo.ContractsVO;
 import com.kr.kimchi.vo.ItemVO;
 import com.kr.kimchi.vo.ProductionVO;
@@ -28,11 +30,14 @@ public class ProductionController {
 	private ItemService itemservice;
 	@Inject
 	private UserService userservice;
+	@Inject
+	private Bom_maService bom_maservice;
 	
 //	생산계획 보기_전체
 	@GetMapping(value = "production/productionAll")
 	public ModelAndView productionAll() {
 		List<ProductionVO> prolist = proservice.productionAll();
+		System.out.println(prolist);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("prolist",prolist);
 		mav.setViewName("production/productionAll");
@@ -45,12 +50,14 @@ public class ProductionController {
 		ProductionVO pro = proservice.productionSelect(production_no);
 		ContractsVO con = conservice.contractsSelect(pro.getContracts_no());
 		ItemVO item = itemservice.itemSelect(con.getItem_no());
+		List<Bom_maVO> bom_malist = bom_maservice.bom_maSelect(item.getItem_no());
 		UserVO user = userservice.userSelect(pro.getUser_id());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pro",pro);
 		mav.addObject("con", con);
 		mav.addObject("item", item);
 		mav.addObject("user", user);
+		mav.addObject("bom_malist", bom_malist);
 		mav.setViewName("production/productionSelect");
 		return mav;
 	}//end

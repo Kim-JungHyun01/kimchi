@@ -73,7 +73,11 @@ public class ItemController {
 //	상품수정
 	@GetMapping(value = "item/itemUpdateForm")
 	public ModelAndView itemUpdateForm(int item_no) {
-		ModelAndView mav = itemSelect(item_no);
+		List<AttachmentVO> attlist = attservice.attachmentAll();
+		ItemVO item =  itemservice.itemSelect(item_no);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("attlist", attlist);
+		mav.addObject("item", item);
 		mav.setViewName("item/itemUpdateForm");
 		return mav;
 	}// end

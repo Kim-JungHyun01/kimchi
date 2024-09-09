@@ -21,10 +21,15 @@ public class PartnerService {
 		return partdao.partnerLogin(partnermap);
 	}//end
 	
-//	협력회사 전체
-	public List<PartnerVO> partnerAll(){
-		return partdao.partnerAll();
+//	협력회사 전체 + 페이징
+	public List<PartnerVO> partnerAll(int startRow, int pageSize){
+		return partdao.partnerAll(startRow, pageSize);
 	}//end
+	
+//	전체 레코드 수
+    public Integer getTotalCount() {
+		return partdao.getTotalCount();   	
+    }//end
 	
 //	협력회사 상세
 	public PartnerVO partnerSelect(String partner_taxid) {

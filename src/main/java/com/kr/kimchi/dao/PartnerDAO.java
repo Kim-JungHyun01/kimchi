@@ -1,5 +1,6 @@
 package com.kr.kimchi.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +24,18 @@ public class PartnerDAO {
 		return session.selectOne(namespace + ".partnerLogin", partnermap);
 	}//end
 	
-//	협력회사 전체
-	public List<PartnerVO> partnerAll(){
-		return session.selectList(namespace+".partnerAll");
+//	협력회사 전체  !!!!!!!!!!!!!!!!!!!!!!!! 여기 수정 있어요!!!!!!!!!!!!!!!!!!!!!!!!!
+	public List<PartnerVO> partnerAll(int startRow, int pageSize){
+		 Map<String, Object> params = new HashMap<>();
+	        params.put("startRow", startRow);
+	        params.put("pageSize", pageSize);
+		return session.selectList(namespace+".partnerAll", params);
 	}//end
+	
+//	레코드 수
+	public Integer getTotalCount() {
+		return session.selectOne(namespace + ".getTotalCount");		
+	} //end
 	
 //	협력회사 상세
 	public PartnerVO partnerSelect(String partner_taxid) {

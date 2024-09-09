@@ -86,8 +86,8 @@
 				<button type="button" onclick="submitCheck('생산계획취소')">생산계획취소</button>
 			</form>
 		</c:if>
-		<a
-			href="${contextPath}/contracts/contractsSelect?contracts_no=${pro.contracts_no}">계약상세보기</a>
+		<a href="${contextPath}/contracts/contractsSelect?contracts_no=${pro.contracts_no}">계약상세보기</a>
+		<a href="${contextPath}/obtain/obtainInsertForm?production_no=${pro.production_no}">자재조달하기</a>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>

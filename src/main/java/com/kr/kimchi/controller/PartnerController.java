@@ -7,9 +7,11 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.kimchi.service.PartnerService;
+import com.kr.kimchi.vo.PaginationVO;
 import com.kr.kimchi.vo.PartnerVO;
 
 @Controller
@@ -20,9 +22,25 @@ public class PartnerController {
 
 //	협력회사 전체
 	@GetMapping(value = "partner/partnerAll")
-	public ModelAndView partnerAll() {
-		List<PartnerVO> partnerlist = partservice.partnerAll();
+	public ModelAndView partnerAll(@RequestParam(defaultValue = "1") int pageNum) {
+		
+		int pageSize = 2; // 한 페이지에 보여줄 갯수 // db에 3개 밖에 없어서 2로 설정했어요!
+	    int pageNavSize = 5; // 페이지 네비 크기
+	    
+	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
+		
+		List<PartnerVO> partnerlist = partservice.partnerAll(startRow, pageSize);
+		
+		Integer totalCount = partservice.getTotalCount(); // 총 레코드 수 가져옴
+		
+		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
+		
 		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("pagination", pagination);
+	    mav.addObject("currentPage", pageNum);
+	    mav.addObject("totalPages", pagination.getTotalPage());
+		
 		mav.addObject("partnerlist", partnerlist);
 		mav.setViewName("partner/partnerAll");
 		return mav;
@@ -41,7 +59,7 @@ public class PartnerController {
 //	협력회사 회원가입
 	@GetMapping(value = "partner/partnerInsertForm")
 	public ModelAndView partnerInsertForm() {
-		List<PartnerVO> partnerlist = partservice.partnerAll();//taxid, id중복확인
+		List<PartnerVO> partnerlist = partservice.partnerAll(10, 0);//taxid, id중복확인
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("partnerlist", partnerlist);
 		mav.setViewName("partner/partnerInsertForm");

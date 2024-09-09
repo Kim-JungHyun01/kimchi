@@ -49,11 +49,12 @@ button {
 		document.getElementById("itemModal").style.display = "none";
 	}//end
 	//물품 정보 가져오기
-	function selectItem(no, category, name, price) {
+	function selectItem(no, category, name, price, schedule) {
 		document.getElementById("item_no").value = no;
 		document.getElementById("item_category").value = category;
 		document.getElementById("item_name").value = name;
 		document.getElementById("item_price").value = price;
+		document.getElementById("bom_schedule").value = schedule;
 		closeitemModal(); // 모달 닫기
 	}//end
 </script>
@@ -66,15 +67,17 @@ button {
 				<td>물룸 분류</td>
 				<td>물품명</td>
 				<td>물품 단가</td>
+				<td>제조소료일</td>
 			</tr>
 			<c:forEach var="itemlist" items="${itemlist}">
 				<c:if test="${itemlist.item_bomRegistered eq 1}">
 					<tr
-						onclick="selectItem('${itemlist.item_no}', '${itemlist.item_category}', '${itemlist.item_name}', '${itemlist.item_price}')">
+						onclick="selectItem('${itemlist.item_no}', '${itemlist.item_category}', '${itemlist.item_name}', '${itemlist.item_price}', '${itemlist.bomVO.bom_schedule}')">
 						<td>${itemlist.item_no}</td>
 						<td>${itemlist.item_category}</td>
 						<td>${itemlist.item_name}</td>
 						<td>${itemlist.item_price}</td>
+						<td>${itemlist.bomVO.bom_schedule}일</td>
 					</tr>
 				</c:if>
 			</c:forEach>

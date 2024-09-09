@@ -19,4 +19,7 @@ public class ItemVO {
 	private String item_storage;
 	private String item_productionDate;
 	private int attachment_no;
+	
+	private BomVO bomVO;
+	private Bom_maVO bom_maVO;
 }
