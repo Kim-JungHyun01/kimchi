@@ -37,10 +37,6 @@
 				<td>${item.item_specifications}</td>
 			</tr>
 			<tr>
-				<td>물품 bom등록여부</td>
-				<td>${item.item_bomRegistered}</td>
-			</tr>
-			<tr>
 				<td>물품 재고수량</td>
 				<td>${item.item_stockquantity}</td>
 			</tr>
@@ -87,6 +83,7 @@
 				<h3>bom 상세정보</h3>
 				<table border="1">
 					<tr>
+						<td>구분</td>
 						<td>자재코드</td>
 						<td>분류</td>
 						<td>자재명</td>
@@ -95,15 +92,18 @@
 						<td>소요자재량</td>
 						<td>생산과정</td>
 					</tr>
+					<c:set var="rowcount" value="0" />
 					<c:forEach var="bom_malist" items="${bom_malist}">
 						<tr>
+							<td>${rowcount + 1}</td>
 							<td>${bom_malist.ma_id}</td>
-							<c:forEach var="malist" items="${maList}">
+							<c:forEach var="malist" items="${malist}">
 								<c:if test="${malist.ma_id == bom_malist.ma_id}">
 									<td>${malist.ma_category}</td>
 									<td>${malist.ma_name}</td>
 									<td>${malist.ma_unit}</td>
 									<td>${malist.ma_weight}</td>
+									<c:set var="rowcount" value="${rowcount + 1}" />
 								</c:if>
 							</c:forEach>
 							<td>${bom_malist.bom_ma_amount}</td>
@@ -113,7 +113,7 @@
 				</table>
 			</div>
 			<div>
-				<button onclick="openbomUpdateModal()">bom수정</button>
+				<button onclick="openbomUpdateModal(${rowcount})">bom수정</button>
 			</div>
 		</c:when>
 		<c:otherwise>
@@ -131,6 +131,6 @@
 </div>
 <%@include file="../include/footer.jsp"%>
 <!-- bom모달창 -->
-<jsp:include page="../bom/bomInsertModal.jsp" />
+<jsp:include page="../bom/bomModal.jsp" />
 <!-- 자재모달창 -->
 <jsp:include page="../material/maModal.jsp" />

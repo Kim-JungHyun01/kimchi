@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="true"%>
 <div class="quixnav">
 	<div class="quixnav-scroll">
 		<ul class="metismenu" id="menu">
@@ -27,23 +29,27 @@
 			<li><a class="has-arrow" href="javascript:void()"
 				aria-expanded="false"><i></i> <span class="nav-text">제재관리</span></a>
 				<ul aria-expanded="false">
-					<li><a href="${contextPath}">자재리스트</a></li>
-					<li><a href="${contextPath}">자재등록</a></li>
+					<li><a href="${contextPath}/material/maList">자재리스트</a></li>
+					<li><a href="${contextPath}/material/maAdd">자재등록</a></li>
 				</ul></li>
 			<!-- 제품계약관리 -->
 			<li><a class="has-arrow" href="javascript:void()"
 				aria-expanded="false"><i></i> <span class="nav-text">제품계약관리</span></a>
 				<ul aria-expanded="false">
-					<li><a href="${contextPath}/contracts/contractsAll">제품계약 목록</a></li>
-					<li><a href="${contextPath}/contracts/contractsInsertForm">제품계약 등록</a></li>
+					<li><a href="${contextPath}/contracts/contractsAll">제품계약
+							목록</a></li>
+					<li><a href="${contextPath}/contracts/contractsInsertForm">제품계약
+							등록</a></li>
 				</ul></li>
 			<!-- -생산계획 관리 -->
 			<li><a class="has-arrow" href="javascript:void()"
 				aria-expanded="false"><i></i> <span class="nav-text">생산계획
 						관리</span></a>
 				<ul aria-expanded="false">
-					<li><a href="${contextPath}/production/productionAll">제품생산 목록</a></li>
-					<li><a href="${contextPath}/production/productionInsertForm">제품생산 등록</a></li>
+					<li><a href="${contextPath}/production/productionAll">제품생산
+							목록</a></li>
+					<li><a href="${contextPath}/production/productionInsertForm">제품생산
+							등록</a></li>
 				</ul></li>
 			<!-- -조달계획관리 -->
 			<li><a class="has-arrow" href="javascript:void()"
@@ -51,7 +57,8 @@
 						관리</span></a>
 				<ul aria-expanded="false">
 					<li><a href="${contextPath}/obtain/obtainAll">조달계획 목록</a></li>
-					<li><a href="${contextPath}/obtain/obtainInsertForm">조달계획 등록</a></li>
+					<li><a href="${contextPath}/obtain/obtainInsertForm">조달계획
+							등록</a></li>
 				</ul></li>
 			<!-- 발주관리 -->
 			<li><a class="has-arrow" href="javascript:void()"
@@ -65,26 +72,36 @@
 				aria-expanded="false"><i class="icon icon-app-store"></i><span
 					class="nav-text">입고 및 출고관리</span></a>
 				<ul aria-expanded="false">
-					<li><a href="${contextPath}/resources/app-profile.html">자재재고</a></li>
+					<li><a href="${contextPath}/material/maList">재고현황</a></li>
 					<li><a href="imformation">입출고정보</a></li>
 					<li><a href="${contextPath}/resources/app-calender.html">자재입고관리</a></li>
-					<li><a href="${contextPath}">출고목록</a></li>
-					<li><a href="${contextPath}">자재리프트</a></li>
+					<li><a href="${contextPath}/out/outList">출고목록</a></li>
+					<li><a href="${contextPath}/material/maReport">금액현황</a></li>
 				</ul></li>
 			<!-- 기울기 센서 -->
 			<li><a class="has-arrow" href="javascript:void()"
 				aria-expanded="false"><i class="icon icon-app-store"></i><span
-					class="nav-text">기울기센서</span></a>	
-			<!-- 관리자관리  -->
-			<li class="nav-label first">관리자전용</li>
+					class="nav-text">기울기센서</span></a></li>
+			<!-- 게시판 -->
+			<li class="nav-label first">게시판</li>
 			<li><a class="has-arrow" href="javascript:void()"
-				aria-expanded="false"> <i class="icon icon-single-04"></i> <span
-					class="nav-text">승인관리</span></a>
-				<ul aria-expanded="true">
-					<li><a href="${contextPath}/user/userAll">직원목록</a></li>
-					<li><a href="${contextPath}/partner/partnerAll">협력사목록</a></li>
+				aria-expanded="false"><i></i><span class="nav-text">게시판</span></a>
+				<ul aria-expanded="false">
+					<li><a href="${contextPath}">게시판목록</a></li>
+					<li><a href="${contextPath}">게시판등록</a></li>
 				</ul>
 			</li>
+			<c:if test="${user.user_name=='관리자'}">
+				<!-- 관리자관리  -->
+				<li class="nav-label first">관리자전용</li>
+				<li><a class="has-arrow" href="javascript:void()"
+					aria-expanded="false"> <i class="icon icon-single-04"></i> <span
+						class="nav-text">승인관리</span></a>
+					<ul aria-expanded="true">
+						<li><a href="${contextPath}/user/userAll">직원목록</a></li>
+						<li><a href="${contextPath}/partner/partnerAll">협력사목록</a></li>
+					</ul></li>
+			</c:if>
 		</ul>
 	</div>
 </div>

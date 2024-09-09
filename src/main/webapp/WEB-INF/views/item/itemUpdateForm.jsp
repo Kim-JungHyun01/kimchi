@@ -40,13 +40,8 @@
 			<tr>
 				<td>물품 단위</td>
 				<td><select name="item_unit" id="item_unit" title="물품 단위">
-						<option value="mg" ${item.item_unit == 'mg' ? 'selected' : ''}>mg</option>
-						<option value="g" ${item.item_unit == 'g' ? 'selected' : ''}>g</option>
 						<option value="kg" ${item.item_unit == 'kg' ? 'selected' : ''}>kg</option>
 						<option value="ton" ${item.item_unit == 'ton' ? 'selected' : ''}>ton</option>
-						<option value="cc" ${item.item_unit == 'cc' ? 'selected' : ''}>cc</option>
-						<option value="ml" ${item.item_unit == 'ml' ? 'selected' : ''}>mL</option>
-						<option value="dl" ${item.item_unit == 'dl' ? 'selected' : ''}>dl</option>
 						<option value="L" ${item.item_unit == 'L' ? 'selected' : ''}>L</option>
 				</select></td>
 			</tr>

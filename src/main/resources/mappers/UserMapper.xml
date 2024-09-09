@@ -6,7 +6,8 @@
 	<!-- 사용자 로그인 -->
 	<select id="userLogin" parameterType="java.util.Map"
 		resultType="java.util.Map">
-		select user_id, user_pw, user_department, user_approval, user_name
+		select user_id, user_pw, user_department, user_approval,
+		user_name
 		from user
 		where user_id=#{user_id}
 		and user_pw=#{user_pw}
@@ -20,25 +21,37 @@
 	<!-- 사용자 상세 -->
 	<select id="userSelect" resultType="com.kr.kimchi.vo.UserVO">
 		select * from user
-		where user_id =#{user_id}
+		where
+		user_id =#{user_id}
 	</select>
 
 	<!-- 사용자 회원가입 -->
 	<insert id="userInsert" parameterType="com.kr.kimchi.vo.UserVO">
 		insert into user(user_id,
 		user_pw, user_email, user_name,
-		user_number, user_department,
+		user_number,
+		user_department,
 		user_approval) values
 		(#{user_id}, #{user_pw}, #{user_email},
 		#{user_name}, #{user_number}, #{user_department}, 0)
 	</insert>
 
+	<!-- 사용자 id중복체크 -->
+	<select id="userIdCheck" parameterType="String">
+		select user_id from
+		where
+		user_id = #{user_id}
+	</select>
+
 	<!-- 사용자 정보 수정 -->
 	<update id="userUpdate" parameterType="com.kr.kimchi.vo.UserVO">
 		update user set
-		user_email = #{user_email}, user_name = #{user_name},
-		user_number = #{user_number}, user_department = #{user_department}
-		where user_id = #{user_id}
+		user_email
+		= #{user_email}, user_name = #{user_name},
+		user_number =
+		#{user_number}, user_department = #{user_department}
+		where user_id =
+		#{user_id}
 	</update>
 
 	<!-- 사용자 승인 -->

@@ -35,6 +35,11 @@ public class UserService {
 	public void userInsert(UserVO user) {
 		userdao.userInsert(user);
 	}// end
+	
+//	사용자 id중복확인
+	public List<String> userIdCheck(String user_id) {
+		return userdao.userIdCheck(user_id);
+	}//end
 
 //	사용자 정보 수정
 	public void userUpdate(UserVO user) {

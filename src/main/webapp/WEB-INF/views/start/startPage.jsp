@@ -13,8 +13,3 @@
 
 <%@include file="../include/footer.jsp"%>
 
-
-
-
-<!-- Required vendors -->
-<script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

@@ -44,7 +44,8 @@ button {
 <script>
 	function openuserModal() {
 		document.getElementById("userModal").style.display = "flex";
-	}//end
+	} // end
+	
 	function closeuserModal() {
 		document.getElementById("userModal").style.display = "none";
 	}//end
@@ -68,9 +69,11 @@ button {
 				<td>담당자 이메일</td>
 				<td>담당자 부서</td>
 			</tr>
+			<!-- userlist.user_approval eq 1 and   -->
 			<c:forEach var="userlist" items="${userlist}">
-				<c:if test="${userlist.user_approval eq 1 and userlist.user_department ne '관리자' }">
-					<!-- 승인된 사람만 -->
+				<c:if
+					test="${userlist.user_approval eq 1 and userlist.user_department eq part}">
+					<!-- 승인된 사람만 & 특정부서만-->
 					<tr
 						onclick="selectUser('${userlist.user_id}','${userlist.user_name }' ,'${userlist.user_number }','${userlist.user_email }','${userlist.user_department }')">
 						<td>${userlist.user_name }</td>
@@ -80,7 +83,8 @@ button {
 					</tr>
 				</c:if>
 			</c:forEach>
+
 		</table>
-	<button onclick="closeuserModal()">닫기</button>
+		<button onclick="closeuserModal()">닫기</button>
 	</div>
 </div>

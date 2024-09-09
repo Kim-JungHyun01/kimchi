@@ -46,10 +46,22 @@ public class UserController {
 
 	@PostMapping(value = "user/userInsert")
 	public String userInsert(UserVO user) {
+		System.out.println(user);
 		userserivce.userInsert(user);
 		return "redirect:/login/loginForm";
 	}// end
-
+	
+//	사용자 id 중복확인
+	@GetMapping(value = "user/userIdCheck")
+	public int userIdCheck(String user_id) {
+	    List<String> user = userserivce.userIdCheck(user_id);
+	    if (user != null && !user.isEmpty()) {
+	        return 1; // 사용자 ID가 존재
+	    } else {
+	        return 0; // 사용자 ID가 존재하지 않음
+	    }
+	}//end
+	
 //	사용자 정보 수정
 	@GetMapping(value = "user/userUpdateForm")
 	public ModelAndView userUpdateForm(String user_id) {

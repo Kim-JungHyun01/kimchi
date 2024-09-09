@@ -68,25 +68,36 @@
 			<div class="header-content">
 				<nav class="navbar navbar-expand">
 					<div class="collapse navbar-collapse justify-content-between">
-						<div class="header-left">
-							<!-- 검색기능삭제 -->
-						</div>
+						<div class="header-left"></div>
 						<ul class="navbar-nav header-right">
-							<c:if test="${user == null}">
-								<li class="nav-item dropdown header-profile"><a
-									href="${contextPath}/login/loginForm" class="dropdown-item">
-										<i class="icon-key"></i> <span class="ml-2">Login </span>
-								</a></li>
-							</c:if>
-							<c:if test="${user != null}">
-								<li class="nav-item dropdown header-profile"><a href="#"
-									class="dropdown-item"> <i class="icon-key"></i> <span
-										class="ml-2">${user.user_name}</span></a> <a
-									href="${contextPath}/login/logout" class="dropdown-item"> <i
-										class="icon-key"></i> <span class="ml-2">Logout </span>
-								</a>
-									<div class="dropdown-menu dropdown-menu-right"></div></li>
-							</c:if>
+							<c:choose>
+								<c:when test="${user != null}">
+									<li class="nav-item dropdown header-profile"><a href="#"
+										class="dropdown-item"> <i class="icon icon-single-04"></i>
+											<span class="ml-2">${user.user_department}_${user.user_name}님</span></a>
+										<a href="${contextPath}/login/logout" class="dropdown-item">
+											<i class="icon-key"></i> <span class="ml-2">Logout </span>
+									</a>
+										<div class="dropdown-menu dropdown-menu-right"></div></li>
+								</c:when>
+								<c:when test="${part !=null }">
+									<li class="nav-item dropdown header-profile"><a href="#"
+										class="dropdown-item"> <i class="icon icon-single-04"></i>
+											<span class="ml-2">협력회사_${part.part_companyname}님</span></a> <a
+										href="${contextPath}/login/logout" class="dropdown-item">
+											<i class="icon-key"></i> <span class="ml-2">Logout </span>
+									</a>
+										<div class="dropdown-menu dropdown-menu-right"></div></li>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${user == null}">
+										<li class="nav-item dropdown header-profile"><a
+											href="${contextPath}/login/loginForm" class="dropdown-item">
+												<i class="icon-key"></i> <span class="ml-2">Login </span>
+										</a></li>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
 						</ul>
 					</div>
 				</nav>

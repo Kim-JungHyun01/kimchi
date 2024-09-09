@@ -25,13 +25,8 @@
 		<div>
 			<p>물품 단위</p>
 			<select name="item_unit" id="item_unit" required="required">
-				<option value="mg" ${item_unit == 'mg' ? 'selected' : ''}>mg</option>
-				<option value="g" ${item_unit == 'g' ? 'selected' : ''}>g</option>
 				<option value="kg" ${item_unit == 'kg' ? 'selected' : ''}>kg</option>
 				<option value="ton" ${item_unit == 'ton' ? 'selected' : ''}>ton</option>
-				<option value="cc" ${item_unit == 'cc' ? 'selected' : ''}>cc</option>
-				<option value="ml" ${item_unit == 'ml' ? 'selected' : ''}>mL</option>
-				<option value="dl" ${item_unit == 'dl' ? 'selected' : ''}>dl</option>
 				<option value="L" ${item_unit == 'L' ? 'selected' : ''}>L</option>
 			</select>
 		</div>

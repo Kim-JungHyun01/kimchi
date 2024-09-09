@@ -62,7 +62,7 @@
 					onclick="openpartnerModal()">
 			</div>
 			<div>
-				<h4>계약담당자</h4>
+				<h4>조달계획 담당자</h4>
 				<input name="user_id" id="user_id" type="hidden"> <label>담당자명</label>
 				<input name="user_name" id="user_name" type="text"
 					placeholder="담당자선택" onclick="openuserModal()"><br> <label>담당자

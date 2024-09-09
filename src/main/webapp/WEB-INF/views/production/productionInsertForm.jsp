@@ -12,7 +12,7 @@
 			<div>
 				<h4>계약 상세내역</h4>
 				<label>계약코드</label> <input name="contracts_no" id="contracts_no"
-					type="number" placeholder="계약선택" onclick="opencontractsModal()"><br>
+					type="number" placeholder="계약선택" onclick="opencontractsModal('')"><br>
 				<label>계약물품코드</label> <input name="item_no" id="item_no"
 					type="number" placeholder="계약선택" onclick="opencontractsModal()"><br>
 				<label>계약물품명</label> <input name="item_name" id="item_name"
