@@ -160,5 +160,7 @@ function checkApproval(partner_approval, partner_taxid) {
 		</div>
 
 	</div>
+		
+	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
