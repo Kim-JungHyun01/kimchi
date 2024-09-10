@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .input-group {
 	display: flex;
@@ -45,53 +46,59 @@
 	    	return;
 		}
 		
-		 $.ajax({
-		        url: 'user/userIdCheck', // 요청할 URL
-		        type: 'GET', // HTTP 메서드
-		        data: { user_id: user_id }, // 서버에 보낼 데이터
-		        success: function(result) {
-		            if (result === 1) {
-		                alert("이미 존재하는 사용자 ID입니다.");
-		                document.getElementById("user_id").readOnly = false; // 사용 가능할 경우 읽기 전용 해제
-		                document.getElementById("btncheckId").disabled = false;//버튼 활성화
-		                document.getElementById("user_id").value = "";
-		            } else {
-		                alert("사용할 수 있는 사용자 ID입니다.");
-		                document.getElementById("user_id").readOnly = true; 
-		                document.getElementById("btncheckId").disabled = true; //버튼활성화
-		            }
-		        },
-		        error: function() {
-		            alert("오류가 발생했습니다.");
+		$.ajax({
+		    url: 'userIdCheck',
+		    type: 'GET',
+		    data: { user_id: user_id },
+		    dataType: 'json', // JSON 형식으로 응답을 기대
+		    success: function(result) {
+		        if (result.status === '있음') {
+		            alert("이미 존재하는 사용자 ID입니다.");
+		            document.getElementById("user_id").readOnly = false; 
+		            document.getElementById("btncheckId").disabled = false; 
+		            document.getElementById("user_id").value = "";
+		        } else {
+		            alert("사용할 수 있는 사용자 ID입니다.");
+		            document.getElementById("user_id").readOnly = true; 
+		            document.getElementById("btncheckId").disabled = true; 
 		        }
-		    });
+		    },
+		    error: function() {
+		        alert("오류가 발생했습니다.");
+		    }
+		});
 	}//checkId
 
 	function checkPw() {
 		var user_pw = document.getElementById("user_pw").value;
 		var user_pwcheck = document.getElementById("user_pwcheck").value;
-
 		const lengthCheck = user_pw.length >= 10; // 길이 체크
-	    const engCheck = /(?=.*[a-z])/.test(user_pw); // 소문자 체크
+	    const loengCheck = /(?=.*[a-z])/.test(user_pw); // 소문자 체크
+	    const upengCheck = /(?=.*[A-Z])/.test(user_pw); // 대문자 체크
 	    const numCheck = /(?=.*\d)/.test(user_pw); // 숫자 체크
 	    const specialCheck = /[!@#$%^&*]/.test(user_pw); // 특수문자 체크
-	    const spaceCheck = !/\s/.test(user_pw); // 공백 체크
+	    const spaceCheck = /\s/.test(user_pw); // 공백 체크
 		 
 		//길이체크
 		document.getElementById("pwWordLenght").className = lengthCheck ? "valid" : "unvalid";
 		//소문자
-		document.getElementById("pwWordEng").className = engCheck ? "valid" : "unvalid";
+		document.getElementById("pwWordLoeng").className = loengCheck ? "valid" : "unvalid";
 		//숫자
 		document.getElementById("pwWordNum").className = numCheck ? "valid" : "unvalid";
 		//특수문자 제외
 		document.getElementById("pwWordSpe").className = specialCheck ? "unvalid" : "valid";
+		//대문자 제외
+		document.getElementById("pwWordUpeng").className = upengCheck ? "unvalid" : "valid";
 		// 공백 체크
 		document.getElementById("pwWordSpace").className = spaceCheck ? "unvalid" : "valid";
 		
 		//비밀번호 제확인
 		if (user_pw == user_pwcheck) {
 			document.getElementById("pwcheckWord").style.display = "none";
+		}else{
+			document.getElementById("pwcheckWord").style.display = "flex";
 		}
+		
 	}//checkPw
 
 	function checkNumber(InputNumber) {
@@ -114,6 +121,8 @@
 	//회원가입시 최종확인
 	function submitCheck() {
 	    var btncheckId = document.getElementById("btncheckId").disabled;
+	    var user_id = document.getElementById("user_id").value;
+	    var idRegex = /^[a-zA-Z0-9]{5,20}$/;
 	    var user_pw = document.getElementById("user_pw").value;
 	    var pwPattern = /^(?=.*[a-z])(?=.*\d)[a-z0-9]{10,}$/;   // 정규 표현식 수정
 	    var user_pwcheck = document.getElementById("user_pwcheck").value;
@@ -127,9 +136,14 @@
 	    var user_department = document.getElementById("user_department").value;
 	    
 
-	    if (btncheckId) {
+	    if (!btncheckId) {
 	        showAlert("ID 중복검사를 실시해주세요.", "user_id");
 	        return;
+	    }
+	    
+	    if(!idRegex.test(user_id)){
+	    	showAlert("ID는 5~20자리의 영문자, 숫자로 입력해주세요.", "user_id");
+		  	return;
 	    }
 
 	    if (!pwPattern.test(user_pw)) {
@@ -148,7 +162,7 @@
 	        return;
 	    }
 
-	    if (!namePattern.test(user_name)) {
+	    if (!namePattern.test(user_name) || user_name==="관리자") {
 	        showAlert("올바르지 않는 이름 형식입니다.", "user_name");
 	        return;
 	    }
@@ -159,7 +173,8 @@
 	    }
 
 	    if (user_department === '부서선택') {
-	        showAlert("부서를 선택해주세요.", "user_department");
+	    	alert("부서를 선택해주세요");
+	    	document.getElementById("user_department").focus();
 	        return;
 	    }
 
@@ -196,12 +211,13 @@
 									<div class="form-group">
 										<label><strong>사용자 Password</strong></label> <input
 											type="password" class="form-control" name="user_pw"
-											id="user_pw" placeholder="사용자 Password">
+											id="user_pw" placeholder="사용자 Password" oninput="checkPw()">
 									</div>
 									<div class="form-group">
 										<label id="pwWordLenght" class="unvalid">10자리이상,&nbsp;</label>
-										<label id="pwWordEng" class="unvalid">영소문자,&nbsp;</label>
+										<label id="pwWordLoeng" class="unvalid">영소문자,&nbsp;</label>
 										<label id="pwWordNum" class="unvalid">숫자포함&nbsp;&nbsp;|&nbsp;</label>
+										<label id="pwWordUpeng" class="valid">대문자,&nbsp;</label>
 										<label id="pwWordSpe" class="valid">특수문자,&nbsp;</label>
 										<label id="pwWordSpace" class="valid">공백제외</label>
 									</div>
@@ -209,7 +225,7 @@
 										<label><strong>사용자 Password 확인</strong></label> <input
 											type="password" class="form-control" name="user_pwcheck"
 											id="user_pwcheck" placeholder="사용자 Password 재입력"
-											onkeyup="checkPw()">
+											oninput="checkPw()">
 									</div>
 									<div class="form-group">
 										<label id="pwcheckWord" style="color: red;"
@@ -242,7 +258,7 @@
 										</select>
 									</div>
 									<div class="text-center mt-4">
-										<button type="button" onclick="sumbitCheck();"
+										<button type="button" onclick="submitCheck()"
 											class="btn btn-primary btn-block">회원가입</button>
 										<button type="reset" class="btn btn-primary btn-block">초기화</button>
 									</div>

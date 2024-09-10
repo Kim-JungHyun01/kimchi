@@ -47,7 +47,7 @@ public class UserService {
 	}// end
 	
 //	사용자 id중복확인
-	public List<String> userIdCheck(String user_id) {
+	public int userIdCheck(String user_id) {
 		return userdao.userIdCheck(user_id);
 	}//end
 

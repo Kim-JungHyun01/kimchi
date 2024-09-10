@@ -46,8 +46,8 @@
 	</insert>
 	
 	<!-- tax중복체크 -->
-	<select id="partnertaxIdCheck" parameterType="String">
-		select partner_taxid from
+	<select id="partnertaxIdCheck" parameterType="String" resultType="java.lang.Integer">
+		select count(*) from partner
 		where
 		partner_taxid = #{partner_taxid}
 	</select>

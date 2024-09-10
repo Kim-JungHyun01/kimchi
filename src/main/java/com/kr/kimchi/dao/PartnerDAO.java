@@ -63,8 +63,8 @@ public class PartnerDAO {
 	}//end
 	
 //	협력사 사업자번호 중목확인
-	public List<PartnerVO> partnertaxIdCheck(String partner_taxid) {
-		return session.selectList(namespace+".partnertaxIdCheck", partner_taxid);
+	public Integer partnertaxIdCheck(String partner_taxid) {
+		return session.selectOne(namespace+".partnertaxIdCheck", partner_taxid);
 	}//end
 	
 //	협력회사 정보 수정

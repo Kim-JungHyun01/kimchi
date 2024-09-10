@@ -6,6 +6,23 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="${contextPath}/resources/images/favicon.png">
 <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
+<script>
+function checktaxId(InputNumber) {
+	var telNumber = InputNumber.value;
+	var length = telNumber.length;
+	if (length >= 8) {
+		// 숫자만 남기고 제거
+		let numbers = telNumber.replace(/[^0-9]/g, "");
+
+		// 정규식을 사용하여 형식화
+		let formattedNumber = numbers.replace(
+				/([0-9]{3})-?([0-9]{2})-?([0-9]{5})/, `$1-$2-$3`);
+
+		InputNumber.value = formattedNumber;
+	}
+} // end checktaxId
+
+</script>
 <style>
 .form-check {
 	margin-right: 100px; /* 원하는 간격으로 조정 */
@@ -74,7 +91,7 @@
 										<div class="form-group">
 											<label><strong>사업자번호</strong></label> <input id="partner_taxid"
 												name="partner_taxid" type="text" class="form-control"
-												placeholder="협력회사 사업자번호">
+												placeholder="협력회사 사업자번호" onkeyup="checktaxId(this)" maxlength="10">
 										</div>
 										<div class="form-group">
 											<label><strong>ID</strong></label> <input id="partner_id"

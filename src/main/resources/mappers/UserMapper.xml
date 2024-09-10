@@ -55,10 +55,9 @@
 	</insert>
 
 	<!-- 사용자 id중복체크 -->
-	<select id="userIdCheck" parameterType="String">
-		select user_id from
-		where
-		user_id = #{user_id}
+	<select id="userIdCheck" parameterType="String" resultType="java.lang.Integer">
+		select count(*) from user 
+		where user_id = #{user_id}
 	</select>
 
 	<!-- 사용자 정보 수정 -->

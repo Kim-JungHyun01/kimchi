@@ -205,6 +205,12 @@
 			<version>2.4</version>
 		</dependency>
 
+		<!-- 중복id체크용 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.11.0</version> <!-- 버전은 맞춰서 사용하세요 -->
+		</dependency>
 
 
 	</dependencies>

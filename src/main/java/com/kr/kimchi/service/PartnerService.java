@@ -47,7 +47,7 @@ public class PartnerService {
 	}//end
 	
 //	사업자번호 중복확인
-	public List<PartnerVO> partnertaxIdCheck(String partner_taxid) {
+	public int partnertaxIdCheck(String partner_taxid) {
 		return partdao.partnertaxIdCheck(partner_taxid);
 	}
 	

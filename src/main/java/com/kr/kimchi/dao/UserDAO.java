@@ -58,12 +58,12 @@ public class UserDAO {
 	
 //	사용자 회원가입
 	public void userInsert(UserVO user) {
-		session.selectOne(namespace+".userSelect", user);
+		session.selectOne(namespace+".userInsert", user);
 	}//end
 
 //	사용자 id중복확인
-	public List<String> userIdCheck(String user_id) {
-		return session.selectList(namespace + ".userIdCheck", user_id);
+	public Integer userIdCheck(String user_id) {
+		return session.selectOne(namespace + ".userIdCheck", user_id);
 	}// end
 	
 //	사용자 정보 수정

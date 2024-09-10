@@ -1,9 +1,12 @@
 package com.kr.kimchi.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,13 +74,15 @@ public class PartnerController {
 	
 //	사업자번호 중복확인
 	@GetMapping(value = "partner/partnertaxIdCheck")
-	public int partnertaxIdCheck(String partner_taxid) {
-		List<PartnerVO> part = partservice.partnertaxIdCheck(partner_taxid);
-	    if (part != null && !part.isEmpty()) {
-	        return 1; // 사용자 ID가 존재
+	public ResponseEntity<Map<String, String>> partnertaxIdCheck(@RequestParam String partner_taxid) {
+		  Map<String, String> response = new HashMap<>();
+		int part = partservice.partnertaxIdCheck(partner_taxid);
+		if (part == 0) {
+	        response.put("status", "없음");
 	    } else {
-	        return 0; // 사용자 ID가 존재하지 않음
+	        response.put("status", "있음");
 	    }
+	    return ResponseEntity.ok(response);
 	}//end
 
 	@PostMapping(value = "partner/partnerInsert")
