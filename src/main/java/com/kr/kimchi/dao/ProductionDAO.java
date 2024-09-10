@@ -1,6 +1,8 @@
 package com.kr.kimchi.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,9 +20,17 @@ public class ProductionDAO {
 	private SqlSession session;
 	
 //	생산계획 보기_전체
-	public List<ProductionVO> productionAll(){
-		return session.selectList(namespace+".productionAll");
+	public List<ProductionVO> productionAll(int startRow, int pageSize){
+		 Map<String, Object> params = new HashMap<>();
+	        params.put("startRow", startRow);
+	        params.put("pageSize", pageSize);
+	     return session.selectList(namespace+".productionAll", params);
 	}//end
+	
+//	전체 레코드 수
+	public Integer getTotalCount() {
+		return session.selectOne(namespace + ".getTotalCount");		
+	} //end
 	
 //	생산계획 보기_상세
 	public ProductionVO productionSelect(int production_no) {

@@ -367,6 +367,7 @@ button {
 										<option value="기타"
 											${bom_malist.bom_ma_process == '기타' ? 'selected' : ''}>기타</option>
 								</select></td>
+								<td><button type="button" onclick="resetRow(this)">초기화</button></td>
 							</tr>
 						</c:forEach>
 					</table>

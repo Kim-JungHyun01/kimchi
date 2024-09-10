@@ -12,21 +12,37 @@
 			<td>생산수량</td>
 			<td>생산납기일</td>
 			<td>생산계획 상태</td>
-			<td>등록일</td>
-			<td>담당자</td>
-			<td>계약코드</td>
 		</tr>
 		<c:forEach var="prolist" items="${prolist}">
-			<tr>
-				<td><a href="${contextPath}/production/productionSelect?production_no=${prolist.production_no}">${prolist.production_no}</a></td>
+			<tr onclick="location.href='${contextPath}/production/productionSelect?production_no=${prolist.production_no}'" style="cursor: pointer;">
+				<td>${prolist.production_no}</td>
 				<td>${prolist.production_quantity}</td>
 				<td>${prolist.production_deliveryDate}</td>
 				<td>${prolist.production_status}</td>
-				<td>${prolist.production_registrationDate}</td>
-				<td>${prolist.user_id}</td>
-				<td>${prolist.contracts_no}</td>
 			</tr>
 		</c:forEach>
 	</table>
+	
+			<!-- Pagination -->
+	<div class="pagination">
+		<c:if test="${currentPage > 1}">
+			<a href="?pageNum=${currentPage - 1}">이전|</a>
+		</c:if>
+
+		<c:forEach var="page" begin="1" end="${totalPages}">
+			<c:choose>
+				<c:when test="${page == currentPage}">
+					<strong>${page}</strong>
+				</c:when>
+				<c:otherwise>
+					<a href="?pageNum=${page}">${page}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+
+		<c:if test="${currentPage < totalPages}">
+			<a href="?pageNum=${currentPage + 1}">|다음</a>
+		</c:if>
+	</div>
 </div>
 <%@include file="../include/footer.jsp"%>

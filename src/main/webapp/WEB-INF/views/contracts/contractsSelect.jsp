@@ -102,26 +102,21 @@
 		<!-- contracts_status : 계약확인중, 계약승인, 계약취소 -->
 		<c:choose>
 			<c:when test="${con.contracts_status eq '계약확인중'}">
-				<a type="button"
-					href="${contextPath}/contracts/contractsUpdateForm?contracts_no=${con.contracts_no}">계약수정</a>
-				<form action="contractsCheck" method="post" id="checkForm"
-					name="checkForm">
+				<a href="${contextPath}/contracts/contractsUpdateForm?contracts_no=${con.contracts_no}">계약수정</a>
+				<form action="contractsCheck" method="post" id="checkForm" name="checkForm">
 					<input type="hidden" name="contracts_no" id="contracts_no" value="${con.contracts_no}">
 					<input type="hidden" name="contracts_status" id="contracts_status" value="">
 					<button type="button" onclick="submitCheck('계약승인')">계약승인</button>
 					<button type="button" onclick="submitCheck('계약취소')">계약취소</button>
 				</form>
 			</c:when>
-			<c:otherwise>
-			<a href="${contextPath }/contracts/paSelect?ca_id=1&pa_referenceNo=${con.contracts_no}">계약서보기</a>
-			<!-- 결과값 ${palist.pa_no} , ${palist.codeVo.code_name}-->
-			
-				<form action="${contextPath }/pa/paSelect" method = "get">
-				<input name = "ca_id" id = "ca_id" type = "number" value=1>
-				<input name = "pa_referenceNo" id = "pa_referenceNo"  type = "number" value = "${con.contracts_no}">
-					<button type="submit">계약서확인</button>
+				<c:when test="${con.contracts_status ne'계약취소'}">
+				<form id="documentForm" action="${contextPath}/contracts/documentView" method="get">
+				    <input name="ca_id" id="ca_id" type="hidden" value="1">
+				    <input name="pa_referenceNo" id="pa_referenceNo" type="hidden" value="${con.contracts_no}">
+				    <button type="submit">계약서확인</button>
 				</form>
-			</c:otherwise>
+				</c:when>
 		</c:choose>
 	</div>
 </div>
@@ -129,7 +124,14 @@
 <script>
 	//계약승인 & 취소
 	function submitCheck(contracts_status) {
+		
+		if (!confirm('계약을'+contracts_status+'하시겠습니까?')) {
+	        location.href = "/contracts/contractsSelect?contracts_no="+${con.contracts_no};
+	        return;
+	    }//end
+		
 		document.getElementById("contracts_status").value = contracts_status;
 		document.getElementById("checkForm").submit();
 	}//end
+	
 </script>

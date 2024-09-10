@@ -1,6 +1,8 @@
 package com.kr.kimchi.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,9 +20,17 @@ public class ContractsDAO {
 	private SqlSession session;
 	
 //	계약 보기_전체
-	public List<ContractsVO> contractsAll(){
-		return session.selectList(namespace+".contractsAll");
+	public List<ContractsVO> contractsAll(int startRow, int pageSize){
+		 Map<String, Object> params = new HashMap<>();
+	        params.put("startRow", startRow);
+	        params.put("pageSize", pageSize);
+		return session.selectList(namespace+".contractsAll", params);
 	}//end
+	
+//	전체 레코드 수
+	public Integer getTotalCount() {
+		return session.selectOne(namespace + ".getTotalCount");		
+	} //end
 	
 //	계약 보기_상세 
 	public ContractsVO contractsSelect(int contracts_no) {

@@ -166,10 +166,10 @@
 	    if (!confirm('회원가입 하시겠습니까?')) {
 	        alert("회원가입이 취소되었습니다.");
 	        location.href = "/login/loginForm";
-	    } else {
+	        return;
+	    }
 	        document.getElementById("userInsertForm").submit();
 	        alert("회원가입이 완료되었습니다. 승인 여부를 확인해주세요.");
-	    }
 	}//end
 	
 </script>

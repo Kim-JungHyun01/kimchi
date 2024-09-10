@@ -30,9 +30,21 @@ public class ItemController {
 
 //	상품 전체보기
 	@GetMapping(value = "item/itemAll")
-	public ModelAndView itemAll() {
-		List<ItemVO> itemlist = itemservice.itemAll();
+	public ModelAndView itemAll(@RequestParam(defaultValue = "1") int pageNum,
+								@RequestParam(required = false) String item_name) {
+		int pageSize = 5; // 한 페이지에 보여줄 갯수 
+	    int pageNavSize = 5; // 페이지 네비 크기
+	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
+		List<ItemVO> itemlist = itemservice.itemAll(startRow, pageSize, item_name);
+		Integer totalCount = itemservice.getTotalCount(); // 총 레코드 수 가져옴
+		Integer totalPages = itemservice.itemSearch(pageSize, item_name); // 검색 이후 ㄹㅔ코드수 계산
+		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
+		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("pagination", pagination);
+	    mav.addObject("currentPage", pageNum);
+	    mav.addObject("totalPages", totalPages);
+	    
 		mav.addObject("itemlist", itemlist);
 		mav.setViewName("item/itemAll");
 		return mav;
@@ -73,7 +85,18 @@ public class ItemController {
 //	상품수정
 	@GetMapping(value = "item/itemUpdateForm")
 	public ModelAndView itemUpdateForm(int item_no) {
-		ModelAndView mav = itemSelect(item_no);
+		List<AttachmentVO> attlist = attservice.attachmentAll();
+		ItemVO item =  itemservice.itemSelect(item_no);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		if(item.getAttachment_no()!=null) {
+			AttachmentVO att = attservice.attachmentSelect(item.getAttachment_no());
+			mav.addObject("att", att);
+		}
+		
+		mav.addObject("attlist", attlist);
+		mav.addObject("item", item);
 		mav.setViewName("item/itemUpdateForm");
 		return mav;
 	}// end
@@ -123,7 +146,6 @@ public class ItemController {
 			}
 		} // end for
 
-		System.out.println(bom_malist);
 		bom_maservice.bom_maInsert(bom_malist);
 
 		ItemVO item = new ItemVO();
@@ -152,7 +174,6 @@ public class ItemController {
 			}
 		} // end for
 
-		System.out.println(bom_malist);
 		bom_maservice.bom_maInsert(bom_malist);
 		
 		

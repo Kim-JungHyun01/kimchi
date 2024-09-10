@@ -7,6 +7,8 @@
 	<select id="contractsAll"
 		resultType="com.kr.kimchi.vo.ContractsVO">
 		select * from contracts
+		ORDER BY contracts_no DESC
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 
 	<!-- 계약 보기_상세 -->
@@ -14,6 +16,11 @@
 		resultType="com.kr.kimchi.vo.ContractsVO">
 		select * from contracts
 		where contracts_no = #{contracts_no}
+	</select>
+	
+	<!-- 전체 레코드 수 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM contracts;
 	</select>
 
 	<!-- 계약 추가 -->

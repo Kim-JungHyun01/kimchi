@@ -7,9 +7,11 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.kimchi.service.PartnerService;
+import com.kr.kimchi.vo.PaginationVO;
 import com.kr.kimchi.vo.PartnerVO;
 
 @Controller
@@ -20,9 +22,28 @@ public class PartnerController {
 
 //	협력회사 전체
 	@GetMapping(value = "partner/partnerAll")
-	public ModelAndView partnerAll() {
-		List<PartnerVO> partnerlist = partservice.partnerAll();
+	public ModelAndView partnerAll(@RequestParam(defaultValue = "1") int pageNum,
+								   @RequestParam(required = false) String partner_companyname) {
+		
+		int pageSize = 2; // 한 페이지에 보여줄 갯수 // db에 3개 밖에 없어서 2로 설정했어요!
+	    int pageNavSize = 5; // 페이지 네비 크기
+	    
+	  //시작 위치 계산
+	    int startRow = (pageNum - 1) * pageSize;
+		
+		List<PartnerVO> partnerlist = partservice.partnerAll(startRow, pageSize, partner_companyname);
+		
+		Integer totalCount = partservice.getTotalCount(); // 총 레코드 수 가져옴
+		Integer totalPages = partservice.partnerSearch(pageSize, partner_companyname); // 검색이후 페이지 수 계산
+		
+		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
+		
 		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("pagination", pagination);
+	    mav.addObject("currentPage", pageNum);
+	    mav.addObject("totalPages", totalPages);
+		
 		mav.addObject("partnerlist", partnerlist);
 		mav.setViewName("partner/partnerAll");
 		return mav;
@@ -41,12 +62,23 @@ public class PartnerController {
 //	협력회사 회원가입
 	@GetMapping(value = "partner/partnerInsertForm")
 	public ModelAndView partnerInsertForm() {
-		List<PartnerVO> partnerlist = partservice.partnerAll();//taxid, id중복확인
+		List<PartnerVO> partnerlist = partservice.partnerAll(0, 1, null);//taxid, id중복확인
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("partnerlist", partnerlist);
 		mav.setViewName("partner/partnerInsertForm");
 		return mav;
 	}// end
+	
+//	사업자번호 중복확인
+	@GetMapping(value = "partner/partnertaxIdCheck")
+	public int partnertaxIdCheck(String partner_taxid) {
+		List<PartnerVO> part = partservice.partnertaxIdCheck(partner_taxid);
+	    if (part != null && !part.isEmpty()) {
+	        return 1; // 사용자 ID가 존재
+	    } else {
+	        return 0; // 사용자 ID가 존재하지 않음
+	    }
+	}//end
 
 	@PostMapping(value = "partner/partnerInsert")
 	public String partnerInsert(PartnerVO part) {

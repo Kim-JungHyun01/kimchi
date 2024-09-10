@@ -132,28 +132,30 @@
 
 			// Validate user input (optional)
 			if (!userId || !userPw) {
-				alert('사용자 ID와 비밀번호를 입력하세요.');
+				alert("사용자 ID와 비밀번호를 입력하세요.");
 				return;
 			}
 
 			// Set form action for user login
-			form.action = 'userLogin'; // Change this to your user login endpoint
+			form.action = '${contextPath}/login/userLogin'; // Change this to your user login endpoint
 			form.method = 'post';
 			form.submit();
 		} else {
+			const partner_taxid = document.getElementById('partner_taxid').value;
 			const partnerId = document.getElementById('partner_id').value;
 			const partnerPw = document.getElementById('partner_pw').value;
 
 			// Validate partner input (optional)
-			if (!partnerId || !partnerPw) {
-				alert('협력회사 ID와 비밀번호를 입력하세요.');
+			if (!partnerId || !partnerPw||!partner_taxid) {
+				alert('사업자번호와 협력회사 ID와 비밀번호를 입력하세요.');
 				return;
 			}
 
 			// Set form action for partner login
-			form.action = 'partnerLogin'; // Change this to your partner login endpoint
+			form.action = '${contextPath}/login/partnerLogin';
 			form.method = 'post';
 			form.submit();
 		}
 	}//end
+	
 </script>

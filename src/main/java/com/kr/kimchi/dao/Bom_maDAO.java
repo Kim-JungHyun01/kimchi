@@ -20,6 +20,11 @@ public class Bom_maDAO {
 	public List<Bom_maVO> bom_maSelect(int item_no) {
 		return session.selectList(namespace + ".bom_maSelect", item_no);
 	}// end
+	
+//	bom정보 보기_ma_id별
+	public Bom_maVO bom_maMaterial(int item_no, int ma_id) {
+		return session.selectOne(namespace + ".bom_maMaterial", ma_id);
+	}// end
 
 //	bom정보_자재 추가
 	public void bom_maInsert(List<Bom_maVO> bom_malist) {

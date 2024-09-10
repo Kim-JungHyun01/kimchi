@@ -57,8 +57,6 @@
 						관리</span></a>
 				<ul aria-expanded="false">
 					<li><a href="${contextPath}/obtain/obtainAll">조달계획 목록</a></li>
-					<li><a href="${contextPath}/obtain/obtainInsertForm">조달계획
-							등록</a></li>
 				</ul></li>
 			<!-- 발주관리 -->
 			<li><a class="has-arrow" href="javascript:void()"
@@ -91,7 +89,7 @@
 					<li><a href="${contextPath}">게시판등록</a></li>
 				</ul>
 			</li>
-			<c:if test="${user.user_name=='관리자'}">
+			<c:if test="${userlogin.user_name=='관리자'}">
 				<!-- 관리자관리  -->
 				<li class="nav-label first">관리자전용</li>
 				<li><a class="has-arrow" href="javascript:void()"

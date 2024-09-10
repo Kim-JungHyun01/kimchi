@@ -49,10 +49,11 @@ button {
 		document.getElementById("productionModal").style.display = "none";
 	}//end
 	//계약 정보가져오기
-	function selectProduction(no, quantity, deliveryDate) {
+	function selectProduction(no, quantity, deliveryDate, contracts_no) {
 		document.getElementById("production_no").value = no;
 		document.getElementById("production_quantity").value = quantity;
 		document.getElementById("production_deliveryDate").value = deliveryDate;
+		document.getElementById("contracts_no").value = contracts_no;
 		closeproductionModal(); // 모달 닫기
 	}//end
 </script>
@@ -66,21 +67,17 @@ button {
 				<td>생산납기일</td>
 			</tr>
 			<c:forEach var="prolist" items="${prolist}">
-				<tr
-					onclick="selectProduction('${prolist.production_no}', '${prolist.production_quantity}', '${prolist.production_deliveryDate}')">
-					<td>${prolist.production_no}</td>
-					<td>${prolist.production_quantity}</td>
-					<td>${prolist.production_deliveryDate}</td>
-				</tr>
+				<c:if test="${prolist.production_status eq '생산계획확인완료'}">
+					<tr
+						onclick="selectProduction('${prolist.production_no}', '${prolist.production_quantity}', '${prolist.production_deliveryDate}', '${prolist.contracts_no}')">
+						<td>${prolist.production_no}</td>
+						<td>${prolist.production_quantity}</td>
+						<td>${prolist.production_deliveryDate}</td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</table>
 		<button onclick="closeproductionModal()">닫기</button>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
-<!-- Required vendors -->
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

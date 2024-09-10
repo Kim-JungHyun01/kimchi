@@ -107,9 +107,7 @@
 		<c:choose>
 			<c:when test="${obtain.obtain_status eq '조달계획확인중'}">
 				<div>
-					<a
-						href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획
-						수정</a>
+					<a href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획수정</a>
 					<form action="obtainCheck" method="post" id="checkForm"
 						name="checkForm">
 						<input type="hidden" name="obtain_no" id="obtain_no"
@@ -122,7 +120,6 @@
 			</c:when>
 			<c:otherwise>
 				<div>
-					<a href="${contextPath}">구매발주서 확인</a>
 					<a href="${contextPath}/production/productionSelect?production_no=${obtain.production_no}">생산계획보기</a>
 				</div>
 			</c:otherwise>
@@ -133,6 +130,12 @@
 <script>
 	//조달계획확인 & 취소
 	function submitCheck(obtain_status) {
+		
+		if (!confirm(obtain_status+'하시겠습니까?')) {
+	        location.href = "/obtain/obtainSelect?obtain_no="+${obtain.obtain_no};
+	        return;
+	    }//end
+		
 		document.getElementById("obtain_status").value = obtain_status;
 		document.getElementById("checkForm").submit();
 	}//end

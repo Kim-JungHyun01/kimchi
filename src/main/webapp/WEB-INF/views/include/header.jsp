@@ -43,7 +43,7 @@
             Nav header start
         ***********************************-->
 		<div class="nav-header">
-			<a href="#" class="brand-logo"> <img class="logo-abbr"
+			<a href="/" class="brand-logo"> <img class="logo-abbr"
 				src="${contextPath}/resources/images/logo.png" alt=""> <img
 				class="logo-compact"
 				src="${contextPath}/resources/images/logo-text.png" alt=""> <!-- 이미지 조정-->
@@ -71,32 +71,24 @@
 						<div class="header-left"></div>
 						<ul class="navbar-nav header-right">
 							<c:choose>
-								<c:when test="${user != null}">
+								<c:when test="${userlogin != null}">
 									<li class="nav-item dropdown header-profile"><a href="#"
 										class="dropdown-item"> <i class="icon icon-single-04"></i>
-											<span class="ml-2">${user.user_department}_${user.user_name}님</span></a>
+											<span class="ml-2">${userlogin.user_department}_${userlogin.user_name}님</span></a>
 										<a href="${contextPath}/login/logout" class="dropdown-item">
 											<i class="icon-key"></i> <span class="ml-2">Logout </span>
 									</a>
 										<div class="dropdown-menu dropdown-menu-right"></div></li>
 								</c:when>
-								<c:when test="${part !=null }">
+								<c:when test="${partlogin !=null }">
 									<li class="nav-item dropdown header-profile"><a href="#"
 										class="dropdown-item"> <i class="icon icon-single-04"></i>
-											<span class="ml-2">협력회사_${part.part_companyname}님</span></a> <a
+											<span class="ml-2">협력회사_${partlogin.partner_companyname}님</span></a> <a
 										href="${contextPath}/login/logout" class="dropdown-item">
 											<i class="icon-key"></i> <span class="ml-2">Logout </span>
 									</a>
 										<div class="dropdown-menu dropdown-menu-right"></div></li>
 								</c:when>
-								<c:otherwise>
-									<c:if test="${user == null}">
-										<li class="nav-item dropdown header-profile"><a
-											href="${contextPath}/login/loginForm" class="dropdown-item">
-												<i class="icon-key"></i> <span class="ml-2">Login </span>
-										</a></li>
-									</c:if>
-								</c:otherwise>
 							</c:choose>
 						</ul>
 					</div>

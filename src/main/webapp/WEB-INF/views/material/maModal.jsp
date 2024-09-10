@@ -88,7 +88,7 @@ button {
 		document.getElementById("ma_origin[" + currentRowIndex + "]").value = origin;
 		document.getElementById("ma_unit[" + currentRowIndex + "]").value = unit;
 		document.getElementById("ma_weight[" + currentRowIndex + "]").value = weight;
-		document.getElementById("btnAddRow").disabled = false; // 버튼 활성화
+		document.getElementById("btnAddRow_update").disabled = false; // 버튼 활성화
 		closebom_maModal(); // 모달 닫기
 	}
 	

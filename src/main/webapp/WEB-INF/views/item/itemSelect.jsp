@@ -126,7 +126,7 @@
 		</c:otherwise>
 	</c:choose>
 	<div>
-		<a href="${contextPath}/item/itemUpdateForm?item_no=${item.item_no}">수정</a>
+		<a href="${contextPath}/item/itemUpdateForm?item_no=${item.item_no}">자재정보 수정</a>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
