@@ -39,21 +39,19 @@ function checkApproval(user_approval, user_id) {
 				<td>사원 전화번호</td>
 				<td>사원 부서</td>
 				<td>사원 승인여부</td>
-				<td>사원정보 수정</td>
 			</tr>
 			<c:forEach var="userlist" items="${userlist}">
-				<tr onclick="location.href='${contextPath}/user/userSelect?user_id=${userlist.user_id}'" style="cursor: pointer;">
-					<td>${userlist.user_name }</td>
+				<tr>
+					<td><a href="${contextPath}/user/userSelect?user_id=${userlist.user_id}">${userlist.user_name }</a></td>
 					<td>${userlist.user_email }</td>
 					<td>${userlist.user_number }</td>
 					<td>${userlist.user_department }</td>
 					<c:if test="${userlist.user_approval eq 0 }">
-				<td><button type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여</button></td>
+				<td><button class="addbutton" type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여</button></td>
 				</c:if>
 				<c:if test="${userlist.user_approval eq 1 }">
-					<td><button type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여해제</button></td>
+					<td><button class="addbutton" type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여해제</button></td>
 				</c:if>
-				<td><a href="${contextPath}/user/userUpdateForm?user_id=${userlist.user_id}">수정</a></td>
 			</tr>
 			</c:forEach>
 		</table>

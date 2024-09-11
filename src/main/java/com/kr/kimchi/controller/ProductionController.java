@@ -1,6 +1,5 @@
 package com.kr.kimchi.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -83,7 +82,7 @@ public class ProductionController {
 		List<ItemVO> itemlist = itemservice.itemAll(0,10, null);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("conlist", conlist);
-//		mav.addObject("userlist", userlist);
+		mav.addObject("userlist", userlist);
 		mav.addObject("itemlist", itemlist);
 		mav.setViewName("production/productionInsertForm");
 		return mav;

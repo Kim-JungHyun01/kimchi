@@ -43,7 +43,6 @@ function checkApproval(partner_approval, partner_taxid) {
 				<td>협력회사 fax</td>
 				<td>협력회사 email</td>
 				<td>협력회사 승인여부</td>
-				<td>수정이동</td>
 			</tr>
 			<c:forEach var="partnerlist" items="${partnerlist}">
 				<tr
@@ -57,14 +56,13 @@ function checkApproval(partner_approval, partner_taxid) {
 					<td>${partnerlist.partner_email }</td>
 
 					<c:if test="${partnerlist.partner_approval eq 0 }">
-						<td><button type="button"
+						<td><button type="button" class="addbutton"
 								onclick="checkApproval(${partnerlist.partner_approval}, '${partnerlist.partner_taxid }')">승인부여</button></td>
 					</c:if>
 					<c:if test="${partnerlist.partner_approval eq 1 }">
-						<td><button type="button"
+						<td><button type="button" class="addbutton"
 								onclick="checkApproval(${partnerlist.partner_approval}, '${partnerlist.partner_taxid }')">승인부여해제</button></td>
 					</c:if>
-					<td><a href="${contextPath}/partner/partnerUpdateForm?partner_taxid=${partnerlist.partner_taxid }">수정</a></td>
 				</tr>
 			</c:forEach>
 		</table>
