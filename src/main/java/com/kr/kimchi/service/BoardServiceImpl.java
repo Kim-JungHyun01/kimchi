@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kr.kimchi.dao.BoardDAO;
+import com.kr.kimchi.vo.BoardCriteria;
+import com.kr.kimchi.vo.BoardSearchCriteria;
 import com.kr.kimchi.vo.BoardVO;
 
 @Service
@@ -38,6 +40,30 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> listAll() throws Exception {
 	return dao.listAll();
+	}
+
+	@Override
+	public List<BoardVO> listCriteria(BoardCriteria cri) throws Exception {
+		
+		return dao.listCriteria(cri);
+	}
+
+	@Override
+	public int listCountCriteria(BoardCriteria cri) throws Exception {
+		
+		return dao.countPaging(cri);
+	}
+
+	@Override
+	public List<BoardVO> listSearchCriteria(BoardSearchCriteria cri) throws Exception {
+		
+		return dao.listSearch(cri);
+	}
+
+	@Override
+	public int listSearchCount(BoardSearchCriteria cri) throws Exception {
+		
+		return dao.listSearchCount(cri);
 	}
 
 }

@@ -1,7 +1,8 @@
 package com.kr.kimchi.dao;
 
-import java.util.List;
-
+import java.util.List;import com.kr.kimchi.controller.SearchBoardController;
+import com.kr.kimchi.vo.BoardCriteria;
+import com.kr.kimchi.vo.BoardSearchCriteria;
 import com.kr.kimchi.vo.BoardVO;
 
 public interface BoardDAO {
@@ -15,4 +16,15 @@ public interface BoardDAO {
 	public void delete(Integer board_no)throws Exception;
 	
 	public List<BoardVO> listAll()throws Exception;
+	
+	public List<BoardVO> listPage(int page)throws Exception;
+	
+	public List<BoardVO> listCriteria(BoardCriteria cri) throws Exception;
+	
+	public int countPaging(BoardCriteria cri)throws Exception;
+	
+	public List<BoardVO> listSearch(BoardSearchCriteria cri) throws Exception;
+	
+	public int listSearchCount(BoardSearchCriteria cri)throws Exception;
+	
 }
