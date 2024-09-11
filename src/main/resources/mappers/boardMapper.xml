@@ -41,9 +41,128 @@
    ]]>
    </select>
    
-   <!-- 전체 listAll의 총 개수 조회 -->
-    <select id="getTotalCount" resultType="int">
-        SELECT COUNT(*) FROM board;
+   <select id="listPage" resultType="com.kr.kimchi.vo.BoardVO">
+   
+   <![CDATA[
+   
+   select
+     board_no, board_title, board_content, board_comment, board_createdDate, board_modifiedDate, attachment_no, user_id
+   from
+     board
+    where board_no > 10
+    order by board_no desc,  
+   board_createdDate desc
+   limit #{page}, 10
+   
+   ]]>
+   
+   </select>
+   
+    <select id="listCriteria" resultType="com.kr.kimchi.vo.BoardVO">
+    
+    <![CDATA[
+
+   
+     select
+      board_no, board_title, board_content, board_comment, board_createdDate, board_modifiedDate, attachment_no, user_id
+     from
+      board
+     where board_no > 0
+     order by board_no desc,  board_createdDate desc
+     limit #{pageStart}, #{perPageNum}
+    
+    ]]>
+        
     </select>
+    
+    
+    <select id="countPaging" resultType="int">
+    
+    <![CDATA[
+    
+    select 
+      count(board_no)
+    from
+      board
+    where
+      board_no > 0
+    
+    ]]>
+    
+    
+    </select>
+    
+    
+    <select id="listSearch" resultType="com.kr.kimchi.vo.BoardVO">
+    
+    <![CDATA[
+   
+     select *
+      from board
+     where board_no > 0
+     ]]>
+     
+  <include refid="search"></include>
+     
+     <![CDATA[
+       
+     order by board_no desc
+     limit #{pageStart}, #{perPageNum}
+     
+     ]]>
+    
+    </select>
+    
+    <select id="listSearchCount" resultType="int">
+    
+    <![CDATA[
+    
+    select count(board_no)
+     from board
+    where board_no > 0
+    
+    ]]>
+    
+     <include refid="search"></include>
+    
+    </select>
+   
+   <sql id="search">
+   
+         <if test="searchType != null">
+     
+     <if test="searchType == 't'.toString()">
+      and board_title like CONCAT('%', #{keyword}, '%')
+     </if>
+     
+     <if test="searchType == 'c'.toString()">
+      and board_content like CONCAT('%', #{keyword}, '%')
+     </if>
+     
+     <if test="searchType == 'w'.toString()">
+      and board_comment like CONCAT('%', #{keyword}, '%')
+     </if>
+     
+     <if test="searchType == 'tc'.toString()">
+      and ( board_title like CONCAT('%', #{keyword}, '%') OR board_content like CONCAT('%', #{keyword}, '%'))
+     </if>
+     
+     <if test="searchType == 'cw'.toString()">
+      and ( board_content like CONCAT('%', #{keyword}, '%'))
+     </if>
+     
+     <if test="searchType == 'tcw'.toString()">
+ and (  board_title like CONCAT('%', #{keyword}, '%')
+       OR
+        board_content like CONCAT('%', #{keyword}, '%')
+       OR 
+        board_comment like CONCAT('%', #{keyword}, '%')) 
+   
+     </if>
+     
+   </if>
+     
+   
+   </sql>
   
   </mapper>
