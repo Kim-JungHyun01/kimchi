@@ -106,5 +106,19 @@
     ORDER BY ma_category;
 </select>
 
+<!-- 차트 -->
+<select id="machart" parameterType="map" resultType="com.kr.kimchi.vo.MaterialVO">
+    SELECT 
+        ma_stockQuantity, ma_price, ma_update, ma_date,
+    SUM(ma_stockQuantity) AS totalQuantity,
+    SUM(ma_stockValue) AS totalValue 
+    FROM material
+    WHERE 1=1
+    <if test="startDate != null and endDate != null">
+        AND (ma_update BETWEEN #{startDate} AND #{endDate} 
+        	OR ma_date BETWEEN #{startDate} AND #{endDate})
+    </if>
+    GROUP BY ma_stockQuantity, ma_price, ma_update, ma_date
+</select>
 
 </mapper>
