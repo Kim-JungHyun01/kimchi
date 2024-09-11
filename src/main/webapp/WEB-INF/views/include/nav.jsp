@@ -1,122 +1,103 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-		<div class="quixnav">
-            <div class="quixnav-scroll">
-                <ul class="metismenu" id="menu">
-                    <li class="nav-label first">Main Menu</li>
-                    <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
-                    </li> -->
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="${contextPath}/start">Dashboard 1</a></li>
-                            <li><a href="${contextPath}/resources/index2.html">Dashboard 2</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-label">Apps</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="${contextPath}/resources/app-profile.html">Profile</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Email</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="${contextPath}/resources/email-compose.html">Compose</a></li>
-                                    <li><a href="${contextPath}/resources/email-inbox.html">Inbox</a></li>
-                                    <li><a href="${contextPath}/resources/email-read.html">Read</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="${contextPath}/resources/app-calender.html">Calendar</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="./chart-flot.html">Flot</a></li>
-                            <li><a href="./chart-morris.html">Morris</a></li>
-                            <li><a href="./chart-chartjs.html">Chartjs</a></li>
-                            <li><a href="./chart-chartist.html">Chartist</a></li>
-                            <li><a href="./chart-sparkline.html">Sparkline</a></li>
-                            <li><a href="./chart-peity.html">Peity</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Components</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-world-2"></i><span class="nav-text">Bootstrap</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="${contextPath}/resources/ui-accordion.html">Accordion</a></li>
-                            <li><a href="${contextPath}/resources/ui-alert.html">Alert</a></li>
-                            <li><a href="${contextPath}/resources/ui-badge.html">Badge</a></li>
-                            <li><a href="${contextPath}/resources/ui-button.html">Button</a></li>
-                            <li><a href="${contextPath}/resources/ui-modal.html">Modal</a></li>
-                            <li><a href="${contextPath}/resources/ui-button-group.html">Button Group</a></li>
-                            <li><a href="${contextPath}/resources/ui-list-group.html">List Group</a></li>
-                            <li><a href="${contextPath}/resources/ui-media-object.html">Media Object</a></li>
-                            <li><a href="${contextPath}/resources/ui-card.html">Cards</a></li>
-                            <li><a href="${contextPath}/resources/ui-carousel.html">Carousel</a></li>
-                            <li><a href="${contextPath}/resources/ui-dropdown.html">Dropdown</a></li>
-                            <li><a href="${contextPath}/resources/ui-popover.html">Popover</a></li>
-                            <li><a href="${contextPath}/resources/ui-progressbar.html">Progressbar</a></li>
-                            <li><a href="${contextPath}/resources/ui-tab.html">Tab</a></li>
-                            <li><a href="${contextPath}/resources/ui-typography.html">Typography</a></li>
-                            <li><a href="${contextPath}/resources/ui-pagination.html">Pagination</a></li>
-                            <li><a href="${contextPath}/resources/ui-grid.html">Grid</a></li>
-
-                        </ul>
-                    </li>
-
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-plug"></i><span class="nav-text">Plugins</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="${contextPath}/resources/uc-select2.html">Select 2</a></li>
-                            <li><a href="${contextPath}/resources/uc-nestable.html">Nestedable</a></li>
-                            <li><a href="${contextPath}/resourcesuc-noui-slider.html">Noui Slider</a></li>
-                            <li><a href="${contextPath}/resources/uc-sweetalert.html">Sweet Alert</a></li>
-                            <li><a href="${contextPath}/resources/uc-toastr.html">Toastr</a></li>
-                            <li><a href="${contextPath}/resources/map-jqvmap.html">Jqv Map</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="widget-basic.html" aria-expanded="false"><i class="icon icon-globe-2"></i><span
-                                class="nav-text">Widget</span></a></li>
-                    <li class="nav-label">Forms</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-form"></i><span class="nav-text">Forms</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="${contextPath}/resources/form-element.html">Form Elements</a></li>
-                            <li><a href="${contextPath}/resources/form-wizard.html">Wizard</a></li>
-                            <li><a href="${contextPath}/resources/form-editor-summernote.html">Summernote</a></li>
-                            <li><a href="form-pickers.html">Pickers</a></li>
-                            <li><a href="form-validation-jquery.html">Jquery Validate</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Table</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-layout-25"></i><span class="nav-text">Table</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="table-bootstrap-basic.html">Bootstrap</a></li>
-                            <li><a href="table-datatable-basic.html">Datatable</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-label">Extra</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-single-copy-06"></i><span class="nav-text">Pages</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="${contextPath}/resources/page-register.html">Register</a></li>
-                            <li><a href="${contextPath}/resources/page-login.html">Login</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="${contextPath}/resources/page-error-400.html">Error 400</a></li>
-                                    <li><a href="${contextPath}/resources/page-error-403.html">Error 403</a></li>
-                                    <li><a href="${contextPath}/resources/page-error-404.html">Error 404</a></li>
-                                    <li><a href="${contextPath}/resourcespage-error-500.html">Error 500</a></li>
-                                    <li><a href="${contextPath}/resources./page-error-503.html">Error 503</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="${contextPath}/resources/page-lock-screen.html">Lock Screen</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="true"%>
+<div class="quixnav">
+	<div class="quixnav-scroll">
+		<ul class="metismenu" id="menu">
+			<c:choose>
+				<c:when test="${userlogin.user_department eq'개발부서'}">
+				<!-- 물품관리 -->
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+					<i class="icon icon-single-04"></i> <span class="nav-text">물품관리</span></a>
+					<ul aria-expanded="true">
+						<li><a href="${contextPath}/item/itemAll">물품리스트</a></li>
+						<li><a href="${contextPath}/item/itemInsertForm">물품등록</a></li>
+					</ul></li>
+				</c:when>
+				<c:when test="${userlogin.user_department eq'자재부서' || userlogin.user_department eq'구매부서'}">
+				<!-- 자재관리 -->
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+					<i></i><span class="nav-text">제재관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/material/maList">자재리스트</a></li>
+              			 <li><a href="${contextPath}/material/maAdd">자재등록</a></li>
+					</ul></li>
+					<!-- -조달계획관리 -->
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+					<i></i> <span class="nav-text">조달계획 관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/obtain/obtainAll">조달계획 목록</a></li>
+					</ul></li>
+						<!-- 자재조달관리_입고  -->
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+					<i class="icon icon-app-store"></i><span class="nav-text">입고 및 출고관리</span></a>
+						<ul aria-expanded="false">
+							 <li><a href="${contextPath}/material/maList">재고현황</a></li>
+							<li><a href="${contextPath}/information">입출고정보</a></li>
+							 <li><a href="${contextPath}/out/outList">출고목록</a></li>
+               				<li><a href="${contextPath}/material/maReport">금액현황조회</a></li>
+						</ul></li>
+					<!-- 발주관리 -->
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+						<i></i> <span class="nav-text">발주관리</span></a>
+						<ul aria-expanded="false">
+							<li><a href="${contextPath}/pa">발주목록</a></li>
+	              			 <li><a href="${contextPath}/paInsert">발주등록</a></li>
+						</ul></li>
+					<!-- 기울기 센서 -->
+					<!-- 
+					<li><a class="has-arrow" href="javascript:void()"
+						aria-expanded="false"><i class="icon icon-app-store"></i><span
+							class="nav-text">기울기센서</span></a></li> -->
+				</c:when>
+				<c:when test="${userlogin.user_department eq'생산부서'}">
+				<!-- 제품계약관리 -->
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i></i> <span class="nav-text">제품계약관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/contracts/contractsAll">제품계약 목록</a></li>
+						<li><a href="${contextPath}/contracts/contractsInsertForm">제품계약등록</a></li>
+					</ul></li>
+				<!-- -생산계획 관리 -->
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i></i> <span class="nav-text">생산계획 관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/production/productionAll">제품생산 목록</a></li>
+						<li><a href="${contextPath}/production/productionInsertForm">제품생산 등록</a></li>
+					</ul></li>
+					<!-- -조달계획관리 -->
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+					<i></i> <span class="nav-text">조달계획 관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/obtain/obtainAll">조달계획 목록</a></li>
+					</ul></li>
+				</c:when>
+				<c:when test="${partlogin != null }">
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i></i> <span class="nav-text">제품계약관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/contracts/contractsAll">제품계약 목록</a></li>
+						<li><a href="${contextPath}/contracts/contractsInsertForm">제품계약등록</a></li>
+					</ul></li>
+				</c:when>
+			</c:choose>
+			<!-- 게시판 -->
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i></i><span class="nav-text">게시판</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/sboard/list">게시판목록</a></li>
+					</ul>
+				</li>
+			<c:if test="${userlogin.user_name=='관리자'}">
+				<!-- 관리자관리  -->
+				<li><a class="has-arrow" href="javascript:void()"
+					aria-expanded="false"> <i class="icon icon-single-04"></i> <span
+						class="nav-text">관리자전용</span></a>
+					<ul aria-expanded="true">
+						<li><a href="${contextPath}/user/userAll">직원목록</a></li>
+						<li><a href="${contextPath}/partner/partnerAll">협력사목록</a></li>
+					</ul></li>
+			</c:if>
+		</ul>
+	</div>
+</div>

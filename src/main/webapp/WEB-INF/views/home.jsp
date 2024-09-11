@@ -1,8 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="true"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+<h1>
+	Hello world!  
+</h1>
 
   <%@include file="include/header.jsp" %>
   
@@ -26,7 +31,31 @@
             Content body start
         ***********************************-->
         <div class="content-body">
-      
+     
+        <div class="row">
+        
+        <!-- left column -->
+        
+        <div class="col-md-12">
+        
+        <!-- general form elements -->
+        
+        <div class="box">
+        
+        <div class="box-header with-border">
+        	<div class="card-body">
+                 <div id="calendar" class="app-fullcalendar"></div>
+            </div>
+        
+          <h3 class="box-title">HOME PAGE</h3>
+        </div>
+        
+        </div>
+        
+        </div>
+        
+        </div>
+     
         </div>
         <!--**********************************
             Content body end
@@ -69,5 +98,4 @@
     <!-- Circle progress -->
 
 </body>
-
 </html>
