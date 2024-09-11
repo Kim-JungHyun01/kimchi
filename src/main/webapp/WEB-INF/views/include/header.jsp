@@ -15,6 +15,7 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="${contextPath}/resources/images/favicon.png">
 <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>

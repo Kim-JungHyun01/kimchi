@@ -56,7 +56,7 @@ public class ItemController {
 		ItemVO item = itemservice.itemSelect(item_no);
 		BomVO bom = bomservice.bomSelect(item_no);
 		List<Bom_maVO> bom_malist = bom_maservice.bom_maSelect(item_no);
-		List<MaterialVO> malist = maservice.maList(0, 10);
+		List<MaterialVO> malist = maservice.maList(0, 100, null);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("item", item);
 		mav.addObject("bom", bom);// bom 리스트

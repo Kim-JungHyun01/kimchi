@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <script>
 	function openitemModal() {
 		document.getElementById("itemModal").style.display = "flex";

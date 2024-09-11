@@ -46,8 +46,7 @@ public class ObtainController {
 		
 		List<ObtainVO> oblist = obtservice.obtainAll(startRow,pageSize);
 		List<UserVO> userlist = userservice.userAll(0, 100, null);
-		List<MaterialVO> malist = maservice.maList(0, 100);
-//		List<MaterialVO> malist = maservice.maList(0, 100, null);
+		List<MaterialVO> malist = maservice.maList(0, 100, null);
 		
 		Integer totalCount = obtservice.getTotalCount(); // 총 레코드 수 가져옴
 		Integer totalPages = userservice.userSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
@@ -89,10 +88,10 @@ public class ObtainController {
 		ProductionVO pro = proservice.productionSelect(production_no);
 		ContractsVO con = conservice.contractsSelect(pro.getContracts_no());
 		List<PartnerVO> partnerlist = partservice.partnerAll(0,100, null);
-		List<MaterialVO> malist = maservice.maList(0, 100);
+		List<MaterialVO> malist = maservice.maList(0, 100, null);
 //		List<MaterialVO> malist = maservice.maList(0, 100, null);
 		List<Bom_maVO> bom_malist = bom_maservice.bom_maSelect(con.getItem_no());
-		List<UserVO> userlist = userservice.userAll(0,10, null);
+		List<UserVO> userlist = userservice.userAll(0,100, null);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pro", pro);
 		mav.addObject("partnerlist", partnerlist);

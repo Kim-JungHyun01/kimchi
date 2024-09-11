@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>"
-	rel='stylesheet' />
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <script>
 function checkApproval(partner_approval, partner_taxid) {
     $.ajax({
