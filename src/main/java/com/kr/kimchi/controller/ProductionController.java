@@ -59,11 +59,11 @@ public class ProductionController {
 	@GetMapping(value = "production/productionInsertForm")
 	public ModelAndView productionInsertForm() {
 		List<ContractsVO> conlist = conservice.contractsAll();
-		List<UserVO> userlist = userservice.userAll();
+//		List<UserVO> userlist = userservice.userAll();
 		List<ItemVO> itemlist = itemservice.itemAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("conlist", conlist);
-		mav.addObject("userlist", userlist);
+//		mav.addObject("userlist", userlist);
 		mav.addObject("itemlist", itemlist);
 		mav.setViewName("production/productionInsertForm");
 		return mav;

@@ -71,12 +71,12 @@ public class ContractsController {
 	@GetMapping(value = "contracts/contractsInsertForm")
 	public ModelAndView contractsInsertForm() {
 		List<ItemVO> itemlist = itemservice.itemAll();
-		List<PartnerVO> partnerlist = partservice.partnerAll();
-		List<UserVO> userlist = userservice.userAll();
+//		List<PartnerVO> partnerlist = partservice.partnerAll();
+//		List<UserVO> userlist = userservice.userAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("itemlist", itemlist);
-		mav.addObject("partnerlist", partnerlist);
-		mav.addObject("userlist", userlist);
+//		mav.addObject("partnerlist", partnerlist);
+//		mav.addObject("userlist", userlist);
 		mav.setViewName("contracts/contractsInsertForm");
 		return mav;
 	}// end

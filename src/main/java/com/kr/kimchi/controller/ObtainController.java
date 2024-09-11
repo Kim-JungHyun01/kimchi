@@ -65,14 +65,14 @@ public class ObtainController {
 	@GetMapping(value = "obtain/obtainInsertForm")
 	public ModelAndView obtainInsertForm() {
 		List<ProductionVO> prolist = proservice.productionAll();
-		List<PartnerVO> partnerlist = partservice.partnerAll();
-		List<MaterialVO> malist = maservice.maList(0, 10);
-		List<UserVO> userlist = userservice.userAll();
+//		List<PartnerVO> partnerlist = partservice.partnerAll();
+//		List<MaterialVO> malist = maservice.maList(0, 10);
+//		List<UserVO> userlist = userservice.userAll();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("prolist", prolist);
-		mav.addObject("partnerlist", partnerlist);
-		mav.addObject("malist", malist);
-		mav.addObject("userlist", userlist);
+//		mav.addObject("partnerlist", partnerlist);
+//		mav.addObject("malist", malist);
+//		mav.addObject("userlist", userlist);
 		mav.setViewName("obtain/obtainInsertForm");
 		return mav;
 	}// end
