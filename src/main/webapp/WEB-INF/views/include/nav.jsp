@@ -66,7 +66,7 @@
 					class="nav-text">입고 및 출고관리</span></a>
 				<ul aria-expanded="false">
 					<li><a href="${contextPath}/resources/app-profile.html">자재재고</a></li>
-					<li><a href="imformation">입출고정보</a></li>
+					<li><a href="information">입출고정보</a></li>
 					<li><a href="${contextPath}/resources/app-calender.html">자재입고관리</a></li>
 					<li><a href="${contextPath}">출고목록</a></li>
 					<li><a href="${contextPath}">자재리프트</a></li>

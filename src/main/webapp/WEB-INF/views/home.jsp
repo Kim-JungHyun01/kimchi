@@ -9,6 +9,89 @@
 	Hello world!  
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+  <%@include file="include/header.jsp" %>
+  
+  
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        
+        
+  <%@include file="include/nav.jsp" %>
+        
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+     
+        <div class="row">
+        
+        <!-- left column -->
+        
+        <div class="col-md-12">
+        
+        <!-- general form elements -->
+        
+        <div class="box">
+        
+        <div class="box-header with-border">
+          <h3 class="box-title">HOME PAGE</h3>
+        </div>
+        
+        </div>
+        
+        </div>
+        
+        </div>
+     
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+     
+       <%@include file="include/footer.jsp" %>
+     
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
+    <script src="${contextPath}/resources/js/quixnav-init.js"></script>
+    <script src="${contextPath}/resources/js/custom.min.js"></script>
+
+    <script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
+    <!-- Circle progress -->
+
 </body>
 </html>

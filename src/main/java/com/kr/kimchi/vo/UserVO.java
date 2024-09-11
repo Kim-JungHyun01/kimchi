@@ -1,4 +1,4 @@
-package kr.co.kim.vo;
+package com.kr.kimchi.vo;
 
 import lombok.Data;
 
@@ -11,9 +11,6 @@ public class UserVO {
 	private String user_name;
 	private String user_number;
 	private String user_department;
-	
-	
-	
-	
+	private int user_approval;
 	
 }//end class

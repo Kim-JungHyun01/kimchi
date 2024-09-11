@@ -1,4 +1,4 @@
-package kr.co.kim.dao;
+package com.kr.kimchi.dao;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import kr.co.kim.vo.PagingVO;
+import com.kr.kimchi.vo.PagingVO;
 
 @Repository
 public class pageDAO {

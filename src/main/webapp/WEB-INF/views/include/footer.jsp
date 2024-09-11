@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   
-   		<div class="footer">
+   <!--**********************************
+            Content body end
+        ***********************************-->
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+
+	<div class="footer">
 		<div class="copyright">
 			<p>
 				Copyright � Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a>
@@ -34,3 +41,10 @@
 	<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
 	<script src="${contextPath}/resources/js/quixnav-init.js"></script>
 	<script src="${contextPath}/resources/js/custom.min.js"></script>
+	
+</body>
+	
+</html>
+	
+	
+	
