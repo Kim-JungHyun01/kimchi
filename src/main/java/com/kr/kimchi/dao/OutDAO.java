@@ -24,18 +24,30 @@ public class OutDAO {
         return session.selectOne(nameSpace + ".getTotalCount");
     }
     
+    // 검색 페이지 수 계산
+    public Integer getSearch(int pageSize, Integer io_id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("io_id", io_id);
+        Integer totalCount = session.selectOne(nameSpace + ".getSearch", params);
+        if (totalCount == 0) {
+            return 0;
+        }
+        return (int) Math.ceil((double) totalCount / pageSize);
+    }
+    
     // 전체 outList
-    public List<IOVO> outList(int startRow, int pageSize) {
-    	Map<String, Object> params = new HashMap<>();
-    	params.put("startRow", startRow);
-    	params.put("pageSize", pageSize);
-    	
-    	// sql 페이지 정보 사용
-		return session.selectList(nameSpace +".outList", params);
-    }  	 
+    public List<IOVO> outList(int startRow, int pageSize, Integer io_id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("startRow", startRow);
+        params.put("pageSize", pageSize);
+        params.put("io_id", io_id);
+        
+        // sql 페이지 정보 사용
+        return session.selectList(nameSpace + ".outList", params);
+    }  
     
     // 선택 outView
-    public IOVO outView(int io_id) {
+    public IOVO outView(Integer io_id) {
         return session.selectOne(nameSpace + ".outView", io_id);
     }
     

@@ -9,9 +9,27 @@
 		where partner_id = #{partner_id} and partner_pw = #{partner_pw}
 	</select>
 
-	<!-- 협력회사 전체 -->
+	<!-- 협력회사 전체 + 페이징 +검색 -->
 	<select id="partnerAll" resultType="com.kr.kimchi.vo.PartnerVO">
-		select * from partner
+	    select * from partner
+	    <if test="partner_companyname != null and partner_companyname != '' ">
+	        WHERE partner_companyname LIKE CONCAT('%', #{partner_companyname}, '%')
+	    </if>
+	    LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	<!-- 전체 레코드 수 -->
+	<select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM partner;
+    </select>
+    
+	<!-- 검색에 따른 총 레코드 수 -->
+	<select id="partnerSearch" parameterType="Map" resultType="int">
+	    SELECT COUNT(*) FROM partner
+	    WHERE 1=1
+	    <if test="partner_companyname != null and partner_companyname != '' ">
+	        AND partner_companyname LIKE CONCAT('%', #{partner_companyname}, '%')
+	    </if>
 	</select>
 
 	<!-- 협력회사 상세 -->
@@ -54,6 +72,6 @@
 		partner_approval = #{partner_approval}
 		where partner_taxid = #{partner_taxid}
 	</update>
-
+	
 
 </mapper>

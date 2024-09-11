@@ -20,20 +20,22 @@ import com.kr.kimchi.vo.PaginationVO;
 @Controller
 public class MaterialController {
 
-	@Autowired
+    @Autowired
     private MaterialService maService;
 
     // 전체 목록 조회
     @GetMapping(value = "/material/maList")
-    public ModelAndView maList(@RequestParam(defaultValue = "1") int pageNum) {
-    	int pageSize = 4; // 한페이지에 보여줄 갯수
-    	int pageNavSize = 5; // 페이지네비 크기
-    	
-    	// startRow 계산
-        int startRow = (pageNum - 1) * pageSize; // startRow 계산
+    public ModelAndView maList(@RequestParam(defaultValue = "1") int pageNum, 
+                                @RequestParam(required = false) String ma_name) {
+        int pageSize = 2; // 한 페이지에 보여줄 갯수
+        int pageNavSize = 5; // 페이지 네비 크기
+        
+        // startRow 계산
+        int startRow = (pageNum - 1) * pageSize; 
 
-        List<MaterialVO> list = maService.maList(startRow, pageSize); // startRow와 pageSize로 서비스 호출
-        Integer totalCount = maService.getTotalCount(); // 총 레코드 수 가져오기기
+        List<MaterialVO> list = maService.maList(startRow, pageSize, ma_name); // startRow와 pageSize로 서비스 호출
+        Integer totalCount = maService.getTotalCount(); // 총 레코드 수 가져오기
+        Integer totalPages = maService.getSearch(pageSize, ma_name); // 검색 페이지 수 계산
         
         PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
         
@@ -41,9 +43,8 @@ public class MaterialController {
         mav.addObject("list", list);
         mav.addObject("pagination", pagination);
         mav.addObject("currentPage", pageNum);
-        mav.addObject("totalPages", pagination.getTotalPage());
-//        System.out.println("startRow" + pagination.getStartRow());
-//        System.out.println("pageSize" + pagination.getPageSize());
+        mav.addObject("totalPages", totalPages);
+        
         return mav;
     }
 
@@ -71,46 +72,45 @@ public class MaterialController {
         return "redirect:/material/maList";
     }
 
-    // 수정이동
+    // 수정 이동
     @GetMapping(value = "/material/maUpdate")
     public String maUpdateForm(@RequestParam("ma_id") int ma_id, Model model) {
         MaterialVO ma = maService.maView(ma_id);
-        model.addAttribute("ma", ma); // 
+        model.addAttribute("ma", ma);
         return "material/maUpdate"; 
     }
 
-    //수정
+    // 수정
     @PostMapping(value = "/material/maUpdate")
     public String maUpdate(MaterialVO maUpdate, RedirectAttributes reAtt) {
-    	System.out.println("data update" + maUpdate);
         maService.maUpdate(maUpdate);
-        reAtt.addAttribute("message", "수정됨"); //
+        reAtt.addFlashAttribute("message", "수정됨");
         return "redirect:/material/maList";
     }
-    
+
     // 리포트 요청 처리
     @GetMapping(value = "/material/maReport")
     public ModelAndView maReport(@RequestParam(required = false) String startDate, 
                                  @RequestParam(required = false) String endDate,
-                                 @RequestParam(required = false) String ma_name ) {
+                                 @RequestParam(required = false) String ma_name) {
         ModelAndView mav = new ModelAndView("material/maReport");
-        
+
         if (startDate == null || endDate == null) {
-            mav.addObject("message", "시작 날짜, 종료 날짜 입력 필요.");
+            mav.addObject("message", "시작 날짜와 종료 날짜 입력이 필요합니다.");
             return mav;
         }
+
         try {
             List<Map<String, Object>> list = maService.maReport(startDate, endDate, ma_name);
             if (list.isEmpty()) {
-                mav.addObject("message", "입력값 없음");
+                mav.addObject("message", "조회된 데이터가 없습니다.");
             } else {
                 mav.addObject("list", list);
             }
         } catch (SQLException e) {
-            mav.addObject("error", "입력 오류");
+            mav.addObject("error", "데이터베이스 오류: " + e.getMessage());
         } catch (Exception e) {
-            // 모든 예외
-            mav.addObject("message", "형식 오류");
+            mav.addObject("message", "형식 오류: " + e.getMessage());
         }
         return mav;
     }

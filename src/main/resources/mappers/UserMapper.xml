@@ -12,11 +12,32 @@
 		and user_pw=#{user_pw}
 	</select>
 
-	<!-- 사용자 전체 -->
+	<!-- 사용자 전체 + 페이징-->
 	<select id="userAll" resultType="com.kr.kimchi.vo.UserVO">
-		select * from user
+	    SELECT * FROM user
+	    <where>
+	        <if test="user_id != null and user_id != ''">
+	            AND user_id LIKE CONCAT('%', #{user_id}, '%')
+	        </if>
+	    </where>
+	    LIMIT #{startRow}, #{pageSize}
 	</select>
-
+	
+	<!-- 전체 레코드 수 -->
+	<select id="getTotalCount" resultType="int">
+	    SELECT COUNT(*) FROM user;
+	</select>
+	
+	<!-- 검색에 따른 총 레코드 수 -->
+	<select id="userSearch" parameterType="Map" resultType="int">
+	    SELECT COUNT(*) FROM user
+	    <where>
+	        <if test="user_id != null and user_id != ''">
+	            AND user_id LIKE CONCAT('%', #{user_id}, '%')
+	        </if>
+	    </where>
+	</select>
+	
 	<!-- 사용자 상세 -->
 	<select id="userSelect" resultType="com.kr.kimchi.vo.UserVO">
 		select * from user 
