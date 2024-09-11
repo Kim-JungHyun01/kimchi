@@ -1,9 +1,12 @@
 package com.kr.kimchi.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,22 +21,22 @@ import com.kr.kimchi.vo.UserVO;
 public class UserController {
 
 	@Inject
-	private UserService userserivce;
+	private UserService userservice;
 
-//	사용자 전체
+//	사용자 전체+페이징+서치
 	@GetMapping(value = "user/userAll")
 	public ModelAndView userAll(@RequestParam(defaultValue = "1") int pageNum,
-								@RequestParam(required = false) String user_id) {
+								@RequestParam(required = false) String user_name) {
 		
 		int pageSize = 5; // 한 페이지에 보여줄 갯수 
 	    int pageNavSize = 5; // 페이지 네비 크기
 	    
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 	    
-		List<UserVO> userlist = userserivce.userAll(startRow, pageSize, user_id);
+		List<UserVO> userlist = userservice.userAll(startRow, pageSize, user_name);
 		
-		Integer totalCount = userserivce.getTotalCount(); // 총 레코드 수 가져옴
-		Integer totalPages = userserivce.userSearch(pageSize, user_id); // 검색 이후 ㄹㅔ코드수 계산
+		Integer totalCount = userservice.getTotalCount(); // 총 레코드 수 가져옴
+		Integer totalPages = userservice.userSearch(pageSize, user_name); // 검색 이후 ㄹㅔ코드수 계산
 		
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		
@@ -51,7 +54,7 @@ public class UserController {
 //	사용자 상세
 	@GetMapping(value = "user/userSelect")
 	public ModelAndView userSelect(String user_id) {
-		UserVO user = userserivce.userSelect(user_id);
+		UserVO user = userservice.userSelect(user_id);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("user", user);
 		mav.setViewName("user/userSelect");
@@ -63,17 +66,30 @@ public class UserController {
 	public String userInsertForm() {
 		return "user/userInsertForm";
 	}// end
+	
+//	사용자 id 중복확인
+	@GetMapping(value = "user/userIdCheck")
+	public ResponseEntity<Map<String, String>> userIdCheck(@RequestParam String user_id) {
+	    Map<String, String> response = new HashMap<>();
+	    int user = userservice.userIdCheck(user_id);
+	    if (user == 0) {
+	        response.put("status", "없음");
+	    } else {
+	        response.put("status", "있음");
+	    }
+	    return ResponseEntity.ok(response);
+	}
 
 	@PostMapping(value = "user/userInsert")
 	public String userInsert(UserVO user) {
-		userserivce.userInsert(user);
+		userservice.userInsert(user);
 		return "redirect:/login/loginForm";
 	}// end
 
 //	사용자 정보 수정
 	@GetMapping(value = "user/userUpdateForm")
 	public ModelAndView userUpdateForm(String user_id) {
-		UserVO user = userserivce.userSelect(user_id);
+		UserVO user = userservice.userSelect(user_id);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("user", user);
 		mav.setViewName("user/userUpdateForm");
@@ -82,14 +98,14 @@ public class UserController {
 	
 	@PostMapping(value = "user/userUpdate")
 	public String userUpdate(UserVO user) {
-		userserivce.userUpdate(user);
+		userservice.userUpdate(user);
 		return "redirect:/user/userSelect?user_id=" + user.getUser_id();
 	}// end
 	
 //	사용자 승인
 	@PostMapping(value = "user/userApproval")
 	public String userApproval(UserVO user) {
-		userserivce.userApproval(user);
+		userservice.userApproval(user);
 		return "redirect:/user/userSelect?user_id=" + user.getUser_id();
 	}//end
 

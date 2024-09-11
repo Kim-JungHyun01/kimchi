@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<script>
+	function checkapp() {
+		var user_approval = document.getElementById('login_user_approval').value;
+		var partner_approval = document.getElementById('login_partner_approval').value;
 
 <%@include file="../include/header.jsp" %>
 

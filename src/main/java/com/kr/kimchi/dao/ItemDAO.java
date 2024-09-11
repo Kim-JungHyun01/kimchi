@@ -1,6 +1,8 @@
 package com.kr.kimchi.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,8 +20,28 @@ public class ItemDAO {
 
 	
 //	제품정보(전체)
-	public List<ItemVO> itemAll() {
-		return session.selectList(namespace+".itemAll");
+	public List<ItemVO> itemAll(int startRow, int pageSize, String item_name){
+		 Map<String, Object> params = new HashMap<>();
+	        params.put("startRow", startRow);
+	        params.put("pageSize", pageSize); 
+	        params.put("item_name", item_name);
+		return session.selectList(namespace+".itemAll", params);
+	}//end
+	
+//	전체 레코드 수
+	public Integer getTotalCount() {
+		return session.selectOne(namespace + ".getTotalCount");		
+	} //end
+	
+//	검색 이후 페이지 수 계산
+	public Integer itemSearch(int pageSize, String item_name) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("item_name", item_name);
+		Integer totalCount = session.selectOne(namespace +".itemSearch", params);
+		if(totalCount == null || totalCount == 0) {
+			return 0;
+		}
+		return (int)Math.ceil((double) totalCount / pageSize);
 	}//end
 	
 //	제품정보(상세)

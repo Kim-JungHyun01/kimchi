@@ -20,14 +20,19 @@ public class Bom_maService {
 		return bom_madao.bom_maSelect(item_no);
 	}//end
 	
+//	bom정보 보기_ma_id별
+	public Bom_maVO bom_maMaterial(int item_no, int ma_id){
+		return bom_madao.bom_maMaterial(item_no, ma_id);
+	}//end
+	
 //	bom정보_자재 추가
-	public void bom_maInsert(Bom_maVO bom_ma) {
-		bom_madao.bom_maInsert(bom_ma);
+	public void bom_maInsert(List<Bom_maVO> bom_malist) {
+		bom_madao.bom_maInsert(bom_malist);
 	}//end
 	
 //	bom정도_자재 수정 
-	public void bom_maUpdate(Bom_maVO bom_ma) {
-		bom_madao.bom_maUpdate(bom_ma);
+	public void bom_maUpdate(List<Bom_maVO> bom_malist) {
+		bom_madao.bom_maUpdate(bom_malist);
 	}//end
 	
 //	bom정보_자재 선택적삭제

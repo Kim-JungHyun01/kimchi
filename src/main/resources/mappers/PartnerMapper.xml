@@ -5,8 +5,8 @@
 	<!-- 협력회사 로그인 -->
 	<select id="partnerLogin" parameterType="java.util.Map"
 		resultType="java.util.Map">
-		select partner_taxid, partner_id, partner_pw, partner_approval from partner 
-		where partner_id = #{partner_id} and partner_pw = #{partner_pw}
+		select partner_taxid, partner_approval,partner_companyname from partner 
+		where partner_id = #{partner_id} and partner_pw = #{partner_pw} and partner_taxid=#{partner_taxid}
 	</select>
 
 	<!-- 협력회사 전체 + 페이징 +검색 -->
@@ -18,11 +18,6 @@
 	    LIMIT #{startRow}, #{pageSize}
 	</select>
 	
-	<!-- 전체 레코드 수 -->
-	<select id="getTotalCount" resultType="int">
-        SELECT COUNT(*) FROM partner;
-    </select>
-    
 	<!-- 검색에 따른 총 레코드 수 -->
 	<select id="partnerSearch" parameterType="Map" resultType="int">
 	    SELECT COUNT(*) FROM partner
@@ -49,6 +44,13 @@
 		#{partner_pw},#{partner_companyname},#{partner_number},#{partner_ownername},
 		#{partner_fax},#{partner_email},#{partner_add},0)
 	</insert>
+	
+	<!-- tax중복체크 -->
+	<select id="partnertaxIdCheck" parameterType="String" resultType="java.lang.Integer">
+		select count(*) from partner
+		where
+		partner_taxid = #{partner_taxid}
+	</select>
 
 	<!-- 협력회사 수정_상호, 명칭및 인터넷도메인, 대표자명, 업종, 사업장 -->
 	<update id="partnerUpdate"
@@ -69,9 +71,13 @@
 	<update id="partnerApproval"
 		parameterType="com.kr.kimchi.vo.PartnerVO">
 		update partner set
-		partner_approval = #{partner_approval}
+		partner_approval = if(#{partner_approval}= 0, 1, 0)
 		where partner_taxid = #{partner_taxid}
 	</update>
 	
+	<!-- 전체 레코드 수 -->
+	<select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM partner;
+    </select>
 
 </mapper>
