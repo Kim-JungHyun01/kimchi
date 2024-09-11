@@ -29,6 +29,6 @@ public class PrpVO {
 		this.prp_notes = prp_notes;
 	}
 
-	
+	private UserVO userVO;
 	
 }

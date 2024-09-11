@@ -21,4 +21,6 @@ public class ObtainVO {
 	
 	private ProductionVO productionVO; 
 	private MaterialVO materialVO;
+	private UserVO userVO; 
+	private PartnerVO partnerVO;
 }

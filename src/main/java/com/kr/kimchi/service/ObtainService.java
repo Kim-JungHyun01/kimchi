@@ -16,30 +16,32 @@ public class ObtainService {
 	private ObtainDAO obtaindao;
 
 
-//	조달계획 보기_전체
 	public List<ObtainVO> obtainAll() {
 		return obtaindao.obtainAll();
 	}// end
 
-//	조달계획 보기_상세
 	public ObtainVO obtainSelect(int obtain_no) {
 		return obtaindao.obtainSelect(obtain_no);
 	}// end
 
-//	조달계획 추가
 	public void obtainInsert(ObtainVO obt) {
 		obtaindao.obtainInsert(obt);
 	}// end
 
-//	조달계획 수정
 	public void obtainUpdate(ObtainVO obt) {
 		obtaindao.obtainUpdate(obt);
 	}// end
 
-//	조달계획 승인 
 	public void obtainCheck(ObtainVO obt) {
 		obtaindao.obtainCheck(obt);
 	}// end
 	
+	public void obtainPa(int obtain_no) {
+		obtaindao.obtainPa(obtain_no);
+	}
+	
+	public List<ObtainVO> obSelectList() {
+		return obtaindao.obSelectList();
+	}// end
 	
 }//end class

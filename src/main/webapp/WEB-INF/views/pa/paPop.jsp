@@ -18,7 +18,7 @@
 		      <tr>
 		        <td width="10%" height="25" align="center" bgcolor="#E2EFDA" style="font-weight: bold">회사명</td>
 		        <td width="2%" align="center" bgcolor="#E2EFDA" style="font-weight: bold">:</td>
-		        <td width="38%" bgcolor="#E2EFDA" style="font-weight: bold"><div   id="is1" style="padding:3px;">(주)삼김팩토리</div></td>
+		        <td width="38%" bgcolor="#E2EFDA" style="font-weight: bold"><div   id="is1" style="padding:3px;">(주)삼김신조</div></td>
 		        <td width="10%" align="center" bgcolor="#E2EFDA">발주번호</td>
 		        <td width="2%" align="center" bgcolor="#E2EFDA">:</td>
 		        <td width="38%" bgcolor="#E2EFDA"><div tms_edit  id="docno" style="padding:3px;">${paVO.codeVo.code_name}</div></td>

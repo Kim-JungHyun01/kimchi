@@ -43,6 +43,10 @@
         <div class="box">
         
         <div class="box-header with-border">
+        	<div class="card-body">
+                 <div id="calendar" class="app-fullcalendar"></div>
+            </div>
+        
           <h3 class="box-title">HOME PAGE</h3>
         </div>
         

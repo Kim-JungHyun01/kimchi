@@ -8,14 +8,25 @@
 <%@include file="../include/header.jsp" %>
 
 <%@include file="../include/nav.jsp" %>
-       
    <div class="content-body">
+   <div class="container-fluid">
+   
+   <div class="row">
+   <div class="col-lg-12"> <!-- 자간 -->
+   <div class="card"> <!-- 흰박스 -->
+   <div class="card-header"> <!-- 흰박스 헤더 -->
+  	<div>
    <h3>구매발주</h3>
-   <button onclick="checkStatus(99)">전체</button>
-   <button onclick="checkStatus(0)">미수립</button>
-   <button onclick="checkStatus(1)">진행중</button>
-   <button onclick="checkStatus(2)">완료</button>
-	<table>
+  	</div>	
+   	   <div class="button-group">
+		   <button class="ca-button" data-status="99" onclick="checkStatus(99)">전체</button>
+		   <button class="ca-button" data-status="0" onclick="checkStatus(0)">미수립</button>
+		   <button class="ca-button" data-status="1" onclick="checkStatus(1)">진행중</button>
+		   <button class="ca-button" data-status="2" onclick="checkStatus(2)">완료</button>
+	   </div>
+   </div>
+   <div class="card-body"> <!-- 흰박스 박스 -->
+	<table class="table table-responsive-sm"> <!-- 테이블 정렬 -->
 		<tr>
 			<th>번호</th>	
 			<th>발주번호</th>	
@@ -57,39 +68,58 @@
 					</c:choose>
 				</td>
 				<td>${paList.pa_notes}</td>
-				<td><button data-pa-no="${paList.pa_no}" id="pop" onclick=" paPop(this)">인쇄</button></td>
-				<td><button data-pa_no = "${paList.pa_no}" onclick="showModal(this)">계획수립</button></td>
+				<td><button class="link-button" data-pa-no="${paList.pa_no}" id="pop" onclick=" paPop(this)">인쇄</button></td>
+				<td><button class="link-button" data-pa_no = "${paList.pa_no}" data-partner="${paList.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}" 
+					data-email = "${paList.userVO.user_email }"
+				onclick="showModal(this)">계획수립</button></td>
 				
 			</tr>
 		</c:forEach>
-	</table>  
+	</table> 
+	</div> 
+	</div> 
+	</div> 
+	</div> 
 	
 	<!-- modal 진척검수계획 작성 -->
 	<div class ="modal">
 		<div class="modal-content">
+			<div class="modal-header">
+			<h2>진척검수</h2>
 			<span class = "close">&times;</span>
-			
-			<form action="/pa" method="post" onsubmit="return checkForm()">
-				<h2>진척검수</h2>
-				납기 일자 : <input type="date" name="prp_issueDate" id="date" min=""> 
-				<p>검수자</p>
-				<input type="hidden" name ="pa_no" id="pa_no"> 
-				<input type="text" name ="user_id" value="abcd" readonly> 
-				<!-- sessin 값 확인 필요 
-				<input type="hidden" name ="user_id" value="session.getAttribute()" readonly> 
-				-->
-				<p>검수 진행도</p>
-				<input type = "text" name = "prp_progress" value = "0"  readonly>
-				<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
-				<p>비고</p>
-				<input type="text" name="prp_notes">
-				<input type="hidden" name="token" value="${token}" />
-				<button>저장</button>
-			</form>
+			</div>
+			<div class="modal-body">
+			    <form action="/pa" method="post" onsubmit="return checkForm()">
+			        <div class="form-group">
+			            <label for="date">검수 일자:</label>
+			            <input type="date" name="prp_issueDate" id="date" min="" style="width: 170px;">
+			        </div>
+			        <div class="form-group">
+			            <label for="user_id">검수자:</label>
+			            <input type="text" name="user_id" id="user_id" value="abcd" readonly>
+			        </div>
+			        <div class="form-group">
+			            <label for="prp_progress">검수 진행도:</label>
+			            <input type="text" name="prp_progress" value="0" readonly>
+			            <input type="range" name="range_val" value="0" min="0" max="100" oninput="showSliderValue(this)">
+			        </div>
+			        <div class="form-group">
+			            <label for="prp_notes">비고:</label>
+			            <textarea name="prp_notes" id="prp_notes" ></textarea>
+			        </div>
+			        <input type="hidden" name="pa_no" id="pa_no">
+			        <input type="hidden" name="token" value="${token}">
+			        <input type="hidden" id="partner" name="partner">
+			        <input type="hidden" id="email" name="email">
+			        <div class="modal-footer">
+	                    <button class="link-button">저장</button>
+	                </div>
+			    </form>
+			</div>
 		</div>
 	</div>
-	
 	<!-- 페이징 작업 -->
+	<div class="pagination">
 	<ul>
 		<c:if test="${paPageList.pageVO.prev}">
 			<li class="paginate_button"><a href="1">START</a></li>
@@ -109,17 +139,18 @@
 		<c:if test="${paPageList.pageVO.next}">
 			<li class="paginate_button"><a href="${paPageList.pageVO.total}">END</a></li>
 		</c:if>
-		
 	</ul>
+	</div>		
 	    
 	<form id="actionForm" action="/pa" method="get">
 		<input type="hidden" name="pageNum" value="${poPageList.pageVO.pageNum }">
+		<input type="hidden" name="pa_checkStatus" id="pa_checkStatus" value="${param.pa_checkStatus}">
 		<!-- 필요하면 생성
 		<input type="hidden" name="total" value="${poPageList.pageVO.total }">
 		  -->
 	</form>	    
    </div>
-
+   </div>
 
 <%@include file="../include/footer.jsp" %>
     </div>
@@ -146,6 +177,13 @@ function showModal(button) {
 	
 	var pa_no = button.getAttribute("data-pa_no");
 	document.getElementById("pa_no").value = pa_no;
+	
+	var partner = button.getAttribute("data-partner");
+	document.getElementById("partner").value = partner;
+
+	var email = button.getAttribute("data-email");
+	document.getElementById("email").value = email;
+	
 }
 
 $(document).ready(function(){
@@ -153,6 +191,8 @@ $(document).ready(function(){
 		e.preventDefault();
 		var actionForm = $('#actionForm');
 		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		var paCheckStatus = $("#pa_checkStatus").val();
+		actionForm.find("input[name='pa_checkStatus']").val(paCheckStatus);
 		actionForm.submit();
 	});
 });
@@ -239,6 +279,63 @@ function checkForm() {
 		return false;
 	}
 }
+
+// 페이징 색상처리
+$(document).ready(function() {
+	var initialPaCheckStatus = "${pa_checkStatus}";
+
+    $(".ca-button").each(function() {
+        var buttonStatus = $(this).data("status");
+
+        if (buttonStatus == initialPaCheckStatus) {
+            $(this).addClass("active-ca-button"); // 상태에 맞는 클래스를 추가
+        } else {
+            $(this).removeClass("active-ca-button"); // 상태에 맞지 않는 클래스를 제거
+        }
+    });
+	
+	
+	
+	
+	$(".pagination a").on("click", function(e) {
+        e.preventDefault();
+        var actionForm = $('#actionForm');
+        var pageNum = $(this).attr("href");
+
+        // 페이지 버튼의 active 클래스 제거
+        $(".pagination a").removeClass("active");
+
+        // 클릭한 페이지 버튼에 active 클래스 추가
+        $(this).addClass("active");
+
+        actionForm.find("input[name='pageNum']").val(pageNum);
+        actionForm.submit();
+    });
+
+    // 페이지 로딩 시 현재 페이지 번호에 active 클래스 추가
+    var currentPage = "${paPageList.pageVO.pageNum}";
+    $(".pagination a[href='" + currentPage + "']").addClass("active");
+});
+
+function checkStatus(pa_checkStatus){
+	
+var url = '/pa';
+
+var form = document.createElement('form');
+form.method = 'GET';
+form.action = url;
+
+var input = document.createElement('input');
+input.type = 'hidden';
+input.name = 'pa_checkStatus'; 
+input.value = pa_checkStatus;
+
+form.appendChild(input);
+
+document.body.appendChild(form);
+form.submit();
+}
+
 </script>
 
 
@@ -263,13 +360,173 @@ display : inline;
 }
 
 .modal-content {
-	width: 50%;
-	height: 50%;
+	width: 30%;
+	height: 53%;
 	position: relative;
-    top: 25%;
-    left: 25%;
+    top: 20%;
+    left: 35%;
 }
 
+.modal-footer {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    margin-top: 20px; /* 버튼과 폼 그룹 사이의 간격 */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a, .pagination strong {
+    margin: 0 5px; /* 각 페이지 링크 간격 */
+    text-decoration: none; /* 링크 스타일 제거 */
+    color: #07020d; /* 링크 색상 */
+    padding: 10px 15px; /* 패딩 추가 */
+    border-radius: 5px; /* 둥근 모서리 */
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+}
+
+.pagination a {
+    background-color: #f0f0f0; /* 기본 배경색 */
+    border: 1px solid #ddd; /* 테두리 추가 */
+}
+
+.pagination a:hover {
+    background-color: #007bff; /* 호버 시 배경색 */
+    color: white; /* 호버 시 글자색 */
+    text-decoration: underline; /* 마우스 오버 시 밑줄 */
+}
+
+.pagination strong {
+    background-color: #007bff; /* 현재 페이지 강조 색상 */
+    color: white; /* 현재 페이지 글자색 */
+    padding: 10px 15px; /* 패딩 추가 */
+    border-radius: 5px; /* 둥근 모서리 */
+}
+
+/* 선택된 페이지 버튼 스타일 */
+.pagination .active a {
+    background-color: #007bff; /* 선택된 페이지 배경색 */
+    color: white; /* 선택된 페이지 글자색 */
+    border: 1px solid #007bff; /* 선택된 페이지 테두리 색상 */
+}
+
+
+.link-button {
+    display: inline-block; 
+    padding: 7px 7px; 
+    border: none; 
+    border-radius: 5px; 
+    background-color: #5892d1; /* 버튼 배경색 */
+    color: white; /* 글자색 */
+    cursor: pointer;
+    transition: background-color 0.3s; /* 배경색 전환 효과 */
+}
+
+.link-button:hover {
+    background-color: #0056b3; /* 호버 시 배경색 변경 */
+    color: white; /* 글자색을 흰색으로 유지 */
+}
+
+.link-button:active {
+    transform: scale(0.95); 
+    outline: none; /* 기본 아웃라인 제거 */
+}
+
+.button-group {
+    display: flex;
+     gap: 5px; 
+	}
+	
+.card-header {
+   display: flex;
+   flex-direction: column; /* 요소들을 세로로 배치 */
+   align-items: flex-start; /* 왼쪽 정렬 */
+   gap: 10px; /* 요소들 사이의 간격 */
+   padding: 10px; /* 카드 헤더 패딩 */
+   background-color: #f5f5f5; /* 카드 헤더 배경색 (선택 사항) */
+}
+	
+.ca-button {
+    display: inline-block; 
+    padding: 3px 15px; /* 버튼의 패딩 */
+    border: 2px solid #adb5bd; /* 버튼 테두리 색상 */
+    border-radius: 3px; /* 버튼 모서리 둥글게 */
+    background-color: #ffffff; /* 버튼 배경색 */
+    color: #868e96; /* 버튼 텍스트 색상 */
+    font-size: 16px; /* 버튼 텍스트 크기 */
+    font-weight: bold; /* 버튼 텍스트 굵기 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    text-decoration: none; /* 텍스트 밑줄 제거 */
+    cursor: pointer; /* 커서가 버튼 위에 있을 때 포인터로 변경 */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* 부드러운 전환 효과 */
+}
+
+.ca-button:hover {
+    background-color: #007bff; /* 버튼 배경색 변경 */
+    color: #ffffff; /* 버튼 텍스트 색상 변경 */
+    border-color: #007bff; /* 버튼 테두리 색상 변경 */
+}
+
+.ca-button:active {
+    transform: scale(0.95); /* 버튼 클릭 시 약간의 축소 효과 */
+    outline: none; /* 버튼 클릭 시 아웃라인 제거 */
+}
+
+.active-ca-button {
+    background-color: #007bff; /* 활성화된 버튼의 배경색 */
+    color: white; /* 활성화된 버튼의 텍스트 색상 */
+    border-color: #007bff; /* 활성화된 버튼의 테두리 색상 */
+}
+
+.modal-body {
+    padding: 20px; /* 모달 내부의 패딩 */
+}
+
+.form-group {
+    display: flex; /* 플렉스 박스 레이아웃 사용 */
+    align-items: center; /* 세로 가운데 정렬 */
+    margin-bottom: 15px; /* 폼 그룹 사이의 간격 */
+}
+
+.form-group label {
+    width: 110px; /* 레이블의 너비 */
+    margin-right: 15px; /* 레이블과 입력 필드 사이의 간격 */
+    font-weight: bold; /* 레이블 텍스트 굵게 */
+    flex-shrink: 0; /* 레이블이 줄어들지 않도록 설정 */
+    
+}
+.form-group input[type="date"]{
+	width: 100px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="range"] {
+    padding: 3px; /* 입력 필드의 내부 여백 */
+    box-sizing: border-box; /* 패딩과 테두리가 전체 너비에 포함되도록 설정 */
+}
+
+.form-group input[type="text"] {
+    margin-right: 30px; /* 입력 필드와 범위 슬라이더 사이의 간격을 넓힘 */
+    
+}
+
+.form-group input[type="range"] {
+    margin-top: 5px; /* 범위 슬라이더와 텍스트 사이의 간격 */
+}
+
+.form-group textarea {
+    width: 100%; /* 부모 요소에 맞춰 너비를 100%로 설정 */
+    height: 150px; /* 고정된 높이 설정 */
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none; /* 사용자가 크기 조절을 못하도록 설정 */
+}
+
+	
 </style>	
 	
 	

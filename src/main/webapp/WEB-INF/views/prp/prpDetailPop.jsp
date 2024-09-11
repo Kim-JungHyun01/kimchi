@@ -19,7 +19,7 @@
 		<input type = "text" name = "prp_progress" id="prp_progress" value = "0" >
 		<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
 		<p>비고</p>
-		<input type="text" id="prp_notes" name="prp_notes" value="">
+		<input type="text" id="prp_notes" name="prp_notes" value="${prpVO.prp_notes}">
 		
 		<button onclick="sendData()">저장</button>
 </div>
