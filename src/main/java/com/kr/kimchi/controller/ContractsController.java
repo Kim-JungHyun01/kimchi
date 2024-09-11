@@ -47,18 +47,24 @@ public class ContractsController {
 
 		int pageSize = 5; // 한 페이지에 보여줄 갯수 
 	    int pageNavSize = 5; // 페이지 네비 크기
-	    
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
+	    
 	    List<ContractsVO> conlist = conservice.contractsAll(startRow, pageSize);
+	    List<UserVO> userlist = userservice.userAll(0, 100, null);
+	    List<ItemVO> itemlist =itemservice.itemAll(0, 100, null);
 	    
 	    Integer totalCount = conservice.getTotalCount(); // 총 레코드 수 가져옴
+	    Integer totalPages = itemservice.itemSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
 	    
 	    PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
-	    
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pagination", pagination);
 	    mav.addObject("currentPage", pageNum);
+	    mav.addObject("totalPages", totalPages);
+	    
 		mav.addObject("conlist", conlist);
+		mav.addObject("userlist", userlist);
+		mav.addObject("itemlist", itemlist);
 		mav.setViewName("contracts/contractsAll");
 		return mav;
 	}// end

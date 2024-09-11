@@ -3,59 +3,46 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <%@include file="../include/header.jsp"%>
 <div class="content-body">
-	<h3>계약 목록</h3>
-	<table>
-		<tr>
-			<td>계약코드</td>
-			<td>계약물품코드</td>
-			<td>계약수량</td>
-			<td>계약가격</td>
-			<td>계약납기일</td>
-			<td>계약상태</td>
-			<td>계약상세</td>
-			<td>계약등록일</td>
-			<td>계약서류발행여부</td>
-			<td>계약협력회사</td>
-			<td>계약담당자</td>
-		</tr>
-		<c:forEach var="conlist" items="${conlist}">
+	<div style="margin-left: 20px;">
+		<h3>계약 목록</h3>
+		<table class="table">
 			<tr>
-				<td><a href="${contextPath}/contracts/contractsSelect?contracts_no=${conlist.contracts_no}">${conlist.contracts_no}</a></td>
-				<td>${conlist.item_no}</td>
-				<td>${conlist.contracts_quantity}</td>
-				<td>${conlist.contracts_price}</td>
-				<td>${conlist.contracts_deliveryDate}</td>
-				<td>${conlist.contracts_status}</td>
-				<td>${conlist.contracts_details}</td>
-				<td>${conlist.contracts_registrationDate}</td>
-				<td>${conlist.contracts_document}</td>
-				<td>${conlist.partner_taxid}</td>
-				<td>${conlist.user_id}</td>
+				<td>계약코드</td>
+				<td>계약물품코드</td>
+				<td>계약수량</td>
+				<td>계약가격</td>
+				<td>계약납기일</td>
+				<td>계약상태</td>
+				<td>계약협력회사</td>
+				<td>계약담당자</td>
 			</tr>
-		</c:forEach>
-	</table>
-			<!-- Pagination -->
-	<div class="pagination">
-		<c:if test="${currentPage > 1}">
-			<a href="?pageNum=${currentPage - 1}">이전|</a>
-		</c:if>
-
-		<c:forEach var="page" begin="1" end="${totalPages}">
-			<c:choose>
-				<c:when test="${page == currentPage}">
-					<strong>${page}</strong>
-				</c:when>
-				<c:otherwise>
-					<a href="?pageNum=${page}">${page}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-
-		<c:if test="${currentPage < totalPages}">
-			<a href="?pageNum=${currentPage + 1}">|다음</a>
-		</c:if>
+			<!--  -->
+			<c:forEach var="conlist" items="${conlist}">
+					<tr onclick="location.href='${contextPath}/contracts/contractsSelect?contracts_no=${conlist.contracts_no}'" style="cursor: pointer;">
+					<td>${conlist.contracts_no}</td>
+					<c:forEach var="itemlist" items="${itemlist }">
+						<c:if test="${conlist.item_no eq itemlist.item_no }">
+							<td>${itemlist.item_name}</td>
+						</c:if>
+					</c:forEach>
+					<td>${conlist.contracts_quantity}</td>
+					<td>${conlist.contracts_price}</td>
+					<td>${conlist.contracts_deliveryDate}</td>
+					<td>${conlist.contracts_status}</td>
+					<td>${conlist.partner_taxid}</td>
+					<c:forEach var="userlist" items="${userlist }">
+						<c:if test="${conlist.user_id eq userlist.user_id }">
+							<td>${userlist.user_name}</td>
+						</c:if>
+					</c:forEach>
+				</tr>
+			</c:forEach>
+		</table>
+		<!-- Pagination -->
+		<%@include file = "../include/paging.jsp" %>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>

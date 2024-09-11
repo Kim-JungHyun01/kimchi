@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kr.kimchi.dao.BoardDAO;
 import com.kr.kimchi.service.BoardService;
 import com.kr.kimchi.vo.BoardVO;
 

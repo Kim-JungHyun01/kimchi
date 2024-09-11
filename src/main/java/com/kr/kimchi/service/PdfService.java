@@ -31,18 +31,19 @@ public class PdfService {
 	private ContractsService conservice;
 
 	public int createContract(int contracts_no, String code_name) {
+//		사용할 데이터
 		ContractsVO con = conservice.contractsSelect(contracts_no);
 		ItemVO item = itemservice.itemSelect(con.getItem_no());
 		PartnerVO part = partservice.partnerSelect(con.getPartner_taxid());
 
 		int result = -1;
 		Document document = new Document(PageSize.A4, 20, 20, 20, 20);
-		String filename = code_name + ".PDF";
-		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;
+		String filename = code_name + ".PDF";//파일이름_pdf로 꼭 지정
+		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//파일저장위치
 		File file = new File(filePath);
 
 		try (FileOutputStream fos = new FileOutputStream(file)) {
-			PdfWriter writer = PdfWriter.getInstance(document, fos);
+			PdfWriter writer = PdfWriter.getInstance(document, fos);//사용하기는 않지만 필요
 			document.open();
 
 			BaseFont baseFont = BaseFont.createFont("HYGoThic-Medium", "UniKS-UCS2-H", BaseFont.NOT_EMBEDDED);
@@ -56,17 +57,17 @@ public class PdfService {
 				if (key == 1 || key == 30) {
 					graph.setAlignment(Paragraph.ALIGN_CENTER);
 				} else if (key == 4) {
+//					표 생성
 					PdfPTable table = new PdfPTable(8);
 					table.setWidthPercentage(100);
-					table.setWidths(new int[] { 30, 30, 130, 50, 25, 50, 80, 80 });
-
+					table.setWidths(new int[] { 30, 30, 130, 50, 25, 50, 80, 80 });//간격 조절
 					String[] titleCate = { "계약\n번호", "품목\n코드", "품명", "품목\n단가(원)", "계약\n수량", "계약\n금액(원)", "납기일", "비고" };
 					for (String title : titleCate) {
 						PdfPCell titleCell = new PdfPCell(new Paragraph(title, contentFont));
 						titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						table.addCell(titleCell);
 					}
-
+//					3.데이터추가
 					List<Object> tmp = new ArrayList<>();
 	                tmp.add(con.getContracts_no());
 	                tmp.add(item.getItem_no());
@@ -85,7 +86,7 @@ public class PdfService {
 	                    table.addCell(content);
 	                }
 
-	                // 빈 셀 추가
+	                // 빈 셀 추가_꼭!!
 	                if (tmp.size() < 8) {
 	                    for (int i = tmp.size(); i < 8; i++) {
 	                        table.addCell(new PdfPCell(new Paragraph("", contentFont))); // 빈 셀 추가
@@ -102,7 +103,7 @@ public class PdfService {
 			}
 
 			result = 1; // 파일 생성 완료
-			document.close();
+			document.close();//파일 닫기_꼭(중간에 닫아버리면 오류)
 		} catch (Exception e) {
 			result = 0; // 파일 생성 실패
 			e.printStackTrace();
@@ -213,7 +214,7 @@ public class PdfService {
 		LocalDateTime today = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
 		// 원하는 형식으로 변환합니다.
-		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy.HH.dd");
+		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 		String formattedDate = today.format(outputFormatter);
 		
 		Food.put(30, "\r\n<" + formattedDate + ">\r\n");

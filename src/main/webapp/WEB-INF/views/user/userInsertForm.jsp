@@ -251,10 +251,10 @@
 										<label><strong>사용자 부서</strong></label> <select
 											name="user_department" id="user_department" required>
 											<option value="부서선택">부서선택</option>
-											<option value="자재부서">자재부서</option>
 											<option value="개발부서">개발부서</option>
-											<option value="발주부서">발주부서</option>
 											<option value="생산부서">생산부서</option>
+											<option value="자재부서">자재부서</option>
+											<option value="발주부서">구매부서</option>
 										</select>
 									</div>
 									<div class="text-center mt-4">

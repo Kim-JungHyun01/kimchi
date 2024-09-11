@@ -6,7 +6,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,22 +36,31 @@ public class ObtainController {
 	@Inject
 	private Bom_maService bom_maservice;
 
+
 //	조달계획 보기_전체
 	@GetMapping(value = "obtain/obtainAll")
 	public ModelAndView obtainAll(@RequestParam(defaultValue = "1") int pageNum) {
 		int pageSize = 5; // 한 페이지에 보여줄 갯수 
 	    int pageNavSize = 5; // 페이지 네비 크기
-	    
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 		
 		List<ObtainVO> oblist = obtservice.obtainAll(startRow,pageSize);
+		List<UserVO> userlist = userservice.userAll(0, 100, null);
+		List<MaterialVO> malist = maservice.maList(0, 100);
+//		List<MaterialVO> malist = maservice.maList(0, 100, null);
+		
 		Integer totalCount = obtservice.getTotalCount(); // 총 레코드 수 가져옴
+		Integer totalPages = userservice.userSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pagination", pagination);
 	    mav.addObject("currentPage", pageNum);
+	    mav.addObject("totalPages", totalPages);
+	    
 		mav.addObject("oblist", oblist);
+		mav.addObject("userlist", userlist);
+		mav.addObject("malist", malist);
 		mav.setViewName("obtain/obtainAll");
 		return mav;
 	}// end
@@ -82,6 +90,7 @@ public class ObtainController {
 		ContractsVO con = conservice.contractsSelect(pro.getContracts_no());
 		List<PartnerVO> partnerlist = partservice.partnerAll(0,100, null);
 		List<MaterialVO> malist = maservice.maList(0, 100);
+//		List<MaterialVO> malist = maservice.maList(0, 100, null);
 		List<Bom_maVO> bom_malist = bom_maservice.bom_maSelect(con.getItem_no());
 		List<UserVO> userlist = userservice.userAll(0,10, null);
 		ModelAndView mav = new ModelAndView();

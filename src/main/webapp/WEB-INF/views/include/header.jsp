@@ -44,11 +44,10 @@
         ***********************************-->
 		<div class="nav-header">
 			<a href="/" class="brand-logo"> <img class="logo-abbr"
-				src="${contextPath}/resources/images/logo.png" alt=""> <img
+				src="${contextPath}/resources/images/navlog.png" alt=""> <img
 				class="logo-compact"
 				src="${contextPath}/resources/images/logo-text.png" alt=""> <!-- 이미지 조정-->
-				<img class="brand-title"
-				src="${contextPath}/resources/images/thekimchi.jpg">
+				<img class="brand-title" src="${contextPath}/resources/images/headerlog.png" style="width: 200px; height: auto;">
 			</a>
 			<div class="nav-control">
 				<div class="hamburger">

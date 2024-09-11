@@ -31,7 +31,7 @@
 .modal-content {
 	background-color: white;
 	padding: 20px;
-	width: 20%; /* 모달 너비를 50%로 설정 */
+	width: 80%; /* 모달 너비를 50%로 설정 */
 	max-height: 70%; /* 최대 높이 조정 */
 	overflow-y: auto;
 	border-radius: 8px;

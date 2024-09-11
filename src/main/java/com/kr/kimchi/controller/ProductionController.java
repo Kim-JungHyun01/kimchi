@@ -1,5 +1,6 @@
 package com.kr.kimchi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,14 +36,23 @@ public class ProductionController {
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 		
 		List<ProductionVO> prolist = proservice.productionAll(startRow, pageSize);
+		List<UserVO> userlist = userservice.userAll(0, 100, null);
+		List<ContractsVO> conlist = conservice.contractsAll(0, 100);
+		List<ItemVO> itemlist = itemservice.itemAll(0, 100, null);
 		
 		Integer totalCount = proservice.getTotalCount(); // 총 레코드 수 가져옴
+		 Integer totalPages = itemservice.itemSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pagination", pagination);
 	    mav.addObject("currentPage", pageNum);
+	    mav.addObject("totalPages", totalPages);
+	    
 		mav.addObject("prolist",prolist);
+		mav.addObject("conlist", conlist);
+		mav.addObject("userlist", userlist);
+		mav.addObject("itemlist", itemlist);
 		mav.setViewName("production/productionAll");
 		return mav;
 	}//end
