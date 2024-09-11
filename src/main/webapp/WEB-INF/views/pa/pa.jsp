@@ -7,7 +7,6 @@
 
 <%@include file="../include/header.jsp" %>
 
-<%@include file="../include/nav.jsp" %>
    <div class="content-body">
    <div class="container-fluid">
    

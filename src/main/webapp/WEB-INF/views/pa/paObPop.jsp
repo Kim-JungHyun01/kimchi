@@ -6,7 +6,7 @@
     <hr>
     <div class="form-group">
         <label class="label">조달계획코드</label>
-        <input type="text" name="obtain_no" id="obtain_no" value="" readonly>
+        <input type="text" name="obtain_no" id="obtain_no" value="${obtain.obtain_no}" readonly>
     </div>
     <div class="form-group">
         <label class="label">조달계획 자재명</label>
