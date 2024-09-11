@@ -14,5 +14,8 @@ public interface BoardDAO {
 	
 	public void delete(Integer board_no)throws Exception;
 	
-	public List<BoardVO> listAll()throws Exception;
+	public List<BoardVO> listAll(int startRow, int pageSize)throws Exception;
+	
+	// 전체 레코드 수
+	public Integer getTotalCount();
 }

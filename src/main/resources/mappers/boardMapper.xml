@@ -37,7 +37,13 @@
    board
   where board_no > 0
   order by board_no desc, board_createdDate desc
+  LIMIT #{startRow}, #{pageSize}
    ]]>
    </select>
+   
+   <!-- 전체 listAll의 총 개수 조회 -->
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM board;
+    </select>
   
   </mapper>

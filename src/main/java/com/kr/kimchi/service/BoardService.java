@@ -15,6 +15,9 @@ public interface BoardService {
 	
 	public void remove(Integer board_no)throws Exception;
 	
-	public List<BoardVO> listAll()throws Exception;
+	public List<BoardVO> listAll(int startRow, int pageSize)throws Exception;
+	
+	// 전체 레코드수
+	public Integer getTotalCount();
 	
 }

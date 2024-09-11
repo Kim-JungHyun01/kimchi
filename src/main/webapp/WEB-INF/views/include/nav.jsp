@@ -15,7 +15,7 @@
 									2</a></li>
 						</ul></li> -->
 			<!-- 물품관리 -->
-			<li class="nav-label first">물류관리</li>
+			<li class="nav-label first">물류관리</li>  <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 			<li><a class="has-arrow" href="javascript:void()"
 				aria-expanded="false"><i class="icon icon-single-04"></i> <span
 					class="nav-text">물품관리</span></a>
@@ -27,8 +27,8 @@
 			<li><a class="has-arrow" href="javascript:void()"
 				aria-expanded="false"><i></i> <span class="nav-text">제재관리</span></a>
 				<ul aria-expanded="false">
-					<li><a href="${contextPath}">자재리스트</a></li>
-					<li><a href="${contextPath}">자재등록</a></li>
+					<li><a href="${contextPath}/material/maList">자재리스트</a></li>
+					<li><a href="${contextPath}/material/maAdd">자재등록</a></li>
 				</ul></li>
 			<!-- 제품계약관리 -->
 			<li><a class="has-arrow" href="javascript:void()"
@@ -69,11 +69,11 @@
 					<li><a href="imformation">입출고정보</a></li>
 					<li><a href="${contextPath}/resources/app-calender.html">자재입고관리</a></li>
 					<li><a href="${contextPath}/out/outList">출고목록</a></li>
-					<li><a href="${contextPath}/material/maReport">금액현황</a></li>
+					<li><a href="${contextPath}/material/maReport">금액현황조회</a></li>
 				</ul></li>
 			<!-- 관리자관리  -->
 
-			<li class="nav-label first">관리자전용</li>
+			<li class="nav-label first">관리자전용</li>	 <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 			<li><a class="has-arrow" href="javascript:void()"
 				aria-expanded="false"> <i class="icon icon-single-04"></i> <span
 					class="nav-text">승인관리</span></a>

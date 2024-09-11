@@ -53,10 +53,11 @@ button {
 	}
 
 	// 계약 정보 가져오기
-	function selectMaterial(id, name, obtainId) {
+	function selectMaterial(maid, macategory, maname, obtainId) {
 		alert("출고처리를 하시겠습니까?")
-		document.getElementById("ma_id").value = id; // 자재 ID 설정
-		document.getElementById("ma_name").value = name; // 자재 이름 설정
+		document.getElementById("ma_id").value = maid; // 자재 ID 설정
+		document.getElementById("ma_category").value = macategory; // 자재 이름 설정
+		document.getElementById("ma_name").value = maname; // 조달 ID 설정 
 		document.getElementById("obtain_no").value = obtainId; // 조달 ID 설정 
 		closeoutModal(); // 모달 닫기
 	}
@@ -96,7 +97,7 @@ button {
 						<c:if test="${ma.ma_id == obj.ma_id}">
 							<td>${ma.ma_id}</td>
 							<td>${ma.ma_category}</td>
-							<td><a href="javascript:selectMaterial('${obj.ma_id}', '${ma.ma_name}', '${obj.obtain_no}')">${ma.ma_name}</a></td>
+							<td><a href="javascript:selectMaterial('${obj.ma_id}', '${ ma.ma_category}', '${ma.ma_name}', '${obj.obtain_no}')">${ma.ma_name}</a></td>
 							<td>${ma.ma_origin}</td>
 							<td>${ma.ma_unit}</td>
 							<td>${ma.ma_weight}</td>

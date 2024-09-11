@@ -1,6 +1,8 @@
 package com.kr.kimchi.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,8 +41,19 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> listAll() throws Exception {
-		return session.selectList(namespace + ".listAll");
+	public List<BoardVO> listAll(int startRow, int pageSize) throws Exception {
+		Map<String, Object> params = new HashMap<>();
+		params.put("startRow", startRow);
+		params.put("pageSize", pageSize);
+		
+		 // SQL 쿼리에서 페이지 정보 사용
+		return session.selectList(namespace + ".listAll", params);
+	}
+	
+	// 레코드수
+	public Integer getTotalCount() {
+		return session.selectOne(namespace + ".getTotalCount");
+		
 	}
 
 }

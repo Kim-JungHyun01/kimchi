@@ -48,19 +48,18 @@ button {
 	function closecmaModal() {
 		document.getElementById("maModal").style.display = "none";
 	}//end
-	//계약 정보가져오기
-	function selectMaterial(id, category, name, origin, unit, weight, stockQuantity, price, specifications,) {
-		document.getElementById("ma_id").value = id;
-		document.getElementById("ma_category").value = category;
-		document.getElementById("ma_name").value = name;
-		document.getElementById("ma_origin").value = origin;
-		document.getElementById("ma_unit").value = unit;
-		document.getElementById("ma_weight").value = weight;
-		document.getElementById("ma_stockQuantity").value = stockQuantity;
-		document.getElementById("ma_price").value = price;
-		document.getElementById("ma_specifications").value = specifications;
-		closecmaModal(); // 모달 닫기
-	}//end
+	function selectMaterial(id, category, name, origin, unit, weight, stockQuantity, price, specifications) {
+	    document.getElementById("ma_id").value = id;
+	    document.getElementById("ma_category").value = category; // category를 추가
+	    document.getElementById("ma_name").value = name;
+	    document.getElementById("ma_origin").value = origin;
+	    document.getElementById("ma_unit").value = unit;
+	    document.getElementById("ma_weight").value = weight;
+	    document.getElementById("ma_stockQuantity").value = stockQuantity;
+	    document.getElementById("ma_price").value = price;
+	    document.getElementById("ma_specifications").value = specifications;
+	    closemaModal(); // 모달 닫기
+	}
 </script>
 <div id="maModal">
 	<div class="modal-content">

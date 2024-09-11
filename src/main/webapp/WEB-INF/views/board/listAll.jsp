@@ -28,6 +28,23 @@
         ***********************************-->
        
         <div class="content-body">
+        
+ <style>
+    .pagination {
+        display: flex;
+        justify-content: center; 
+        margin: 20px 0; 
+    }
+    .pagination a, .pagination strong {
+        margin: 0 5px; /* 각 페이지 링크 간격 */ 
+        text-decoration: none; /* 링크 스타일 제거 */
+        color: #07020d; /* 링크 색상 (선택적) */
+    }
+
+    .pagination a:hover {
+        text-decoration: underline; /* 마우스 오버 시 밑줄 */
+    }
+</style>
      
     <table class="table table-bordered">
     <tr>
@@ -57,6 +74,28 @@
     
     
     </table>  
+    
+    <!-- Pagination -->
+	<div class="pagination">
+	    <c:if test="${currentPage > 1}">
+	        <a href="?pageNum=${currentPage - 1}">이전|</a>
+	    </c:if>
+	
+	    <c:forEach var="page" begin="1" end="${totalPages}">
+	        <c:choose>
+	            <c:when test="${page == currentPage}">
+	                <strong>${page}</strong>
+	            </c:when>
+	            <c:otherwise>
+	                <a href="?pageNum=${page}">${page}</a>
+	            </c:otherwise>
+	        </c:choose>
+	    </c:forEach>
+	
+	    <c:if test="${currentPage < totalPages}">
+	        <a href="?pageNum=${currentPage + 1}">|다음</a>
+	    </c:if>
+	</div>
       
       <script>
       
