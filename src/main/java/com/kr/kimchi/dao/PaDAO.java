@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kr.kimchi.vo.CodeVO;
 import com.kr.kimchi.vo.PaVO;
 
 
@@ -23,27 +24,45 @@ public class PaDAO {
 		return session.selectList(namespace+".paList",params);
 	}
 	
-	public List<PaVO> paAllList() {
-		return session.selectList(namespace+".paAllList");
+	public List<PaVO> paAllList(int pa_checkStatus) {
+		return session.selectList(namespace+".paAllList",pa_checkStatus);
+	}
+	
+	// ±¸¸Å¹ßÁÖ¼­ ÄÚµå¹ßÇà
+	public void paCode(String code) {
+		session.selectOne(namespace+".paCode", code);
+	}
+
+	// ±¸¸Å¹ßÁÖ¼­ ÄÚµå°Ë»ö
+	public int paCodeSelecet(String code_name) {
+		return session.selectOne(namespace+".paCodeSelecet", code_name);
+	}
+
+	public void paPlus(Map<String, Object> map) {
+		session.selectOne(namespace+".paPlus", map);
+	}
+	
+	public void prpFinsh(int pa_no) {
+		session.selectOne(namespace+".prpFinsh", pa_no);
+	}
+
+	public void prpIng(int pa_no) {
+		session.selectOne(namespace+".prpIng", pa_no);
 	}
 	
 	
-//	 í˜ì´í¼ ì¶”ê°€
 	public void paInsert(PaVO pa) {
 		session.selectOne(namespace+".paInsert", pa);
 	}//end
 	
-//	 í˜ì´í¼ ìˆ˜ì •
 	public void paUpdate(PaVO pa) {
 		session.selectOne(namespace+".paUpdate", pa);
 	}//end
 	
-//	í˜ì´ì²˜ ì²´í¬
 	public void paCheck(int pa_no) {
 		session.selectOne(namespace+".paCheck", pa_no);
 	}//end
 	
-//	í˜ì´í¼ ë³´ê¸°
 	public PaVO paSelect(Map<String, Object> params){
 		return session.selectOne(namespace+".paSelect", params);
 	}//end
