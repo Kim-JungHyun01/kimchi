@@ -37,10 +37,6 @@ public class BoardServiceImpl implements BoardService {
 		dao.delete(board_no);
 	}
 
-	@Override
-	public List<BoardVO> listAll(int startRow, int pageSize) throws Exception {
-		return dao.listAll(startRow, pageSize);
-	}
 	
 	public Integer getTotalCount() {
 		return dao.getTotalCount();
@@ -68,6 +64,12 @@ public class BoardServiceImpl implements BoardService {
 	public int listSearchCount(BoardSearchCriteria cri) throws Exception {
 		
 		return dao.listSearchCount(cri);
+	}
+
+	@Override
+	public List<BoardVO> listAll(int startRow, int pageSize) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -74,7 +74,7 @@
 								<c:when test="${userlogin != null}">
 									<li class="nav-item dropdown header-profile"><a href="#"
 										class="dropdown-item"> <i class="icon icon-single-04"></i>
-											<span class="ml-2">${userlogin.user_department}_${userlogin.user_name}님</span></a>
+											<span class="ml-2">${userlogin.user_id}_${userlogin.user_department}_${userlogin.user_name}님</span></a>
 										<a href="${contextPath}/login/logout" class="dropdown-item">
 											<i class="icon-key"></i> <span class="ml-2">Logout </span>
 									</a>

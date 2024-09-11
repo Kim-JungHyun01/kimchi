@@ -41,21 +41,11 @@ public class BoardDAOImpl implements BoardDAO {
 		session.delete(namespace + ".delete", board_no);
 
 	}
-
-	@Override
-	public List<BoardVO> listAll(int startRow, int pageSize) throws Exception {
-		Map<String, Object> params = new HashMap<>();
-		params.put("startRow", startRow);
-		params.put("pageSize", pageSize);
-		
-		 // SQL 쿼리에서 페이지 정보 사용
-		return session.selectList(namespace + ".listAll", params);
-	}
 	
 	// 레코드수
+	@Override
 	public Integer getTotalCount() {
 		return session.selectOne(namespace + ".getTotalCount");
-		
 	}
 
 	@Override
@@ -92,6 +82,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public int listSearchCount(BoardSearchCriteria cri) throws Exception {
 
 		return session.selectOne(namespace + ".listSearchCount", cri);
+	}
+
+	@Override
+	public List<BoardVO> listAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

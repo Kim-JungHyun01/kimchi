@@ -6,7 +6,7 @@
 	<!-- 사용자 로그인 -->
 	<select id="userLogin" parameterType="java.util.Map"
 		resultType="java.util.Map">
-		select user_name, user_department, user_approval
+		select user_id, user_name, user_department, user_approval
 		from user
 		where user_id=#{user_id}
 		and user_pw=#{user_pw}
