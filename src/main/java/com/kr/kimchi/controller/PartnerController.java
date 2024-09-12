@@ -28,7 +28,7 @@ public class PartnerController {
 	public ModelAndView partnerAll(@RequestParam(defaultValue = "1") int pageNum,
 								   @RequestParam(required = false) String partner_companyname) {
 		
-		int pageSize = 2; // 한 페이지에 보여줄 갯수 // db에 3개 밖에 없어서 2로 설정했어요!
+		int pageSize = 10; // 한 페이지에 보여줄 갯수 // db에 3개 밖에 없어서 2로 설정했어요!
 	    int pageNavSize = 5; // 페이지 네비 크기
 	    
 	  //시작 위치 계산

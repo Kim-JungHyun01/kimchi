@@ -2,9 +2,95 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<script>
+<style>
+.content-body {
+	border-radius: 8px;
+	padding: 20px;
+	margin: auto;
+}
 
+.content-body h2 {
+	margin: 0 15%;
+}
+</style>
+<%@include file="../include/header.jsp"%>
+<div class="contracts">
+<div class="content-body">
+	<h2>계약 수정화면</h2>
+	<hr>
+	<div class="input-container">
+		<form action="contractsUpdate" method="post" name="contractsUpdateForm" id="contractsUpdateForm">
+			<div>
+				<h3>물품 상세</h3>
+			</div>
+			<div class="input-group">
+				<label>계약코드</label><input name="contracts_no" id="contracts_no" type="number" value="${con.contracts_no}" readonly>
+				<label>계약물품코드</label><input name="item_no" id="item_no" type="number" value="${con.item_no}" readonly><br>
+			</div>
+			<div class="input-group">
+				<label>계약물품분류</label><input name="item_category" id="item_category" type="text" value="${item.item_category}" readonly><br>
+				<label>계약물품명</label><input name="item_name" id="item_name" type="text" value="${item.item_name}" readonly><br>
+			</div>
+			<div class="input-group">	
+				<label>계약물품단가</label><input name="item_price" id="item_price" type="number" value="${item.item_price}" readonly><br>
+				<label>물품제조소요일(일)</label><input name="bom_schedule" id="bom_schedule" type="number" value="${item.bomVO.bom_schedule}" readonly>
+			</div>
+			<hr>
+			<div>
+				<h3>계약정보</h3>
+			</div>
+			<div class="input-group">
+				<label>계약수량</label>
+				<input name="contracts_quantity" id="contracts_quantity" type="number" value="${con.contracts_quantity}" oninput="calculate()">
+				<label>계약가격</label> 
+				<input name="contracts_price" id="contracts_price" type="number" value="${con.contracts_price}" onkeyup="calculate()" readonly>
+			</div>
+			<div class="input-group">
+				<label>계약납기일</label>
+				<input name="contracts_deliveryDate" id="contracts_deliveryDate" type="date" value="${con.contracts_deliveryDate}" onchange="checkdate()">
+				<label>계약상세</label>
+				<textarea id="contracts_details" name="contracts_details">${con.contracts_details}</textarea>
+			</div>
+			<hr>
+			<div>
+				<h3>계약협력회사 상세정보</h3>
+			</div>
+			<div class="input-group">
+				<label>협력회사 사업자번호</label> <input name="partner_taxid" id="partner_taxid" type="text" value="${con.partner_taxid}" readonly><br>
+				<label>협력회사 회사명</label> <input name="partner_companyname" id="partner_companyname" type="text" value="${partner.partner_companyname }" readonly><br>
+			</div>
+			<div class="input-group">
+				<label>협력회사 대표자명</label> <input name="partner_ownername" id="partner_ownername" type="text" value="${partner.partner_ownername }" readonly><br>
+				<label>협력회사 전화번호</label> <input name="partner_number" id="partner_number" type="text" value="${partner.partner_number }" readonly><br> 
+			</div>
+			<div class="input-group">
+				<label>협력회사 이메일</label><input name="partner_email" id="partner_email" type="text" value="${partner.partner_email }" readonly>
+			</div>
+			<div>
+				<h3>계약담당자</h3>
+			</div>
+			<div class="input-group">
+				<label>담당자명</label><input name="user_name" id="user_name" type="text" value="${user.user_email}" readonly><br>
+				<label>담당자 이메일</label><input name="user_email" id="user_email" type="text" value="${user.user_name}" readonly><br>
+			</div>
+			<div class="input-group">
+				<label>담당자 전화번호</label><input name="user_number" id="user_number" type="text" value="${user.user_number}" readonly><br>
+				<label>담당자 부서</label><input name="user_id" id="user_id" type="text" value="${con.user_id}" readonly><br>
+			</div>
+			<hr>
+			<div style="text-align: right;">
+				<button type="button" class="addbutton" onclick="btnsumbit()">계약수정</button>
+				<button type="reset" class="addbutton">초기화</button>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+
+<%@include file="../include/footer.jsp"%>
+<script>
 	function alertprint(message, element) {
 		alert(message + "을 입력해주세요.");
 		document.getElementById(element).focus();
@@ -72,65 +158,3 @@
 
 	}//btnsumbit
 </script>
-<%@include file="../include/header.jsp"%>
-<div class="content-body">
-	<form action="contractsUpdate" method="post" name="contractsUpdateForm"
-		id="contractsUpdateForm">
-		<div>
-			<h3>계약 수정화면</h3>
-		</div>
-		<div>
-			<label>계약코드</label>
-			<input name="contracts_no" id="contracts_no" type="number" value="${con.contracts_no}" readonly>
-		</div>
-
-		<div>
-			<label>계약물품코드</label><input name="item_no" id="item_no" type="number" value="${con.item_no}" readonly><br>
-			<label>계약물품분류</label><input name="item_category" id="item_category" type="text" value="${item.item_category}" readonly><br>
-			<label>계약물품명</label><input name="item_name" id="item_name" type="text" value="${item.item_name}" readonly><br>
-			<label>계약물품단가</label><input name="item_price" id="item_price" type="number" value="${item.item_price}" readonly><br>
-			<label>물품제조소요일(일)</label><input name="bom_schedule" id="bom_schedule" type="number" value="${item.bomVO.bom_schedule}"readonly>
-		</div>
-		<div>
-			<label>계약수량</label>
-			<input name="contracts_quantity" id="contracts_quantity" type="number" value="${con.contracts_quantity}" oninput="calculate()">
-		</div>
-		<div>
-			<label>계약가격</label> 
-			<input name="contracts_price" id="contracts_price" type="number" value="${con.contracts_price}" onkeyup="calculate()" readonly>
-		</div>
-		<div>
-			<label>계약납기일</label>
-			<input name="contracts_deliveryDate" id = "contracts_deliveryDate" type="date" value="${con.contracts_deliveryDate}" onchange="checkdate()">
-		</div>
-		<div>
-			<label>계약상세</label>
-			<textarea id="contracts_details" name="contracts_details">${con.contracts_details}</textarea>
-		</div>
-		<div>
-			<h4>계약협력회사 상세정보</h4>
-			<label>협력회사 사업자번호</label> <input name="partner_taxid" id="partner_taxid"
-				type="text" value="${con.partner_taxid}" readonly><br>
-			<label>협력회사 회사명</label> <input name="partner_companyname" id="partner_companyname"
-				type="text" value="${partner.partner_companyname }" readonly><br>
-			<label>협력회사 대표자명</label> <input name="partner_ownername" id="partner_ownername"
-				type="text" value="${partner.partner_ownername }" readonly><br>
-			<label>협력회사 전화번호</label> <input name="partner_number" id="partner_number" type="text"
-				value="${partner.partner_number }" readonly><br> 
-			<label>협력회사 이메일</label><input name="partner_email" id="partner_email" type="text"
-				value="${partner.partner_email }" readonly>
-		</div>
-		<div>
-			<h4>계약담당자</h4>
-			<label>담당자명</label><input name="user_name" id="user_name" type="text"value="${user.user_email}" readonly><br>
-			<label>담당자 이메일</label><input name="user_email" id="user_email" type="text"value="${user.user_name}" readonly><br>
-			<label>담당자 전화번호</label><input name="user_number" id=user_number type="text" value="${user.user_number}" readonly><br>
-			<label>담당자 부서</label><input name="user_id" id="user_id" type="text" value="${con.user_id}" readonly><br>
-		</div>
-		<div>
-			<button type="button" onclick="btnsumbit()">계약수정</button>
-			<button type="reset">초기화</button>
-		</div>
-	</form>
-</div>
-<%@include file="../include/footer.jsp"%>
