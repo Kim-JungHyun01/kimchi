@@ -6,8 +6,7 @@
 <mapper namespace="com.kr.kimchi.mappers.MaterialMapper">
 
 	<!-- 전체 + 페이징 + 검색(ma_name기준) -->
-	<select id="maList" parameterType="map"
-		resultType="com.kr.kimchi.vo.MaterialVO">
+	<select id="maList" parameterType="map" resultType="com.kr.kimchi.vo.MaterialVO">
 		SELECT * FROM material
 		WHERE 1=1
 		<if test="ma_name != null and ma_name != ''">
@@ -33,8 +32,7 @@
 	</select>
 
 	<!-- 선택 -->
-	<select id="maView" parameterType="int"
-		resultType="com.kr.kimchi.vo.MaterialVO">
+	<select id="maView" parameterType="int" resultType="com.kr.kimchi.vo.MaterialVO">
 		SELECT * FROM material WHERE ma_id = #{ma_id}
 	</select>
 
@@ -61,8 +59,7 @@
 	</insert>
 
 	<!-- 수정 -->
-	<update id="maUpdate"
-		parameterType="com.kr.kimchi.vo.MaterialVO">
+	<update id="maUpdate" parameterType="com.kr.kimchi.vo.MaterialVO">
 		UPDATE material
 		SET ma_name = #{ma_name},
 		ma_category =
@@ -88,8 +85,7 @@
 	</update>
 
 	<!-- 금액 현황 리포트 -->
-	<select id="maReport" parameterType="map"
-		resultType="com.kr.kimchi.vo.MaterialVO">
+	<select id="maReport" parameterType="map" resultType="com.kr.kimchi.vo.MaterialVO">
 		SELECT ma_id, ma_category, ma_name, ma_price, ma_update, ma_date,
 		SUM(ma_stockQuantity) AS totalQuantity,
 		SUM(ma_stockValue) AS
@@ -107,20 +103,5 @@
 		GROUP BY ma_id, ma_category, ma_name, ma_price, ma_update, ma_date
 		ORDER BY ma_category;
 	</select>
-
-<!-- 차트 -->
-<select id="machart" parameterType="map" resultType="com.kr.kimchi.vo.MaterialVO">
-    SELECT 
-        ma_stockQuantity, ma_price, ma_update, ma_date,
-    SUM(ma_stockQuantity) AS totalQuantity,
-    SUM(ma_stockValue) AS totalValue 
-    FROM material
-    WHERE 1=1
-    <if test="startDate != null and endDate != null">
-        AND (ma_update BETWEEN #{startDate} AND #{endDate} 
-        	OR ma_date BETWEEN #{startDate} AND #{endDate})
-    </if>
-    GROUP BY ma_stockQuantity, ma_price, ma_update, ma_date
-</select>
 
 </mapper>

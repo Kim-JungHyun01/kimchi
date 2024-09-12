@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kr.kimchi.mappers.ChartMapper">
+
+    <!-- 전체 재고 정보 쿼리 -->
+    <select id="getChartData" parameterType="map" resultType="com.kr.kimchi.vo.ChartVO">
+        SELECT 
+            DATE(ma_update) AS date,
+            SUM(ma_stockQuantity) AS totalQuantity,
+            SUM(ma_stockValue) AS totalValue
+        FROM material
+        WHERE (ma_update BETWEEN #{startDate} AND #{endDate} 
+               OR ma_date BETWEEN #{startDate} AND #{endDate})
+        GROUP BY DATE(ma_update)
+    </select>
+    
+    <!-- 상품별 총액 정보 쿼리 -->
+    <select id="getChartTotalValue" parameterType="map" resultType="com.kr.kimchi.vo.ChartVO">
+        SELECT 
+            ma_name AS ma_name,
+            SUM(ma_stockValue) AS totalValue
+        FROM material
+        WHERE (ma_update BETWEEN #{startDate} AND #{endDate} 
+               OR ma_date BETWEEN #{startDate} AND #{endDate})
+        GROUP BY ma_name
+    </select>
+
+</mapper>
