@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
- <%@ page session="true"%>
- <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+   pageEncoding="UTF-8"%>
+   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+   <%@ page session="true"%>
+   <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
- <%@include file="../include/header.jsp" %>
+   <%@include file="../include/header.jsp" %>
 
 
         <!--**********************************
@@ -27,7 +27,7 @@
             ***********************************-->
             <div class="content-body">
 
-               <div class="col-lg-12">
+             <div class="col-lg-12">
 
                 <div class="card">
 
@@ -38,28 +38,31 @@
 
                     <div class="card-body">
 
-                       <div class="form-validation">
+                     <div class="form-validation">
 
 
                         <div class="box-body">
 
                             <div class="form-group form-group row">
-                           <label class="col-lg-2 col-form-label" for="exampleInputEmail1">Title</label>
-                           <div class="col-lg-5">
-                           <input type="text" name="board_title" class="form-control input-default" value="${boardVO.board_title}" readonly="readonly">
-                       </div>
-                       </div>
+                             <label class="col-lg-2 col-form-label" for="exampleInputEmail1">Title</label>
+                             <div class="col-lg-5">
+                                 <input type="text" name="board_title" class="form-control input-default" value="${boardVO.board_title}" readonly="readonly">
+                             </div>
+                         </div>
 
-                       <div class="form-group form-group row">
+                         <div class="form-group form-group row">
                           <label class="col-lg-2 col-form-label" for="exampleInputPassword1">Content</label>
-                          <textarea class="form-control" name="board_content" rows="12" cols="80"  readonly="readonly">
+                          
+                          <textarea class="from-control" name="board_content" rows="12" cols="80"  readonly="readonly">
                           ${boardVO.board_content}</textarea>
+                  
                       </div>
 
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Comment</label>
-                        <input type="text" name="board_comment" class="form-control" value="${boardVO.board_comment}" readonly="readonly">
-
+                      <div class="form-group form-group row">
+                        <label class="col-lg-2 col-form-label" for="exampleInputEmail1">Comment</label>
+                        <div class="col-lg-4">
+                            <input type="text" name="board_comment" class="form-control" value="${boardVO.board_comment}" readonly="readonly">
+                        </div>
                     </div>
 
 
@@ -71,32 +74,32 @@
 
                 <div class="box-footer">
 
-                 <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
-                 <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
-                 <button type="submit" class="btn btn-primary goListBtn">GO LISTL</button>    
-             </div>
+                   <button type="submit" class="btn btn-warning modifyBtn">Modify</button>
+                   <button type="submit" class="btn btn-danger removeBtn">REMOVE</button>
+                   <button type="submit" class="btn btn-primary goListBtn">GO LISTL</button>    
+               </div>
 
-             <form role="form"action="modifyPage" method="post">
+               <form role="form"action="modifyPage" method="post">
 
-                 <input type='hidden' name='board_no' value="${boardVO.board_no}">
-                 <input type='hidden' name='page' value ="${cri.page}">
-                 <input type='hidden' name='perPageNum' value="${cri.perPageNum}">
-                 <input type='hidden' name='searchType' value="${cri.searchType}">
-                 <input type='hidden' name='keyword' value="${cri.keyword}">
+                   <input type='hidden' name='board_no' value="${boardVO.board_no}">
+                   <input type='hidden' name='page' value ="${cri.page}">
+                   <input type='hidden' name='perPageNum' value="${cri.perPageNum}">
+                   <input type='hidden' name='searchType' value="${cri.searchType}">
+                   <input type='hidden' name='keyword' value="${cri.keyword}">
 
-             </form>
+               </form>
 
-         </div>
+           </div>
 
-         <%-- form-validation --%>
+           <%-- form-validation --%>
 
-     </div>
+       </div>
 
-     <%-- card-body --%>
+       <%-- card-body --%>
 
- </div>
+   </div>
 
- <%-- card --%>
+   <%-- card --%>
 
 </div>
 
@@ -110,29 +113,29 @@
 
     $(document).ready(function(){
 
-       var formObj = $("form[role='form']");
+     var formObj = $("form[role='form']");
 
-       console.log(formObj);
+     console.log(formObj);
 
 
-       $(".btn-warning").on("click",function(){
-          formObj.attr("action","/sboard/modifyPage");
-          formObj.attr("method", "get");
-          formObj.submit();
-      });
+     $(".btn-warning").on("click",function(){
+      formObj.attr("action","/sboard/modifyPage");
+      formObj.attr("method", "get");
+      formObj.submit();
+  });
 
-       $(".btn-danger").on("click",function(){
-          formObj.attr("action","/sboard/removePage");
-          formObj.submit();
-      });
+     $(".btn-danger").on("click",function(){
+      formObj.attr("action","/sboard/removePage");
+      formObj.submit();
+  });
 
-       $(".btn-primary").on("click",function(){
-          formObj.attr("method","get");
-          formObj.attr("action", "/sboard/list");
-          formObj.submit();
-      });
+     $(".btn-primary").on("click",function(){
+      formObj.attr("method","get");
+      formObj.attr("action", "/sboard/list");
+      formObj.submit();
+  });
 
-   });
+ });
 
 </script>
 

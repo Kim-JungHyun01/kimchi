@@ -29,52 +29,77 @@
 
 
                 <div class="col-lg-12">
-                  
+
                     <div class="card">
 
-                     <form role="form" action="modifyPage" method="post">
+                        <div class="card-header">
+                            <h4 class="text-center mb-4">수 정</h4> 
+                        </div>
 
-                       <input type='hidden' name='page' value= "${cri.page}">
-                       <input type='hidden' name='perPageNum' value= "${cri.perPageNum}">
+                        <div class="card-body">
+
+                         <div class="form-validation">
+
+                            <form role="form" action="modifyPage" method="post">
+
+                               <input type='hidden' name='page' value= "${cri.page}">
+                               <input type='hidden' name='perPageNum' value= "${cri.perPageNum}">
 
 
-                       <div class="box-body">
+                               <div class="box-body">
 
 
-                         <div class="form-group">
-                           <label for="exampleInputEmail1">BNO</label>
-                           <input type="text" name='board_no' class="form-control" value="${boardVO.board_no}" readonly="readonly">
-                       </div>
+                                 <div class="form-group form-group row">
+                                    <label class="col-lg-2 col-form-label" for="exampleInputEmail1">BNO</label>
+                                    <div class="col-lg-5">
+                                       <input type="text" name='board_no' class="form-control input-default" value="${boardVO.board_no}" readonly="readonly">
+                                   </div>
+                               </div>
 
-                       <div class="form-group">
-                           <label for="exampleInputEmail1">TITLE</label>
-                           <input type="text" name='board_title' class="form-control" value="${boardVO.board_title}">
-                       </div>
+                               <div class="form-group form-group row">
+                                   <label class="col-lg-2 col-form-label" for="exampleInputEmail1">TITLE</label>
+                                   <div class="col-lg-5">
+                                       <input type="text" name='board_title' class="form-control input-default" value="${boardVO.board_title}">
+                                   </div>
+                               </div>
 
-                       <div class="form-group">
-                           <label for="exampleInputEmail1">Content</label>
-                           <textarea class="form-control" name="board_content" rows="3">${boardVO.board_content}</textarea>
-                       </div>
+                               <div class="form-group form-group row">
+                                   <label class="col-lg-2 col-form-label" for="exampleInputEmail1">Content</label>
+                                   <textarea class="from-control" name="board_content" rows="12" cols="80" >${boardVO.board_content}</textarea>
+                               </div>
 
-                       <div class="form-group">
-                           <label for="exampleInputEmail1">Comment</label>
-                           <input type="text" name='board_comment' class="form-control" value="${boardVO.board_comment} readonly">
-                       </div>
+                               <div class="form-group form-group row">
+                                   <label class="col-lg-2 col-form-label" for="exampleInputEmail1">Comment</label>
+                                   <div class="col-lg-4">
+                                   <input type="text" name='board_comment' class="form-control" value="${boardVO.board_comment} readonly">
+                               </div>
+                               </div>
 
-                   </div>
-                   <!-- /.box-body --> 
-               </div>
-           </div>
+                           </div>
+                           <!-- /.box-body --> 
 
-       </form>
 
-       <div class="box-footer">
-          <button type="submit" class="btn btn-primary">SAVE</button>
-          <button type="submit" class="btn btn-warning">CANCLE</button>
+
+                       </form>
+
+                       <div class="box-footer">
+                          <button type="submit" class="btn btn-primary">SAVE</button>
+                          <button type="submit" class="btn btn-warning">CANCLE</button>
+                      </div>
+
+
+
+                  </div>
+                  <%-- form-validation --%>
+              </div>
+              <%-- card-body --%>
+
+          </div>
+          <%-- card--%>
       </div>
-
+      <%-- col-lg-12 --%>
   </div>
-
+  <%-- content-body --%>
   <script>
 
     $(document).ready(function(){
