@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
         events: [
             <%-- JSP scriptlet을 사용하여 데이터를 JSON으로 변환 --%>
             <c:forEach var="vo" items="${list}" varStatus="status">
-                {
+            {
                     title: '${vo.partner_companyname} 검수일',
                     start: '${vo.prp_issueDate}T00:00:00', 
                     // end: '${vo.prp_issueDate}T23:59:59',   
@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </c:forEach>
         ]
     });
+            console.log("he");   
     console.log(calendar.getEvents()); 
     calendar.render();
 });

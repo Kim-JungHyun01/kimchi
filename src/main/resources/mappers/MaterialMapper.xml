@@ -87,24 +87,40 @@
 		WHERE ma_id = #{ma_id}
 	</update>
 
-<!-- 금액 현황 리포트 -->
-<select id="maReport" parameterType="map"
-    resultType="com.kr.kimchi.vo.MaterialVO">
-    SELECT ma_id, ma_category, ma_name, ma_price, ma_update, ma_date,
-    SUM(ma_stockQuantity) AS totalQuantity,
-    SUM(ma_stockValue) AS totalValue
-    FROM material
-    WHERE 1=1
-    <if test="startDate != null and endDate != null">
-        AND (ma_update BETWEEN #{startDate} AND #{endDate} 
-        	OR ma_date BETWEEN #{startDate} AND #{endDate})
-    </if>
-    <if test="ma_name != null and ma_name != ''">
-        AND ma_name = #{ma_name}
-    </if>
-    GROUP BY ma_id, ma_category, ma_name, ma_price, ma_update, ma_date
-    ORDER BY ma_category;
-</select>
+	<!-- 금액 현황 리포트 -->
+	<select id="maReport" parameterType="map"
+		resultType="com.kr.kimchi.vo.MaterialVO">
+		SELECT ma_id, ma_category, ma_name, ma_price, ma_update, ma_date,
+		SUM(ma_stockQuantity) AS totalQuantity,
+		SUM(ma_stockValue) AS
+		totalValue
+		FROM material
+		WHERE 1=1
+		<if test="startDate != null and endDate != null">
+			AND (ma_update BETWEEN #{startDate} AND #{endDate}
+			OR
+			ma_date BETWEEN #{startDate} AND #{endDate})
+		</if>
+		<if test="ma_name != null and ma_name != ''">
+			AND ma_name = #{ma_name}
+		</if>
+		GROUP BY ma_id, ma_category, ma_name, ma_price, ma_update, ma_date
+		ORDER BY ma_category;
+	</select>
 
+	<select id="machart" parameterType="map"
+		resultType="com.kr.kimchi.vo.ChartVO">
+		SELECT
+		ma_date,
+		SUM(ma_stockQuantity) AS totalQuantity,
+		SUM(ma_stockQuantity * ma_price) AS totalValue,
+		SUM(ma_price) AS totalPrice
+		FROM material
+		WHERE 1=1
+		<if test="startDate != null and endDate != null">
+			AND ma_date BETWEEN #{startDate} AND #{endDate}
+		</if>
+		GROUP BY ma_date
+	</select>
 
 </mapper>
