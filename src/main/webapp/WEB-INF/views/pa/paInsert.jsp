@@ -57,7 +57,7 @@
 
     <script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
 <script>
-function receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no) {
+function receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no,notes) {
 	$.ajax({
         type: 'POST',
         url: 'paUpdate',
@@ -66,7 +66,8 @@ function receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no) {
         	user_id : user_id,
           	pa_issueDate : pa_issueDate,
            	code : code,
-            obtain_no : obtain_no
+            obtain_no : obtain_no,
+            notes : notes
             
         },
         success: function(response) {
@@ -98,7 +99,7 @@ function receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no) {
     	form.appendChild(input);
     	
     	
-    	window.open('', 'paObPop', 'width=500,height=450,left=700,top=300');
+    	window.open('', 'paObPop', 'width=500,height=600,left=700,top=250');
     	
     	document.body.appendChild(form);
     	form.submit();

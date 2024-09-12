@@ -4,15 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kr.kimchi.mappers.pcspMapper">
 	
-	<select id="pcspList" resultType="com.kr.kimchi.vo.PcspVO">
-		 select * from pcsp 
-		 where partner_taxid = #{partner_taxid}; 
+	
+	
+	<select id="pcspList" resultType="PcspVO">
+		  select
+		 *
+		 from pcsp
+		 where partner_taxid = #{partner_taxid}
+		 order by pcsp_no desc; 
 	</select>
 	
 	<insert id="pcspInsert" >
 		 insert into pcsp 
-		 (partner_taxid, code_name, pcsp_status, pcsp_date, pcsp_notes) 
-		 values (#{partner_taxid},#{code_name},0,#{pcsp_date},#{pcsp_notes});
+		 (partner_taxid, code_name,pcsp_date, pcsp_notes) 
+		 values (#{partner_taxid},#{code_name},#{pcsp_date},#{pcsp_notes});
 	</insert>
 
 	

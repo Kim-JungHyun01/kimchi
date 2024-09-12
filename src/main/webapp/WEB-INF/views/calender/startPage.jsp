@@ -176,9 +176,9 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
         initialDate: today,
-        navLinks: true, // can click day/week names to navigate views
+        navLinks: true, 
         editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
+        dayMaxEvents: true, 
         events: [
             <%-- JSP scriptlet을 사용하여 데이터를 JSON으로 변환 --%>
             <c:forEach var="vo" items="${list}" varStatus="status">

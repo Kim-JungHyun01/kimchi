@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -6,7 +7,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
 <%@include file="../include/header.jsp" %>
-
+<%Map<String, Object> userlogin = (Map<String, Object>) session.getAttribute("userlogin");%>
    <div class="content-body">
    <div class="container-fluid">
    
@@ -95,7 +96,7 @@
 			        </div>
 			        <div class="form-group">
 			            <label for="user_id">검수자:</label>
-			            <input type="text" name="user_id" id="user_id" value="abcd" readonly>
+			            <input type="text" value="<%=userlogin.get("user_name")%>" readonly>
 			        </div>
 			        <div class="form-group">
 			            <label for="prp_progress">검수 진행도:</label>
@@ -106,6 +107,7 @@
 			            <label for="prp_notes">비고:</label>
 			            <textarea name="prp_notes" id="prp_notes" ></textarea>
 			        </div>
+			        <input type="hidden" name="user_id" id="user_id" value="<%=userlogin.get("user_id")%>" readonly>
 			        <input type="hidden" name="pa_no" id="pa_no">
 			        <input type="hidden" name="token" value="${token}">
 			        <input type="hidden" id="partner" name="partner">
