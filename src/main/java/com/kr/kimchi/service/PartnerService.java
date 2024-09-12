@@ -46,6 +46,11 @@ public class PartnerService {
 		partdao.partnerInsert(partner);
 	}//end
 	
+//	사업자번호 중복확인
+	public int partnertaxIdCheck(String partner_taxid) {
+		return partdao.partnertaxIdCheck(partner_taxid);
+	}
+	
 //	협력회사 정보 수정
 	public void partnerUpdate(PartnerVO partner) {
 		partdao.partnerUpdate(partner);

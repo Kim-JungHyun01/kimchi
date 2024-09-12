@@ -4,7 +4,6 @@
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
 	<div>
 		<h3>계약정보 상세보기</h3>
@@ -76,31 +75,33 @@
 		</table>
 	</div>
 	<div>
-		<c:if test="${pro.production_status eq '생산계획확인중'}">
-		<a href="${contextPath}/production/productionUpdateForm?production_no=${pro.production_no}">생산계획 수정</a>
-			<form action="productionCheck" method="post" id="checkForm"
-				name="checkForm">
-				<input type="hidden" name="production_no" id="production_no"
-					value="${pro.production_no}"> <input type="hidden"
-					name="production_status" id="production_status" value="">
-				<button type="button" onclick="submitCheck('생산계획확인완료')">생산계획승인</button>
-				<button type="button" onclick="submitCheck('생산계획취소')">생산계획취소</button>
-			</form>
-		</c:if>
-		<a
-			href="${contextPath}/contracts/contractsSelect?contracts_no=${pro.contracts_no}">계약상세보기</a>
+		<a href="${contextPath}/contracts/contractsSelect?contracts_no=${pro.contracts_no}">계약상세보기</a>
+		<c:choose>
+		    <c:when test="${pro.production_status eq '생산계획확인중'}">
+		        <a href="${contextPath}/production/productionUpdateForm?production_no=${pro.production_no}">생산계획 수정</a>
+		        <form action="productionCheck" method="post" id="checkForm" name="checkForm">
+		            <input type="hidden" name="production_no" id="production_no" value="${pro.production_no}">
+		            <input type="hidden" name="production_status" id="production_status" value="">
+		            <button type="button" onclick="submitCheck('생산계획확인완료')">생산계획 승인</button>
+		            <button type="button" onclick="submitCheck('생산계획취소')">생산계획 취소</button>
+		        </form>
+		    </c:when>
+		    <c:when test="${pro.production_status eq '생산계획확인완료'}">
+		        <a href="${contextPath}/obtain/obtainInsertForm?production_no=${pro.production_no}">자재조달하기</a>
+			</c:when>
+		</c:choose>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
-<!-- Required vendors -->
 <script>
 	function submitCheck(production_status) {
+		
+		if (!confirm(production_status+'하시겠습니까?')) {
+	        location.href = "production/productionSelect?production_no="+${pro.production_no};
+	        return;
+	    }//end
+		
 		document.getElementById("production_status").value = production_status;
 		document.getElementById("checkForm").submit();
 	}//end
 </script>
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

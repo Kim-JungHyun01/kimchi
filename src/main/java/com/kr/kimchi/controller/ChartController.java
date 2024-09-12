@@ -1,15 +1,16 @@
 package com.kr.kimchi.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kr.kimchi.service.ChartService;
-import com.kr.kimchi.vo.MaterialVO;
+import com.kr.kimchi.vo.ChartVO;
 
 @Controller
 public class ChartController {
@@ -17,14 +18,12 @@ public class ChartController {
 	@Autowired
 	private ChartService chartservice;
 	
-	@GetMapping(value = "/start/chart")
-	public ModelAndView machart(@RequestParam(required = false) String startDate, 
-	                             @RequestParam(required = false) String endDate) {
-	    ModelAndView mav = new ModelAndView("start/chart");
-	    List<MaterialVO> chartData = chartservice.machart(startDate, endDate);
-	    
-	    mav.addObject("chartData", chartData);
-	    return mav;
+    // 차트 화면
+	@GetMapping("/calender/chart")
+	@ResponseBody
+	public List<ChartVO> getChartData(@RequestParam(required = false) String startDate,
+	                                    @RequestParam(required = false) String endDate) {
+	    return chartservice.getChartData(startDate, endDate);
 	}
 	//===============================
 }

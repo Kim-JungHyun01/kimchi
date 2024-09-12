@@ -77,7 +77,7 @@ public class OutController {
         
         // maList 가져ㅛ올때
         List<MaterialVO> malist = maService.maList(0, Integer.MAX_VALUE, null);
-        List<ObtainVO> obList = obService.obtainAll();
+        List<ObtainVO> obList = obService.obtainAll(0,100);
         
         model.addAttribute("malist", malist);
         model.addAttribute("obList", obList);

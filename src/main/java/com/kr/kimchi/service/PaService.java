@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kr.kimchi.dao.PaDAO;
+import com.kr.kimchi.vo.CodeVO;
 import com.kr.kimchi.vo.PaVO;
 
 @Service
@@ -20,27 +21,42 @@ public class PaService {
 		return padao.paList(params);
 	}
 	
-	public List<PaVO> paAllList(){
-		return padao.paAllList();
+	public List<PaVO> paAllList(int pa_checkStatus){
+		return padao.paAllList(pa_checkStatus);
 	}
 	
+	public void paCode(String code) {
+		padao.paCode(code);
+	}
 	
-//	 페이퍼 추가
+	public int paCodeSelecet(String code_name) {
+		return padao.paCodeSelecet(code_name);
+	}
+	
+	public void paPlus(Map<String, Object> map) {
+		padao.paPlus(map);
+	}
+	
+	public void prpFinsh(int pa_no ) {
+		padao.prpFinsh(pa_no);
+	}
+	
+	public void prpIng(int pa_no ) {
+		padao.prpIng(pa_no);
+	}
+	
 	public void paInsert(PaVO pa) {
 		padao.paInsert(pa);
 	}//end
 	
-//	 페이퍼 수정
 	public void paUpdate(PaVO pa) {
 		padao.paUpdate(pa);
 	}//end
 	
-//	페이처 체크
 	public void paCheck(int pa_no) {
 		padao.paCheck(pa_no);
 	}//end
 	
-//	페이퍼보기
 	public PaVO paSelect(Map<String, Object> params){
 		return padao.paSelect(params);
 	}//end

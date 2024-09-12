@@ -10,6 +10,7 @@
 <%@include file="../include/nav.jsp" %>
        
   <div class="content-body">
+ 
   		<h2>발주상세</h2>
 	   <table>
 		   <tr>
@@ -30,7 +31,7 @@
 		   </tr> 
 		   <tr>
 		   		<td>납기일</td>
-		  		<td><fmt:formatDate value="${paVO.obtainVo.obtain_deliveryDate}" pattern="yyyy-MM-dd" /></td>
+		  		<td>${paVO.obtainVo.obtain_deliveryDate}</td>
 		   </tr> 
 		    <tr>
 			   <td>공급업체</td> 
@@ -87,22 +88,39 @@
 				<p>비고</p>
 				<input type="text" id="prp_notes" name="prp_notes">
 				<input type="hidden" name="token" value="${token}" />
+				<input type="hidden" name="parthner" value="${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}">
+				<input type="hidden" name="email" value="${paVO.userVO.user_email }">
+				
 				<button>저장</button>
 			</form>
 		</div>
 	</div>
+	<form action="/prpFinsh" method="post">
+	<input type="hidden" name="pa_no" value="${paVO.pa_no}">
+	<button>완료</button>
+	</form>
 	
 	
 	<c:forEach var="prpList" items="${prpList}">
+	
 	<table>
 		<tr>
 			<td>검수일자</td>
 			<td>${prpList.prp_issueDate }</td>
-			<td><button data-prp_no=${prpList.prp_no } onclick="prpPop(this)">검수결과</button>
+			
+			<td><button data-prp_no=${prpList.prp_no } onclick="prpPop(this)">검수결과</button></td>
+			<td><button onclick="mailSend('${prpList.prp_issueDate}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}','${prpList.userVO.user_email }')">발송</button></td>
+			<td><button onclick="mailSend2('${prpList.prp_issueDate}','${prpList.prp_notes}','${prpList.userVO.user_email }')">타회사</button></td>
+		</tr>
+		<tr>
+			<td>결과 일자</td>
+			<td>${prpList.PRP_revisionDate }</td>
 		</tr>
 		<tr>
 			<td>검수자</td>
-			<td>${prpList.user_id }</td>
+			<!-- 
+			 -->
+			<td>${prpList.userVO.user_name }</td>
 		</tr>
 		<tr>
 			<td>검수진척도</td>
@@ -139,8 +157,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 팝업창에서 정보 받아옴 -->
 <script>
+
+function showSliderValue(slider) {
+    var value = slider.value;
+    document.querySelector('input[name="prp_progress"]').value = value;
+}
+
+
  function receiveData(prp_no, prp_revisionDate, prp_progress, prp_notes, pa_no) {
      $.ajax({
+    	    	 
          type: 'POST',
          url: 'prpUpdate',
          data: {
@@ -234,6 +260,46 @@ function checkForm() {
 		alert("날짜를 선택해주세요.")
 		return false;
 	}
+}
+
+function mailSend(date,parthner,receivedMail) {
+	alert("메일을 전송했습니다.");
+    $.ajax({
+        type: 'POST',
+        url: 'mail',
+        data: {
+        	date : date,
+        	parthner : parthner,
+        	receivedMail : receivedMail
+        },
+        success: function(response) {
+            // 페이지 새로고침
+            location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("서버 오류:", textStatus, errorThrown);
+        }
+    });
+}
+
+function mailSend2(date,notes,receivedMail) {
+	alert("메일을 전송했습니다.");
+    $.ajax({
+        type: 'POST',
+        url: 'mail2',
+        data: {
+        	date : date,
+        	notes : notes,
+        	receivedMail : receivedMail
+        },
+        success: function(response) {
+            // 페이지 새로고침
+            location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("서버 오류:", textStatus, errorThrown);
+        }
+    });
 }
 </script>
 

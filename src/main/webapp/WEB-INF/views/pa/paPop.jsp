@@ -18,7 +18,7 @@
 		      <tr>
 		        <td width="10%" height="25" align="center" bgcolor="#E2EFDA" style="font-weight: bold">회사명</td>
 		        <td width="2%" align="center" bgcolor="#E2EFDA" style="font-weight: bold">:</td>
-		        <td width="38%" bgcolor="#E2EFDA" style="font-weight: bold"><div   id="is1" style="padding:3px;">(주)삼김팩토리</div></td>
+		        <td width="38%" bgcolor="#E2EFDA" style="font-weight: bold"><div   id="is1" style="padding:3px;">(주)삼김신조</div></td>
 		        <td width="10%" align="center" bgcolor="#E2EFDA">발주번호</td>
 		        <td width="2%" align="center" bgcolor="#E2EFDA">:</td>
 		        <td width="38%" bgcolor="#E2EFDA"><div tms_edit  id="docno" style="padding:3px;">${paVO.codeVo.code_name}</div></td>
@@ -37,7 +37,7 @@
 		        <td bgcolor="#E2EFDA"><div   id="is3" style="padding:3px;">${paVO.userVO.user_name }</div></td>
 		        <td align="center" bgcolor="#E2EFDA">작성일자</td>
 		        <td align="center" bgcolor="#E2EFDA">:</td>
-		        <td bgcolor="#E2EFDA"><div class="inputBox" id="w_date6" style="padding:2px;cursor:hand;" ><fmt:formatDate value="${paVO.pa_issueDate}" pattern="yyyy-MM-dd HH:mm:ss" /></div></td>
+		        <td bgcolor="#E2EFDA"><div class="inputBox" id="w_date6" style="padding:2px;cursor:hand;" ><fmt:formatDate value="${paVO.pa_issueDate}" pattern="yyyy-MM-dd" /></div></td>
 		        </tr>
 	          <tr>
 		        <td height="25" align="center" bgcolor="#E2EFDA">Phone</td>
@@ -263,7 +263,7 @@
 		</tr>
 		  <tr>
 		    <td height="30" colspan="9" align="left" style="font-weight: bold" ><div  tms_edit id="gg31" style="padding:3px;line-height:25px" >1. 납품주소 : 경기 수원시 팔달구 덕영대로 899 세진브론즈빌 3층 MBC아카데미컴퓨터교육센터수원<br>
-		      2. 납 기 일 : <fmt:formatDate value="${paVO.obtainVo.obtain_deliveryDate}" pattern="yyyy년 MM월 dd일 " /><br>
+		      2. 납 기 일 : ${paVO.obtainVo.obtain_deliveryDate}<br>
 		      3. 비고: ${paVO.pa_notes} <br>
 		      <span style="color: #0033FF">전자세금계산서 발행용 메일주소 goodjob@goodapp.co.kr</span></div></td>
 		  </tr>

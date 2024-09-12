@@ -8,7 +8,7 @@ public class PaPageVO {
 	private int total; // �� ������
 	
 	private int start = 1; //����¡ ����
-	private int end = 2; //�ѹ��� ������ ����¡ ��ȣ ���� basic : 5
+	private int end = 5; //�ѹ��� ������ ����¡ ��ȣ ���� basic : 5
 	private int listcnt = 2; //���������� ������ ����Ʈ �� basic : 10
 	
 	

@@ -3,42 +3,51 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <style>
-/* 모달창 스타일 */
-#contractsModal {
+/* 모달스타일 */
+.modal-long {
 	display: none;
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.7); /* 배경을 더 어둡게 */
 	justify-content: center;
 	align-items: center; /* 수직 중앙 정렬 */
+	z-index: 1000; /* 다른 요소 위에 표시 */
+}
+.modal-content{
+	width: 80%;
 }
 
-.modal-content {
-	background-color: white;
-	padding: 20px;
-	width: 80%; /* 모달 너비를 50%로 설정 */
-	max-height: 70%; /* 최대 높이 조정 */
-	overflow-y: auto;
-	border-radius: 8px;
-	margin-left: 20%;
-	margin-right: 10%; /* 오른쪽 여백 추가 */
+.modal-table {
+	width: 100%; /* 테이블 너비 100% */
+	border-collapse: collapse; /* 테두리 겹치지 않게 */
 }
 
-table {
-	width: 100%;
-	border-collapse: collapse;
+.modal-table th, .modal-table td {
+	padding: 10px; /* 셀 패딩 */
+	border: 1px solid #000; /* 셀 테두리 색상 검정 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+	color: #000; /* 글자 색상 검정 */
 }
 
-th, td {
-	padding: 10px;
-	border: 1px solid #ccc;
+.filter-button {
+	display: inline-block;
+	padding: 10px 20px; /* 버튼 크기 증가 */
+	margin-left: 10px;
+	margin-right: 15px;
+	border: none;
+	border-radius: 5px;
+	background-color: #5892d1;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	font-size: 1.2em; /* 글자 크기 증가 */
 }
 
-button {
-	margin-top: 40px;
+.filter-button:hover {
+	background-color: #467aab; /* 호버 시 배경색 변화 */
 }
 </style>
 <script>
@@ -49,10 +58,11 @@ button {
 		document.getElementById("contractsModal").style.display = "none";
 	}//end
 	//계약 정보가져오기
-	function selectContracts(cno, ino, name, quantity, price, deliveryDate) {
+	function selectContracts(cno, ino, name,schedule, quantity, price, deliveryDate) {
 		document.getElementById("contracts_no").value = cno;
 		document.getElementById("item_no").value = ino;
 		document.getElementById("item_name").value = name;
+		document.getElementById("bom_schedule").value = schedule;
 		document.getElementById("contracts_quantity").value = quantity;
 		document.getElementById("contracts_price").value = price;
 		document.getElementById("contracts_deliveryDate").value = deliveryDate;
@@ -67,6 +77,7 @@ button {
 				<td>계약코드</td>
 				<td>계약물품코드</td>
 				<td>게약물품명</td>
+				<td>게약물품 제조소요일(일)</td>
 				<td>계약수량</td>
 				<td>계약가격</td>
 				<td>계약납기일</td>
@@ -76,10 +87,11 @@ button {
 					<c:forEach var="itemlist" items="${itemlist}">
 						<c:if test="${conlist.item_no == itemlist.item_no}">
 							<tr
-								onclick="selectContracts('${conlist.contracts_no}','${conlist.item_no}','${itemlist.item_name}', '${conlist.contracts_quantity}', '${conlist.contracts_price}', '${conlist.contracts_deliveryDate}' )">
+								onclick="selectContracts('${conlist.contracts_no}','${conlist.item_no}','${itemlist.item_name}','${itemlist.bomVO.bom_schedule}', '${conlist.contracts_quantity}', '${conlist.contracts_price}', '${conlist.contracts_deliveryDate}' )">
 								<td>${conlist.contracts_no}</td>
 								<td>${conlist.item_no}</td>
 								<td>${itemlist.item_name}</td>
+								<td>${itemlist.bomVO.bom_schedule}일</td>
 								<td>${conlist.contracts_quantity}</td>
 								<td>${conlist.contracts_price}</td>
 								<td>${conlist.contracts_deliveryDate}</td>

@@ -15,10 +15,20 @@ public class ItemService {
 	@Inject
 	private ItemDAO itemdao;
 	
-//	제품정보(전체)
-	public List<ItemVO> itemAll() {
-		return itemdao.itemAll();
+//	제품정보(전체)+페이징+서치
+	public List<ItemVO> itemAll(int startRow, int pageSize, String item_name) {
+		return itemdao.itemAll(startRow, pageSize, item_name);
 	}//end
+	
+//	전체 레코드 수
+    public Integer getTotalCount() {
+		return itemdao.getTotalCount();   	
+    }//end
+    
+//    검색이후 페이지 수
+    public Integer itemSearch(int pageSize, String item_name) {
+		return itemdao.itemSearch(pageSize, item_name);
+    }
 	
 //	제품정보(상세)
 	public ItemVO itemSelect(int item_no){

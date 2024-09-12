@@ -3,116 +3,63 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+ <link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
+<script>
+function checkApproval(user_approval, user_id) {
+    $.ajax({
+        type: 'POST',
+        url: 'userApproval', // 요청할 URL
+        data: {
+            user_id: user_id,
+            user_approval: user_approval
+        },
+        success: function(response) {
+            // 페이지 새로고침
+            location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("서버 오류:", textStatus, errorThrown);//콘솔에 오류
+        }
+    });
+}
+</script>
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
-
-	<style>
-.pagination {
-	display: flex;
-	justify-content: center;
-	margin: 20px 0;
-}
-
-.pagination a, .pagination strong {
-	margin: 0 5px; /* 각 페이지 링크 간격 */
-	text-decoration: none; /* 링크 스타일 제거 */
-	color: #07020d; /* 링크 색상 */
-	padding: 10px 15px; /* 패딩 추가 */
-	border-radius: 5px; /* 둥근 모서리 */
-	transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
-}
-
-.pagination a {
-	background-color: #f0f0f0; /* 기본 배경색 */
-	border: 1px solid #ddd; /* 테두리 추가 */
-}
-
-.pagination a:hover {
-	background-color: #007bff; /* 호버 시 배경색 */
-	color: white; /* 호버 시 글자색 */
-	text-decoration: underline; /* 마우스 오버 시 밑줄 */
-}
-
-.pagination strong {
-	background-color: #007bff; /* 현재 페이지 강조 색상 */
-	color: white; /* 현재 페이지 글자색 */
-	padding: 10px 15px; /* 패딩 추가 */
-	border-radius: 5px; /* 둥근 모서리 */
-}
-
-/* 검색창 */
-.search-form {
-	display: flex;
-	justify-content: flex-end; /* 오른쪽 정렬 */
-	align-items: center;
-	margin: 20px;
-}
-
-.search-input {
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	width: 600px; /* 원하는 너비로 조절 */
-	transition: border 0.3s;
-}
-
-.search-input:focus {
-	border-color: #007bff; /* 포커스 시 테두리 색상 변경 */
-	outline: none; /* 기본 아웃라인 제거 */
-}
-
-.search-button {
-	padding: 10px 15px;
-	margin-left: 10px;
-	border: none;
-	border-radius: 5px;
-	background-color: #5892d1; /* 버튼 배경색 */
-	color: white; /* 글자색 */
-	cursor: pointer;
-	transition: background-color 0.3s;
-}
-
-.search-button:hover {
-	background-color: #0056b3; /* 호버 시 색상 변경 */
-}
-
-.table th, .table td {
-	text-align: center; /* 가운데 정렬 */
-}
-</style>
-
 	<form action="?pageNum=1" method="get" class="search-form">
-		<input type="text" name="user_id" placeholder="사원 id 검색"
-			value="${param.user_id}" class="search-input" />
+		<input type="text" name="user_name" placeholder="사원명 검색" value="${param.user_name}" class="search-input" />
 		<button type="submit" class="search-button">검색</button>
 	</form>
 
-<div style="margin-left: 20px;">
-	<h3>사용자 목록</h3>
-	
-	<<table class="table">
-		<tr>
-			<td>사용자 id</td>
-			<td>사용자 pw</td>
-			<td>사용자 email</td>
-			<td>사용자명</td>
-			<td>사용자 전화번호</td>
-			<td>사용자 부서</td>
-			<td>사용자 승인여부</td>
-		</tr>
-		<c:forEach var="userlist" items="${userlist}">
+	<div style="margin-left: 20px;">
+		<h3>사용자 목록</h3>
+		<table class="table">
 			<tr>
-				<td><a href="${contextPath}/user/userSelect?user_id=${userlist.user_id}">${userlist.user_id }</a></td>
-				<td>${userlist.user_pw }</td>
-				<td>${userlist.user_email }</td>
-				<td>${userlist.user_name }</td>
-				<td>${userlist.user_number }</td>
-				<td>${userlist.user_department }</td>
-				<td>${userlist.user_approval }</td>
+				<td>사원명</td>
+				<td>사원 email</td>
+				<td>사원 전화번호</td>
+				<td>사원 부서</td>
+				<td>사원 승인여부</td>
+				<td>사원정보 수정</td>
 			</tr>
-		</c:forEach>
-	</table>
+			<c:forEach var="userlist" items="${userlist}">
+				<tr onclick="location.href='${contextPath}/user/userSelect?user_id=${userlist.user_id}'" style="cursor: pointer;">
+					<td>${userlist.user_name }</td>
+					<td>${userlist.user_email }</td>
+					<td>${userlist.user_number }</td>
+					<td>${userlist.user_department }</td>
+					<c:if test="${userlist.user_approval eq 0 }">
+				<td><button type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여</button></td>
+				</c:if>
+				<c:if test="${userlist.user_approval eq 1 }">
+					<td><button type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여해제</button></td>
+				</c:if>
+				<td><a href="${contextPath}/user/userUpdateForm?user_id=${userlist.user_id}">수정</a></td>
+			</tr>
+			</c:forEach>
+		</table>
+	</div>
+	<!-- Pagination -->
+	<%@include file = "../include/paging.jsp" %>
 </div>
 	
 <!-- Pagination -->
@@ -138,9 +85,3 @@
 		
 </div>
 <%@include file="../include/footer.jsp"%>
-<!-- Required vendors -->
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

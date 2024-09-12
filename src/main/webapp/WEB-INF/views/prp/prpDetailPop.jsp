@@ -5,7 +5,7 @@
 <div class="content-body">
 	
 		<input type="hidden" name="prp_no" id="prp_no" value="${prpVO.prp_no}">
-		<input type="hidden" name="pa_no" id="pa_no" value=<%=Integer.parseInt(request.getParameter("pa_no"))%>>
+		<input type="hidden" name="pa_no" id="pa_no" value="${prpVO.pa_no}">
 
 		<h2>진척검수결과</h2>
 		계획 검수 일자 : <input type="text" readonly id ="prp_issueDate" value="${prpVO.prp_issueDate }"><br/> 
@@ -19,7 +19,7 @@
 		<input type = "text" name = "prp_progress" id="prp_progress" value = "0" >
 		<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
 		<p>비고</p>
-		<input type="text" id="prp_notes" name="prp_notes" value="">
+		<input type="text" id="prp_notes" name="prp_notes" value="${prpVO.prp_notes}">
 		
 		<button onclick="sendData()">저장</button>
 </div>

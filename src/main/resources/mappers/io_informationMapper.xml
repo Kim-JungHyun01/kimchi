@@ -2,26 +2,14 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="kr.co.kim.mappers.io_imformationMapper"> <!--중요-->
+  <mapper namespace="kr.co.kimchi.mappers.io_informationMapper"> <!--중요-->
   
-  <!--java.util.Hashmap-->
-  <resultMap type="java.util.HashMap" id="obtain">
- 	<result column="obtain_no" property="number" />
- 	<result column="user_id" property="id" />
- 	<result column="obtain_quantity" property="quantity" />
- 	<result column="obtain_deliveryDate" property="deliveryDate" />
- 	<result column="obtain_status" property="status" />
- 	<result column="ma_name" property="name" />
- 	<result column="ma_price" property="price" />
- 	<result column="ma_unit" property="unit" />
- 	<result column="ma_specifications" property="specifications" />
-  </resultMap>
 
 
 <!--입고 추가-->
 <insert id="io_add" parameterType="IOVO">
 	INSERT INTO `kimchi`.`io`
-(`io_id`,
+(
 `io_status`,
 `io_quantity`,
 `io_date`,
@@ -31,17 +19,39 @@
 `ma_id`,
 `obtain_no`)
 VALUES
-(io_id=#{io_id},
-io_status=#{io_status},
-io_quantity=#{io_quantity},
-io_date=now,
-io_information=#{io_information},
-io_return_date=#{io_return_date},
-invoice_issuance_status=#{invoice_issuance_status},
-ma_id=#{ma_id},
-obtain_no=#{obtain_no})
+(
+#{io_status},
+#{io_quantity},
+#{io_date},
+#{io_information},
+#{io_return_date},
+#{invoice_issuance_status},
+#{ma_id},
+#{obtain_no})
 	
 </insert>
+
+<!--io_추가 후 조달중-> 조달완료 -->
+<update id="obtain_status" parameterType="int">
+update obtain
+set obtain_status="조달완료"
+where obtain_no=#{obtain_no}
+</update>
+
+<!--io_status 검수확인-->
+<update id="io_status_change" parameterType="int" >
+update 	io 
+set io_status="입고완료",invoice_issuance_status="발행"
+where io_id=#{io_id}
+
+</update>
+
+<!--io_quantity 추가 입고하기-->
+<update id="materia_io" parameterType="StatusCheck">
+
+update material set ma_stockQuantity=ma_stockQuantity+#{io_quantity},ma_date=now() 
+where ma_id=#{ma_id};
+</update>
 
 
 
@@ -97,19 +107,32 @@ where user_id=(select user_id from obtain where obtain_no=#{obtain_no});
 </select>
 
 
-<!--io_status 검수확인-->
-<update id="io_status_change" parameterType="IOVO" >
-update 	io 
-set io_status=#{io_status},invoice_issuance_status=#{invoice_issuance_status}
-where io_id=#{io_id}
+<!--거래명세서-->
+<select id="transaction_statement" parameterType="int" resultType="transactionVO">
+select ob.obtain_no,ob.user_id,ob.obtain_deliveryDate,ob.obtain_quantity
+,ma.ma_name,ma.ma_price,ma.ma_specifications,ma.ma_weight,ma.ma_unit,ma.ma_storage
+,part.partner_companyname,part.partner_number,part.partner_ownername ,part.partner_fax,part.partner_taxid
+from obtain as ob
+inner join material as ma
+on ob.ma_id = ma.ma_id
+inner join partner as part
+on ob.partner_taxid = part.partner_taxid
+where ob.obtain_no=#{obtain_no};
+</select>
 
-</update>
 
 
+<!--입고출고 정보조회-->
+<select id="io-list all" resultType="InlistVO">
 
+SELECT io.*, ob.obtain_no, part.partner_companyname
+FROM io
+INNER JOIN obtain AS ob
+    ON io.obtain_no = ob.obtain_no
+INNER JOIN partner AS part
+    ON ob.partner_taxid = part.partner_taxid
 
-<!--material 상세리스트 수정-->
-<!--입고출고 정보 상세조회-->
+</select>
 
 
 
