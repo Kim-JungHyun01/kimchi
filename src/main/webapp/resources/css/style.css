@@ -4448,7 +4448,7 @@ a.close.disabled {
   align-items: flex-start;
   justify-content: space-between;
   padding: 1rem 1rem;
-  border-bottom: 1px solid #EEEEEE;
+  border-bottom: 1px solid #000000;
   border-top-left-radius: 0.3rem;
   border-top-right-radius: 0.3rem; }
   .modal-header .close {
@@ -4469,7 +4469,7 @@ a.close.disabled {
   align-items: center;
   justify-content: flex-end;
   padding: 1rem;
-  border-top: 1px solid #EEEEEE;
+  border-top: 1px solid #000000;
   border-bottom-right-radius: 0.3rem;
   border-bottom-left-radius: 0.3rem; }
   .modal-footer > :not(:first-child) {
@@ -8030,15 +8030,23 @@ a {
     transform: scale(1); } }
 
 .footer {
-  padding-left: 17.1875rem;
-  background-color: rgba(88, 115, 254, 0.04); }
-  .footer .copyright {
-    padding: 0.9375rem; }
-    .footer .copyright p {
-      text-align: center;
-      margin: 0; }
-    .footer .copyright a {
-      color: #593bdb; }
+  width: 100%;
+  background-color: rgba(88, 115, 254, 0.04);
+  min-height: 50px; /* 최소 높이를 설정 (필요에 따라 조정 가능) */
+}
+
+.footer .copyright {
+  padding: 0.5rem; /* 0.5rem으로 수정 */
+}
+
+.footer .copyright p {
+  text-align: center;
+  margin: 0;
+}
+
+.footer .copyright a {
+  color: #593bdb;
+}
 
 [data-sidebar-style="mini"] .nav-control,
 [data-layout="horizontal"] .nav-control {

@@ -3,37 +3,45 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+ <link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
-	<h3>생산계획 목록</h3>	
-	<table>
-		<tr>
-			<td>생산계획코드</td>
-			<td>생산수량</td>
-			<td>생산납기일</td>
-			<td>생산계획 상태</td>
-			<td>등록일</td>
-			<td>담당자</td>
-			<td>계약코드</td>
-		</tr>
-		<c:forEach var="prolist" items="${prolist}">
+	<div style="margin-left: 20px;">
+		<h3>생산계획 목록</h3>
+		<table  class="table">
 			<tr>
-				<td><a href="${contextPath}/production/productionSelect?production_no=${prolist.production_no}">${prolist.production_no}</a></td>
-				<td>${prolist.production_quantity}</td>
-				<td>${prolist.production_deliveryDate}</td>
-				<td>${prolist.production_status}</td>
-				<td>${prolist.production_registrationDate}</td>
-				<td>${prolist.user_id}</td>
-				<td>${prolist.contracts_no}</td>
+				<td>생산계획코드</td>
+				<td>생산물품명</td>
+				<td>생산수량</td>
+				<td>생산납기일</td>
+				<td>생산계획 상태</td>
+				<td>생산계획 담당자</td>
 			</tr>
-		</c:forEach>
-	</table>
+			<c:forEach var="prolist" items="${prolist}">
+				<tr onclick="location.href='${contextPath}/production/productionSelect?production_no=${prolist.production_no}'" style="cursor: pointer;">
+					<td>${prolist.production_no}</td>
+					<c:forEach var="conlist" items="${conlist }">
+						<c:if test="${prolist.contracts_no eq conlist.contracts_no }">
+							<c:forEach var="itemlist" items="${itemlist }">
+								<c:if test="${conlist.item_no eq itemlist.item_no }">
+									<td>${itemlist.item_name}</td>
+								</c:if>
+							</c:forEach>
+						</c:if>
+					</c:forEach>
+					<td>${prolist.production_quantity}</td>
+					<td>${prolist.production_deliveryDate}</td>
+					<td>${prolist.production_status}</td>
+					<c:forEach var="userlist" items="${userlist }">
+						<c:if test="${prolist.user_id eq userlist.user_id }">
+							<td>${userlist.user_name}</td>
+						</c:if>
+					</c:forEach>
+				</tr>
+			</c:forEach>
+		</table>
+		<!-- Pagination -->
+		<%@include file = "../include/paging.jsp" %>
+	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
-<!-- Required vendors -->
-    <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-    <script src="${contextPath}/resources/js/quixnav-init.js"></script>
-    <script src="${contextPath}/resources/js/custom.min.js"></script>
-
-    <script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>>

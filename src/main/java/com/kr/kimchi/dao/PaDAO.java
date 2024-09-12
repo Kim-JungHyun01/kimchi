@@ -28,12 +28,12 @@ public class PaDAO {
 		return session.selectList(namespace+".paAllList",pa_checkStatus);
 	}
 	
-	// ±¸¸Å¹ßÁÖ¼­ ÄÚµå¹ßÇà
+	// ï¿½ï¿½ï¿½Å¹ï¿½ï¿½Ö¼ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½
 	public void paCode(String code) {
 		session.selectOne(namespace+".paCode", code);
 	}
 
-	// ±¸¸Å¹ßÁÖ¼­ ÄÚµå°Ë»ö
+	// ï¿½ï¿½ï¿½Å¹ï¿½ï¿½Ö¼ï¿½ ï¿½Úµï¿½Ë»ï¿½
 	public int paCodeSelecet(String code_name) {
 		return session.selectOne(namespace+".paCodeSelecet", code_name);
 	}

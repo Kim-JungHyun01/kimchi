@@ -17,14 +17,19 @@ public class MaterialService {
     @Inject
     private MaterialDAO madao;
 
-    // 전체 + 페이징
-    public List<MaterialVO> maList(int startRow, int pageSize) {
-        return madao.maList(startRow, pageSize); // startRow와 pageSize로 수정
+    // 전체 + 페이징 + 검색
+    public List<MaterialVO> maList(int startRow, int pageSize, String ma_name) {
+        return madao.maList(startRow, pageSize, ma_name); 
     }
     
-    //전체 레코드 수
+    // 전체 레코드 수
     public Integer getTotalCount() {
-		return madao.getTotalCount();   	
+        return madao.getTotalCount();   	
+    }
+
+    // 검색 페이지 수
+    public Integer getSearch(int pageSize, String ma_name) {
+        return madao.getSearch(pageSize, ma_name);
     }
 
     // 선택

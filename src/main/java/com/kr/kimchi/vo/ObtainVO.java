@@ -19,7 +19,7 @@ public class ObtainVO {
 	private int production_no; 
 	private String partner_taxid;
 	
-	private ProductionVO productionVO; 
+	private ProductionVO productionVO;
 	private MaterialVO materialVO;
 	private UserVO userVO; 
 	private PartnerVO partnerVO;

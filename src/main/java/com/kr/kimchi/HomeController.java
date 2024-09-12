@@ -5,8 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
+import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,16 @@ public class HomeController {
 	private CalenderService service;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-			
+	public String home(Locale locale, Model model, HttpSession session) {
+		
+		Object userLogin = session.getAttribute("userlogin");
+	    Object partLogin = session.getAttribute("partlogin");
+	    
+	    if (userLogin == null && partLogin == null) {
+	        return "redirect:/login/loginForm";
+	    }
+	    
+		logger.info("Welcome home! The client locale is {}.", locale);
 		List<CalenderVO> list = service.calenderList();
 		System.out.println(list);
 		model.addAttribute("list", list );

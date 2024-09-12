@@ -16,9 +16,15 @@ public class ObtainService {
 	private ObtainDAO obtaindao;
 
 
-	public List<ObtainVO> obtainAll() {
-		return obtaindao.obtainAll();
+//	조달계획 보기_전체
+	public List<ObtainVO> obtainAll(int startRow, int pageSize) {
+		return obtaindao.obtainAll(startRow, pageSize);
 	}// end
+	
+//	전체 레코드 수
+    public Integer getTotalCount() {
+		return obtaindao.getTotalCount();   	
+    }//end
 
 	public ObtainVO obtainSelect(int obtain_no) {
 		return obtaindao.obtainSelect(obtain_no);

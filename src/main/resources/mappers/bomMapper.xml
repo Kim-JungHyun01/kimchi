@@ -7,6 +7,7 @@
 	<select id="bomSelect" resultType="com.kr.kimchi.vo.BomVO">
 		select * from bom 
 		where item_no = #{item_no}
+		ORDER BY item_no DESC
 	</select>
 	
 	<!-- bom정보_스케줄 추가-->

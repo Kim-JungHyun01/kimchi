@@ -251,7 +251,7 @@ public class PaController {
 
 		obtservice.obtainPa(obtain_no);
 
-		List<ObtainVO> oblist = obtservice.obtainAll();
+		List<ObtainVO> oblist = obtservice.obtainAll(0,100);
 		mav.addObject("oblist", oblist);
 		mav.setViewName("pa/paInsert");
 		return mav;
