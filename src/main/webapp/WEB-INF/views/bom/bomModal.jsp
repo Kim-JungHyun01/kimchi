@@ -9,6 +9,14 @@
 .modal-table th, .modal-table td {
  padding: 5px; /* 패딩을 줄임 */
 }
+.input-group input[type="number"]{
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 5px;
+}
 </style>
 <script>
 	var rowIndex = 1; // 초기번호 설정
@@ -55,14 +63,14 @@
 		    const cell10 = newRow.insertCell();
 
 		    // 셀에 HTML 추가 (onclick에 rowIndex 추가)
-		    cell1.innerHTML = '<input name="roeNum" id="rowNum[' + rowIndex + ']" type="number" value="' + rowIndex + '" readonly>';
-		    cell2.innerHTML = '<input name="ma_id" id="ma_id[' + rowIndex + ']" onclick="openbom_maModal(' + rowIndex + ')" placeholder="자재선택" type="number">';
+		    cell1.innerHTML = '<input name="roeNum" id="rowNum[' + rowIndex + ']" type="number" value="' + rowIndex + '" readonly style="width: 80%;">';
+		    cell2.innerHTML = '<input name="ma_id" id="ma_id[' + rowIndex + ']" onclick="openbom_maModal(' + rowIndex + ')" placeholder="자재선택" type="number" style="width: 80%;">';
 		    cell3.innerHTML = '<input name="ma_category" id="ma_category[' + rowIndex + ']" onclick="openbom_maModal(' + rowIndex + ')" placeholder="자재선택">';
 		    cell4.innerHTML = '<input name="ma_name" id="ma_name[' + rowIndex + ']" onclick="openbom_maModal(' + rowIndex + ')" placeholder="자재선택">';
 		    cell5.innerHTML = '<input name="ma_origin" id="ma_origin[' + rowIndex + ']" onclick="openbom_maModal(' + rowIndex + ')" placeholder="자재선택">';
 		    cell6.innerHTML = '<input name="ma_unit" id="ma_unit[' + rowIndex + ']" onclick="openbom_maModal(' + rowIndex + ')" placeholder="자재선택">';
 		    cell7.innerHTML = '<input name="ma_weight" id="ma_weight[' + rowIndex + ']" onclick="openbom_maModal(' + rowIndex + ')" placeholder="자재선택">';
-		    cell8.innerHTML = '<input name="bom_ma_amount" id="bom_ma_amount[' + rowIndex + ']" type="number">';
+		    cell8.innerHTML = '<input name="bom_ma_amount" id="bom_ma_amount[' + rowIndex + ']" type="number" style="width: 80%;">';
 		    cell9.innerHTML = '<select required name="bom_ma_process" id="bom_ma_process[' + rowIndex + ']">'
 		        + '<option value="제조공정선택">제조공정선택</option>'
 		        + '<option value="조제">조제</option>'
@@ -302,16 +310,11 @@
 						<c:forEach var="bom_malist" items="${bom_malist}" varStatus="status">
 							<tr>
 								<td><input name="roeNum" id="rowNum[${status.index + 1}]" type="number" value="${status.index + 1}" readonly></td>
-								<td><input name="ma_id" id="ma_id[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" type="number" value="${bom_malist.ma_id}" readonly></td>
+								<td><input name="ma_id" id="ma_id[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" type="number" value="${bom_malist.ma_id}" readonly style="width: 80%;,margin: 10px auto;"></td>
 								<c:forEach var="malist" items="${malist}">
 									<c:if test="${malist.ma_id == bom_malist.ma_id}">
-										<td><input name="ma_category" id="ma_category[${status.index + 1}]"
-											onclick="openbom_maModal(${status.index + 1})"
-											value="${malist.ma_category}" readonly></td>
-										<td><input name="ma_name"
-											id="ma_name[${status.index + 1}]"
-											onclick="openbom_maModal(${status.index + 1})"
-											value="${malist.ma_name}" readonly></td>
+										<td><input name="ma_category" id="ma_category[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})"value="${malist.ma_category}" readonly></td>
+										<td><input name="ma_name" id="ma_name[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" value="${malist.ma_name}" readonly></td>
 										<td><input name="ma_origin"
 											id="ma_origin[${status.index + 1}]"
 											onclick="openbom_maModal(${status.index + 1})"

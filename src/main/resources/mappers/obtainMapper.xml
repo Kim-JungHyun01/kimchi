@@ -65,10 +65,10 @@
 		CASE
 		WHEN #{obtain_status} = '조달계획확인완료' THEN NOW()
 		ELSE production.production_registrationDate
-		END,
-		obtain.obtain_document = IF(#{obtain_status} = '조달계획확인완료', 1, 0)
+		END
 		WHERE
 		obtain.obtain_no = #{obtain_no}
+		<!-- obtain.obtain_document = IF(#{obtain_status} = '조달계획확인완료', 1, 0)-->
 	</update>
 
 	<!-- 구매발주서 발부 -->
