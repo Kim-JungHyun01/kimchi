@@ -2,12 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
-<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>"
-	rel='stylesheet' />
-	
 <style>
 .modal-table th, .modal-table td {
  padding: 5px; /* 패딩을 줄임 */
+}
+
+.modal-table input[type="number"] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 0 !important; /* 또는 원하는 값 */
+    font-size: 16px;
 }
 </style>
 <script>

@@ -139,24 +139,24 @@ public class ObtainController {
 	@PostMapping(value = "obtain/obtainCheck")
 	public String obtainCheck(ObtainVO ob) {
 		obtservice.obtainCheck(ob);
-		// 계약 승인 시 서류 발급
-		if (ob.getObtain_status().equals("조달계획확인완료")) {
-			ObtainVO inobtain = obtservice.obtainSelect(ob.getObtain_no());
-			CodeVO code = codeservice.obtainCode(inobtain);
-
-			// 여기서 codeInsert 메서드의 반환 값을 사용하여 code_id를 가져옵니다.
-			CodeVO insertedCode = codeservice.codeInsert(code);
-			int code_id = insertedCode.getCode_id(); // 올바르게 설정된 code_id 사용
-
-			// pa 추가
-			PaVO pa = new PaVO();
-			pa.setUser_id(inobtain.getUser_id());
-			pa.setCode_id(code_id);
-			Date pa_issueDate = inobtain.getObtain_registrationDate();
-			pa.setPa_issueDate(pa_issueDate);
-			pa.setPa_referenceNo(inobtain.getObtain_no());
-			paservice.paInsert(pa);
-		} // end if
+		// 계약 승인 시 서류 발급=> 삭제
+//		if (ob.getObtain_status().equals("조달계획확인완료")) {
+//			ObtainVO inobtain = obtservice.obtainSelect(ob.getObtain_no());
+//			CodeVO code = codeservice.obtainCode(inobtain);
+//
+//			// 여기서 codeInsert 메서드의 반환 값을 사용하여 code_id를 가져옵니다.
+//			CodeVO insertedCode = codeservice.codeInsert(code);
+//			int code_id = insertedCode.getCode_id(); // 올바르게 설정된 code_id 사용
+//
+//			// pa 추가
+//			PaVO pa = new PaVO();
+//			pa.setUser_id(inobtain.getUser_id());
+//			pa.setCode_id(code_id);
+//			Date pa_issueDate = inobtain.getObtain_registrationDate();
+//			pa.setPa_issueDate(pa_issueDate);
+//			pa.setPa_referenceNo(inobtain.getObtain_no());
+//			paservice.paInsert(pa);
+//		} // end if
 
 		return "redirect:/obtain/obtainSelect?obtain_no=" + ob.getObtain_no();
 	}// end
