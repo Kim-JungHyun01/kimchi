@@ -86,7 +86,6 @@
 </div>
 
 
-<%@include file="../include/footer.jsp" %>
 
 <!-- Required vendors -->
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
@@ -126,7 +125,9 @@
         <div class="content-body">
         
         	
-        	<div id='calendar'></div>
+        	<div class="container">
+			    <div id="calendar"></div>
+			</div>
 
         </div>
      
@@ -176,9 +177,9 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
         initialDate: today,
-        navLinks: true, // can click day/week names to navigate views
+        navLinks: true, 
         editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
+        dayMaxEvents: true, 
         events: [
             <%-- JSP scriptlet을 사용하여 데이터를 JSON으로 변환 --%>
             <c:forEach var="vo" items="${list}" varStatus="status">
@@ -222,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .fc-daygrid-more-link fc-more-link{
 	 color: #343a40;
 }
+
 
 
 </style>

@@ -80,6 +80,11 @@
 						<li><a href="${contextPath}/contracts/contractsAll">제품계약 목록</a></li>
 						<li><a href="${contextPath}/contracts/contractsInsertForm">제품계약등록</a></li>
 					</ul></li>
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i></i> <span class="nav-text">발주검수관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/pcsp">발주검수관리</a></li>
+					</ul></li>
 				</c:when>
 			</c:choose>
 			<!-- 게시판 -->
