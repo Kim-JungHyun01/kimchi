@@ -93,8 +93,8 @@ public class ContractsController {
 		List<UserVO> userlist = userservice.userAll(0,100,null);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("itemlist", itemlist);
-//		mav.addObject("partnerlist", partnerlist);
-//		mav.addObject("userlist", userlist);
+		mav.addObject("partnerlist", partnerlist);
+		mav.addObject("userlist", userlist);
 		mav.setViewName("contracts/contractsInsertForm");
 		return mav;
 	}// end

@@ -8,18 +8,30 @@
 		<input type="hidden" name="pa_no" id="pa_no" value="${prpVO.pa_no}">
 
 		<h2>진척검수결과</h2>
-		계획 검수 일자 : <input type="text" readonly id ="prp_issueDate" value="${prpVO.prp_issueDate }"><br/> 
-		결과 작성 일자 : <input type="text" name="prp_revisionDate" id="now" readonly value=""> 
-		<p>검수자</p>
-		<input type="text" name ="user_id" value="abcd" readonly> 
-		<!-- sessin 값 확인 필요 
-		<input type="hidden" name ="user_id" value="session.getAttribute()" readonly> 
-		-->
-		<p>검수 진행도</p>
-		<input type = "text" name = "prp_progress" id="prp_progress" value = "0" >
-		<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
-		<p>비고</p>
-		<input type="text" id="prp_notes" name="prp_notes" value="${prpVO.prp_notes}">
+		<div class="form-group">
+			 <label class="label">계획 검수 일자 </label>
+			 <input type="text" readonly id ="prp_issueDate" value="${prpVO.prp_issueDate }"><br/> 
+		</div>
+		<div class="form-group">
+			 <label class="label">결과 작성 일자  </label>
+			 <input type="text" name="prp_revisionDate" id="now" readonly value=""> 
+		</div>
+		<div class="form-group">
+			<label class="label">검수자</label>
+			<input type="text" name ="user_id" value="abcd" readonly> 
+			<!-- sessin 값 확인 필요 
+			<input type="hidden" name ="user_id" value="session.getAttribute()" readonly> 
+			-->
+		</div>
+		<div class="form-group">
+			<label class="label">검수 진행도</label>
+			<input type = "text" name = "prp_progress" id="prp_progress" value = "0" >
+			<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
+		</div>
+		<div class="form-group">
+			<label class="label">비고</label>
+			<textarea id="prp_notes" name="prp_notes" value="${prpVO.prp_notes}"></textarea>
+		</div>
 		
 		<button onclick="sendData()">저장</button>
 </div>
@@ -77,6 +89,57 @@ function sendData() {
 }
  
 </script>
- 
+<style>
+
+    .form-group {
+        margin-bottom: 15px; /* 각 입력 필드 그룹 사이의 간격 조절 */
+        display: flex;
+        align-items: center; /* 수직 중앙 정렬 */
+    }
+
+    .label {
+        display: inline-block;
+        width: 150px; /* 레이블의 폭을 통일 */
+        font-weight: bold;
+        margin-right: 10px; /* 레이블과 입력 필드 사이의 간격 */
+        white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
+    }
+
+    input[type="text"] {
+        padding: 5px; /* 입력 필드 내부 여백 */
+        border: 1px solid #ccc; /* 테두리 색상 */
+        border-radius: 4px; /* 테두리의 둥근 모서리 */
+        width:300px;
+    }
+    
+   hr {
+    height: 1px;
+    background-color: #dbe4ff; 
+}
+
+button {
+    float: right; /* 버튼을 오른쪽으로 배치 */
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.form-group textarea {
+    width: 65%;
+    height: 150px; 
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none; 
+}
+
+</style> 
 
 </html>

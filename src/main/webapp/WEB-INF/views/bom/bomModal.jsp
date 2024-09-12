@@ -2,43 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>"
+	rel='stylesheet' />
+	
 <style>
-/* 모달창 스타일 */
-#bomInsertModal, #bomUpdateModal {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	justify-content: center;
-	align-items: center; /* 수직 중앙 정렬 */
-}
-
-.modal-content {
-	background-color: white;
-	padding: 20px;
-	width: 70%; /* 모달 너비를 50%로 설정 */
-	max-height: 100%; /* 최대 높이 조정 */
-	overflow-y: auto;
-	border-radius: 8px;
-	margin-left: 20%;
-	margin-right: 10%; /* 오른쪽 여백 추가 */
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 10px;
-	border: 1px solid #ccc;
-}
-
-button {
-	margin-top: 40px;
+.modal-table th, .modal-table td {
+ padding: 5px; /* 패딩을 줄임 */
 }
 </style>
 <script>
@@ -102,7 +71,7 @@ button {
 		        + '<option value="포장">포장</option>'
 		        + '<option value="숙성">숙성</option>'
 		        + '<option value="기타">기타</option>' + '</select>';
-		    cell10.innerHTML = '<button type="button" onclick="resetRow(this)">초기화</button>'; // 초기화 버튼 추가
+		    cell10.innerHTML = '<button type="button" class="addbutton reset" onclick="resetRow(this)">초기화</button>'; // 초기화 버튼 추가
 
 		    rowIndex++; // rowIndex가 정의되고 적절히 관리되도록 합니다.
 		    document.getElementById("btnAddRow_insert").disabled = true; // 버튼 비활성화
@@ -137,7 +106,7 @@ button {
 
 		if (rowIndex == 1) {
 			alert("자재리스트를 추가해주세요.");
-			document.getElementById("btnAddRow").focus();
+			document.getElementById("bom_schedule_insert").focus();
 			return;
 		}//end
 
@@ -252,33 +221,28 @@ button {
 	
 </script>
 <!-- bomInsertModal -->
-<div id=bomInsertModal>
+<div id=bomInsertModal class="modal-long">
 	<div class="modal-content">
-		<div>
+		<div class="modal-header">
 			<h3>bom 추가화면</h3>
-			<form action="bomInsert" method="post" id="bomInsertForm"
-				name="bomInsertForm">
-				<div>
-					<label>물품코드</label> <input id="item_no" name="item_no"
-						type="number" value="${item.item_no}" readonly>
-				</div>
-				<div>
-					<h4>bom 상세 스케줄</h4>
-					<label>제작 소요일자</label><input id="bom_schedule" name="bom_schedule"
-						type="number">
-					<p>제작 상세내용</p>
-					<textarea rows="8" cols="10" id="bom_other" name="bom_other"
-						placeholder="제작상세내용 입력"></textarea>
-				</div>
+		</div>
+		<div class="modal-body">
+			<form action="bomInsert" method="post" id="bomInsertForm" name="bomInsertForm">
+				<label>물품코드</label> <input style=" width: 30%;" id="item_no" name="item_no" type="number" value="${item.item_no}" readonly>
+				<label>제작 소요일자</label><input style=" width: 30%;" id="bom_schedule" name="bom_schedule" type="number">
+					<div style="text-align: center;">
+						 <label style="text-align: left; display: block;">제작상세내용</label>
+						<textarea rows="3" cols="5" id="bom_othe_inputr" name="bom_other" placeholder="제작상세내용 입력"></textarea>
+					</div>
 			</form>
 			<hr>
-			<div>
+			<div class="modal-header">
 				<h3>bom 자재 추가화면</h3>
-				<form action="bom_maInsert" method="post" id="bom_maInsertForm"
-					name="bom_maInsertForm">
-					<input type="hidden" name="item_no" value="${item.item_no}"
-						id="item_no" />
-					<table id="bomInsertTable">
+			</div>
+			<div class="modal-body">
+				<form action="bom_maInsert" method="post" id="bom_maInsertForm" name="bom_maInsertForm">
+					<input type="hidden" name="item_no" value="${item.item_no}" id="item_no" />
+					<table id="bomInsertTable" class="modal-table">
 						<tr>
 							<th>번호</th>
 							<th>자재코드</th>
@@ -291,41 +255,39 @@ button {
 							<td>소요공정</td>
 						</tr>
 					</table>
-					<button type="button" onclick="addRow('insert')" id="btnAddRow_insert">자재리스트추가</button>
-					<button type="button" onclick="InsertBom()">BOM 추가</button>
+					<button type="button" class="addbutton" onclick="addRow('insert')" id="btnAddRow_insert">자재리스트추가</button>
+					<button type="button" class="addbutton" onclick="InsertBom()">BOM 추가</button>
 				</form>
+				<div class="modal-footer">
+					<button type="button" class="filter-button" onclick="closebomInsertModal()">닫기</button>
+				</div>
 			</div>
 		</div>
-		<button onclick="closebomInsertModal()">닫기</button>
 	</div>
 </div>
 <!-- bomUpdateModal -->
-<div id=bomUpdateModal>
+<div id=bomUpdateModal class="modal-long">
 	<div class="modal-content">
-		<div>
+		<div class="modal-header">
 			<h3>bom 수정화면</h3>
-			<form action="bomUpdate" method="post" id="bomUpdateForm"
-				name="bomUpdateForm">
-				<div>
-					<label>물품코드</label> <input id="item_no" name="item_no"
-						type="number" value="${item.item_no}" readonly>
-				</div>
-				<div>
-					<h4>bom 상세 스케줄</h4>
-					<label>제작 소요일자</label><input id="bom_schedule_update" name="bom_schedule"
-						type="number" value="${bom.bom_schedule }">
-					<p>제작 상세내용</p>
-					<textarea rows="8" cols="10" id="bom_other_update" name="bom_other">
-					${bom.bom_other}</textarea>
-				</div>
+		</div>
+		<div class="modal-body">
+			<form action="bomUpdate" method="post" id="bomUpdateForm" name="bomUpdateForm">
+					<label>물품코드</label> <input style=" width: 30%;" id="item_no" name="item_no" type="number" value="${item.item_no}" readonly>
+					<label>제작 소요일자</label><input style=" width: 30%;" id="bom_schedule_update" name="bom_schedule" type="number" value="${bom.bom_schedule }">
+					<div style="text-align: center;">
+					 <label style="text-align: left; display: block;">제작상세내용</label>
+					<textarea rows="3" cols="5" id="bom_other_update" name="bom_other"> ${bom.bom_other}</textarea>
+					</div>
 			</form>
 			<hr>
-			<div>
-				<h3>bom 자재 추가화면</h3>
-				<form action="bom_maUpdate" method="post" id="bom_maUpdateForm"
-					name="bom_maUpdateForm">
+			<div class="modal-header">
+				<h3>bom 자재 수정화면</h3>
+			</div>
+			<div class="modal-body">
+				<form action="bom_maUpdate" method="post" id="bom_maUpdateForm" name="bom_maUpdateForm">
 					<input type="hidden" name="item_no" value="${item.item_no}" id="item_no" />
-					<table id="bomUpdateTable">
+					<table id="bomUpdateTable" class="modal-table">
 						<tr>
 							<th>번호</th>
 							<th>자재코드</th>
@@ -343,15 +305,32 @@ button {
 								<td><input name="ma_id" id="ma_id[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" type="number" value="${bom_malist.ma_id}" readonly></td>
 								<c:forEach var="malist" items="${malist}">
 									<c:if test="${malist.ma_id == bom_malist.ma_id}">
-										<td><input name="ma_category" id="ma_category[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" value="${malist.ma_category}" readonly></td>
-										<td><input name="ma_name" id="ma_name[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" value="${malist.ma_name}" readonly></td>
-										<td><input name="ma_origin" id="ma_origin[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" value="${malist.ma_origin}" readonly></td>
-										<td><input name="ma_unit" id="ma_unit[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" value="${malist.ma_unit}" readonly></td>
-										<td><input name="ma_weight" id="ma_weight[${status.index + 1}]" onclick="openbom_maModal(${status.index + 1})" value="${malist.ma_weight}" readonly></td>
+										<td><input name="ma_category" id="ma_category[${status.index + 1}]"
+											onclick="openbom_maModal(${status.index + 1})"
+											value="${malist.ma_category}" readonly></td>
+										<td><input name="ma_name"
+											id="ma_name[${status.index + 1}]"
+											onclick="openbom_maModal(${status.index + 1})"
+											value="${malist.ma_name}" readonly></td>
+										<td><input name="ma_origin"
+											id="ma_origin[${status.index + 1}]"
+											onclick="openbom_maModal(${status.index + 1})"
+											value="${malist.ma_origin}" readonly></td>
+										<td><input name="ma_unit"
+											id="ma_unit[${status.index + 1}]"
+											onclick="openbom_maModal(${status.index + 1})"
+											value="${malist.ma_unit}" readonly></td>
+										<td><input name="ma_weight"
+											id="ma_weight[${status.index + 1}]"
+											onclick="openbom_maModal(${status.index + 1})"
+											value="${malist.ma_weight}" readonly></td>
 									</c:if>
 								</c:forEach>
-								<td><input name="bom_ma_amount" id="bom_ma_amount[${status.index + 1}]" type="number" value="${bom_malist.bom_ma_amount}"></td>
-								<td><select required name="bom_ma_process" id="bom_ma_process[${status.index + 1}]">
+								<td><input name="bom_ma_amount"
+									id="bom_ma_amount[${status.index + 1}]" type="number"
+									value="${bom_malist.bom_ma_amount}"></td>
+								<td><select required name="bom_ma_process"
+									id="bom_ma_process[${status.index + 1}]">
 										<option value="제조공정선택"
 											${bom_malist.bom_ma_process == '제조공정선택' ? 'selected' : ''}>제조공정선택</option>
 										<option value="조제"
@@ -367,15 +346,17 @@ button {
 										<option value="기타"
 											${bom_malist.bom_ma_process == '기타' ? 'selected' : ''}>기타</option>
 								</select></td>
-								<td><button type="button" onclick="resetRow(this)">초기화</button></td>
+								<td><button type="button" class="addbutton reset" onclick="resetRow(this)">초기화</button></td>
 							</tr>
 						</c:forEach>
 					</table>
-					<button type="button" onclick="addRow('update')" id="btnAddRow_update">자재리스트추가</button>
-					<button type="button" onclick="updateBom()">BOM 수정</button>
+					<button type="button" class="addbutton" onclick="addRow('update')" id="btnAddRow_update">자재리스트추가</button>
+					<button type="button" class="addbutton" onclick="updateBom()">BOM 수정</button>
 				</form>
 			</div>
 		</div>
-		<button onclick="closebomUpdateModal()">닫기</button>
+		<div class="modal-footer">
+		<button type="button" class="filter-button" onclick="closebomUpdateModal()">닫기</button>
+	</div>
 	</div>
 </div>

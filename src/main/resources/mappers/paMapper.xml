@@ -29,9 +29,9 @@
 	<insert id="paPlus" parameterType="com.kr.kimchi.vo.PaVO">
 		insert into pa
 		(user_id,
-		code_id, pa_issueDate, pa_checkStatus, pa_referenceNo)
+		code_id, pa_issueDate, pa_checkStatus, pa_referenceNo,pa_notes)
 		values
-		(#{user_id}, #{code_id}, #{pa_issueDate}, 0, #{pa_referenceNo})
+		(#{user_id}, #{code_id}, #{pa_issueDate}, 0, #{pa_referenceNo},#{notes})
 	</insert>
 	
 	<!-- 진척계획 완료 -->

@@ -35,10 +35,10 @@ public class PcspController {
 //		List<PcspVO> list = pcspService.pcspList(value);
 //		mav.addObject("list", list);
 
-		String value = "111-22-33333";
+		String value = (String) session.getAttribute("userlogin");
 		List<PcspVO> list = pcspService.pcspList(value);
 		mav.addObject("list", list);
-		
+		System.out.println(list);
 		// 토큰
 		mav.addObject("partner_taxid", value);
 		mav.addObject("token", token);

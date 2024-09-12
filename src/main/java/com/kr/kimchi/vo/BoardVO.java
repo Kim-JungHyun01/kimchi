@@ -19,7 +19,7 @@ public class BoardVO {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private Date board_modifiedDate;
-	private int attachment_no;
+	private Integer attachment_no;
 	private String user_id;
 	
 	

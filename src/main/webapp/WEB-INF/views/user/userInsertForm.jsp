@@ -30,7 +30,7 @@
 		const specialCheck = /[!@#$%^&*]/.test(user_id);
 		
 		if (!user_id) {
-	        showAlert("사용자 ID를 입력해 주세요.", "user_id");
+	        showAlert("사원 ID를 입력해 주세요.", "user_id");
 	        return;
 	    }
 		
@@ -53,12 +53,12 @@
 		    dataType: 'json', // JSON 형식으로 응답을 기대
 		    success: function(result) {
 		        if (result.status === '있음') {
-		            alert("이미 존재하는 사용자 ID입니다.");
+		            alert("이미 존재하는 사원 ID입니다.");
 		            document.getElementById("user_id").readOnly = false; 
 		            document.getElementById("btncheckId").disabled = false; 
 		            document.getElementById("user_id").value = "";
 		        } else {
-		            alert("사용할 수 있는 사용자 ID입니다.");
+		            alert("사용할 수 있는 사원 ID입니다.");
 		            document.getElementById("user_id").readOnly = true; 
 		            document.getElementById("btncheckId").disabled = true; 
 		        }
@@ -196,22 +196,22 @@
 					<div class="row no-gutters">
 						<div class="col-xl-12">
 							<div class="auth-form">
-								<h4 class="text-center mb-4">사용자 회원가입</h4>
+								<h4 class="text-center mb-4">사원 회원가입</h4>
 								<form action="userInsert" method=post id="userInsertForm"
 									name="userInsertForm">
 									<div class="form-group">
-										<label><strong>사용자 ID</strong></label>
+										<label><strong>사원 ID</strong></label>
 										<div class="input-group">
 											<input type="text" class="form-control text-1" id="user_id"
-												name="user_id" placeholder="사용자 ID">
+												name="user_id" placeholder="사원 ID">
 											<button id ="btncheckId" type="button" class="check-button btn btn-secondary"
 												onclick="checkId()">ID중복확인</button>
 										</div>
 									</div>
 									<div class="form-group">
-										<label><strong>사용자 Password</strong></label> <input
+										<label><strong>사원 Password</strong></label> <input
 											type="password" class="form-control" name="user_pw"
-											id="user_pw" placeholder="사용자 Password" oninput="checkPw()">
+											id="user_pw" placeholder="사원 Password" oninput="checkPw()">
 									</div>
 									<div class="form-group">
 										<label id="pwWordLenght" class="unvalid">10자리이상,&nbsp;</label>
@@ -222,9 +222,9 @@
 										<label id="pwWordSpace" class="valid">공백제외</label>
 									</div>
 									<div class="form-group">
-										<label><strong>사용자 Password 확인</strong></label> <input
+										<label><strong>사원 Password 확인</strong></label> <input
 											type="password" class="form-control" name="user_pwcheck"
-											id="user_pwcheck" placeholder="사용자 Password 재입력"
+											id="user_pwcheck" placeholder="사원 Password 재입력"
 											oninput="checkPw()">
 									</div>
 									<div class="form-group">
@@ -232,23 +232,23 @@
 											style="display: flex;">비밀번호가 일치하지 않습니다.</label>
 									</div>
 									<div class="form-group">
-										<label><strong>사용자 email</strong></label> <input type="email"
+										<label><strong>사원 email</strong></label> <input type="email"
 											class="form-control" name="user_email" id="user_email"
-											placeholder="사용자 email">
+											placeholder="사원 email">
 									</div>
 									<div class="form-group">
-										<label><strong>사용자 이름</strong></label> <input type="text"
+										<label><strong>사원 이름</strong></label> <input type="text"
 											class="form-control" name="user_name" id="user_name"
-											placeholder="사용자 이름">
+											placeholder="사원 이름">
 									</div>
 									<div class="form-group">
-										<label><strong>사용자 전화번호</strong></label> <input type="text"
+										<label><strong>사원 전화번호</strong></label> <input type="text"
 											name="user_number" id="user_number" class="form-control"
-											placeholder="사용자 전화번호" onkeyup="checkNumber(this)"
+											placeholder="사원 전화번호" onkeyup="checkNumber(this)"
 											maxlength="13">
 									</div>
 									<div class="form-group">
-										<label><strong>사용자 부서</strong></label> <select
+										<label><strong>사원 부서</strong></label> <select
 											name="user_department" id="user_department" required>
 											<option value="부서선택">부서선택</option>
 											<option value="개발부서">개발부서</option>
@@ -261,6 +261,7 @@
 										<button type="button" onclick="submitCheck()"
 											class="btn btn-primary btn-block">회원가입</button>
 										<button type="reset" class="btn btn-primary btn-block">초기화</button>
+										<button type="button" onclick="location.href='${contextPath}/login/loginForm'" class="btn btn-primary btn-block">로그인으로 이동</button>
 									</div>
 								</form>
 							</div>

@@ -6,23 +6,6 @@
 <link rel="icon" type="image/png" sizes="16x16"
 	href="${contextPath}/resources/images/favicon.png">
 <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
-<script>
-function checktaxId(InputNumber) {
-	var telNumber = InputNumber.value;
-	var length = telNumber.length;
-	if (length >= 8) {
-		// 숫자만 남기고 제거
-		let numbers = telNumber.replace(/[^0-9]/g, "");
-
-		// 정규식을 사용하여 형식화
-		let formattedNumber = numbers.replace(
-				/([0-9]{3})-?([0-9]{2})-?([0-9]{5})/, `$1-$2-$3`);
-
-		InputNumber.value = formattedNumber;
-	}
-} // end checktaxId
-
-</script>
 <style>
 .form-check {
 	margin-right: 100px; /* 원하는 간격으로 조정 */
@@ -55,7 +38,7 @@ function checktaxId(InputNumber) {
 											<div class="form-check ml-2">
 												<input class="form-check-input" type="checkbox" id="user"
 													name="user" checked onclick="checkLoginForm('user')">
-												<label class="form-check-label" for="user">사용자</label>
+												<label class="form-check-label" for="user">사원</label>
 											</div>
 											<div class="form-check ml-2">
 												<input class="form-check-input" type="checkbox" id="partner"
@@ -69,16 +52,16 @@ function checktaxId(InputNumber) {
 										<div class="form-group">
 											<label><strong>ID</strong></label> <input type="text"
 												id="user_id" name="user_id" class="form-control"
-												placeholder="사용자 ID">
+												placeholder="사원 ID">
 										</div>
 										<div class="form-group">
 											<label><strong>Password</strong></label> <input id="user_pw"
 												name="user_pw" type="password" class="form-control"
-												placeholder="사용자 비밀번호">
+												placeholder="사원 비밀번호">
 										</div>
 										<div class="text-center">
 											<button type="button" onclick="checkSubmit('user')"
-												class="btn btn-primary btn-block">사용자 로그인</button>
+												class="btn btn-primary btn-block">사원 로그인</button>
 										</div>
 										<div class="new-account mt-3">
 											<p>
@@ -123,8 +106,6 @@ function checktaxId(InputNumber) {
 		</div>
 	</div>
 </div>
-
-<!-- Required vendors -->
 <script>
 	function checkLoginForm(selected) {
 		const userLoginForm = document.getElementById('userLoginForm');
@@ -174,5 +155,20 @@ function checktaxId(InputNumber) {
 			form.submit();
 		}
 	}//end
+	
+	function checktaxId(InputNumber) {
+		var telNumber = InputNumber.value;
+		var length = telNumber.length;
+		if (length >= 8) {
+			// 숫자만 남기고 제거
+			let numbers = telNumber.replace(/[^0-9]/g, "");
+
+			// 정규식을 사용하여 형식화
+			let formattedNumber = numbers.replace(
+					/([0-9]{3})-?([0-9]{2})-?([0-9]{5})/, `$1-$2-$3`);
+
+			InputNumber.value = formattedNumber;
+		}
+	} // end checktaxId
 	
 </script>
