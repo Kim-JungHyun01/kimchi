@@ -140,7 +140,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentElement = $(e.target).find('.active img')[0];
     });
 </script>
-
+<!-- 로그인용 스인여부 확인용 -->
+<div>
+<input value="${partlogin.partner_approval }" type="hidden" id="login_partner_approval" name="login_partner_approval"> 
+<input value="${userlogin.user_approval }" type="hidden" id="login_user_approval" name="login_user_approval">
+</div>
 <div class="container">
   <!-- 사진 슬라이드 -->
   <div id="carouselExample" class="carousel slide" data-ride="carousel">
