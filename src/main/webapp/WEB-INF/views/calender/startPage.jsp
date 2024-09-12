@@ -86,7 +86,6 @@
 </div>
 
 
-<%@include file="../include/footer.jsp" %>
 
 <!-- Required vendors -->
 <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
@@ -126,7 +125,9 @@
         <div class="content-body">
         
         	
-        	<div id='calendar'></div>
+        	<div class="container">
+			    <div id="calendar"></div>
+			</div>
 
         </div>
      
@@ -222,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .fc-daygrid-more-link fc-more-link{
 	 color: #343a40;
 }
+
 
 
 </style>
