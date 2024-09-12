@@ -37,6 +37,7 @@
    board
   where board_no > 0
   order by board_no desc, board_createdDate desc
+  LIMIT #{startRow}, #{pageSize}
    ]]>
    </select>
    

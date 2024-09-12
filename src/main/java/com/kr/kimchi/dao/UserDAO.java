@@ -1,5 +1,6 @@
 package com.kr.kimchi.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,31 @@ public class UserDAO {
 		return session.selectOne(namespace + ".userLogin", usermap);
 	}//end
 	
-//	사용자 전체
-	public List<UserVO> userAll(){
-		return session.selectList(namespace+".userAll");
+//	사용자 전체 + 페이징
+	public List<UserVO> userAll(int startRow, int pageSize, String user_name){
+		Map<String, Object> params = new HashMap<>();
+			params.put("startRow", startRow);
+	        params.put("pageSize", pageSize);
+	        params.put("user_name", user_name);
+	        
+		    // SQL 쿼리에서 페이지 정보 + 검색 조건 사용 
+		return session.selectList(namespace+".userAll", params);
+	}//end
+	
+//	전체 레코드 수
+	public Integer getTotalCount() {
+		return session.selectOne(namespace + ".getTotalCount");		
+	} //end
+	
+//	검색 이후 페이지 수 계산
+	public Integer userSearch(int pageSize, String user_id) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("user_id", user_id);
+		Integer totalCount = session.selectOne(namespace +".userSearch", params);
+		if(totalCount == null || totalCount == 0) {
+			return 0;
+		}
+		return (int)Math.ceil((double) totalCount / pageSize);
 	}//end
 	
 //	사용자 상세
@@ -35,8 +58,13 @@ public class UserDAO {
 	
 //	사용자 회원가입
 	public void userInsert(UserVO user) {
-		session.selectOne(namespace+".userSelect", user);
+		session.selectOne(namespace+".userInsert", user);
 	}//end
+
+//	사용자 id중복확인
+	public Integer userIdCheck(String user_id) {
+		return session.selectOne(namespace + ".userIdCheck", user_id);
+	}// end
 	
 //	사용자 정보 수정
 	public void userUpdate(UserVO user) {

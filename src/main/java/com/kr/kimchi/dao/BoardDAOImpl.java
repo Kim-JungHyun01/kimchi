@@ -1,6 +1,8 @@
 package com.kr.kimchi.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,10 +41,11 @@ public class BoardDAOImpl implements BoardDAO {
 		session.delete(namespace + ".delete", board_no);
 
 	}
-
+	
+	// 레코드수
 	@Override
-	public List<BoardVO> listAll() throws Exception {
-		return session.selectList(namespace + ".listAll");
+	public Integer getTotalCount() {
+		return session.selectOne(namespace + ".getTotalCount");
 	}
 
 	@Override
@@ -79,6 +82,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public int listSearchCount(BoardSearchCriteria cri) throws Exception {
 
 		return session.selectOne(namespace + ".listSearchCount", cri);
+	}
+
+	@Override
+	public List<BoardVO> listAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

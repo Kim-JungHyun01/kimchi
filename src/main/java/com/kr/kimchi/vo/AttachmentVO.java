@@ -9,5 +9,4 @@ public class AttachmentVO {
 	private String attachment_name;
 	private String attachment_location;
 	
-	
 }//end class

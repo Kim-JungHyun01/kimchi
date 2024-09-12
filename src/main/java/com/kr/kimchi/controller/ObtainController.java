@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.kimchi.service.*;
@@ -18,8 +19,6 @@ public class ObtainController {
 
 	@Inject
 	private ObtainService obtservice;
-	@Inject
-	private ItemService itemservice;
 	@Inject
 	private UserService userservice;
 	@Inject
@@ -32,13 +31,35 @@ public class ObtainController {
 	private CodeService codeservice;
 	@Inject
 	private PaService paservice;
+	@Inject
+	private ContractsService conservice;
+	@Inject
+	private Bom_maService bom_maservice;
+
 
 //	조달계획 보기_전체
 	@GetMapping(value = "obtain/obtainAll")
-	public ModelAndView obtainAll() {
-		List<ObtainVO> oblist = obtservice.obtainAll();
+	public ModelAndView obtainAll(@RequestParam(defaultValue = "1") int pageNum) {
+		int pageSize = 5; // 한 페이지에 보여줄 갯수 
+	    int pageNavSize = 5; // 페이지 네비 크기
+	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
+		
+		List<ObtainVO> oblist = obtservice.obtainAll(startRow,pageSize);
+		List<UserVO> userlist = userservice.userAll(0, 100, null);
+		List<MaterialVO> malist = maservice.maList(0, 100, null);
+		
+		Integer totalCount = obtservice.getTotalCount(); // 총 레코드 수 가져옴
+		Integer totalPages = userservice.userSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
+		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
+		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("pagination", pagination);
+	    mav.addObject("currentPage", pageNum);
+	    mav.addObject("totalPages", totalPages);
+	    
 		mav.addObject("oblist", oblist);
+		mav.addObject("userlist", userlist);
+		mav.addObject("malist", malist);
 		mav.setViewName("obtain/obtainAll");
 		return mav;
 	}// end
@@ -63,20 +84,24 @@ public class ObtainController {
 
 //	조달계획 추가
 	@GetMapping(value = "obtain/obtainInsertForm")
-	public ModelAndView obtainInsertForm() {
-		List<ProductionVO> prolist = proservice.productionAll();
-		List<PartnerVO> partnerlist = partservice.partnerAll();
-		List<MaterialVO> malist = maservice.maList(0, 10);
-		List<UserVO> userlist = userservice.userAll();
+	public ModelAndView obtainInsertForm(int production_no) {
+		ProductionVO pro = proservice.productionSelect(production_no);
+		ContractsVO con = conservice.contractsSelect(pro.getContracts_no());
+		List<PartnerVO> partnerlist = partservice.partnerAll(0,100, null);
+		List<MaterialVO> malist = maservice.maList(0, 100, null);
+//		List<MaterialVO> malist = maservice.maList(0, 100, null);
+		List<Bom_maVO> bom_malist = bom_maservice.bom_maSelect(con.getItem_no());
+		List<UserVO> userlist = userservice.userAll(0,100, null);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("prolist", prolist);
+		mav.addObject("pro", pro);
 		mav.addObject("partnerlist", partnerlist);
 		mav.addObject("malist", malist);
 		mav.addObject("userlist", userlist);
+		mav.addObject("bom_malist", bom_malist);
 		mav.setViewName("obtain/obtainInsertForm");
 		return mav;
 	}// end
-
+	
 	@PostMapping(value = "obtain/obtainInsert")
 	public String obtainInsert(ObtainVO ob) {
 		obtservice.obtainInsert(ob);
@@ -86,7 +111,20 @@ public class ObtainController {
 //	조달계획 수정
 	@GetMapping(value = "obtain/obtainUpdateForm")
 	public ModelAndView obtainUpdateForm(int obtain_no) {
-		ModelAndView mav = obtainSelect(obtain_no);
+		ObtainVO obtain = obtservice.obtainSelect(obtain_no);
+		ProductionVO pro = proservice.productionSelect(obtain.getProduction_no());
+		ContractsVO con = conservice.contractsSelect(pro.getContracts_no());
+		MaterialVO ma = maservice.maView(obtain.getMa_id());
+		Bom_maVO bom_ma = bom_maservice.bom_maMaterial(con.getItem_no(),ma.getMa_id());
+		UserVO user = userservice.userSelect(obtain.getUser_id());
+		PartnerVO partner = partservice.partnerSelect(obtain.getPartner_taxid());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("obtain", obtain);
+		mav.addObject("pro", pro);
+		mav.addObject("ma", ma);
+		mav.addObject("bom_ma", bom_ma);
+		mav.addObject("user", user);
+		mav.addObject("partner", partner);
 		mav.setViewName("obtain/obtainUpdateForm");
 		return mav;
 	}// end

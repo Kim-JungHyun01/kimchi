@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class IOVO {
 
-	private int io_id;  
+	private Integer io_id;  
 	private String io_status;  
 	private Integer io_quantity;
 	private String io_date; 

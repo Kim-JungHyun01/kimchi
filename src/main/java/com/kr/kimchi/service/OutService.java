@@ -2,8 +2,7 @@ package com.kr.kimchi.service;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,35 +12,28 @@ import com.kr.kimchi.vo.IOVO;
 @Service
 public class OutService {
 
-    @Inject
-    private OutDAO outdao;
+    @Autowired
+    private OutDAO outDAO;
 
-//    @Inject
-//    private MaterialService maService; // 추가
-
-    // 전체 + 페이징
-    public List<IOVO> outList(int startRow, int pageSize) {
-        return outdao.outList(startRow, pageSize);
+    public List<IOVO> outList(int startRow, int pageSize, Integer io_id) {
+        return outDAO.outList(startRow, pageSize, io_id);
     }
 
-    // 전체 레코드 수
     public Integer getTotalCount() {
-        return outdao.getTotalCount();
+        return outDAO.getTotalCount();
     }
 
-    // 상세
-    public IOVO outView(int io_id) {
-        return outdao.outView(io_id);
+    public Integer getSearch(int pageSize, Integer io_id) {
+        return outDAO.getSearch(pageSize, io_id);
     }
 
-    // 출고 정보 삽입 및 자재 정보 업데이트
+    public IOVO outView(Integer io_id) {
+        return outDAO.outView(io_id);
+    }
+
     @Transactional
-    public void outAdd(IOVO out) {
-        // 출고 정보 삽입
-        outdao.outAdd(out);
-
-        // 자재 정보 업데이트 (재고 수량 감소)
-        outdao.updateMa(out);
+    public void outAdd(IOVO outAdd) {
+        outDAO.outAdd(outAdd); // 출고 정보 추가
+        outDAO.updateMa(outAdd); // 자재 정보 업데이트
     }
-    //=================
 }
