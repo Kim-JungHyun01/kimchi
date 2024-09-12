@@ -252,11 +252,11 @@
 					<input type="hidden" name="item_no" value="${item.item_no}" id="item_no" />
 					<table id="bomInsertTable" class="modal-table">
 						<tr>
-							<th>번호</th>
-							<th>자재코드</th>
-							<th>분류</th>
-							<th>자재명</th>
-							<th>원산지</th>
+							<td>번호</td>
+							<td>자재코드</td>
+							<td>분류</td>
+							<td>자재명</td>
+							<td>원산지</td>
 							<td>자재단위</td>
 							<td>자재무게</td>
 							<td>소요자재량</td>
