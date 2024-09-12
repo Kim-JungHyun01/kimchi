@@ -17,6 +17,8 @@
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
         String formattedDate = sdf.format(now);
     %>
+    
+    
 <style type="text/css">
 
 
@@ -59,12 +61,45 @@ p{
 	border-left-color: #ffffff;
 }
 
+.paper {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm; /* set contents area */
+    margin: 10mm auto;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+            body * {
+                visibility: hidden;
+            }
+            #print, #print * {
+                visibility: visible;
+            }
+            #print {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+   
+
+
 
 </style>
 
 </HEAD>
 <BODY >
-
+<div class="content-body">
+	  	<button onclick="p()" class="btn">인쇄</button> 	
+	  	
+	<div class="paper" id="print">
 <table width="650"  border="0"  cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border-collapse:collapse;table-layout:" align="center" >
   <tr>
     <td width="99%" height="100" align="center" class="f18b"><div   id="ti1" style="padding:3px;" onClick="pycode(1)">거래명세서</div></td>
@@ -72,7 +107,7 @@ p{
   </tr>
   
 </table>
-<c:forEach items="${value}" var="statement">
+
 <table width="650"  border="1"  cellspacing="0" cellpadding="0" bordercolor="#000000" style="border-collapse:collapse;table-layout:" align="center">
   <tr>
     <td height="30" align="center">
@@ -118,7 +153,7 @@ p{
     <td width="163" align="center" style="font-weight: bold" >FAX</td>
   </tr>
   <tr>
-    <td height="25" align="center" ><div tms_edit id="cn1" onKeyDown="javascript:enterkey_process();">(주)삼김팩토리</div></td>
+    <td height="25" align="center" ><div tms_edit id="cn1" onKeyDown="javascript:enterkey_process();">(주)삼김신조유</div></td>
     <td align="center" ><div tms_edit id="cn2" ></div>자재(입고)part</td>
     <td align="center" ><div tms_edit id="cn3" ></div>조재현</td>
     <td align="center" ><div tms_edit id="cn4" ></div>010.1111.2222</td>
@@ -139,17 +174,17 @@ p{
     <td width="41" align="center" bgcolor="#E2EFDA" style="font-weight: bold" >단위</td>
     <td width="61" align="center" bgcolor="#E2EFDA" style="font-weight: bold" >단 가</td>
     <td width="107" align="center" bgcolor="#E2EFDA" style="font-weight: bold" >금액(VAT별도)</td>
-    <td width="62" align="center" bgcolor="#E2EFDA" style="font-weight: bold" >비고</td>
+    <td width="62" align="center" bgcolor="#E2EFDA" style="font-weight: bold" colspan="2">비고</td>
   </tr>
 <tr>
   <td height="30" align="center" >1</td>
   <td align="center" ><div  tms_edit id="aa1" style="padding:3px;" onDblClick="javascript:pum_code(this);">${value.ma_name }</div></td>
-  <td align="center" ><div  tms_edit id="bb1" style="padding:3px;" ></div>${value.ma_specifications}(${ma_weight })</td>
+  <td align="center" ><div  tms_edit id="bb1" style="padding:3px;" ></div>${value.ma_specifications}(${value.ma_weight })</td>
   <td align="right" ><div  tms_edit id="ee1" onBlur="calc_value1(this, 'dd', 'ff')" onFocus="del_focus(this)" style="padding:3px;">${value.obtain_quantity }</div></td>
   <td align="center" ><div  tms_edit id="cc1" style="padding:3px;" >${value.ma_unit}</div></td>
   <td align="right" ><div  tms_edit id="dd1" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;">${value.ma_price}</div></td>
   <td align="center" ><div  tms_edit id="gg1" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg16" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2" ><div  tms_edit id="gg16" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >2</td>
@@ -159,7 +194,7 @@ p{
   <td align="center" ><div  tms_edit id="cc2" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd2" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg2" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg17" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg17" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >3</td>
@@ -169,7 +204,7 @@ p{
   <td align="center" ><div  tms_edit id="cc3" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd3" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg3" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg18" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2" ><div  tms_edit id="gg18" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >4</td>
@@ -179,7 +214,7 @@ p{
   <td align="center" ><div  tms_edit id="cc4" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd4" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg4" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg19" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg19" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >5</td>
@@ -189,7 +224,7 @@ p{
   <td align="center" ><div  tms_edit id="cc5" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd5" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg5" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg20" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2" ><div  tms_edit id="gg20" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >6</td>
@@ -199,7 +234,7 @@ p{
   <td align="center" ><div  tms_edit id="cc6" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd6" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg6" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg21" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg21" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >7</td>
@@ -209,7 +244,7 @@ p{
   <td align="center" ><div  tms_edit id="cc7" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd7" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg7" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg22" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg22" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >8</td>
@@ -219,7 +254,7 @@ p{
   <td align="center" ><div  tms_edit id="cc8" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd8" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg8" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg23" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2" ><div  tms_edit id="gg23" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >9</td>
@@ -229,7 +264,7 @@ p{
   <td align="center" ><div  tms_edit id="cc9" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd9" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg9" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg24" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg24" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >10</td>
@@ -239,7 +274,7 @@ p{
   <td align="center" ><div  tms_edit id="cc10" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd10" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg10" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg25" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg25" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >11</td>
@@ -249,7 +284,7 @@ p{
   <td align="center" ><div  tms_edit id="cc11" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd11" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg11" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg26" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg26" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >12</td>
@@ -259,7 +294,7 @@ p{
   <td align="center" ><div  tms_edit id="cc12" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd12" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg12" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg27" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg27" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >13</td>
@@ -269,7 +304,7 @@ p{
   <td align="center" ><div  tms_edit id="cc13" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd13" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg13" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg28" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg28" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >14</td>
@@ -279,7 +314,7 @@ p{
   <td align="center" ><div  tms_edit id="cc14" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd14" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg14" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg29" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg29" style="padding:3px;" ></div></td>
   </tr>
 <tr>
   <td height="30" align="center" >15</td>
@@ -289,13 +324,12 @@ p{
   <td align="center" ><div  tms_edit id="cc15" style="padding:3px;" ></div></td>
   <td align="right" ><div  tms_edit id="dd15" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"></div></td>
   <td align="center" ><div  tms_edit id="gg15" style="padding:3px;" ></div></td>
-  <td align="center" ><div  tms_edit id="gg30" style="padding:3px;" ></div></td>
+  <td align="center" colspan="2"><div  tms_edit id="gg30" style="padding:3px;" ></div></td>
   </tr>
 <tr>
-  <td height="30" colspan="6" align="center" bgcolor="#E2EFDA" style="font-weight: bold" >합 계</td>
+  <td height="30" colspan="6" align="center" bgcolor="#E2EFDA" style="font-weight: bold" >총  금  액</td>
   <td align="right" bgcolor="#F8F8F8" style="font-weight: bold" ><div  id="sum_ff" style="padding:3px;"></div></td>
-  <td align="right" style="font-weight: bold" >&nbsp;</td>
-  <td align="right" style="font-weight: bold" >&nbsp;</td>
+  <td align="right" style="font-weight: bold" colspan="2">${value.ma_price*value.obtain_quantity}</td>
 </tr>
   <tr>
     <td height="30" colspan="9" align="left" style="font-weight: bold" ><div  tms_edit id="gg31" style="padding:3px;line-height:25px" >1. 납품주소 : 경기 수원시 팔달구 덕영대로 899 세진브론즈빌 지하 "${value.ma_storage}" <br>
@@ -305,12 +339,21 @@ p{
   </tr>
   
 </table>
-</c:forEach>
 <table width="650"  border="0"  cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border-collapse:collapse;table-layout:fixed" align="center" class="f10">
   <tr>
     <td height="25" align="right" >&nbsp;</td>
   </tr>
 </table>
 <p>&nbsp;</p>
+</div>
+</div>
+
+<script type="text/javascript">
+function p() {
+    window.print();
+}
+
+</script>
+
 </BODY>
 </HTML>
