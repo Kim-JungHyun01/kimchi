@@ -14,7 +14,40 @@
 .content-body h2 {
 	margin: 0 20%;
 }
+/*item용 */
+.item-group {
+	margin: 0 5%;
+	margin-bottom: 15px; /* 각 그룹 사이의 간격 */
+	width: 100%; /* 원하는 너비 설정 */
+	display: flex;
+	padding: 10px;
+	border-radius: 5px;
+}
 
+.item-group label {
+	width: 150px; /* 고정 너비 설정 */
+	margin: 10px 0 5px;
+	font-weight: bold;
+	padding: 10px; /* 내부 여백 */
+	margin-bottom: 5px; /* label과 input 사이의 간격 */
+	text-align: center; /* 가운데 정렬 */
+}
+.item-group input {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.item-group input[type="text"], input[type="number"], input[type="date"], textarea {
+	width: 50%;
+	padding: 10px;
+	margin-bottom: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	text-align: center; /* 텍스트 가운데 정렬 */
+	margin-top: 5px;
+	margin-left: 40px;
+}
 .input-container{
 	margin: 0 20%; /* 왼쪽 간격 */
 }
@@ -55,7 +88,7 @@ select.input-field {
 		</div>
 		<div class="item-group">
 			<label>물품 단가</label>
-			<input name="item_price" id = "item_price" type="number" value="${item_price}" required="required">
+			<input name="item_price" id = "item_price" type="number" value="${item_price}" required="required" style="width: 50%;">
 		</div>
 		<div class="item-group">
 			<label>물품 단위</label>
@@ -68,7 +101,7 @@ select.input-field {
 		</div>
 		<div class="item-group">
 			<label>물품 무게</label>
-			<input name="item_weight" id = "item_weight" type="number" value="${item_weight}" required="required">
+			<input name="item_weight" id = "item_weight" type="number" value="${item_weight}" required="required" style="width: 50%;">
 		</div>
 		<div class="item-group">
 			<label>물품 규격</label>
@@ -84,11 +117,11 @@ select.input-field {
 		</div>
 		<div class="item-group">
 			<label>물품 기본재고</label>
-			<input name="item_basicstock" id = "item_basicstock" type="number" value="${item_basicstock}" required="required">
+			<input name="item_basicstock" id = "item_basicstock" type="number" value="${item_basicstock}" required="required" style="width: 50%;">
 		</div>
 		<div class="item-group">
 			<label>물품 저장고</label>
-			<select name="item_storage" id="item_storage" required="required" class="input-field">
+			<select name="item_storage" id="item_storage" required="required" class="input-field" >
 				<option value="물품저장창고선택">물품저장창고선택</option>
 				<option value="냉동창고" ${item_storage == '냉동창고' ? 'selected' : ''}>냉동창고</option>
 				<option value="냉장창고" ${item_storage == '냉장창고' ? 'selected' : ''}>냉장창고</option>
@@ -97,7 +130,7 @@ select.input-field {
 		</div>
 		<div class="item-group">
 			<label>물품 생산일</label>
-			<input name="item_productionDate" id ="item_productionDate" type="date" value="${item_productionDate}" required="required">
+			<input name="item_productionDate" id ="item_productionDate" type="date" value="${item_productionDate}" required="required" style="width: 50%;">
 		</div>
 		<div class="item-group">
 			<label>물품 첨부파일</label>

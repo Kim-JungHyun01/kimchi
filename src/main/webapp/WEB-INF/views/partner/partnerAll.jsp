@@ -45,10 +45,8 @@ function checkApproval(partner_approval, partner_taxid) {
 				<td>협력회사 승인여부</td>
 			</tr>
 			<c:forEach var="partnerlist" items="${partnerlist}">
-				<tr
-					onclick="location.href='${contextPath}/partner/partnerSelect?partner_taxid=${partnerlist.partner_taxid}'"
-					style="cursor: pointer;">
-					<td>${partnerlist.partner_taxid }</td>
+				<tr>
+					<td><a href="${contextPath}/partner/partnerSelect?partner_taxid=${partnerlist.partner_taxid}">${partnerlist.partner_taxid }</a></td>
 					<td>${partnerlist.partner_companyname }</td>
 					<td>${partnerlist.partner_number }</td>
 					<td>${partnerlist.partner_ownername }</td>
@@ -61,7 +59,7 @@ function checkApproval(partner_approval, partner_taxid) {
 					</c:if>
 					<c:if test="${partnerlist.partner_approval eq 1 }">
 						<td><button type="button" class="addbutton"
-								onclick="checkApproval(${partnerlist.partner_approval}, '${partnerlist.partner_taxid }')">승인해제</button></td>
+								onclick="checkApproval(${partnerlist.partner_approval}, '${partnerlist.partner_taxid }')">승인부여해제</button></td>
 					</c:if>
 				</tr>
 			</c:forEach>

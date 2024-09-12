@@ -77,9 +77,9 @@ public class ProductionController {
 //	생산계획 추가
 	@GetMapping(value = "production/productionInsertForm")
 	public ModelAndView productionInsertForm() {
-		List<ContractsVO> conlist = conservice.contractsAll(0,10);
-		List<UserVO> userlist = userservice.userAll(0,10, null);
-		List<ItemVO> itemlist = itemservice.itemAll(0,10, null);
+		List<ContractsVO> conlist = conservice.contractsAll(0,100);
+		List<UserVO> userlist = userservice.userAll(0,100, null);
+		List<ItemVO> itemlist = itemservice.itemAll(0,100, null);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("conlist", conlist);
 		mav.addObject("userlist", userlist);
