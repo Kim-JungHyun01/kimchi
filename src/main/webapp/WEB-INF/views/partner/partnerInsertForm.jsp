@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
-<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
+<link href="${contextPath}/resources/css/mystyle.css" rel="stylesheet"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .input-group {
@@ -230,9 +230,9 @@
 								<form action="partnerInsert" method="post" id="partnerInsertForm" name="partnerInsertForm">
 									<div class="form-group">
 										<label><strong>협력회사 사업자번호</strong></label>
-										<div class="input-group">
-											<input type="text" class="form-control" name="partner_taxid" id="partner_taxid" placeholder="협력회사 사업번호" maxlength="10" onkeyup="checktaxId(this)">
-											<button type="button" id="btncheckId" class="check-button btn btn-secondary" onclick="checkId()">사업자번호 중복확인</button>
+										<div style="display: flex; align-items: center; margin-top: 5px;">
+												<input type="text" style="width:70%;" class="form-control" name="partner_taxid" id="partner_taxid" placeholder="협력회사 사업번호" maxlength="10" onkeyup="checktaxId(this)">
+												<button type="button" id="btncheckId" class="check-button btn btn-secondary" style="margin-left: 50px;" onclick="checkId()">사업자번호 중복확인</button>
 										</div>
 									</div>
 									<div class="form-group">
@@ -287,6 +287,7 @@
 									<div class="text-center mt-4">
 										<button type="button" onclick="btnsumbit()" class="btn btn-primary btn-block">등록신청</button>
 										<button type="reset" class="btn btn-primary btn-block">초기화</button>
+										<button type="button" onclick="location.href='${contextPath}/login/loginForm'" class="btn btn-primary btn-block">로그인으로 이동</button>
 									</div>
 								</form>
 							</div>

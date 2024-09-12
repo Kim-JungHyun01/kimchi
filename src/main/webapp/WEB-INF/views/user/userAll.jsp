@@ -50,7 +50,7 @@ function checkApproval(user_approval, user_id) {
 				<td><button class="addbutton" type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여</button></td>
 				</c:if>
 				<c:if test="${userlist.user_approval eq 1 }">
-					<td><button class="addbutton" type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인부여해제</button></td>
+					<td><button class="addbutton" type="button" onclick="checkApproval(${userlist.user_approval}, '${userlist.user_id }')">승인해제</button></td>
 				</c:if>
 			</tr>
 			</c:forEach>

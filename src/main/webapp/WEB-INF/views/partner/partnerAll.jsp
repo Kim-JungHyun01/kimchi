@@ -61,7 +61,7 @@ function checkApproval(partner_approval, partner_taxid) {
 					</c:if>
 					<c:if test="${partnerlist.partner_approval eq 1 }">
 						<td><button type="button" class="addbutton"
-								onclick="checkApproval(${partnerlist.partner_approval}, '${partnerlist.partner_taxid }')">승인부여해제</button></td>
+								onclick="checkApproval(${partnerlist.partner_approval}, '${partnerlist.partner_taxid }')">승인해제</button></td>
 					</c:if>
 				</tr>
 			</c:forEach>

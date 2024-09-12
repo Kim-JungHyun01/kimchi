@@ -61,10 +61,10 @@
 			</tr>
 			<tr>
 				<td>사용자 승인여부</td>
-				<td><c:if test="${part.partner_approval eq 0 }">
+				<td><c:if test="${user.user_approval eq 0 }">
 							승인필요
 						</c:if>
-						<c:if test="${part.partner_approval eq 1 }">
+						<c:if test="${user.user_approval eq 1 }">
 							승인됨
 					</c:if></td>
 			</tr>
