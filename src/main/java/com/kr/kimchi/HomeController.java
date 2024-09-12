@@ -35,6 +35,12 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
+		Object userLogin = session.getAttribute("userlogin");
+	    Object partLogin = session.getAttribute("partlogin");
+	    
+	    if (userLogin == null && partLogin == null) {
+	        return "redirect:/login/loginForm";
+	    }
 		
 		List<CalenderVO> list = service.calenderList();
 		System.out.println("list : " + list);

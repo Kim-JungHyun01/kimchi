@@ -1,6 +1,7 @@
 package com.kr.kimchi.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,6 +19,11 @@ public class informationService {
 	
 	@Inject
 	private informationDAO dao;
+	
+	//페이징하기
+		public List<InlistVO> pa_select(Map<String, Object> params){
+			return dao.pa_select(params);
+		}
 	
 	public List<InlistVO> in_select(){
 		return dao.in_select();

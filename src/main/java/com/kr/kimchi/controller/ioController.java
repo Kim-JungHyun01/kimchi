@@ -1,7 +1,9 @@
 package com.kr.kimchi.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -21,7 +23,9 @@ import com.kr.kimchi.service.informationService;
 import com.kr.kimchi.vo.IOVO;
 import com.kr.kimchi.vo.InlistVO;
 import com.kr.kimchi.vo.ObtainVO;
+import com.kr.kimchi.vo.PaPageVO;
 import com.kr.kimchi.vo.StatusCheck;
+import com.kr.kimchi.vo.inPageLIst;
 import com.kr.kimchi.vo.transactionVO;
 
 @Controller
@@ -33,14 +37,33 @@ public class ioController {
 	private static final Logger logger = LoggerFactory.getLogger(ioController.class);
 	
 	@RequestMapping(value="information", method = RequestMethod.GET)
-	public ModelAndView io_imformation() {
+	public ModelAndView io_imformation(@RequestParam(defaultValue = "1") int pageNum) {
 		ModelAndView mav = new ModelAndView();
 		List<ObtainVO> list= service.modar_data();
 		List<InlistVO> in_list=service.in_select();
 		
+		PaPageVO pageVO = new PaPageVO(pageNum, in_list.size());
 		
-		mav.addObject("in", in_list);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
+		params.put("count", pageVO.getListcnt());
+		
+		
+		List<InlistVO> pageAllList = service.pa_select(params);
+		
+		inPageLIst in = new inPageLIst(pageAllList,pageVO);
+		System.out.println(in);
+		
+		//������ ����
+		int startIndex = (in.getPageVO().getPageNum() - 1) * in.getPageVO().getListcnt() + 1;
+		
+		
+		mav.addObject("startIndex", startIndex);
+		mav.addObject("in", in);
 		mav.addObject("list", list);
+		
+		
+		
 		mav.setViewName("io/information");
 		
 		return mav;
@@ -91,7 +114,7 @@ public class ioController {
 	    }
 
 	    // ������ ó�� ����
-	    System.out.println(dataList);
+	    System.out.println("------"+dataList);
 	    
 	    
 	    for(int i=0 ; i < dataList.size();i++) {
@@ -134,7 +157,7 @@ public class ioController {
 		            // ������ ó�� ����
 		            transactionVO statement = service.transaction_statement(obtainNoInt);
 		            System.out.println(statement);
-		            model.addAttribute("statement", statement);
+		            model.addAttribute("val	ue", statement);
 
 		            // ��ȯ�ϴ� �� �̸�
 		            return "/io/transaction";

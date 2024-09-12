@@ -1,6 +1,7 @@
 package com.kr.kimchi.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,10 +18,15 @@ import com.kr.kimchi.vo.transactionVO;
 @Repository
 public class informationDAO {
 	
-	private final static String namespaces="kr.co.kim.mappers.io_informationMapper";
+	private final static String namespaces="kr.co.kimchi.mappers.io_informationMapper";
 	
 	@Inject
 	private SqlSession Session;
+	
+	//페이징하기
+	public List<InlistVO> pa_select(Map<String, Object> params){
+		return Session.selectList(namespaces+".io-list-paging", params);
+	}
 	
 	//입출고 정보 리스트 조회
 	public List<InlistVO> in_select(){
