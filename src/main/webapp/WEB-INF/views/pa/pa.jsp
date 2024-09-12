@@ -98,20 +98,20 @@
 					<div class="modal-body">
 					    <form action="/pa" method="post" onsubmit="return checkForm()">
 					        <div class="form-group">
-					            <label for="date">검수 일자:</label>
+					            <label for="date" style="font-size: 15px;">검수 일자:</label>
 					            <input type="date" name="prp_issueDate" id="date" min="" style="width: 170px;">
 					        </div>
 					        <div class="form-group">
-					            <label for="user_id">검수자:</label>
+					            <label for="user_id" style="font-size: 15px;">검수자:</label>
 					            <input type="text" value="<%=userlogin.get("user_name")%>" readonly>
 					        </div>
 					        <div class="form-group">
-					            <label for="prp_progress">검수 진행도:</label>
+					            <label for="prp_progress" style="font-size: 15px;">검수 진행도:</label>
 					            <input type="text" name="prp_progress" value="0" readonly>
 					            <input type="range" name="range_val" value="0" min="0" max="100" oninput="showSliderValue(this)">
 					        </div>
 					        <div class="form-group">
-					            <label for="prp_notes">비고:</label>
+					            <label for="prp_notes" style="font-size: 15px;">비고:</label>
 					            <textarea name="prp_notes" id="prp_notes" ></textarea>
 					        </div>
 					        <input type="hidden" name="user_id" id="user_id" value="<%=userlogin.get("user_id")%>" readonly>
