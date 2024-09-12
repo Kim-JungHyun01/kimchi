@@ -18,23 +18,35 @@ public class MaterialDAO {
 	private final static String namespace = "com.kr.kimchi.mappers.MaterialMapper";
 
 	@Inject
-	private SqlSession session;
-	
-	/// 전체 레코드 수
-    public Integer getTotalCount() {		
-        return session.selectOne(namespace + ".getTotalCount");
-    }
+	private SqlSession session;	
 
     // 전체
-    public List<MaterialVO> maList(int startRow, int pageSize) {
+    public List<MaterialVO> maList(int startRow, int pageSize, String ma_name) {
         Map<String, Object> params = new HashMap<>();
         params.put("startRow", startRow);
         params.put("pageSize", pageSize);
+        params.put("ma_name", ma_name);
         
-        // SQL 쿼리에서 페이지 정보 사용
+        // SQL 쿼리에서 페이지 정보 + 검색 조건 사용
         return session.selectList(namespace + ".maList", params);
     }
 
+    /// 전체 레코드 수
+    public Integer getTotalCount() {		
+    	return session.selectOne(namespace + ".getTotalCount");
+    }
+    
+    // 검색 페이지 수 계산
+    public Integer getSearch(int pageSize, String ma_name) {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("ma_name", ma_name);
+    	Integer totalCount = session.selectOne(namespace + ".getSearch", params);
+    	if (totalCount == null || totalCount == 0) {
+    		return 0;
+    	}
+    	return (int) Math.ceil((double) totalCount / pageSize);
+    }
+    
 	// 선택
 	public MaterialVO maView(int ma_id) {
 		return session.selectOne(namespace + ".maView", ma_id);
@@ -52,17 +64,14 @@ public class MaterialDAO {
 
 	// 금액현황
 	public List<Map<String, Object>> maReport(String startDate, String endDate, String ma_name) throws SQLException {
+	    // 파라미터 설정
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("startDate", startDate);
+	    params.put("endDate", endDate);
+	    params.put("ma_name", ma_name);
 
-		// 파라미터 설정
-		Map<String, Object> params = new HashMap<>();
-		params.put("startDate", startDate);
-		params.put("endDate", endDate);
-		params.put("ma_name", ma_name);
-
-		// SQL 쿼리 실행 (ma_date 기준)
-		List<Map<String, Object>> reportData = session.selectList(namespace + ".maReport", params);
-
-		return reportData;
+	    // SQL 쿼리 실행
+	    return session.selectList(namespace + ".maReport", params);
 	}
 	// ============================
 }

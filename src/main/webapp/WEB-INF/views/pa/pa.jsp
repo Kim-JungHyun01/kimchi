@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -7,132 +8,167 @@
 
 <%@include file="../include/header.jsp" %>
 
-<%@include file="../include/nav.jsp" %>
-       
-   <div class="content-body">
-   <h3>구매발주</h3>
-   <button onclick="checkStatus(99)">전체</button>
-   <button onclick="checkStatus(0)">미수립</button>
-   <button onclick="checkStatus(1)">진행중</button>
-   <button onclick="checkStatus(2)">완료</button>
-	<table>
-		<tr>
-			<th>번호</th>	
-			<th>발주번호</th>	
-			<th>발주일자</th>
-			<th>납기일자</th>
-			<th>거래처명</th>
-			<th>품목명</th>
-			<th>금액</th>
-			<th>발주자</th>
-			<th>검수계획수립</th>
-			<th>비고</th>
-			<th>인쇄</th>
-			<th>진척검수</th>
-		</tr>
-		<c:forEach var="paList" items="${paPageList.povoList}" varStatus="status">
-			<tr>
-				<td>${status.count + (paPageList.pageVO.pageNum-1) * paPageList.pageVO.listcnt }</td>
-				<td><a href="#" onclick="submitForm(${paList.pa_no})">${paList.codeVo.code_name}</a></td>
-				<td><fmt:formatDate value="${paList.pa_issueDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-				<td><fmt:formatDate value="${paList.obtainVo.obtain_deliveryDate}" pattern="yyyy년 MM월 dd일 " /></td>
-				<td>${paList.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}</td>
-				<td>${paList.obtainVo.materialVO.ma_name}</td>
-				<td><fmt:formatNumber value="${paList.obtainVo.materialVO.ma_price * paList.obtainVo.obtain_quantity}" pattern="###,###,###,###" />원</td>				
-				<td>${paList.userVO.user_name }</td>
-				<td>
-					<c:choose>
-						<c:when test="${paList.pa_checkStatus == 0}">
-							미수립
-						</c:when>
-						<c:when test="${paList.pa_checkStatus == 1}">
-							진행중
-						</c:when>
-						<c:when test="${paList.pa_checkStatus == 2}">
-							완료
-						</c:when>		
-						<c:otherwise>
-							잘못된 정보입니다.
-						</c:otherwise>		
-					</c:choose>
-				</td>
-				<td>${paList.pa_notes}</td>
-				<td><button data-pa-no="${paList.pa_no}" id="pop" onclick=" paPop(this)">인쇄</button></td>
-				<td><button data-pa_no = "${paList.pa_no}" onclick="showModal(this)">계획수립</button></td>
-				
-			</tr>
-		</c:forEach>
-	</table>  
-	
-	<!-- modal 진척검수계획 작성 -->
-	<div class ="modal">
-		<div class="modal-content">
-			<span class = "close">&times;</span>
+<%Map<String, Object> userlogin = (Map<String, Object>) session.getAttribute("userlogin");%>
+<script type="text/javascript">
+    var token = '<%= session.getAttribute("token") != null ? session.getAttribute("token").toString() : "" %>';
+    if (!token) {
+        alert("메세지가 발송되었습니다.");
+    }
+</script>
+  
+		<div class="content-body">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12"> <!-- 자간 -->
+						<div class="card"> <!-- 흰박스 -->
+							<div class="card-header"> <!-- 흰박스 헤더 -->
+								<div>
+									<h3>구매발주</h3>
+								</div>	
+								<div class="button-group">
+									<button class="ca-button" data-status="99" onclick="checkStatus(99)">전체</button>
+									<button class="ca-button" data-status="0" onclick="checkStatus(0)">미수립</button>
+									<button class="ca-button" data-status="1" onclick="checkStatus(1)">진행중</button>
+									<button class="ca-button" data-status="2" onclick="checkStatus(2)">완료</button>
+								</div>
+							</div>
+						<div class="card-body"> <!-- 흰박스 박스 -->
+							<table class="table table-responsive-sm"> <!-- 테이블 정렬 -->
+								<tr>
+									<th>번호</th>	
+									<th>발주번호</th>	
+									<th>발주일자</th>
+									<th>납기일자</th>
+									<th>거래처명</th>
+									<th>품목명</th>
+									<th>금액</th>
+									<th>발주자</th>
+									<th>검수계획수립</th>
+									<th>비고</th>
+									<th>인쇄</th>
+									<th>진척검수</th>
+								</tr>
+								<c:forEach var="paList" items="${paPageList.povoList}" varStatus="status">
+									<tr>
+										<td>${status.count + (paPageList.pageVO.pageNum-1) * paPageList.pageVO.listcnt }</td>
+										<td><a href="#" onclick="submitForm(${paList.pa_no})">${paList.codeVo.code_name}</a></td>
+										<td><fmt:formatDate value="${paList.pa_issueDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+										<td>${paList.obtainVo.obtain_deliveryDate}</td>
+										<td>${paList.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}</td>
+										<td>${paList.obtainVo.materialVO.ma_name}</td>
+										<td><fmt:formatNumber value="${paList.obtainVo.materialVO.ma_price * paList.obtainVo.obtain_quantity}" pattern="###,###,###,###" />원</td>				
+										<td>${paList.userVO.user_name }</td>
+										<td>
+											<c:choose>
+												<c:when test="${paList.pa_checkStatus == 0}">
+													미수립
+												</c:when>
+												<c:when test="${paList.pa_checkStatus == 1}">
+													진행중
+												</c:when>
+												<c:when test="${paList.pa_checkStatus == 2}">
+													완료
+												</c:when>		
+												<c:otherwise>
+													잘못된 정보입니다.
+												</c:otherwise>		
+												</c:choose>
+										</td>
+										<td>${paList.pa_notes}</td>
+										<td><button class="link-button" data-pa-no="${paList.pa_no}" id="pop" onclick=" paPop(this)">인쇄</button></td>
+										<td><button class="link-button" data-pa_no = "${paList.pa_no}" data-partner="${paList.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}" 
+											data-email = "${paList.userVO.user_email }"
+											onclick="showModal(this)">계획수립</button></td>
+										
+									</tr>
+							</c:forEach>
+						</table> 
+						</div> 
+					</div> 
+				</div> 
+			</div> 
 			
-			<form action="/pa" method="post" onsubmit="return checkForm()">
-				<h2>진척검수</h2>
-				납기 일자 : <input type="date" name="prp_issueDate" id="date" min=""> 
-				<p>검수자</p>
-				<input type="hidden" name ="pa_no" id="pa_no"> 
-				<input type="text" name ="user_id" value="abcd" readonly> 
-				<!-- sessin 값 확인 필요 
-				<input type="hidden" name ="user_id" value="session.getAttribute()" readonly> 
-				-->
-				<p>검수 진행도</p>
-				<input type = "text" name = "prp_progress" value = "0"  readonly>
-				<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
-				<p>비고</p>
-				<input type="text" name="prp_notes">
-				<input type="hidden" name="token" value="${token}" />
-				<button>저장</button>
-			</form>
+			<!-- modal 진척검수계획 작성 -->
+			<div class ="modal">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>진척검수</h2>
+						<span class = "close">&times;</span>
+					</div>
+					<div class="modal-body">
+					    <form action="/pa" method="post" onsubmit="return checkForm()">
+					        <div class="form-group">
+					            <label for="date">검수 일자:</label>
+					            <input type="date" name="prp_issueDate" id="date" min="" style="width: 170px;">
+					        </div>
+					        <div class="form-group">
+					            <label for="user_id">검수자:</label>
+					            <input type="text" value="<%=userlogin.get("user_name")%>" readonly>
+					        </div>
+					        <div class="form-group">
+					            <label for="prp_progress">검수 진행도:</label>
+					            <input type="text" name="prp_progress" value="0" readonly>
+					            <input type="range" name="range_val" value="0" min="0" max="100" oninput="showSliderValue(this)">
+					        </div>
+					        <div class="form-group">
+					            <label for="prp_notes">비고:</label>
+					            <textarea name="prp_notes" id="prp_notes" ></textarea>
+					        </div>
+					        <input type="hidden" name="user_id" id="user_id" value="<%=userlogin.get("user_id")%>" readonly>
+					        <input type="hidden" name="pa_no" id="pa_no">
+					        <input type="hidden" name="token" value="${token}">
+					        <input type="hidden" id="partner" name="partner">
+					        <input type="hidden" id="email" name="email">
+					        <div class="modal-footer">
+			                    <button class="link-button">저장</button>
+			                </div>
+					    </form>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 페이징 작업 -->
+			<div class="pagination">
+				<ul>
+					<c:if test="${paPageList.pageVO.prev}">
+						<li class="paginate_button"><a href="1">START</a></li>
+					</c:if>
+					<c:if test="${paPageList.pageVO.pageNum != 1}">
+						<li class="paginate_button"><a href="${paPageList.pageVO.pageNum -1}">&lt;</a></li>
+					</c:if>
+					<c:forEach var="num" begin="${paPageList.pageVO.startPage}" end="${paPageList.pageVO.endPage}">
+						<li class="paginate_button ${paPageList.pageVO.pageNum == num ? 'active' : '' }"><a href="${num}">${num}</a></li>
+					</c:forEach>
+					<c:if test="${paPageList.pageVO.pageNum != paPageList.pageVO.total}">
+						<li class="paginate_button"><a href="${paPageList.pageVO.pageNum +1}"> &gt;</a></li>
+					</c:if>
+					<c:if test="${paPageList.pageVO.next}">
+						<li class="paginate_button"><a href="${paPageList.pageVO.total}">END</a></li>
+					</c:if>
+				</ul>
+			</div>		
+			    
+			<form id="actionForm" action="/pa" method="get">
+				<input type="hidden" name="pageNum" value="${poPageList.pageVO.pageNum }">
+				<input type="hidden" name="pa_checkStatus" id="pa_checkStatus" value="${param.pa_checkStatus}">
+				<!-- 필요하면 생성
+				<input type="hidden" name="total" value="${poPageList.pageVO.total }">
+				  -->
+			</form>	    
+			</div>
 		</div>
+		
+		<%@include file="../include/footer.jsp" %>
 	</div>
-	
-	<!-- 페이징 작업 -->
-	<ul>
-		<c:if test="${paPageList.pageVO.prev}">
-			<li class="paginate_button"><a href="1">START</a></li>
-		</c:if>
-		<c:if test="${paPageList.pageVO.pageNum != 1}">
-			<li class="paginate_button"><a href="${paPageList.pageVO.pageNum -1}">&lt;</a></li>
-		</c:if>
-		
-		
-		<c:forEach var="num" begin="${paPageList.pageVO.startPage}" end="${paPageList.pageVO.endPage}">
-			<li class="paginate_button ${paPageList.pageVO.pageNum == num ? 'active' : '' }"><a href="${num}">${num}</a></li>
-		</c:forEach>
-		
-		<c:if test="${paPageList.pageVO.pageNum != paPageList.pageVO.total}">
-			<li class="paginate_button"><a href="${paPageList.pageVO.pageNum +1}"> &gt;</a></li>
-		</c:if>
-		<c:if test="${paPageList.pageVO.next}">
-			<li class="paginate_button"><a href="${paPageList.pageVO.total}">END</a></li>
-		</c:if>
-		
-	</ul>
-	    
-	<form id="actionForm" action="/pa" method="get">
-		<input type="hidden" name="pageNum" value="${poPageList.pageVO.pageNum }">
-		<!-- 필요하면 생성
-		<input type="hidden" name="total" value="${poPageList.pageVO.total }">
-		  -->
-	</form>	    
-   </div>
-
-
-<%@include file="../include/footer.jsp" %>
-    </div>
-    
-    <!-- Required vendors -->
-    <script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-    <script src="${contextPath}/resources/js/quixnav-init.js"></script>
-    <script src="${contextPath}/resources/js/custom.min.js"></script>
-
-    <script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
-    <!-- Circle progress -->
+		    
+	<!-- Required vendors -->
+	<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
+	<script src="${contextPath}/resources/js/quixnav-init.js"></script>
+	<script src="${contextPath}/resources/js/custom.min.js"></script>
+	<script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
 
 </body>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 function showModal(button) {
@@ -146,6 +182,13 @@ function showModal(button) {
 	
 	var pa_no = button.getAttribute("data-pa_no");
 	document.getElementById("pa_no").value = pa_no;
+	
+	var partner = button.getAttribute("data-partner");
+	document.getElementById("partner").value = partner;
+
+	var email = button.getAttribute("data-email");
+	document.getElementById("email").value = email;
+	
 }
 
 $(document).ready(function(){
@@ -153,6 +196,8 @@ $(document).ready(function(){
 		e.preventDefault();
 		var actionForm = $('#actionForm');
 		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		var paCheckStatus = $("#pa_checkStatus").val();
+		actionForm.find("input[name='pa_checkStatus']").val(paCheckStatus);
 		actionForm.submit();
 	});
 });
@@ -185,7 +230,6 @@ function paPop(button) {
     document.body.appendChild(form);
     form.submit();
 }
-
 
 function showSliderValue(slider) {
     var value = slider.value;
@@ -239,10 +283,62 @@ function checkForm() {
 		return false;
 	}
 }
+
+// 페이징 색상처리
+$(document).ready(function() {
+	var initialPaCheckStatus = "${pa_checkStatus}";
+
+    $(".ca-button").each(function() {
+        var buttonStatus = $(this).data("status");
+
+        if (buttonStatus == initialPaCheckStatus) {
+            $(this).addClass("active-ca-button"); // 상태에 맞는 클래스를 추가
+        } else {
+            $(this).removeClass("active-ca-button"); // 상태에 맞지 않는 클래스를 제거
+        }
+    });
+	
+	
+	$(".pagination a").on("click", function(e) {
+        e.preventDefault();
+        var actionForm = $('#actionForm');
+        var pageNum = $(this).attr("href");
+
+        // 페이지 버튼의 active 클래스 제거
+        $(".pagination a").removeClass("active");
+
+        // 클릭한 페이지 버튼에 active 클래스 추가
+        $(this).addClass("active");
+
+        actionForm.find("input[name='pageNum']").val(pageNum);
+        actionForm.submit();
+    });
+
+    // 페이지 로딩 시 현재 페이지 번호에 active 클래스 추가
+    var currentPage = "${paPageList.pageVO.pageNum}";
+    $(".pagination a[href='" + currentPage + "']").addClass("active");
+});
+
+function checkStatus(pa_checkStatus){
+	
+var url = '/pa';
+
+var form = document.createElement('form');
+form.method = 'GET';
+form.action = url;
+
+var input = document.createElement('input');
+input.type = 'hidden';
+input.name = 'pa_checkStatus'; 
+input.value = pa_checkStatus;
+
+form.appendChild(input);
+
+document.body.appendChild(form);
+form.submit();
+}
+
 </script>
-
-
-
 
 <style>
 
@@ -259,20 +355,174 @@ display : inline;
  top: 0;
  background-color: rgba(0, 0, 0, 0.4); /* 반투명 배경 */
  
- 
 }
 
 .modal-content {
-	width: 50%;
-	height: 50%;
+	width: 30%;
+	height: 53%;
 	position: relative;
-    top: 25%;
-    left: 25%;
+    top: 20%;
+    left: 35%;
 }
 
+.modal-footer {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 20px; 
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a, .pagination strong {
+    margin: 0 5px; 
+    text-decoration: none; 
+    color: #07020d; 
+    padding: 10px 15px; 
+    border-radius: 5px; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+.pagination a {
+    background-color: #f0f0f0; 
+    border: 1px solid #ddd; 
+}
+
+.pagination a:hover {
+    background-color: #007bff; 
+    color: white; 
+    text-decoration: underline; 
+}
+
+.pagination strong {
+    background-color: #007bff; 
+    color: white; 
+    padding: 10px 15px; 
+    border-radius: 5px; 
+}
+
+.pagination .active a {
+    background-color: #007bff; 
+    color: white; 
+    border: 1px solid #007bff; 
+}
+
+
+.link-button {
+    display: inline-block; 
+    padding: 7px 7px; 
+    border: none; 
+    border-radius: 5px; 
+    background-color: #5892d1; 
+    color: white; 
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.link-button:hover {
+    background-color: #0056b3; 
+    color: white; 
+}
+
+.link-button:active {
+    transform: scale(0.95); 
+    outline: none; 
+}
+
+.button-group {
+    display: flex;
+     gap: 5px; 
+	}
+	
+.card-header {
+   display: flex;
+   flex-direction: column; 
+   align-items: flex-start; 
+   gap: 10px; 
+   padding: 10px; 
+   background-color: #f5f5f5; 
+}
+	
+.ca-button {
+    display: inline-block; 
+    padding: 3px 15px; 
+    border: 2px solid #adb5bd; 
+    border-radius: 3px; 
+    background-color: #ffffff; 
+    color: #868e96; 
+    font-size: 16px; 
+    font-weight: bold;
+    text-align: center; 
+    text-decoration: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; 
+}
+
+.ca-button:hover {
+    background-color: #007bff; 
+    color: #ffffff; 
+    border-color: #007bff; 
+}
+
+.ca-button:active {
+    transform: scale(0.95); 
+    outline: none; 
+}
+
+.active-ca-button {
+    background-color: #007bff; 
+    color: white; 
+    border-color: #007bff; 
+}
+
+.modal-body {
+    padding: 20px; 
+}
+
+.form-group {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
+}
+
+.form-group label {
+    width: 110px; 
+    margin-right: 15px; 
+    font-weight: bold; 
+    flex-shrink: 0; 
+    
+}
+.form-group input[type="date"]{
+	width: 100px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="range"] {
+    padding: 3px; 
+    box-sizing: border-box; 
+}
+
+.form-group input[type="text"] {
+    margin-right: 30px; 
+    
+}
+
+.form-group input[type="range"] {
+    margin-top: 5px; 
+}
+
+.form-group textarea {
+    width: 100%; 
+    height: 150px; 
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none; 
+}
+	
 </style>	
 	
-	
-
-
 </html>

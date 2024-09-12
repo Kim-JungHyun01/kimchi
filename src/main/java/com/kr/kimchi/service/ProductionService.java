@@ -16,9 +16,14 @@ public class ProductionService {
 	private ProductionDAO prodao;
 
 //	생산계획 보기_전체
-	public List<ProductionVO> productionAll() {
-		return prodao.productionAll();
+	public List<ProductionVO> productionAll(int startRow, int pageSize) {
+		return prodao.productionAll(startRow, pageSize);
 	}// end
+	
+//	전체 레코드 수
+    public Integer getTotalCount() {
+		return prodao.getTotalCount();   	
+    }//end
 
 //	생산계획 보기_상세
 	public ProductionVO productionSelect(int production_no) {

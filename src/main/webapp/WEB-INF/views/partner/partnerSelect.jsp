@@ -3,23 +3,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<style>
+.content-body h3 {
+	margin-left: 10%; /* 원하는 만큼 왼쪽으로 이동 */
+}
+
+.content-body .table {
+	width: 80%; /* 테이블 너비 설정 */
+	margin: 20px auto; /* 상하 여백 20px, 좌우 자동 여백으로 중앙 정렬 */
+	border-collapse: collapse; /* 테두리 겹침 방지 */
+}
+
+.content-body .table th, .content-body .table td {
+	border: 1px solid #cbc6c6; /* 진한 회색 테두리 */
+	padding: 8px; /* 셀 안쪽 여백 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+}
+.content-body .button-container {
+	display: flex; /* Flexbox 사용 */
+	justify-content: flex-end; /* 오른쪽 정렬 */
+	margin: 2% 10%; /* 상하 여백 20px, 좌우 자동 여백으로 중앙 정렬 */
+}
+
+.button-container {
+	display: flex;
+	flex-direction: column; /* 수직 정렬을 위해 방향을 세로로 설정 */
+	align-items: flex-end; /* 왼쪽 정렬 */
+	text-align: left; /* 텍스트 왼쪽 정렬 */
+	margin-right: 20px; /* 오른쪽 간격 추가 */
+}
+
+.addbutton {
+	margin-bottom: 10px; /* 버튼 간의 간격 추가 */
+}
+</style>
 <%@include file="../include/header.jsp"%>
-<%@include file="../include/nav.jsp"%>
 <div class="content-body">
-	<div>
+	<div style="margin-left: 20px;">
 		<h3>협력회사 상세보기</h3>
-		<table border="1">
+		<table class="table">
 			<tr>
 				<td>협력회사 사업자번호</td>
 				<td>${part.partner_taxid }</td>
-			</tr>
-			<tr>
-				<td>협력회사 id</td>
-				<td>${part.partner_id }</td>
-			</tr>
-			<tr>
-				<td>협력회사 pw</td>
-				<td>${part.partner_pw }</td>
 			</tr>
 			<tr>
 				<td>협력회사명</td>
@@ -47,25 +72,18 @@
 			</tr>
 			<tr>
 				<td>협력회사 승인여부</td>
-				<td>${part.partner_approval }</td>
+				<td><c:if test="${part.partner_approval eq 0 }">
+							승인필요
+						</c:if>
+						<c:if test="${part.partner_approval eq 1 }">
+							승인됨
+					</c:if></td>
 			</tr>
 		</table>
-		<form action="partnerApproval" method="post" name="partnerApprovalForm"
-			id="partnerApprovalForm">
-			<input type="hidden" name="partner_taxid" id="partner_taxid"
-				value="${part.partner_taxid }"> <input type="hidden"
-				name="partner_approval" id="partner_approval" value="">
-			<c:if test="${part.partner_approval eq 0 }">
-				<div>
-					<button type="button" onclick="checkApproval(1)">협력회사 승인부여</button>
-				</div>
-			</c:if>
-			<c:if test="${part.partner_approval eq 1 }">
-				<div>
-					<button type="button" onclick="checkApproval(0)">협력회사 승인해제</button>
-				</div>
-			</c:if>
-		</form>
+		<div class="button-container">
+			<a class="addbutton" href="${contextPath}/partner/partnerUpdateForm?partner_taxid=${partnerlist.partner_taxid }">협력회사수정</a>
+			<a  class="addbutton" href="${contextPath}/partner/partnerAll">목록</a>
+		</div>
 	</div>
 </div>
 <%@include file="../include/footer.jsp"%>
@@ -76,9 +94,3 @@
 		document.getElementById("partnerApprovalForm").submit();
 	}//end
 </script>
-<!-- Required vendors -->
-<script src="${contextPath}/resources/vendor/global/global.min.js"></script>
-<script src="${contextPath}/resources/js/quixnav-init.js"></script>
-<script src="${contextPath}/resources/js/custom.min.js"></script>
-<script
-	src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>

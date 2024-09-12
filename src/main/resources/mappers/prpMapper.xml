@@ -13,8 +13,38 @@
 	</insert>
 	
 	<!-- 진척리스트 -->
-	<select id="prpList" resultType="com.kr.kimchi.vo.PrpVO">
-		select * from prp where pa_no = #{pa_no}; 
+	
+	
+	<resultMap type="com.kr.kimchi.vo.UserVO" id="UserVO">
+		<result column="user_id" property="user_id" />
+		<result column="user_name" property="user_name" />
+		<result column="user_email" property="user_email" />
+	</resultMap>
+	<resultMap type="com.kr.kimchi.vo.PrpVO" id="PrpVO">
+		<result column="prp_no" property="prp_no" />
+		<result column="user_id" property="user_id" />
+		<result column="pa_no" property="pa_no" />
+		<result column="prp_issueDate" property="prp_issueDate" />
+		<result column="PRP_revisionDate" property="PRP_revisionDate" />
+		<result column="prp_progress" property="prp_progress" />
+		<result column="prp_notes" property="prp_notes" />
+		<association property="userVO" javaType="com.kr.kimchi.vo.UserVO" resultMap="UserVO" />
+	</resultMap>
+	<select id="prpList" resultMap="PrpVO">
+		select 
+			a.prp_no,
+			a.user_id,
+			a.pa_no,
+			a.prp_issueDate,
+			a.PRP_revisionDate,
+			a.prp_progress,
+			a.prp_notes, 
+			b.user_name,
+			b.user_email
+		from prp a
+			join user b on a.user_id = b.user_id
+		where pa_no = #{pa_no}
+		order by prp_no desc; 
 	</select>
 					
 

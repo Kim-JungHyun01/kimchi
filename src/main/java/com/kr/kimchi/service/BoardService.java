@@ -2,6 +2,8 @@ package com.kr.kimchi.service;
 
 import java.util.List;
 
+import com.kr.kimchi.vo.BoardCriteria;
+import com.kr.kimchi.vo.BoardSearchCriteria;
 import com.kr.kimchi.vo.BoardVO;
 
 
@@ -15,6 +17,17 @@ public interface BoardService {
 	
 	public void remove(Integer board_no)throws Exception;
 	
-	public List<BoardVO> listAll()throws Exception;
+	public List<BoardVO> listAll(int startRow, int pageSize)throws Exception;
+	
+	// 전체 레코드수
+	public Integer getTotalCount();
+	
+	public List<BoardVO> listCriteria(BoardCriteria cri)throws Exception;
+	
+	public int listCountCriteria(BoardCriteria cri)throws Exception;
+	
+	public List<BoardVO> listSearchCriteria(BoardSearchCriteria cri)throws Exception;
+	
+	public int listSearchCount(BoardSearchCriteria cri)throws Exception;
 	
 }

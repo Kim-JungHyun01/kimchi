@@ -54,7 +54,7 @@ public class ioController {
 		inPageLIst in = new inPageLIst(pageAllList,pageVO);
 		System.out.println(in);
 		
-		//ÆäÀÌÁö ¼ø¼­
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int startIndex = (in.getPageVO().getPageNum() - 1) * in.getPageVO().getListcnt() + 1;
 		
 		
@@ -72,7 +72,7 @@ public class ioController {
 	@PostMapping(value = "insert_io")
 	public String IN_io_imformation(IOVO vo, RedirectAttributes rttr) {
 	    
-		vo.setIo_status("ÀÔ°íÁß");
+		vo.setIo_status("ï¿½Ô°ï¿½ï¿½ï¿½");
 	    
 	    System.out.println(vo);
 
@@ -107,13 +107,13 @@ public class ioController {
 	                    dataList.add(dataObject);
 	                }
 	            } catch (Exception e) {
-	                // ¿¹¿Ü Ã³¸® ·ÎÁ÷
+	                // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	                e.printStackTrace();
 	            }
 	        }
 	    }
 
-	    // µ¥ÀÌÅÍ Ã³¸® ·ÎÁ÷
+	    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    System.out.println("------"+dataList);
 	    
 	    
@@ -132,14 +132,14 @@ public class ioController {
 	    
 	    
 
-	    return "redirect:/information"; // ¸®´ÙÀÌ·ºÆ®ÇÒ ÆäÀÌÁö ¶Ç´Â ºä ÀÌ¸§
+	    return "redirect:/information"; // ï¿½ï¿½ï¿½ï¿½ï¿½Ì·ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½
 	}
 
 	private Integer parseInteger(String value) {
 	    try {
 	        return value == null || value.isEmpty() ? null : Integer.parseInt(value);
 	    } catch (NumberFormatException e) {
-	        // ¼ýÀÚ º¯È¯ ½ÇÆÐ ½Ã nullÀ» ¹ÝÈ¯
+	        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ nullï¿½ï¿½ ï¿½ï¿½È¯
 	        return null;
 	    }
 	}
@@ -154,28 +154,28 @@ public class ioController {
 		            StatusCheck dataObject = new StatusCheck();
 		            dataObject.setObtain_no(obtainNoInt);
 		            
-		            // µ¥ÀÌÅÍ Ã³¸® ·ÎÁ÷
+		            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		            transactionVO statement = service.transaction_statement(obtainNoInt);
 		            System.out.println(statement);
 		            model.addAttribute("val	ue", statement);
 
-		            // ¹ÝÈ¯ÇÏ´Â ºä ÀÌ¸§
+		            // ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½
 		            return "/io/transaction";
 		        } catch (Exception e) {
 		            e.printStackTrace();
-		            // ¿¡·¯ Ã³¸®
+		            // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 		            return "/error";
 		        }
 		    }
 
-		    return "/error"; // Àß¸øµÈ ¿äÃ» Ã³¸®
+		    return "/error"; // ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» Ã³ï¿½ï¿½
     }
 
     private Integer parseIntegers(String value) {
         try {
             return value == null || value.isEmpty() ? null : Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            // ¼ýÀÚ º¯È¯ ½ÇÆÐ ½Ã nullÀ» ¹ÝÈ¯
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ nullï¿½ï¿½ ï¿½ï¿½È¯
             return null;
         }
     }

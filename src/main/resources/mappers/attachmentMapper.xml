@@ -11,7 +11,7 @@
 	<!-- 첨부파일 보기 -->
 	<select id="attachmentSelect" resultType="com.kr.kimchi.vo.AttachmentVO">
 		select * from attachment 
-		where item_no = #{item_no}
+		where attachment_no = #{attachment_no}
 	</select>
 	
 	<!-- 첨부파일 추가 -->

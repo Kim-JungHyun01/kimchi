@@ -8,12 +8,48 @@
 	<select id="paAllList" resultType="com.kr.kimchi.vo.PaVO">
 		select * from pa a
 		join code b on a.code_id = b.code_id
-		where b.ca_id = 3; 
+		where b.ca_id = 3
+		<if test="pa_checkStatus != 99">
+        and a.pa_checkStatus = #{pa_checkStatus}
+   		</if>
+		order by a.pa_no desc; 
 	</select>
+
+	<!-- 구매발주서 코드발행 -->
+	<select id="paCode" resultType="com.kr.kimchi.vo.CodeVO">
+		insert into code (ca_id, code_name) values (3,#{code});
+	</select>
+
+	<!-- 구매발주서 코드검색 -->
+	<select id="paCodeSelecet" resultType="int">
+		select code_id from code where code_name = #{code_name};
+	</select>
+	
+	<!-- 추가 -->
+	<insert id="paPlus" parameterType="com.kr.kimchi.vo.PaVO">
+		insert into pa
+		(user_id,
+		code_id, pa_issueDate, pa_checkStatus, pa_referenceNo,pa_notes)
+		values
+		(#{user_id}, #{code_id}, #{pa_issueDate}, 0, #{pa_referenceNo},#{notes})
+	</insert>
+	
+	<!-- 진척계획 완료 -->
+	<update id="prpFinsh"> 
+		update pa set pa_checkStatus = 2 where pa_no = #{pa_no}; 	
+	</update>
+
+	<!-- 진척계획 추가 -->
+	<update id="prpIng"> 
+		update pa set pa_checkStatus = 1 where pa_no = #{pa_no}; 	
+	</update>
+	
+	
 
 	<!-- paper 선택 리스트 -->
 	<resultMap type="com.kr.kimchi.vo.UserVO" id="UserVO">
 		<result column="user_name" property="user_name"/>
+		<result column="user_email" property="user_email"/>
 	</resultMap>
 	<resultMap type="com.kr.kimchi.vo.ItemVO" id="ItemVO">
 		<result column="item_no" property="item_no" />
@@ -98,7 +134,8 @@
 			g.item_no,
 			h.partner_companyname,
 			i.item_name,
-			j.user_name
+			j.user_name,
+			j.user_email
 		from pa a 
 			join code b on a.code_id = b.code_id
 			join category c on b.ca_id = c.ca_id
@@ -110,6 +147,9 @@
 			join item i on g.item_no = i.item_no
 			join user j on j.user_id = a.user_id
 		where b.ca_id = 3
+		<if test="pa_checkStatus != 99">
+        and a.pa_checkStatus = #{pa_checkStatus}
+   		</if>
 		order by a.pa_no desc
 		limit #{start},#{end};
 	</select>

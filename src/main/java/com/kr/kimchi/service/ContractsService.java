@@ -16,9 +16,14 @@ public class ContractsService {
 	private ContractsDAO condao;
 	
 //	계약 보기_전체
-	public List<ContractsVO> contractsAll(){
-		return condao.contractsAll();
+	public List<ContractsVO> contractsAll(int startRow, int pageSize){
+		return condao.contractsAll(startRow, pageSize);
 	}//end
+	
+//	전체 레코드 수
+    public Integer getTotalCount() {
+		return condao.getTotalCount();   	
+    }//end
 	
 //	계약 보기_상세 
 	public ContractsVO contractsSelect(int contracts_no) {
