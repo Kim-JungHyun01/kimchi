@@ -21,8 +21,8 @@
 	color: red; /* 유효하지 않은 경우 빨간색 */
 }
 </style>
+<!-- submit 을 위한 script -->
 <script>
-
 	function checkId() {
 		var partner_taxid = document.getElementById("partner_taxid").value;
 		//형태
@@ -160,7 +160,6 @@
 		const ownerNameRegex = /^[가-힣a-zA-Z\s]{1,30}$/;
 		const faxRegex = /^\d{2,3}-\d{3,4}-\d{4}$/;
 		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		const addRegex = /^[가-힣a-zA-Z0-9\s]{1,100}$/;
 
 		if (!btncheckId) {
 			showAlert("ID 중복검사를 실시해주세요.", "user_id");
@@ -202,9 +201,8 @@
 			showAlert("이메일 형식이 올바르지 않습니다.", "partner_email");
 			return;
 		}
-		if (!addRegex.test(partnerAdd)) {
-			showAlert("사업장주소는 1~100자리의 한글, 영문, 숫자, 공백으로 구성되어야 합니다.",
-					"partner_add");
+		if (!partnerAdd) {
+			showAlert("사업장주소는 1~100자리의 한글, 영문, 숫자, 공백으로 구성되어야 합니다.","partner_add");
 			return;
 		}
 
@@ -217,6 +215,39 @@
 		alert("협력회사등록이 완료되었습니다. 승인 여부를 확인해주세요.");
 
 	}//btnsumbit
+</script>
+<!-- partner_add api scipt -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+// 주소 api 
+function daumPost(){
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById('address').value = addr;
+            document.getElementById('partner_add').value = data.zonecode + "," + addr+",";
+            document.getElementById('detailAddress').value = "";
+            document.getElementById('detailAddress').focus()
+        }
+    }).open();
+}//end daumPost
+
+function inputpartadd(){
+	const detailAddress = document.getElementById('detailAddress').value;
+	const partnerAdd = document.getElementById('partner_add');
+
+		// 기존의 협력회사 사업장주소와 detailAddress를 합칩니다.
+		partnerAdd.value = partnerAdd.value.split(',')[0]+','+partnerAdd.value.split(',')[1] + ',' + detailAddress;
+
+	}//end inputpartadd
 </script>
 <div class="authincation h-100">
 	<div class="container-fluid h-100">
@@ -281,8 +312,12 @@
 										<input type="email" name="partner_email" id="partner_email" class="form-control" placeholder="협력회사 email">
 									</div>
 									<div class="form-group">
-										<label><strong>협력회사 사업장주소</strong></label>
-										<textarea name="partner_add" id="partner_add" class="form-control" placeholder="협력회사 사업장주소"></textarea>
+										<label style="display:block;"><strong>협력회사 사업장주소</strong></label>
+											<input type="text" id="postcode" class="form-control" placeholder="우편번호" style="width: 100px; display: inline-block;" readonly>
+											<input type="text" id="address" class="form-control" placeholder="주소" style="width: 400px;  display: inline-block;" readonly>
+											<input type="button" onclick="daumPost()" value="우편번호 찾기" class="check-button btn btn-secondary" style="height: 30px;">
+											<input type="text" id="detailAddress" class="form-control" placeholder="상세주소" oninput="inputpartadd()">
+											<input type="hidden" name="partner_add" id="partner_add" class="form-control" placeholder="협력회사 사업장주소" onkeyup="inputpartadd()"readonly>
 									</div>
 									<div class="text-center mt-4">
 										<button type="button" onclick="btnsumbit()" class="btn btn-primary btn-block">등록신청</button>

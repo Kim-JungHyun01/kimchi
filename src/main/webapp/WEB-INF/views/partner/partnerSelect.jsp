@@ -81,7 +81,7 @@
 			</tr>
 		</table>
 		<div class="button-container">
-			<a class="addbutton" href="${contextPath}/partner/partnerUpdateForm?partner_taxid=${partnerlist.partner_taxid }">협력회사수정</a>
+			<a class="addbutton" href="${contextPath}/partner/partnerUpdateForm?partner_taxid=${part.partner_taxid }">협력회사수정</a>
 			<a  class="addbutton" href="${contextPath}/partner/partnerAll">목록</a>
 		</div>
 	</div>

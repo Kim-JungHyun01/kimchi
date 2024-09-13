@@ -5,27 +5,26 @@
 <div class="quixnav">
 	<div class="quixnav-scroll">
 		<ul class="metismenu" id="menu">
-			<c:choose>
-				<c:when test="${userlogin.user_department eq'개발부서'}">
+				<c:if test="${userlogin.user_department eq'개발부서'||userlogin.user_department eq'관리자'}">
 				<!-- 물품관리 -->
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-					<i class="icon icon-single-04"></i> <span class="nav-text">물품관리</span></a>
+					<i></i> <span class="nav-text">물품관리</span></a>
 					<ul aria-expanded="true">
 						<li><a href="${contextPath}/item/itemAll">물품리스트</a></li>
 						<li><a href="${contextPath}/item/itemInsertForm">물품등록</a></li>
 					</ul></li>
-				</c:when>
-				<c:when test="${userlogin.user_department eq'자재부서' || userlogin.user_department eq'구매부서'}">
+					</c:if>
+				<c:if test="${userlogin.user_department eq'자재부서' || userlogin.user_department eq'구매부서'||userlogin.user_department eq'관리자'}">
 				<!-- 자재관리 -->
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-					<i></i><span class="nav-text">제재관리</span></a>
+					<i></i><span class="nav-text">자재관리</span></a>
 					<ul aria-expanded="false">
 						<li><a href="${contextPath}/material/maList">자재리스트</a></li>
               			 <li><a href="${contextPath}/material/maAdd">자재등록</a></li>
 					</ul></li>
 					<!-- -조달계획관리 -->
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-					<i></i> <span class="nav-text">조달계획 관리</span></a>
+					<i class="simple-line-icons icon-social-dropbox"></i> <span class="nav-text">조달계획 관리</span></a>
 					<ul aria-expanded="false">
 						<li><a href="${contextPath}/obtain/obtainAll">조달계획 목록</a></li>
 					</ul></li>
@@ -50,10 +49,9 @@
 					<li><a class="has-arrow" href="javascript:void()"
 						aria-expanded="false"><i class="icon icon-app-store"></i><span
 							class="nav-text">기울기센서</span></a></li> -->
-				</c:when>
+				</c:if>				
 				
-				
-				<c:when test="${userlogin.user_department eq'생산부서'}">
+				<c:if test="${userlogin.user_department eq'생산부서' || userlogin.user_department eq'관리자'}">
 				<!-- 제품계약관리 -->
 				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
 				<i></i> <span class="nav-text">제품계약관리</span></a>
@@ -74,8 +72,8 @@
 					<ul aria-expanded="false">
 						<li><a href="${contextPath}/obtain/obtainAll">조달계획 목록</a></li>
 					</ul></li>
-				</c:when>
-				<c:when test="${partlogin != null }">
+				</c:if>
+				<c:if test="${partlogin != null }">
 				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
 				<i></i> <span class="nav-text">제품계약관리</span></a>
 					<ul aria-expanded="false">
@@ -87,18 +85,17 @@
 					<ul aria-expanded="false">
 						<li><a href="${contextPath}/pcsp">발주검수관리</a></li>
 					</ul></li>
-				</c:when>
-			</c:choose>
+				</c:if>
 			<!-- 게시판 -->
 				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i></i><span class="nav-text">게시판</span></a>
 					<ul aria-expanded="false">
 						<li><a href="${contextPath}/sboard/list">게시판목록</a></li>
 					</ul>
 				</li>
-			<c:if test="${userlogin.user_name=='관리자'}">
+			<c:if test="${userlogin.user_department eq'관리자'}">
 				<!-- 관리자관리  -->
 				<li><a class="has-arrow" href="javascript:void()"
-					aria-expanded="false"> <i class="icon icon-single-04"></i> <span
+					aria-expanded="false"> <i class="simple-line-icons icon-people"></i> <span
 						class="nav-text">관리자전용</span></a>
 					<ul aria-expanded="true">
 						<li><a href="${contextPath}/user/userAll">직원목록</a></li>

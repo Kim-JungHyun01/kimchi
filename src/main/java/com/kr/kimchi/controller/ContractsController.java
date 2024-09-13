@@ -87,14 +87,35 @@ public class ContractsController {
 
 //	계약 추가
 	@GetMapping(value = "contracts/contractsInsertForm")
-	public ModelAndView contractsInsertForm() {
-		List<ItemVO> itemlist = itemservice.itemAll(0, 100, null);
-		List<PartnerVO> partnerlist = partservice.partnerAll(0, 100,null);
-		List<UserVO> userlist = userservice.userAll(0,100,null);
+	public ModelAndView contractsInsertForm(@RequestParam(defaultValue = "1") int pageNum,
+											@RequestParam(required = false) String item_name,
+											@RequestParam(required = false) String partner_companyname,
+											@RequestParam(required=false) String user_name) {
+		
+//		item 페이징
+		int pageSize = 10; // 한 페이지에 보여줄 갯수 
+	    int pageNavSize = 5; // 페이지 네비 크기
+	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
+	    Integer totalCount = itemservice.getTotalCount(); // 총 레코드 수 가져옴
+		
+		
+		List<ItemVO> itemlist = itemservice.itemAll(startRow, pageSize, item_name);
+		List<PartnerVO> partnerlist = partservice.partnerAll(startRow, pageSize, partner_companyname);
+		List<UserVO> userlist = userservice.userAll(startRow,pageSize,user_name);
+		
+		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
+		Integer totalPages = itemservice.itemSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음 
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("itemlist", itemlist);
 		mav.addObject("partnerlist", partnerlist);
 		mav.addObject("userlist", userlist);
+		
+		mav.addObject("pagination", pagination);
+		 mav.addObject("currentPage", pageNum);
+		 mav.addObject("totalPages", totalPages);
+		
+		
 		mav.setViewName("contracts/contractsInsertForm");
 		return mav;
 	}// end

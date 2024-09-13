@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<!-- login scipt -->
 <script>
 	function checkapp() {
 		var user_approval = document.getElementById('login_user_approval').value;
@@ -126,7 +127,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <%@include file="../include/header.jsp" %>
 
 <div class="content-body">
-
+<!-- login input -->
+	<input value="${partlogin.partner_approval }" type="hidden" id="login_partner_approval" name="login_partner_approval">
+	<input value="${userlogin.user_approval }" type="hidden" id="login_user_approval" name="login_user_approval">
    <!-- 사진 슬라이드 -->
 <div id="carouselExample" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
@@ -153,17 +156,11 @@ document.addEventListener('DOMContentLoaded', function() {
     </a>
 </div>
 <div class="content-body">
-	<input value="${partlogin.partner_approval }" type="hidden"
-		id="login_partner_approval" name="login_partner_approval"> <input
-		value="${userlogin.user_approval }" type="hidden"
-		id="login_user_approval" name="login_user_approval">
-		<div class="content-body">
-        
-        	
-        	<div id='calendar'></div>
-
-        </div>
+       	<div id='calendar'></div>
 </div>
+
+	
+	
 
         
         
