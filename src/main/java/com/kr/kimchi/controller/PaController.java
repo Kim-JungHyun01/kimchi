@@ -226,7 +226,8 @@ public class PaController {
 	@PostMapping(value="paUpdate")
 	public ModelAndView prpUpdate(@RequestParam("pa_referenceNo") int pa_referenceNo,
 			@RequestParam("user_id") String user_id,@RequestParam("pa_issueDate") String pa_issueDate,@RequestParam("code") String code,
-			@RequestParam("obtain_no") int obtain_no) throws ParseException {
+			@RequestParam("obtain_no") int obtain_no,
+			@RequestParam("notes") String notes) throws ParseException {
 		// 구매발주서 발급
 		obtservice.obtainPa(obtain_no);
 		
@@ -235,6 +236,7 @@ public class PaController {
 		map.put("pa_referenceNo", pa_referenceNo);
 		map.put("user_id", user_id);
 		map.put("code", code);
+		map.put("notes", notes);
 //		map.put("pa_issueDate", pa_issueDate);
 		System.out.println(pa_issueDate);
 		

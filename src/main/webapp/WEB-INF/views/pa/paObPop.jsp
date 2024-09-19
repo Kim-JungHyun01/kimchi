@@ -1,7 +1,10 @@
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 
 <div class="content-body">
+	 <%Map<String, Object> userlogin = (Map<String, Object>) session.getAttribute("userlogin");%>
+	 
     <h2>구매발주서 등록</h2>
     <hr>
     <div class="form-group">
@@ -30,8 +33,15 @@
     </div>
     <div class="form-group">
         <label class="label">구매발주자</label>
-        <input type="text" name="user_id" id="user_id" value="abcd" readonly>
+        <input type="text" 
+        value="<%=userlogin.get("user_name")%>" readonly>
     </div>
+    <div class="form-group">
+        <label class="label">협력사 요청사항</label>
+        <textarea id="notes"></textarea>
+    </div>
+        <input type="hidden" name="user_id" id="user_id" 
+        value="<%=userlogin.get("user_id")%>" readonly>
     <input type="hidden" name="pa_issueDate" id="pa_issueDate" readonly>                
     <input type="hidden" name="code" id="code" readonly>        
     <hr>        
@@ -85,13 +95,14 @@ function sendData() {
     const pa_issueDate = document.getElementById("pa_issueDate").value;
     const code = document.getElementById("code").value;
     const obtain_no = document.getElementById("obtain_no").value;
+    const notes = document.getElementById("notes").value;
     
     if (!pa_referenceNo || !user_id || !pa_issueDate || !code || !obtain_no) {
         alert('잘못된 정보가 있습니다. 조달계획을 확인해주세요');
         return; 
     }
     
-    window.opener.receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no);
+    window.opener.receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no,notes);
     window.close();
 }
 </script>
@@ -136,6 +147,14 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+.form-group textarea {
+    width: 65%;
+    height: 150px; 
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none; 
 }
 
 </style>

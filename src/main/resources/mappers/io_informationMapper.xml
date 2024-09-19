@@ -131,8 +131,23 @@ INNER JOIN obtain AS ob
     ON io.obtain_no = ob.obtain_no
 INNER JOIN partner AS part
     ON ob.partner_taxid = part.partner_taxid
-
+ where io_status="입고중" or io_status="입고완료"
+ 
 </select>
+
+<!-- 페이징 -->
+<select id="io-list-paging" parameterType="java.util.HashMap" resultType="InlistVO">
+    SELECT io.*, ob.obtain_no, part.partner_companyname
+    FROM io
+    INNER JOIN obtain AS ob
+        ON io.obtain_no = ob.obtain_no
+    INNER JOIN partner AS part
+        ON ob.partner_taxid = part.partner_taxid
+    WHERE io_status="입고중" OR io_status="입고완료"
+    ORDER BY io_id DESC
+    LIMIT #{start}, #{count}
+</select>
+
 
 
 

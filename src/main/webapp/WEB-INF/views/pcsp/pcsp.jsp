@@ -7,7 +7,6 @@
 
 <%@include file="../include/header.jsp" %>
 
-<%@include file="../include/nav.jsp" %>
        
    <div class="content-body">
 	   <div class="container-fluid">
@@ -55,20 +54,20 @@
 			<div class="modal-body">
 			    <form action="/pcsp" method="post" onsubmit="return checkForm()">
 			        <div class="form-group">
-			            <label for="date">검수 일자:</label>
-			            <input type="date" name="pcsp_date" id="date" min="" style="width: 170px;">
+			            <label for="date" style="font-size: 15px; text-align: left;">검수 일자</label>
+			            <input type="date" name="pcsp_date" id="date" min="" style="width: 170px; margin-left: 0;">
 			        </div>
 			        <div class="form-group">
-			            <label for="code">발주번호</label>
-			            <input type="text" name="code_name">
+			            <label for="code" style="font-size: 15px; text-align: left;">발주번호</label>
+			            <input type="text" name="code_name" id="code">
 			        </div>
 			        <div class="form-group">
-			            <label for="partner">협력회사</label>
+			            <label for="partner" style="font-size: 15px; text-align: left;">협력회사</label>
 			            <input type="text"  value="(주)삼김팩토리" readonly>
 			        </div>
 			        <div class="form-group">
-			            <label for="pcsp_notes">비고:</label>
-			            <textarea name="pcsp_notes" id="pcsp_notes	" ></textarea>
+			            <label for="pcsp_notes" style="font-size: 15px;, text-align: left;"></label>
+			            <textarea name="pcsp_notes" id="pcsp_notes" style="text-align: left; margin-left: 5px; " placeholder="비고"></textarea>
 			        </div>
 			  <input type="hidden" name="token" value="${token}" />
 				<input type="hidden" name="partner_taxid" value="${partner_taxid}" />
@@ -127,6 +126,9 @@ function checkForm() {
 	if(!date.value){
 		alert("날짜를 선택해주세요.")
 		return false;
+	}else if(!code.value){
+		alert("발주코드를 입력해주세요")
+		return false;
 	}
 }
 </script>
@@ -176,10 +178,10 @@ function checkForm() {
 
 .modal-content {
 	width: 30%;
-	height: 53%;
+	height: 55%;
 	position: relative;
     top: 20%;
-    left: 35%;
+    left: 40%;
 }
 
 .modal-footer {

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
-<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>"
+	rel='stylesheet' />
 <script>
 	function openitemModal() {
 		document.getElementById("itemModal").style.display = "flex";
@@ -32,7 +33,7 @@
 					<td>물룸 분류</td>
 					<td>물품명</td>
 					<td>물품 단가</td>
-					<td>제조소료일</td>
+					<td>제조소요일</td>
 				</tr>
 				<c:forEach var="itemlist" items="${itemlist}">
 					<c:if test="${itemlist.item_bomRegistered eq 1}">
@@ -48,7 +49,8 @@
 				</c:forEach>
 			</table>
 			<div class="modal-footer">
-				<button type="button" class="filter-button" onclick="closeitemModal()">닫기</button>
+				<button type="button" class="filter-button"
+					onclick="closeitemModal()">닫기</button>
 			</div>
 		</div>
 	</div>

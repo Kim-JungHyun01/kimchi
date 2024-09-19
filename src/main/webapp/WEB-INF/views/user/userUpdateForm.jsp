@@ -3,6 +3,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
+<style>
+.content-body {
+	border-radius: 8px;
+	padding: 20px;
+	margin: auto;
+}
+
+.content-body h2 {
+	margin: 0 15%;
+}
+</style>
 <script>
 function checkNumber(InputNumber) {
 	var telNumber = InputNumber.value;
@@ -58,32 +70,27 @@ function submitCheck() {
     
         document.getElementById("userUpdateForm").submit();
         alert("회원정보가 수정되었습니다.");
-    }
-}//end
+    }//end
 </script>
 <%@include file="../include/header.jsp"%>
 <div class="content-body">
-<div>
-	<h3>사용자 수정목록</h3>
+	<h2>사용자 수정목록</h2>
+	<hr>
+	<div class="input-container">
 		<form action="userUpdate" method = post id = "userUpdateForm" name = "userUpdateForm">
-			<div>
-				<label>사용자 id</label> <input id=user_id name="user_id" type="text" value="${user.user_id }" readonly>
+			<input style="width: 80%;" id=user_id name="user_id" type="hidden" value="${user.user_id }" readonly>
+			<div class="input-group">
+				<label>사용자 email</label> <input style="width: 80%;" name ="user_email" id ="user_email" type="text" value="${user.user_email }">
 			</div>
-			<div>
-				<label>사용자 pw</label> <input name ="user_pw" id="user_pw" type="password" value="${user.user_pw }" readonly>
+			<div class="input-group">
+				<label>사용자명</label> <input style="width: 80%;" name ="user_name" id ="user_name" type="text" value="${user.user_name }">
 			</div>
-			<div>
-				<label>사용자 email</label> <input name ="user_email" id ="user_email" type="text" value="${user.user_email }">
+			<div class="input-group">
+				<label>사용자 전화번호</label> <input style="width: 80%;" name ="user_number" id ="user_number" type="text" value="${user.user_number }" onkeyup="checkNumber(this)" maxlength="13">
 			</div>
-			<div>
-				<label>사용자명</label> <input name ="user_name" id ="user_name" type="text" value="${user.user_name }">
-			</div>
-			<div>
-				<label>사용자 전화번호</label> <input name ="user_number" id ="user_number" type="text" value="${user.user_number }" onkeyup="checkNumber(this)">
-			</div>
-			<div>
+			<div class="input-group">
 				<label>사용자 부서</label>
-				<select name="user_department" id="user_department" required>
+				<select name="user_department" id="user_department" required style="width: 50%; margin-left:40px;">
 					<option value="부서선택 "${user.user_department == '부서선택' ? 'selected' : ''}>부서선택</option>
 					<option value="자재부서" ${user.user_department == '자재부서' ? 'selected' : ''}>자재부서</option>
 					<option value="개발부서" ${user.user_department == '개발부서' ? 'selected' : ''}>개발부서</option>
@@ -91,9 +98,10 @@ function submitCheck() {
 					<option value="생산부서" ${user.user_department == '생산부서' ? 'selected' : ''}>생산부서</option>
 				</select>
 			</div>
-			<div>
-				<button type = "button" onclick="submitCheck()">정보 수정</button>
-				<button type ="reset">초기화</button>
+			<hr>
+			<div style="text-align: right;">
+				<button class="addbutton" type = "button" onclick="submitCheck()">정보 수정</button>
+				<button class="addbutton" type ="reset">초기화</button>
 			</div>
 		</form>
 	</div>

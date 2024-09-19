@@ -28,7 +28,7 @@ public class UserController {
 	public ModelAndView userAll(@RequestParam(defaultValue = "1") int pageNum,
 								@RequestParam(required = false) String user_name) {
 		
-		int pageSize = 5; // 한 페이지에 보여줄 갯수 
+		int pageSize = 10; // 한 페이지에 보여줄 갯수 
 	    int pageNavSize = 5; // 페이지 네비 크기
 	    
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산

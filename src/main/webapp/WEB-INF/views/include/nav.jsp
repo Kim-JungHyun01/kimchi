@@ -51,6 +51,8 @@
 						aria-expanded="false"><i class="icon icon-app-store"></i><span
 							class="nav-text">기울기센서</span></a></li> -->
 				</c:when>
+				
+				
 				<c:when test="${userlogin.user_department eq'생산부서'}">
 				<!-- 제품계약관리 -->
 				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -79,6 +81,11 @@
 					<ul aria-expanded="false">
 						<li><a href="${contextPath}/contracts/contractsAll">제품계약 목록</a></li>
 						<li><a href="${contextPath}/contracts/contractsInsertForm">제품계약등록</a></li>
+					</ul></li>
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i></i> <span class="nav-text">발주검수관리</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/pcsp">발주검수관리</a></li>
 					</ul></li>
 				</c:when>
 			</c:choose>

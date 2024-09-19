@@ -50,26 +50,27 @@
 
 	<!-- 조달계획 승인 -->
 	<update id="obtainCheck"
-		parameterType="com.kr.kimchi.vo.ObtainVO">
-		UPDATE production
-		JOIN obtain ON production.production_no = obtain.production_no
-		SET
-		production.production_status =
-		CASE
-		WHEN #{obtain_status} = '조달계획확인완료' THEN '조달중'
-		ELSE production.production_status
-		END,
-		obtain.obtain_status = #{obtain_status},
-		obtain.obtain_registrationDate = NOW(),
-		production.production_registrationDate =
-		CASE
-		WHEN #{obtain_status} = '조달계획확인완료' THEN NOW()
-		ELSE production.production_registrationDate
-		END,
-		obtain.obtain_document = IF(#{obtain_status} = '조달계획확인완료', 1, 0)
-		WHERE
-		obtain.obtain_no = #{obtain_no}
-	</update>
+      parameterType="com.kr.kimchi.vo.ObtainVO">
+      UPDATE production
+      JOIN obtain ON production.production_no = obtain.production_no
+      SET
+      production.production_status =
+      CASE
+      WHEN #{obtain_status} = '조달계획확인완료' THEN '조달중'
+      ELSE production.production_status
+      END,
+      obtain.obtain_status = #{obtain_status},
+      obtain.obtain_registrationDate = NOW(),
+      production.production_registrationDate =
+      CASE
+      WHEN #{obtain_status} = '조달계획확인완료' THEN NOW()
+      ELSE production.production_registrationDate
+      END
+      WHERE
+      obtain.obtain_no = #{obtain_no}
+      <!-- obtain.obtain_document = IF(#{obtain_status} = '조달계획확인완료', 1, 0)-->
+   </update>
+
 
 	<!-- 구매발주서 발부 -->
 	<update id="obtainPa" parameterType="com.kr.kimchi.vo.ObtainVO">

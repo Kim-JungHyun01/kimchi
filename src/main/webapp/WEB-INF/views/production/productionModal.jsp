@@ -42,8 +42,7 @@
 				</c:forEach>
 			</table>
 			<div class="modal-footer">
-				<button type="button" class="filter-button"
-					onclick="closeproductionModal()">닫기</button>
+				<button type="button" class="filter-button" onclick="closeproductionModal()">닫기</button>
 			</div>
 		</div>
 	</div>
