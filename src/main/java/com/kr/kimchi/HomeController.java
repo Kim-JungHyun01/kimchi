@@ -44,17 +44,18 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) throws SQLException, JsonProcessingException {
+		//login부분
 		Object userLogin = session.getAttribute("userlogin");
 	    Object partLogin = session.getAttribute("partlogin");
 	    if (userLogin == null && partLogin == null) {
 	        return "redirect:/login/loginForm";
 	    }
-		
+		//캘린더 부분
 		List<CalenderVO> list = service.calenderList();
 		System.out.println("list : " + list);
 		model.addAttribute("list", list );
 		
-		
+		//차트부분
 		 List<Map<String, Object>> chartData = chartService.chartData();
 	        // 전체 재고 총액 정보 조회
 	        List<Map<String, Object>> totalStock = chartService.totalStockChart();
