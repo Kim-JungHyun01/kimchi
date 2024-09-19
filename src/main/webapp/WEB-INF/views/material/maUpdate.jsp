@@ -17,23 +17,7 @@
         display: block; /* 블록 요소로 설정 */
         box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 조정 */
     }
-
-    .table {
-        border-collapse: collapse; /* 경계가 겹치지 않도록 설정 */
-    }
-
-    .table, .table td {
-        border: none; /* 테이블과 셀의 경계를 없앰 */
-    }
-
-    .table td {
-        text-align: center; /* 가운데 정렬 */
-    }
-    
-    
 </style>
-
-
 
 <div class="content-body">
     <div>

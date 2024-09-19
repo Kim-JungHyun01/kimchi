@@ -1,6 +1,6 @@
 package com.kr.kimchi.dao;
 
-import java.util.HashMap;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -8,8 +8,6 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-
-import com.kr.kimchi.vo.ChartVO;
 
 @Repository
 public class ChartDAO {
@@ -20,20 +18,13 @@ public class ChartDAO {
     private SqlSession session;    
 
     // 상품별 재고 갯수 정보
-    public List<ChartVO> getChartData(String startDate, String endDate) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("startDate", startDate);
-        params.put("endDate", endDate);
-        
-        return session.selectList(namespace + ".getChartData", params);
+    public List<Map<String, Object>> chartData() throws SQLException {
+        return session.selectList(namespace + ".chartData");
     }
 
-    // 상품별 총액 정보
-    public List<ChartVO> getChartTotalValue(String startDate, String endDate) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("startDate", startDate);
-        params.put("endDate", endDate);
-        
-        return session.selectList(namespace + ".getChartTotalValue", params);
+    // 전체 재고 총액 정보 (날짜별 총액)
+    public List<Map<String, Object>> totalStockChart() throws SQLException {
+        return session.selectList(namespace + ".totalStockChart");
     }
+    //===============
 }

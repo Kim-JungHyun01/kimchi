@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="true"%>
 
@@ -7,106 +8,128 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
-    
-    <style>
-        #myChart {
-            width: 100%;
-            height: 400px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>자재 차트</h1>
-    <div style="width: 900px; height: 900px;">
-        <canvas id="myChart"></canvas>
+    <div class="container">
+
+        <!-- 품목별 재고 및 총액 차트 -->
+        <canvas id="product-stock-chart" style="margin-top: 50px; width:10%; height:30%;"></canvas>
+
+        <!-- 날짜별 전체 재고 총액 차트 -->
+        <canvas id="overall-stock-chart" style="margin-top: 50px; width:10%; height:30%;"></canvas>
     </div>
 
     <script>
-    let myChart; // 전역 변수로 차트 인스턴스 유지
+        // JSON 데이터는 문자열로 그대로 삽입합니다.
+        const productChartData = JSON.parse('${chartData}');
+        const overallStockData = JSON.parse('${totalStock}');
 
-    function fetchData() {
-        // 하드코딩된 데이터
-        const labels = ['2024-09-08', '2024-09-09', '2024-09-10', '2024-09-11', '2024-09-12', '2024-09-13'];
-        const totalQuantity = [50, 500, 500, 400, 300, 600];
-        const totalValue = [100, 1000, 1000, 850, 750, 1500];
+        console.log('chartData:', productChartData);
+        console.log('totalStock:', overallStockData);
 
-        const data = {
-            labels: labels,
+        // 품목별 재고 및 총액 차트 데이터
+        const productNames = productChartData.map(item => item.ma_name); // 상품명 추출
+        const stockQuantities = productChartData.map(item => item.totalQuantity); // 재고량 추출
+        const stockValues = productChartData.map(item => item.totalValue); // 총액 추출
+
+        const ctx1 = document.getElementById('product-stock-chart').getContext('2d');
+        
+        const data1 = {
+            labels: productNames, // 상품명
             datasets: [
                 {
                     type: 'bar',
-                    label: '총 재고 수량',
-                    data: totalQuantity,
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    label: '각 상품별 재고량',
+                    data: stockQuantities, // 각 상품의 재고량
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderWidth: 1,
-                    yAxisID: 'y1'
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
                 },
                 {
-                    type: 'line',
-                    label: '총 재고 금액',
-                    data: totalValue,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderWidth: 2,
-                    yAxisID: 'y2'
+                    type: 'bar',
+                    label: '각 상품별 총액',
+                    data: stockValues, // 총액
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
                 }
             ]
         };
 
-        const options = {
-            responsive: true,
+        const options1 = {
             scales: {
-                x: {
-                    type: 'category',
+                y: {
+                    beginAtZero: true,
                     title: {
                         display: true,
-                        text: '날짜'
+                        text: '재고량 및 총액'
                     }
                 },
-                y: {
-                    y1: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: '총 재고 수량'
-                        },
-                        position: 'left'
-                    },
-                    y2: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: '총 재고 금액'
-                        },
-                        position: 'right'
+                x: {
+                    title: {
+                        display: true,
+                        text: '상품명'
                     }
                 }
             }
         };
 
-        const ctx = document.getElementById('myChart').getContext('2d');
-        
-        if (myChart) {
-            myChart.destroy();
-        }
-
-        myChart = new Chart(ctx, {
-            type: 'bar', 
-            data: data,
-            options: options
+        new Chart(ctx1, {
+            type: 'bar',
+            data: data1,
+            options: options1
         });
-    }
 
-    $(document).ready(function() {
-        fetchData();
-    });
+        // 날짜별 전체 재고 총액 차트
+        const ctx2 = document.getElementById('overall-stock-chart').getContext('2d');
+
+        // 날짜 레이블과 총액 데이터를 분리
+        const dateLabels = overallStockData.map(item => {
+            const date = new Date(item.date);
+            return date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+        });
+        const stockValuesData = overallStockData.map(item => item.totalValue);
+
+        const data2 = {
+            labels: dateLabels, // 날짜 레이블
+            datasets: [
+                {
+                    type: 'line',
+                    label: '전체 재고 총액',
+                    data: stockValuesData, // 전체 재고의 총액
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.1
+                }
+            ]
+        };
+
+        const options2 = {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '총액'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '날짜'
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx2, {
+            type: 'line',
+            data: data2,
+            options: options2
+        });
     </script>
 </body>
 </html>
