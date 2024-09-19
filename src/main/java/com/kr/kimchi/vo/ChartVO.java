@@ -4,11 +4,14 @@ import lombok.Data;
 
 @Data
 public class ChartVO {
-	
-    private String ma_date; // 자재등록일
+
+    private String ma_name; // 자재명
     
-    // 데이터베이스에 없는 값
-    private Long totalQuantity; // 전체 체고 수량
-    private Long totalValue; // 항목별 재고 총액
-    private Long totalPrice; // 전체 재고 총합계액
+    private int ma_price; // 단가
+    private int ma_stockQuantity; // 재고량
+    
+    private Long totalQuantity; // 총 재고 갯수
+    private Long totalValue; // 총액
+
+ 	//====================
 }
