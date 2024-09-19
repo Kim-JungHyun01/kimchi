@@ -121,7 +121,9 @@
 									<tr>
 										<td>검수자</td>
 										<td style="padding-left: 15px;">${prpList.userVO.user_name }
-											<i class="fas fa-envelope" onclick="mailSend('${prpList.prp_issueDate}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}','${prpList.userVO.user_email }')"></i>
+											<i class="fas fa-envelope" 
+											onclick="mailSend('${prpList.prp_issueDate}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}','${prpList.userVO.user_email }')" 
+											style="cursor: pointer;"></i>
 											<!-- 아이콘으로 대체 
 											<button onclick="mailSend('${prpList.prp_issueDate}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}','${prpList.userVO.user_email }')" ></button>
 											-->

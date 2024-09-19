@@ -29,7 +29,7 @@
 			<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
 		</div>
 		<div class="form-group">
-			<label class="label">비고</label>
+			<label class="label">결과 및 보완내용</label>
 			<textarea id="prp_notes" name="prp_notes" value="${prpVO.prp_notes}"></textarea>
 		</div>
 		

@@ -37,7 +37,7 @@
         value="<%=userlogin.get("user_name")%>" readonly>
     </div>
     <div class="form-group">
-        <label class="label">협력사 요청사항</label>
+        <label class="label">비고</label>
         <textarea id="notes"></textarea>
     </div>
         <input type="hidden" name="user_id" id="user_id" 

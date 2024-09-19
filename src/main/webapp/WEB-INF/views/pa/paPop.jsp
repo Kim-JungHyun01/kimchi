@@ -3,7 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="content-body">
-	  	<button onclick="a()" class="btn">인쇄</button> 	
+	  	<div style="display: flex;">
+		    <button onclick="a()" class="btn" style="margin-left: auto;">인쇄</button>
+		</div> 	
   		<div class ="paper" id="print">
 		<table width="680"  border="0"  cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border-collapse:collapse;table-layout:" align="center" >
 		  <tr>
