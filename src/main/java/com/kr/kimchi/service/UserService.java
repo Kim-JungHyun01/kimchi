@@ -22,8 +22,8 @@ public class UserService {
 	}// end
 
 //	사용자 전체 + 페이징 + 서치
-	public List<UserVO> userAll(int startRow, int pageSize, String user_id) {
-		return userdao.userAll(startRow, pageSize, user_id);
+	public List<UserVO> userAll(int startRow, int pageSize, String user_name) {
+		return userdao.userAll(startRow, pageSize, user_name);
 	}// end
 	
 //	전체 레코드 수

@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,9 @@ public class ContractsController {
 	@Inject
 	private PartnerService partservice;
 	@Inject
-	PdfService pdfService;
+	private PdfService pdfService;
+	@Inject
+	private ModalpagingService pageservice;
 
 //	계약 보기_전체
 	@GetMapping(value = "contracts/contractsAll")
@@ -83,39 +86,24 @@ public class ContractsController {
 		mav.addObject("partner", partner);
 		mav.setViewName("contracts/contractsSelect");
 		return mav;
-	}// end
+	}// end	
 
 //	계약 추가
 	@GetMapping(value = "contracts/contractsInsertForm")
-	public ModelAndView contractsInsertForm(@RequestParam(defaultValue = "1") int pageNum,
-											@RequestParam(required = false) String item_name,
-											@RequestParam(required = false) String partner_companyname,
-											@RequestParam(required=false) String user_name) {
-		
-//		item 페이징
-		int pageSize = 10; // 한 페이지에 보여줄 갯수 
-	    int pageNavSize = 5; // 페이지 네비 크기
-	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
-	    Integer totalCount = itemservice.getTotalCount(); // 총 레코드 수 가져옴
-		
-		
-		List<ItemVO> itemlist = itemservice.itemAll(startRow, pageSize, item_name);
-		List<PartnerVO> partnerlist = partservice.partnerAll(startRow, pageSize, partner_companyname);
-		List<UserVO> userlist = userservice.userAll(startRow,pageSize,user_name);
-		
-		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
-		Integer totalPages = itemservice.itemSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음 
-		
+	public ModelAndView contractsInsertForm(@RequestParam(defaultValue = "1") int pageNum) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("itemlist", itemlist);
-		mav.addObject("partnerlist", partnerlist);
-		mav.addObject("userlist", userlist);
+		// item 페이징
+	    ModelAndView itemMav = pageservice.itempaging(pageNum);
+	    mav.addAllObjects(itemMav.getModel());
+
+	    // partner 페이징
+	    ModelAndView partnerMav = pageservice.partnerpaging(pageNum);
+	    mav.addAllObjects(partnerMav.getModel());
 		
-		mav.addObject("pagination", pagination);
-		 mav.addObject("currentPage", pageNum);
-		 mav.addObject("totalPages", totalPages);
-		
-		
+//		user 페이징
+	    ModelAndView userMav = pageservice.userpaging(pageNum, null);
+	    mav.addAllObjects(userMav.getModel());
+	    
 		mav.setViewName("contracts/contractsInsertForm");
 		return mav;
 	}// end
