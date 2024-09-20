@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+ pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 
@@ -14,24 +14,35 @@
 /* 차트 */
 .container {
     display: flex;
-    margin: 0; /* 부모 요소의 마진을 제거 */
+
+    margin-left: 400px !important;
+    margin-top: 50px !important; 
+    min-height: 1100px;
+    min-width: 1450px !important;
 }
 
 .charts {
     display: flex;
     flex-direction: column; /* 세로 정렬 */
     flex: 1; /* 차트가 캘린더의 왼쪽에 위치 */
-    margin-top: 120px; /* 차트의 위쪽 여백 */
-    margin-left: 270px; /* 차트의 왼쪽 여백 */
+    margin-top: 50px; /* 차트의 위쪽 여백 */
+    margin-left: auto; /* 차트의 왼쪽 여백 */
 }
 
 .calendar {
-    flex: 0 0 auto; /* 캘린더의 크기 조정 */
+    flex: auto; /* 캘린더의 크기 조정 */
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 110px !important;
+    margin-top: 135px; /* 차트의 위쪽 여백 */
 }
 
 /* 차트 크기 조정 */
 #product-stock-chart, 
-#overall-stock-chart {
+#overall-stock-chart, 
+#in-stock-chart,
+#out-stock-chart
+{
     width: 100%; /* 차트 폭을 부모 요소에 맞춤 */
     height: 400px; /* 차트 높이 */
     margin-bottom: 10px; /* 차트 간격 */
@@ -47,8 +58,22 @@ canvas {
     height: 900px; /* 캘린더와 차트의 높이를 동일하게 설정 */
     display: flex;
     align-items: stretch; /* 자식 요소의 높이를 동일하게 설정 */
+    margin-left: 30px !important;
 }
 
+.fc-toolbar h2 {
+ margin-left: 15px !important;
+ margin-right: 15px !important;
+
+}
+
+.fc {
+   margin-bottom: 200px;
+}
+
+#product-stock-chart, #overall-stock-chart #in-stock-chart, #out-stock-chart {
+    margin-bottom: 40px !important;
+}
 </style>
 
 <!-- 캘린더 -->
@@ -69,24 +94,20 @@ document.addEventListener('DOMContentLoaded', function() {
         editable: true,
         dayMaxEvents: true, 
         events: [
-            <%-- JSP scriptlet을 사용하여 데이터를 JSON으로 변환 --%>
             <c:forEach var="vo" items="${list}" varStatus="status">
             {
-                    title: '${vo.partner_companyname} 검수일',
-                    start: '${vo.prp_issueDate}T00:00:00', 
-                    // end: '${vo.prp_issueDate}T23:59:59',   
-                    color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
-                }
-                <c:if test="${!status.last}">,</c:if>
+                title: '${vo.partner_companyname} 검수일',
+                start: '${vo.prp_issueDate}T00:00:00', 
+                color: '#' + Math.round(Math.random() * 0xffffff).toString(16)
+            }
+            <c:if test="${!status.last}">,</c:if>
             </c:forEach>
         ]
     });
-            console.log("he");   
     console.log(calendar.getEvents()); 
     calendar.render();
 });
 </script>
-
 
 <!-- 캘린더 및 차트 div-->
 <div class="container">
@@ -95,129 +116,286 @@ document.addEventListener('DOMContentLoaded', function() {
         <canvas id="product-stock-chart"></canvas>
         <!-- 날짜별 전체 재고 총액 차트 -->
         <canvas id="overall-stock-chart"></canvas>
+        <canvas id="in-stock-chart"></canvas>
+        <canvas id="out-stock-chart"></canvas>
     </div>
 
-    <div class="calendar" style=" margin-left: 10px;">
-        <div class="content-body">
+    <div class="calendar" style="margin-left: 10px;">
             <div id='calendar'></div>
         </div>
     </div>
-</div>
 
 <!-- 차트 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-        // JSON 데이터는 문자열로 그대로 삽입합니다.
-        const productChartData = JSON.parse('${chartData}');
-        const overallStockData = JSON.parse('${totalStock}');
+    // JSON 데이터는 문자열로 그대로 삽입합니다.
+    const productChartData = JSON.parse('${chartData}');
+    const overallStockData = JSON.parse('${totalStock}');
+    const inStockData = JSON.parse('${inChart}');
+    const outStockData = JSON.parse('${outChart}');
 
-        console.log('chartData:', productChartData);
-        console.log('totalStock:', overallStockData);
+    console.log('chartData:', productChartData);
+    console.log('totalStock:', overallStockData);
+    console.log('inStockData:', inStockData);
+    console.log('outStockData:', outStockData);
+    
+    const productNames = productChartData.map(item => item.ma_name);
+    const stockQuantities = productChartData.map(item => item.totalQuantity);
+    const stockValues = productChartData.map(item => item.totalValue);
 
-        // 품목별 재고 및 총액 차트 데이터
-        const productNames = productChartData.map(item => item.ma_name); // 상품명 추출
-        const stockQuantities = productChartData.map(item => item.totalQuantity); // 재고량 추출
-        const stockValues = productChartData.map(item => item.totalValue); // 총액 추출
+    // 품목별 재고 및 총액 차트 데이터
+    const ctx1 = document.getElementById('product-stock-chart').getContext('2d');
+    
+    const data1 = {
+        labels: productNames,
+        datasets: [
+            {
+                type: 'bar',
+                label: '각 상품별 재고량',
+                data: stockQuantities,
+                backgroundColor: '#4bc0c0',
+                borderColor: '#4bc0c0', 
+                borderWidth: 1,
+                yAxisID: 'y',
+            },
+            {
+                type: 'bar',
+                label: '각 상품별 총액',
+                data: stockValues,
+                backgroundColor: '#ff9f40', 
+                borderColor: '#ff9f40', 
+                borderWidth: 2,
+                yAxisID: 'y1', 
+                fill: false,
+            }
+        ]
+    };
 
-        const ctx1 = document.getElementById('product-stock-chart').getContext('2d');
-        
-        const data1 = {
-            labels: productNames, // 상품명
-            datasets: [
-                {
-                    type: 'bar',
-                    label: '각 상품별 재고량',
-                    data: stockQuantities, // 각 상품의 재고량
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                },
-                {
-                    type: 'bar',
-                    label: '각 상품별 총액',
-                    data: stockValues, // 총액
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderColor: 'rgba(255, 159, 64, 1)',
-                    borderWidth: 1
+    const options1 = {
+        scales: {
+            y: {
+                type: 'linear',
+                position: 'left',
+                title: {
+                    display: true,
+                    text: '총액'
                 }
-            ]
-        };
-
-        const options1 = {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: '재고량 및 총액'
-                    }
+            },
+            y1: {
+                type: 'linear',
+                position: 'right',
+                title: {
+                    display: true,
+                    text: '재고량'
                 },
-                x: {
-                    title: {
-                        display: true,
-                        text: '상품명'
-                    }
+                grid: {
+                    drawOnChartArea: false // 그리드 숨기기
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: '상품명'
                 }
             }
-        };
+        }
+    };
 
-        new Chart(ctx1, {
-            type: 'bar',
-            data: data1,
-            options: options1
-        });
+    new Chart(ctx1, {
+        data: data1,
+        options: options1
+    });
 
-        // 날짜별 전체 재고 총액 차트
-        const ctx2 = document.getElementById('overall-stock-chart').getContext('2d');
+    // 날짜별 전체 재고 총액 차트
+    const ctx2 = document.getElementById('overall-stock-chart').getContext('2d');
 
-        // 날짜 레이블과 총액 데이터를 분리
-        const dateLabels = overallStockData.map(item => {
-            const date = new Date(item.date);
-            return date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
-        });
-        const stockValuesData = overallStockData.map(item => item.totalValue);
+    const dateLabels = overallStockData.map(item => {
+        const date = new Date(item.date);
+        return date.toISOString().split('T')[0];
+    });
+    const stockValuesData = overallStockData.map(item => item.totalValue);
 
-        const data2 = {
-            labels: dateLabels, // 날짜 레이블
-            datasets: [
-                {
-                    type: 'line',
-                    label: '전체 재고 총액',
-                    data: stockValuesData, // 전체 재고의 총액
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 2,
-                    fill: false,
-                    tension: 0.1
+    const data2 = {
+        labels: dateLabels,
+        datasets: [
+            {
+                type: 'line',
+                label: '전체 재고 총액',
+                data: stockValuesData,
+                borderColor: '#f50509', 
+                borderWidth: 2,
+                fill: false,
+                tension: 0.1
+            }
+        ]
+    };
+
+    const options2 = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '총액'
                 }
-            ]
-        };
-
-        const options2 = {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: '총액'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: '날짜'
-                    }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: '날짜'
                 }
             }
-        };
+        }
+    };
 
-        new Chart(ctx2, {
-            type: 'line',
-            data: data2,
-            options: options2
-        });
+    new Chart(ctx2, {
+        type: 'line',
+        data: data2,
+        options: options2
+    });
+    
+
+    
+    // 입고 수량 차트
+    const ctx3 = document.getElementById('in-stock-chart').getContext('2d');
+
+    const inProductNames = inStockData.map(item => item.ma_name);
+    const inQuantities = inStockData.map(item => item.io_quantity);
+    const inValues = inStockData.map(item => item.inValue);
+    
+    console.log('입고 총액 데이터:', inValues);
+
+    const data3 = {
+        labels: inProductNames, 
+        datasets: [
+            {
+                type: 'bar',
+                label: '각 상품별 입고량',
+                data: inQuantities,
+                backgroundColor: '#c0ebb5', 
+                borderColor: '#c0ebb5', 
+                borderWidth: 1,
+                yAxisID: 'y', // 입고량에 대한 y축
+            },
+            {
+                type: 'bar',
+                label: '입고 총액',
+                data: inValues,
+                backgroundColor: '#e4eb31', 
+                borderColor: '#e4eb31', 
+                borderWidth: 2,
+                yAxisID: 'y1', // 입고 총액에 대한 y축
+                fill: false,
+            }
+        ]
+    };
+
+    const options3 = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '입고량'
+                }
+            },
+            y1: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '입고 총액'
+                },
+                position: 'right',
+                grid: {
+                    drawOnChartArea: false // 그리드 숨기기
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: '상품명'
+                }
+            }
+        }
+    };
+
+    new Chart(ctx3, {
+        type: 'bar',
+        data: data3,
+        options: options3
+    });
+    
+    // 출고 수량 차트
+    const ctx4 = document.getElementById('out-stock-chart').getContext('2d');
+
+    const outProductNames = outStockData.map(item => item.ma_name);
+    const outQuantities = outStockData.map(item => item.io_quantity);
+    const outValues = outStockData.map(item => item.outValue);
+    
+    console.log('출고 총액 데이터:', outValues);
+
+    const data4 = {
+        labels: outProductNames,
+        datasets: [
+            {
+                type: 'bar',
+                label: '각 상품별 출고량',
+                data: outQuantities,
+                backgroundColor: '#65a7fc', 
+                borderColor: '#65a7fc', 
+                borderWidth: 1,
+                yAxisID: 'y', // 출고량에 대한 y축
+            },
+            {
+                type: 'bar',
+                label: '출고 총액',
+                data: outValues,
+                backgroundColor: '#d26eeb', 
+                borderColor: '#d26eeb', 
+                borderWidth: 2,
+                yAxisID: 'y1', // 출고 총액에 대한 y축
+                fill: false,
+            }
+        ]
+    };
+
+    const options4 = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '출고량'
+                }
+            },
+            y1: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: '출고 총액'
+                },
+                position: 'right',
+                grid: {
+                    drawOnChartArea: false // 그리드 숨기기
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: '상품명'
+                }
+            }
+        }
+    };
+
+    new Chart(ctx4, {
+        type: 'bar',
+        data: data4,
+        options: options4
+    });
 </script>
 
-<!-- login script -->
+<!-- 로그인 체크 스크립트 -->
 <script>
    function checkapp() {
       var user_approval = document.getElementById('login_user_approval').value;
@@ -248,6 +426,4 @@ document.addEventListener('DOMContentLoaded', function() {
 <input value="${userlogin.user_approval }" type="hidden"
    id="login_user_approval" name="login_user_approval">
 
-
 <%@ include file="../include/footer.jsp"%>
-</html>

@@ -1,8 +1,6 @@
 package com.kr.kimchi;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -29,17 +27,13 @@ import com.kr.kimchi.vo.CalenderVO;
  */
 @Controller
 public class HomeController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	
-	@Inject
-	private CalenderService service;
-	
-	@Autowired
+
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+    @Inject
+    private CalenderService service;
+
+    @Autowired
     private ChartService chartService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -55,24 +49,40 @@ public class HomeController {
 		System.out.println("list : " + list);
 		model.addAttribute("list", list );
 		
-		//차트부분
-		 List<Map<String, Object>> chartData = chartService.chartData();
-	        // 전체 재고 총액 정보 조회
-	        List<Map<String, Object>> totalStock = chartService.totalStockChart();
 
-	        // ObjectMapper 생성
-	        ObjectMapper objectMapper = new ObjectMapper();
-	        
-	        // 모델에 JSON 문자열 추가
-	        String jsonChartData = objectMapper.writeValueAsString(chartData);
-	        String jsonTotalStock = objectMapper.writeValueAsString(totalStock);
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home(Locale locale, Model model, HttpSession session) throws SQLException, JsonProcessingException {
 
-	        model.addAttribute("chartData", jsonChartData);
-	        model.addAttribute("totalStock", jsonTotalStock);
-		
-		
-		 
-		return "calender/startPage";
-	}
-	
+        List<CalenderVO> list = service.calenderList();
+        System.out.println("list : " + list);
+        model.addAttribute("list", list);
+
+        // 전체 재고 정보 
+        List<Map<String, Object>> chartData = chartService.chartData(); 
+
+        // 전체 재고 총액 정보 조회 
+        List<Map<String, Object>> totalStock = chartService.totalStockChart(); 
+
+        // 입고 수량 정보
+        List<Map<String, Object>> inChart = chartService.inChart();
+        
+        // 출고 수량 정보
+        List<Map<String, Object>> outChart = chartService.outChart();
+
+        // ObjectMapper 생성
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 모델에 JSON 문자열 추가
+        String jsonChartData = objectMapper.writeValueAsString(chartData);
+        String jsonTotalStock = objectMapper.writeValueAsString(totalStock);
+        String jsonInChart = objectMapper.writeValueAsString(inChart);
+        String jsonOutChart = objectMapper.writeValueAsString(outChart);
+
+        model.addAttribute("chartData", jsonChartData);
+        model.addAttribute("totalStock", jsonTotalStock);
+        model.addAttribute("inChart", jsonInChart);
+        model.addAttribute("outChart", jsonOutChart);
+
+        return "calender/startPage";
+    }
 }
