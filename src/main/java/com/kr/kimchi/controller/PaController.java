@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.kimchi.EmailSend;
@@ -215,7 +216,7 @@ public class PaController {
 	}
 	
 	@GetMapping(value = "paInsert")
-	public ModelAndView obtainAll() {
+	public ModelAndView paInsert() {
 		ModelAndView mav = new ModelAndView();
 		List<ObtainVO> oblist = obtservice.obSelectList();
 		mav.addObject("oblist", oblist);
@@ -223,8 +224,9 @@ public class PaController {
 		return mav;
 	}// end
 	
+	@ResponseBody
 	@PostMapping(value="paUpdate")
-	public ModelAndView prpUpdate(@RequestParam("pa_referenceNo") int pa_referenceNo,
+	public ModelAndView paUpdate(@RequestParam("pa_referenceNo") int pa_referenceNo,
 			@RequestParam("user_id") String user_id,@RequestParam("pa_issueDate") String pa_issueDate,@RequestParam("code") String code,
 			@RequestParam("obtain_no") int obtain_no,
 			@RequestParam("notes") String notes) throws ParseException {

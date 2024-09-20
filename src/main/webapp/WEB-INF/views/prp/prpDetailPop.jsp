@@ -1,8 +1,10 @@
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="content-body">
+<%Map<String, Object> userlogin = (Map<String, Object>) session.getAttribute("userlogin");%>
 	
 		<input type="hidden" name="prp_no" id="prp_no" value="${prpVO.prp_no}">
 		<input type="hidden" name="pa_no" id="pa_no" value="${prpVO.pa_no}">
@@ -18,10 +20,11 @@
 		</div>
 		<div class="form-group">
 			<label class="label">검수자</label>
-			<input type="text" name ="user_id" value="abcd" readonly> 
 			<!-- sessin 값 확인 필요 
-			<input type="hidden" name ="user_id" value="session.getAttribute()" readonly> 
+			<input type="text" name ="user_id" value="abcd" readonly> 
 			-->
+			<input type="text" value="<%=userlogin.get("user_name")%>" readonly> 
+			<input type="hidden" name ="user_id" value="<%=userlogin.get("user_id")%>" readonly> 
 		</div>
 		<div class="form-group">
 			<label class="label">검수 진행도</label>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div class="quixnav">
 	<div class="quixnav-scroll">
 		<ul class="metismenu" id="menu">
@@ -40,7 +41,8 @@
 						</ul></li>
 					<!-- 발주관리 -->
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-						<i></i> <span class="nav-text">발주관리</span></a>
+						<i class="fas fa-shopping-cart"></i>
+						<span class="nav-text">발주관리</span></a>
 						<ul aria-expanded="false">
 							<li><a href="${contextPath}/pa">발주목록</a></li>
 	              			 <li><a href="${contextPath}/paInsert">발주등록</a></li>

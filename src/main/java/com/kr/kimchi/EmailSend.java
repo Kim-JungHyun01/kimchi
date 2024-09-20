@@ -45,9 +45,9 @@ public class EmailSend {
 	
 	public static void sendEmail(String date, String parthner, String receivedMail) {
 		// 구글 이메일
-		String user_email= "";
+		String user_email= "dohyun9160@gmail.com";
 		// 구글 비번
-		String user_pw = "";
+		String user_pw = "lxrd avnm mucs wtds";
 		
 		String smtp_host = "smtp.gmail.com";
 		int smtp_port = 465;  // TLS : 587, SSL : 465
@@ -97,9 +97,9 @@ public class EmailSend {
 	
 	public static void sendEmail2(String date, String notes,String receivedMail) {
 		// 구글 이메일
-		String user_email= "";
+		String user_email= "dohyun9160@gmail.com";
 		// 구글 비번
-		String user_pw = "";
+		String user_pw = "lxrd avnm mucs wtds";
 		
 		String smtp_host = "smtp.gmail.com";
 		int smtp_port = 465;  // TLS : 587, SSL : 465

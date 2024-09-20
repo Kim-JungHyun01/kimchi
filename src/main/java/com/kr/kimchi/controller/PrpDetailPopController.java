@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kr.kimchi.service.PrpDetailPopService;
@@ -32,6 +33,7 @@ public class PrpDetailPopController {
 		return mav;
 	}
 
+	@ResponseBody
 	@PostMapping(value="/prpUpdate")
 	public ModelAndView prpUpdate(@RequestParam("prp_no") int prp_no, @RequestParam("prp_revisionDate") String prp_revisionDate, 
 			@RequestParam("prp_progress") int prp_progress, @RequestParam("prp_notes") String prp_notes,@RequestParam("pa_no") int pa_no) {

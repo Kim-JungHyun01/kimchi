@@ -154,7 +154,7 @@
 					<div class="modal-body">
 						<form action="/paDetailUpdate" method="post" onsubmit="return checkForm()">
 							<div class="form-group">
-								<label for="date">납기 일자 : </label> 
+								<label for="date">검수 일자 : </label> 
 								<input type="date" name="prp_issueDate" id="date" min="" style="width: 170px;margin-left: 0;"> <br/>
 							</div>
 							<div class="form-group">
@@ -168,7 +168,7 @@
 							</div>
 							<div class="form-group">
 								<label for="prp_notes">결과 및 보완내용</label>
-								<textarea id="prp_notes" name="prp_notes" style="margin-left: 0;"></textarea>
+								<textarea id="prp_notes" name="prp_notes" style="margin-left: 0; text-align: left;"></textarea>
 							</div>
 			
 							<input type="hidden" name ="user_id" value="<%=userlogin.get("user_id")%>" readonly> <br/>
