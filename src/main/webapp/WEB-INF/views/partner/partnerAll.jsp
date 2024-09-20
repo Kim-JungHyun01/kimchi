@@ -26,8 +26,7 @@ function checkApproval(partner_approval, partner_taxid) {
 <%@include file="../include/header.jsp"%>
 <div class="content-body">
 	<form action="?pageNum=1" method="get" class="search-form">
-		<input type="text" name="partner_companyname" placeholder="협력 회사명 검색"
-			value="${param.partner_companyname}" class="search-input" />
+		<input type="text" name="partner_companyname" placeholder="협력 회사명 검색" value="${param.partner_companyname}" class="search-input" />
 		<button type="submit" class="search-button">검색</button>
 	</form>
 

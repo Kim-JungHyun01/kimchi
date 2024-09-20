@@ -40,7 +40,7 @@
 				<td>계약납기일</td>
 			</tr>
 			<c:forEach var="conlist" items="${conlist}">
-				<%-- <c:if test="${conlist.contracts_status eq '계약승인'}"> --%>
+				<c:if test="${conlist.contracts_status eq '계약승인'}">
 					<c:forEach var="itemlist" items="${itemlist}">
 						<c:if test="${conlist.item_no == itemlist.item_no}">
 							<tr
@@ -55,7 +55,7 @@
 							</tr>
 						</c:if>
 					</c:forEach>
-				<%-- </c:if> --%>
+				</c:if>
 			</c:forEach>
 		</table>
 		<div class="modal-footer">

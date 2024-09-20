@@ -22,8 +22,8 @@ public class UserService {
 	}// end
 
 //	사용자 전체 + 페이징 + 서치
-	public List<UserVO> userAll(int startRow, int pageSize, String user_name) {
-		return userdao.userAll(startRow, pageSize, user_name);
+	public List<UserVO> userAll(int startRow, int pageSize, String user_name, String user_department) {
+		return userdao.userAll(startRow, pageSize, user_name, user_department);
 	}// end
 	
 //	전체 레코드 수
@@ -32,8 +32,8 @@ public class UserService {
     }//end
     
 //    검색이후 페이지 수
-    public Integer userSearch(int pageSize, String user_name) {
-		return userdao.userSearch(pageSize, user_name);
+    public Integer userSearch(int pageSize, String user_name, String user_department) {
+		return userdao.userSearch(pageSize, user_name, user_department);
     }
 
 //	사용자 상세

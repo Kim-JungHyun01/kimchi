@@ -6,6 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	function openpartnerModal() {
+		loadPartners(1,''); // 처음 열 때 첫 페이지 로드
 		document.getElementById("partnerModal").style.display = "flex";
 	}//end
 	function closepartnerModal() {
@@ -21,12 +22,22 @@
 		closepartnerModal(); // 모달 닫기
 	}//end
 	
-	// 협력회사 목록 로드
-	function loadPartners(pageNum) {
+	//회사명으로 검색
+	function searchPartner(pageNum = 1){
+		const input = document.getElementById('searchPartnerInput').value.toLowerCase();
+		loadPartners(pageNum, input);
+	}//end
+	
+	function resctsearch(){
+		loadPartners(1,'');
+	}//end
+	
+	// 협력회사 목록 로드_새로고침 방지
+	function loadPartners(pageNum, partnerCompanyname) {
 		$.ajax({
 			url: '<c:url value="/contracts/contractsInsertForm" />',
 			type: 'GET',
-			data: { pageNum: pageNum },
+			data: { pageNum: pageNum, partner_companyname: partnerCompanyname}, //검색 정보 전송
 			success: function(data) {
 				// 모달 내용 업데이트 // partnerModal의 내용을 가져오는 부분 수정
 			    const partnerContent = $(data).find('#partnerModal .modal-body').html();
@@ -44,6 +55,9 @@
 			<h3>협력회사 목록</h3>
 		</div>
 		<div class="modal-body">
+		    <input type="text" id="searchPartnerInput" placeholder="회사명 검색" class="search-input">
+            <button onclick="searchPartner(1)" class="search-button">검색</button>
+            <button onclick="resctsearch()" class="search-button">초기화</button>
 			<table class="modal-table">
 				<tr>
 					<td>혁력회사 사업자번호</td>

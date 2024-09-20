@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,11 +52,11 @@ public class ContractsController {
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 	    
 	    List<ContractsVO> conlist = conservice.contractsAll(startRow, pageSize);
-	    List<UserVO> userlist = userservice.userAll(0, 100, null);
+	    List<UserVO> userlist = userservice.userAll(0, 100, null, "생산부서");
 	    List<ItemVO> itemlist =itemservice.itemAll(0, 100, null);
 	    
 	    Integer totalCount = conservice.getTotalCount(); // 총 레코드 수 가져옴
-	    Integer totalPages = itemservice.itemSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
+	    Integer totalPages = (int) Math.ceil((double) totalCount / pageSize);//검색이 없기에 따로 계산
 	    
 	    PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		ModelAndView mav = new ModelAndView();
@@ -90,18 +89,22 @@ public class ContractsController {
 
 //	계약 추가
 	@GetMapping(value = "contracts/contractsInsertForm")
-	public ModelAndView contractsInsertForm(@RequestParam(defaultValue = "1") int pageNum) {
+	public ModelAndView contractsInsertForm(@RequestParam(defaultValue = "1") int pageNum,
+											@RequestParam(required = false) String item_name,
+											@RequestParam(required = false) String user_name,
+											@RequestParam(required = false) String user_department,
+											@RequestParam(required = false) String partner_companyname) {
 		ModelAndView mav = new ModelAndView();
 		// item 페이징
-	    ModelAndView itemMav = pageservice.itempaging(pageNum);
+	    ModelAndView itemMav = pageservice.itempaging(pageNum, item_name);
 	    mav.addAllObjects(itemMav.getModel());
 
 	    // partner 페이징
-	    ModelAndView partnerMav = pageservice.partnerpaging(pageNum);
+	    ModelAndView partnerMav = pageservice.partnerpaging(pageNum, partner_companyname);
 	    mav.addAllObjects(partnerMav.getModel());
 		
 //		user 페이징
-	    ModelAndView userMav = pageservice.userpaging(pageNum, null);
+	    ModelAndView userMav = pageservice.userpaging(pageNum, user_name, user_department);
 	    mav.addAllObjects(userMav.getModel());
 	    
 		mav.setViewName("contracts/contractsInsertForm");
@@ -178,7 +181,7 @@ public class ContractsController {
 		String filename = pa.getCodeVo().getCode_name() + ".PDF";
 		System.out.println(filename);
 //	    String filePath = "C:/KJH/springworkspaces/practive/src/main/webapp/resources/pdf/" + filename;
-		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;
+		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//절대경로
 		File file = new File(filePath);
 		if (!file.exists()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

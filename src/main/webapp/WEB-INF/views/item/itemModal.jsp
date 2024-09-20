@@ -2,10 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
-<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>"
-	rel='stylesheet' />
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	function openitemModal() {
+		loadItems(1,''); // 처음 열 때 첫 페이지 로드
 		document.getElementById("itemModal").style.display = "flex";
 	}//end
 	function closeitemModal() {
@@ -22,29 +23,22 @@
 	}//end
 	
 	//물품 검색
-	function searchItems() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const rows = document.querySelectorAll('.modal-table tr');
-
-	    rows.forEach((row, index) => {
-	        if (index === 0) return; // 첫 번째 행(헤더)은 제외
-	        const itemName = row.cells[2].textContent.toLowerCase();
-	        row.style.display = itemName.includes(input) ? '' : 'none';
-	    });
+	function searchItems(pageNum = 1) {
+	    const input = document.getElementById('searchItemInput').value.toLowerCase();
+	    loadItems(pageNum, input);
 	}//end
 
 	//검색 초기화
 	function resetSearch() {
-	    document.getElementById('searchInput').value = ''; // 입력 필드 초기화
-	    searchItems(); // 모든 항목 표시
+		loadItems(1,'');
 	}//end
 	
 	//물품 목록 로드
-	function loadItems(pageNum) {
+	function loadItems(pageNum, itemName) {
 	    $.ajax({
 	        url: '<c:url value="/contracts/contractsInsertForm" />',
 	        type: 'GET',
-	        data: { pageNum: pageNum },
+	        data: { pageNum: pageNum, item_name: itemName },
 	        success: function(data) {
 	            // 모달 내용 업데이트 // item의 내용을 가져오는 부분 수정
 	            const itemContent = $(data).find('#itemModal .modal-body').html();
@@ -66,8 +60,8 @@
 			<h3>물품 목록</h3>
 		</div>
 		<div class="modal-body">
-				<input type="text" id="searchInput" placeholder="물품명으로 검색" class="search-input">
-   			 	<button onclick="searchItems()" class="search-button">검색</button>
+				<input type="text" id="searchItemInput" placeholder="물품명으로 검색" class="search-input">
+   			 	<button onclick="searchItems(1)" class="search-button">검색</button>
    			 	<button onclick="resetSearch()" class="search-button">초기화</button>
 			<table class="modal-table">
 				<tr>
@@ -93,7 +87,8 @@
 			<!-- pagination -->
 			<div class="pagination">
 				<c:if test="${item_currentPage > 1}">
-					<a href="javascript:void(0);" onclick="loadItems(${item_currentPage - 1})">이전</a>
+					<a href="javascript:void(0);"
+						onclick="loadItems(${item_currentPage - 1}, document.getElementById('searchItemInput').value)">이전</a>
 				</c:if>
 				<c:forEach var="page" begin="1" end="${item_totalPages}">
 					<c:choose>
@@ -101,13 +96,15 @@
 							<strong>${page}</strong>
 						</c:when>
 						<c:otherwise>
-							<a href="javascript:void(0);" onclick="loadItems(${page})">${page}</a>
+							<a href="javascript:void(0);"
+								onclick="loadItems(${page}, document.getElementById('searchItemInput').value)">${page}</a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 
 				<c:if test="${item_currentPage < item_totalPages}">
-					<a href="javascript:void(0);" onclick="loadItems(${item_currentPage + 1})">다음</a>
+					<a href="javascript:void(0);"
+						onclick="loadItems(${item_currentPage + 1}, document.getElementById('searchItemInput').value)">다음</a>
 				</c:if>
 			</div>
 			<div class="modal-footer">

@@ -1,6 +1,5 @@
 package com.kr.kimchi.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,13 +27,11 @@ public class ObtainController {
 	@Inject
 	private MaterialService maservice;
 	@Inject
-	private CodeService codeservice;
-	@Inject
-	private PaService paservice;
-	@Inject
 	private ContractsService conservice;
 	@Inject
 	private Bom_maService bom_maservice;
+	@Inject
+	private ModalpagingService pageservice;
 
 
 //	조달계획 보기_전체
@@ -45,11 +42,11 @@ public class ObtainController {
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 		
 		List<ObtainVO> oblist = obtservice.obtainAll(startRow,pageSize);
-		List<UserVO> userlist = userservice.userAll(0, 100, null);
+		List<UserVO> userlist = userservice.userAll(0, 100, null, null);
 		List<MaterialVO> malist = maservice.maList(0, 100, null);
 		
 		Integer totalCount = obtservice.getTotalCount(); // 총 레코드 수 가져옴
-		Integer totalPages = userservice.userSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
+		Integer totalPages = (int) Math.ceil((double) totalCount / pageSize);//검색이 없기에 따로 계산
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		
 		ModelAndView mav = new ModelAndView();
@@ -84,19 +81,31 @@ public class ObtainController {
 
 //	조달계획 추가
 	@GetMapping(value = "obtain/obtainInsertForm")
-	public ModelAndView obtainInsertForm(int production_no) {
+	public ModelAndView obtainInsertForm(int production_no,
+										@RequestParam(defaultValue = "1") int pageNum,
+										@RequestParam(required = false) String item_name,
+										@RequestParam(required = false) String user_name,
+										@RequestParam(required = false) String user_department,
+										@RequestParam(required = false) String partner_companyname) {
+		ModelAndView mav = new ModelAndView();
+		//생산계획에서 조달계획으로 이동하기 위한 것
 		ProductionVO pro = proservice.productionSelect(production_no);
 		ContractsVO con = conservice.contractsSelect(pro.getContracts_no());
-		List<PartnerVO> partnerlist = partservice.partnerAll(0,100, null);
-		List<MaterialVO> malist = maservice.maList(0, 100, null);
-//		List<MaterialVO> malist = maservice.maList(0, 100, null);
+		//특정 ma_id만 출력학 위한 것
 		List<Bom_maVO> bom_malist = bom_maservice.bom_maSelect(con.getItem_no());
-		List<UserVO> userlist = userservice.userAll(0,100, null);
-		ModelAndView mav = new ModelAndView();
+		List<MaterialVO> malist = maservice.maList(0, 100, null);
+		
+	    // partner 페이징
+	    ModelAndView partnerMav = pageservice.partnerpaging(pageNum, partner_companyname);
+	    mav.addAllObjects(partnerMav.getModel());
+		
+//		user 페이징
+	    ModelAndView userMav = pageservice.userpaging(pageNum, user_name, user_department);
+	    mav.addAllObjects(userMav.getModel());
+		
+
 		mav.addObject("pro", pro);
-		mav.addObject("partnerlist", partnerlist);
 		mav.addObject("malist", malist);
-		mav.addObject("userlist", userlist);
 		mav.addObject("bom_malist", bom_malist);
 		mav.setViewName("obtain/obtainInsertForm");
 		return mav;
@@ -139,7 +148,7 @@ public class ObtainController {
 	@PostMapping(value = "obtain/obtainCheck")
 	public String obtainCheck(ObtainVO ob) {
 		obtservice.obtainCheck(ob);
-		// 계약 승인 시 서류 발급
+		// 계약 승인 시 서류 발급=> 입고에서 처리하므로 제외
 //		if (ob.getObtain_status().equals("조달계획확인완료")) {
 //			ObtainVO inobtain = obtservice.obtainSelect(ob.getObtain_no());
 //			CodeVO code = codeservice.obtainCode(inobtain);
