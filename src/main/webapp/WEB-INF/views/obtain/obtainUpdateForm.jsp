@@ -194,8 +194,7 @@
 			return;
 		}//end
 
-		var obtain_deliveryDate = document
-				.getElementById("obtain_deliveryDate").value;
+		var obtain_deliveryDate = document.getElementById("obtain_deliveryDate").value;
 		if (obtain_deliveryDate === "") {
 			alertprint("자재계획납기일", "obtain_deliveryDate");
 			return;

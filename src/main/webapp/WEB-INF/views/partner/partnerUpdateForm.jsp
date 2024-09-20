@@ -40,13 +40,12 @@
 				<label>협력회사 email</label> <input style="width: 80%;" name="partner_email" id="partner_email" type="text"value="${part.partner_email }">
 			</div>
 			<div class="input-group">
-				<label>협력회사 사업장주소</label>
+				<label>협력회사 사업장주소</label><input type="hidden" name="partner_add" id="partner_add" value="${part.partner_add }" onkeyup="setAddress()"readonly>
 				<input type="text" id="postcode" placeholder="우편번호" style="width: 200px;" readonly onkeyup="setAddress()">
 				<input type="text" id="address" placeholder="주소" style="width: 520px; margin-left: 20px;" readonly onkeyup="setAddress()">
 				<input type="button" onclick="daumPost()" value="우편번호 찾기"  class="addbutton" style="height: 45px; margin-top: 5px;">
 				<input type="text" id="detailAddress"  placeholder="상세주소" onkeyup="setAddress()"  oninput="inputpartadd()" style="margin-left:190px; width:740px;">
 			</div>
-				<input type="text" name="partner_add" id="partner_add" value="${part.partner_add }" onkeyup="setAddress()"readonly>
 			<hr>
 			<div style="text-align: right;">
 				<button  class="addbutton" type="button" onclick="btnsumbit()">협력회사 수정</button>
@@ -166,7 +165,7 @@ function btnsumbit() {
     
     if (!confirm('협력회사수정을 하시겠습니까?')) {
         alert("협력회사수정이 취소되었습니다.");
-        location.href = "/partner/partnerSelect?partner_taxid="+${part.partner_taxid };
+        location.href = `/partner/partnerSelect?partner_taxid=${part.partner_taxid }`;
         return;
     }
         document.getElementById("partnerUpdateForm").submit();

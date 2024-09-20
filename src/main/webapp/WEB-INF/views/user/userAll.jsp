@@ -31,7 +31,7 @@ function checkApproval(user_approval, user_id) {
 	</form>
 
 	<div style="margin-left: 20px;">
-		<h3>사용자 목록</h3>
+		<h3>사원 목록</h3>
 		<table class="table">
 			<tr>
 				<td>사원명</td>

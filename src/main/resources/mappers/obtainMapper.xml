@@ -60,7 +60,7 @@
 		ELSE production.production_status
 		END,
 		obtain.obtain_document = IF(#{obtain_status} = '조달계획확인완료', 1, 0),
-		obtain.obtain_status = #{obtain_status},
+		obtain.obtain_status = IF(#{obtain_status} = '조달계획확인완료', '조달중', '조달계획취소'),
 		obtain.obtain_registrationDate = NOW(),
 		production.production_registrationDate =
 		CASE

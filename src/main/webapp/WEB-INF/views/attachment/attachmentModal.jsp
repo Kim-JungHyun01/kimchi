@@ -41,7 +41,7 @@
 <div id="attSelectModal" class="modal-long">
 	<div class="modal-content">
 			<div class="modal-header">
-				<h3>물품 목록</h3>
+				<h3>첨부파일목록</h3>
 			</div>
 			<div class="modal-body">
 				<table class="modal-table">

@@ -64,7 +64,7 @@ function submitCheck() {
 
     if (!confirm('회원정보를 수정하시겠습니까?')) {
         alert("회원정보 수정이 취소되었습니다.");
-        location.href = "/user/userSelect?user_id="+${user.user_id };
+        location.href = `/user/userSelect?user_id=${user.user_id}`;
         return;
     }//end
     
