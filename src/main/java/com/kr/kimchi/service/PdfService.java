@@ -18,7 +18,10 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.kr.kimchi.vo.ContractsVO;
 import com.kr.kimchi.vo.ItemVO;
+import com.kr.kimchi.vo.MaterialVO;
+import com.kr.kimchi.vo.ObtainVO;
 import com.kr.kimchi.vo.PartnerVO;
+import com.kr.kimchi.vo.UserVO;
 
 @Service
 public class PdfService {
@@ -29,7 +32,14 @@ public class PdfService {
 	private PartnerService partservice;
 	@Inject
 	private ContractsService conservice;
+	@Inject
+	private ObtainService obtainservice;
+	@Inject
+	private MaterialService maservice;
+	@Inject
+	private UserService userservice;
 
+	//계약서
 	public int createContract(int contracts_no, String code_name) {
 //		사용할 데이터
 		ContractsVO con = conservice.contractsSelect(contracts_no);
@@ -109,7 +119,7 @@ public class PdfService {
 			e.printStackTrace();
 		}
 		return result; // 결과 반환
-	}
+	}//end
 
 //계약서 내용
 	private static Map<Integer, String> contractFood(PartnerVO part, ContractsVO con) {
@@ -230,4 +240,64 @@ public class PdfService {
 		return Food;
 	}// end
 
+	
+//	거래명세서 제작
+	public int createStatement(int obtain_no, String code_name) {
+		// 사용할 데이터
+	    ObtainVO obtain = obtainservice.obtainSelect(obtain_no);
+	    MaterialVO ma = maservice.maView(obtain.getMa_id());
+	    PartnerVO partner = partservice.partnerSelect(obtain.getPartner_taxid());
+	    UserVO user = userservice.userSelect(obtain.getUser_id());
+
+	    // 파일 정보 지정
+	    String filename = code_name + ".PDF"; // 파일이름_pdf로 꼭 지정
+	    String filePath = "C:/Users/A9/Desktop/pdf/" + filename; // 파일저장위치
+	    
+	    File file = new File(filePath);
+
+	    int result = -1;
+
+	    // PDF 생성 및 텍스트 추가
+	    Document document = new Document(PageSize.A4, 30, 25, 25, 25);// A4 크기: 210mm x 297mm
+	    try {
+	        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
+	        document.open();
+
+	        // 이미지 추가
+	        String imagePath = "C:/Users/A9/Desktop/거래명세서.jpg"; // 이미지 파일 경로
+	        Image img = Image.getInstance(imagePath);
+
+	        // 이미지 크기 조정_사용 가능한 너비: 210mm - 25mm(좌측) - 25mm(우측) = 160mm | 사용 가능한 높이: 297mm - 30mm(상단) - 25mm(하단) = 242mm
+	        img.scaleToFit(160, 242);
+
+	        // 이미지 위치 설정
+	        float x = 25; // 좌측 여백
+	        float y = document.getPageSize().getHeight() - 30 - img.getScaledHeight(); // 상단 여백과 이미지 높이를 고려한 Y 좌표
+	        img.setAbsolutePosition(x, y); // 이미지 위치 설정
+	        document.add(img); // 이미지 추가
+
+	        // PdfContentByte 객체 가져오기
+	        PdfContentByte canvas = writer.getDirectContent();
+
+	        // 폰트 설정 및 텍스트 추가
+//	        canvas.beginText();
+//	        BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+//	        canvas.setFontAndSize(bf, 12);
+//	        canvas.setTextMatrix(100, 100);
+//	        canvas.showText("회사명: " + partner.getCompanyName()); // 회사명 추가
+//	        canvas.endText();
+
+	        // 추가적인 데이터도 같은 방식으로 추가 가능
+
+	        document.close();
+	        result = 1; //파일 생성 성공
+	    } catch (Exception e) {
+			result = 0; // 파일 생성 실패
+			e.printStackTrace();
+		}
+
+	    return result;
+	}//end
+	
+	
 }// end class

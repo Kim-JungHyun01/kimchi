@@ -59,6 +59,7 @@
 		WHEN #{obtain_status} = '조달계획확인완료' THEN '조달중'
 		ELSE production.production_status
 		END,
+		obtain.obtain_document = IF(#{obtain_status} = '조달계획확인완료', 1, 0),
 		obtain.obtain_status = #{obtain_status},
 		obtain.obtain_registrationDate = NOW(),
 		production.production_registrationDate =
@@ -68,7 +69,6 @@
 		END
 		WHERE
 		obtain.obtain_no = #{obtain_no}
-		<!-- obtain.obtain_document = IF(#{obtain_status} = '조달계획확인완료', 1, 0)-->
 	</update>
 
 	<!-- 구매발주서 발부 -->

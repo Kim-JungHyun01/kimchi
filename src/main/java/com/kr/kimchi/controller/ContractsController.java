@@ -143,6 +143,7 @@ public class ContractsController {
 			// 여기서 codeInsert 메서드의 반환 값을 사용하여 code_id를 가져옵니다.
 			CodeVO insertedCode = codeservice.codeInsert(code);
 			int code_id = insertedCode.getCode_id(); // 올바르게 설정된 code_id 사용
+//			계약서 작성
 			int result = pdfService.createContract(con.getContracts_no(), insertedCode.getCode_name());
 
 			if (result == 1) {
@@ -163,8 +164,6 @@ public class ContractsController {
 
 		return "redirect:/contracts/contractsSelect?contracts_no=" + con.getContracts_no();
 	}// end
-
-//	계약서 작성
 
 // 계약서 보기
 	@GetMapping(value = "contracts/documentView")

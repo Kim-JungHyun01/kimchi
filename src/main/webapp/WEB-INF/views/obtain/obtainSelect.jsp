@@ -146,6 +146,13 @@
 					</form>
 				</div>
 			</c:when>
+			<c:when test="${obtain.obtain_document eq 1}">
+				<form id="documentForm" action="${contextPath}/obtain/documentView" method="get">
+					<input name="ca_id" id="ca_id" type="hidden" value="2"> 
+					<input name="pa_referenceNo" id="pa_referenceNo" type="hidden" value="${obtain.obtain_no}">
+					<button type="submit" class="addbutton">거래명세서확인</button>
+				</form>
+			</c:when>
 			<c:otherwise>
 				<div>
 					<a class="addbutton" href="${contextPath}/production/productionSelect?production_no=${obtain.production_no}">생산계획보기</a>
