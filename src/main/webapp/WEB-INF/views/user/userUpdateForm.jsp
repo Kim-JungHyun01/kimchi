@@ -74,7 +74,7 @@ function submitCheck() {
 </script>
 <%@include file="../include/header.jsp"%>
 <div class="content-body">
-	<h2>사용자 수정목록</h2>
+	<h2>사원 수정화면</h2>
 	<hr>
 	<div class="input-container">
 		<form action="userUpdate" method = post id = "userUpdateForm" name = "userUpdateForm">

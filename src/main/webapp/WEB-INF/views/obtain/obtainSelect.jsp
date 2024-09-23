@@ -135,8 +135,8 @@
 	</div>
 	<div class="button-container">
 			<c:if test="${obtain.obtain_status eq '조달계획확인중'}">
-					<a style="padding: 7px 10px;" class="addbutton" href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획수정</a>
-					<a style="padding: 7px 10px;" class="addbutton" href="${contextPath}/production/productionSelect?production_no=${obtain.production_no}">생산계획보기</a>
+					<a style="padding: 7px 10px; margin-top: 0px;" class="addbutton" href="${contextPath}/obtain/obtainUpdateForm?obtain_no=${obtain.obtain_no}">조달계획수정</a>
+					<a style="padding: 7px 10px; margin-top: 0px;" class="addbutton" href="${contextPath}/production/productionSelect?production_no=${obtain.production_no}">생산계획보기</a>
 					<form action="obtainCheck" method="post" id="checkForm" name="checkForm">
 						<input type="hidden" name="obtain_no" id="obtain_no" value="${obtain.obtain_no}">
 						 <input type="hidden" name="obtain_status" id="obtain_status" value="">

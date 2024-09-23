@@ -2,10 +2,12 @@ package com.kr.kimchi.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -269,14 +271,14 @@ public class PdfService {
 	    Document document = new Document(PageSize.A4, 30, 25, 25, 25); // A4 크기: 210mm x 297mm
 	    try {
 	        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
-	        document.open();
+	        document.open();//서류 열기
 
 	        // 이미지 추가
 	        String imagePath = "C:/Users/A9/Desktop/거래명세서.jpg"; // 이미지 파일 경로
 	        Image img = Image.getInstance(imagePath);
 
 	        // 이미지 크기 조정_사용 가능한 너비: 210mm - 25mm(좌측) - 25mm(우측) = 160mm | 사용 가능한 높이: 297mm - 30mm(상단) - 25mm(하단) = 242mm
-	        img.scaleToFit(750, 700);
+	        img.scaleToFit(750, 700);//그림 크기가 작을 경우 키울것
 
 	        // 이미지 위치 설정
 	        float x = 25; // 좌측 여백
@@ -286,18 +288,89 @@ public class PdfService {
 
 	        // PdfContentByte 객체 가져오기
 	        PdfContentByte canvas = writer.getDirectContent();
-
-	        // 폰트 설정 및 텍스트 추가
-	        
-	        //관리번호
-	         canvas.beginText();
-	         BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-	         canvas.setFontAndSize(bf, 12);
-	         canvas.setTextMatrix(100, 100);
-	         canvas.showText(code_name);
-	         canvas.endText();
-
-	        document.close();
+	        BaseFont bf = BaseFont.createFont("HYGoThic-Medium", "UniKS-UCS2-H", BaseFont.NOT_EMBEDDED);
+//			BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);// 폰트설정
+//			BaseFont bf_kr = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);// 폰트설정
+			canvas.beginText();//글자 추가시작 선언
+			canvas.setFontAndSize(bf, 12);//폰트 사이즈
+			
+			//관리번호_code_name
+			float X1 = x + 338; // 이미지 왼쪽 여백(25)+338 = 363
+			float Y1 = y + img.getScaledHeight() - 76; // 이미지 높이에 따라 Y 좌표 조정 
+			canvas.setTextMatrix(X1, Y1);
+			canvas.showText(code_name);//글자추가
+	         
+	        //담당자
+			float Y2 = y + img.getScaledHeight() - 97; // 이미지 높이에 따라 Y 좌표 조정 
+			canvas.setTextMatrix(X1, Y2);
+			canvas.showText(user.getUser_name());//글자 추가
+	         
+	         //작성일자
+			float Y3 = y + img.getScaledHeight() - 118; // 이미지 높이에 따라 Y 좌표 조정 
+			canvas.setTextMatrix(X1, Y3);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//date => string 변환
+			canvas.showText(format.format(obtain.getObtain_registrationDate()));//글자 추가
+			
+	         //공급업체_partner : 협력회사명, 대표자명, 전화번호, fax
+			float Y4 = y + img.getScaledHeight() - 165; // 이미지 높이에 따라 Y 좌표 조정 
+			
+			float X2 = x + 40;
+			canvas.setTextMatrix(X2, Y4);
+			canvas.showText(partner.getPartner_companyname());//협력회사명
+			
+			float X3 = x + 190;
+			canvas.setTextMatrix(X3, Y4);
+			canvas.showText(partner.getPartner_ownername());//대표자명
+			
+			float X4 = x + 295;
+			canvas.setTextMatrix(X4, Y4);
+			canvas.showText(partner.getPartner_number());//전화번호
+			
+			float X5 = x + 435;
+			canvas.setTextMatrix(X5, Y4);
+			canvas.showText(partner.getPartner_fax());// fax
+	         
+	         //자재 : 품명, 규격, 수량, 단위, 단가, 금액
+			float Y5 = y + img.getScaledHeight() - 225; // 이미지 높이에 따라 Y 좌표 조정 
+			
+			float X6 = x + 60;
+			canvas.setTextMatrix(X6, Y5);
+			canvas.showText(ma.getMa_name());//품명
+			
+			float X7 = x + 143;
+			canvas.setTextMatrix(X7, Y5);
+			canvas.showText(ma.getMa_specifications());//규격
+			
+			float X8 = x + 240;
+			canvas.setTextMatrix(X8, Y5);
+			canvas.showText(Integer.toString(obtain.getObtain_quantity()));//수량
+			
+			float X9 = x + 275;
+			canvas.setTextMatrix(X9, Y5);
+			canvas.showText(ma.getMa_unit());//단위
+			
+			float X10 = x + 305;
+			canvas.setTextMatrix(X10, Y5);
+			canvas.showText(Integer.toString(ma.getMa_price()));//단가
+			
+			float X11 = x + 375;
+			canvas.setTextMatrix(X11, Y5);
+			canvas.showText(Integer.toString(obtain.getObtain_price()));//금액
+			
+			//합계
+			float Y6 = y + img.getScaledHeight() - 600; // 이미지 높이에 따라 Y 좌표 조정 
+			canvas.setTextMatrix(X11, Y6);
+			canvas.showText(Integer.toString(obtain.getObtain_price()));//합계
+			
+	        //자재납기일
+			float X12 = x + 75;
+			float Y7 = y + img.getScaledHeight() - 647; // 이미지 높이에 따라 Y 좌표 조정 
+			canvas.setTextMatrix(X12, Y7);
+			canvas.showText(obtain.getObtain_deliveryDate());
+	         
+	         
+			canvas.endText();//글자 쓰기 종료
+	        document.close();//서류 닫기
 	        result = 1; // 파일 생성 성공
 	    } catch (Exception e) {
 	        result = 0; // 파일 생성 실패
