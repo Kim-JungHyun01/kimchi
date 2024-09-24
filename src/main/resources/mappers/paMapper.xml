@@ -143,7 +143,7 @@
 			join material e on d.ma_id = e.ma_id
 			join production f on d.production_no = f.production_no
 			join contracts g on f.contracts_no = g.contracts_no
-			join partner h on g.partner_taxid = h.partner_taxid
+			join partner h on d.partner_taxid = h.partner_taxid
 			join item i on g.item_no = i.item_no
 			join user j on j.user_id = a.user_id
 		where b.ca_id = 3

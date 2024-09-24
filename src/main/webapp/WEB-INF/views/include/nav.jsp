@@ -44,8 +44,10 @@
 						<i class="fas fa-shopping-cart"></i>
 						<span class="nav-text">발주관리</span></a>
 						<ul aria-expanded="false">
-							<li><a href="${contextPath}/pa">발주목록</a></li>
-	              			 <li><a href="${contextPath}/paInsert">발주등록</a></li>
+							<li>
+					            <a href="javascript:void(0)" onclick="postToURL('${contextPath}/pa/pa')" >발주목록</a>
+					        </li>
+	              			<li><a href="${contextPath}/pa/paInsert">발주등록</a></li>
 						</ul></li>
 					<!-- 기울기 센서 -->
 					<!-- 
@@ -53,7 +55,6 @@
 						aria-expanded="false"><i class="icon icon-app-store"></i><span
 							class="nav-text">기울기센서</span></a></li> -->
 				</c:when>
-				
 				
 				<c:when test="${userlogin.user_department eq'생산부서'}">
 				<!-- 제품계약관리 -->
@@ -110,3 +111,12 @@
 		</ul>
 	</div>
 </div>
+<script>
+	function postToURL(url) {
+	    const form = document.createElement('form');
+	    form.method = 'POST';
+	    form.action = url;
+	    document.body.appendChild(form);
+	    form.submit();
+	}
+</script>

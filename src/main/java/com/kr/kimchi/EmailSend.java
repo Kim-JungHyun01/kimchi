@@ -13,26 +13,23 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class EmailSend {
 	
 	//ÀÚÈ¸»ç
-	@PostMapping(value="/mail")
-	public ModelAndView mail(@RequestParam("date") String date, @RequestParam("parthner") String parthner,@RequestParam("receivedMail") String receivedMail) {
-		ModelAndView mav = new ModelAndView();
-		sendEmail(date, parthner,receivedMail);
-		mav.setViewName("pa/paDetail");
-		return mav;
+	@ResponseBody
+	@PostMapping(value="pa/mail")
+	public void mail(@RequestParam("date") String date, @RequestParam("partner") String partner,@RequestParam("receivedMail") String receivedMail) {
+		sendEmail(date, partner,receivedMail);
 	}
 
-	@PostMapping(value="/mail2")
-	public ModelAndView mail2(@RequestParam("date") String date, @RequestParam("notes") String notes,@RequestParam("receivedMail") String receivedMail) {
-		ModelAndView mav = new ModelAndView();
+	@ResponseBody
+	@PostMapping(value="pa/mail2")
+	public void mail2(@RequestParam("date") String date, @RequestParam("notes") String notes,@RequestParam("receivedMail") String receivedMail) {
 		sendEmail2(date, notes,receivedMail);
-		mav.setViewName("pa/paDetail");
-		return mav;
 	}
 
 	@PostMapping(value="/mail3")

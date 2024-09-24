@@ -12,23 +12,20 @@
 		<h2>진척검수결과</h2>
 		<div class="form-group">
 			 <label class="label">계획 검수 일자 </label>
-			 <input type="text" readonly id ="prp_issueDate" value="${prpVO.prp_issueDate }"><br/> 
+			 <input type="text" readonly id ="prp_issueDate" value="${prpVO.prp_issueDate }" style="width: 150px;"><br/> 
 		</div>
 		<div class="form-group">
 			 <label class="label">결과 작성 일자  </label>
-			 <input type="text" name="prp_revisionDate" id="now" readonly value=""> 
+			 <input type="text" name="prp_revisionDate" id="now" readonly value="" style="width: 150px;"> 
 		</div>
 		<div class="form-group">
 			<label class="label">검수자</label>
-			<!-- sessin 값 확인 필요 
-			<input type="text" name ="user_id" value="abcd" readonly> 
-			-->
-			<input type="text" value="<%=userlogin.get("user_name")%>" readonly> 
+			<input type="text" value="<%=userlogin.get("user_name")%>" readonly style="width: 150px;"> 
 			<input type="hidden" name ="user_id" value="<%=userlogin.get("user_id")%>" readonly> 
 		</div>
 		<div class="form-group">
 			<label class="label">검수 진행도</label>
-			<input type = "text" name = "prp_progress" id="prp_progress" value = "0" >
+			<input type = "text" name = "prp_progress" id="prp_progress" value = "0" style="width: 150px;">
 			<input type="range" name="range_val" value="0" min="0" max="100"  oninput="showSliderValue(this)" >
 		</div>
 		<div class="form-group">

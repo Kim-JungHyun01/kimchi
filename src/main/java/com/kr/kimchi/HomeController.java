@@ -51,7 +51,6 @@ public class HomeController {
 	    }
 		
 		List<CalenderVO> list = service.calenderList();
-		System.out.println("list : " + list);
 		model.addAttribute("list", list );
 		
 

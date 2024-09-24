@@ -10,10 +10,11 @@
 
 <%Map<String, Object> userlogin = (Map<String, Object>) session.getAttribute("userlogin");%>
 <script type="text/javascript">
-    var token = '<%= session.getAttribute("token") != null ? session.getAttribute("token").toString() : "" %>';
-    if (!token) {
-        alert("메세지가 발송되었습니다.");
+    var email = '<%= session.getAttribute("email") == null ? "" : session.getAttribute("email").toString() %>';
+    if (email) {
+        alert("진척 검수자에게 일정을 발송했습니다.");
     }
+    <% session.removeAttribute("email"); %>
 </script>
   
 		<div class="content-body">
@@ -75,7 +76,7 @@
 												</c:choose>
 										</td>
 										<td>${paList.pa_notes}</td>
-										<td><button class="link-button" data-pa-no="${paList.pa_no}" id="pop" onclick=" paPop(this)">인쇄</button></td>
+										<td><button class="link-button" data-pa-no="${paList.pa_no}" id="pop" onclick=" printPop(this)">인쇄</button></td>
 										<td><button class="link-button" data-pa_no = "${paList.pa_no}" data-partner="${paList.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}" 
 											data-email = "${paList.userVO.user_email }"
 											onclick="showModal(this)">계획수립</button></td>
@@ -96,7 +97,7 @@
 						<span class = "close">&times;</span>
 					</div>
 					<div class="modal-body">
-					    <form action="/pa" method="post" onsubmit="return checkForm()">
+					    <form id="modalForm" onsubmit="return checkForm()">
 					        <div class="form-group">
 					            <label for="date" style="font-size: 15px; text-align: left;">검수 일자:</label>
 					            <input type="date" name="prp_issueDate" id="date" min="" style="width: 170px; margin-left: 0;">
@@ -120,7 +121,7 @@
 					        <input type="hidden" id="partner" name="partner">
 					        <input type="hidden" id="email" name="email">
 					        <div class="modal-footer">
-			                    <button class="link-button">저장</button>
+			                    <button type="submit" class="link-button" onclick="handleSubmit(event)">저장</button>
 			                </div>
 					    </form>
 					</div>
@@ -148,12 +149,9 @@
 				</ul>
 			</div>		
 			    
-			<form id="actionForm" action="/pa" method="get">
+			<form id="actionForm" action="/pa/pa" method="post">
 				<input type="hidden" name="pageNum" value="${poPageList.pageVO.pageNum }">
 				<input type="hidden" name="pa_checkStatus" id="pa_checkStatus" value="${param.pa_checkStatus}">
-				<!-- 필요하면 생성
-				<input type="hidden" name="total" value="${poPageList.pageVO.total }">
-				  -->
 			</form>	    
 			</div>
 		</div>
@@ -171,6 +169,40 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+function handleSubmit(evnet) {
+	event.preventDefault();
+    if(checkForm()){
+	insertPrp(); 
+    }    
+}
+
+function insertPrp() {
+	const formData = {
+        prp_issueDate: $('#date').val(),
+        prp_progress: $('input[name="prp_progress"]').val(),
+        prp_notes: $('#prp_notes').val(),
+        user_id: $('#user_id').val(),
+        pa_no: $('#pa_no').val(),
+        token: $('input[name="token"]').val(),
+        partner: $('#partner').val(),
+        email: $('#email').val()
+    };
+	
+	$.ajax({
+        type: 'POST',
+        url: 'modal',
+        data: formData,
+        success: function(response) {
+            // 페이지 새로고침
+            location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("서버 오류:", textStatus, errorThrown);
+        }
+    });
+}
+
+
 function showModal(button) {
 	var modal = document.querySelector(".modal");
 	modal.style.display ="block";
@@ -202,31 +234,25 @@ $(document).ready(function(){
 	});
 });
 
-function paPop(button) {
+function printPop(button) {
     var paNo = button.getAttribute('data-pa-no');
 
-    // POST 요청을 보낼 URL
-    var url = 'paPop';
+    var url = 'printPop';
 
-    // 새 폼 요소 생성
     var form = document.createElement('form');
     form.method = 'POST';
     form.action = url;
-    form.target = '구매발주'; // 새 창의 이름
+    form.target = '구매발주 인쇄';
 
-    // 숨겨진 input 요소 생성
     var input = document.createElement('input');
     input.type = 'hidden';
     input.name = 'pa_no';
     input.value = paNo;
 
-    // 폼에 input 추가
     form.appendChild(input);
 
-    // 새 창 열기
-    var popup = window.open('', '구매발주', 'width=1000,height=800,left=440,top=125,scrollbars=yes');
+    var popup = window.open(url, '구매발주 인쇄', 'width=1000,height=800,left=440,top=125,scrollbars=yes');
 
-    // 폼을 문서에 추가하고 제출
     document.body.appendChild(form);
     form.submit();
 }
@@ -239,24 +265,19 @@ function showSliderValue(slider) {
 
 // paDetail로 이동
 function submitForm(pa_no) {
-    // POST 요청을 보낼 URL
-    var url = '/paDetail';
+    var url = 'paDetail';
 
-    // 새 폼 요소 생성
     var form = document.createElement('form');
     form.method = 'POST';
     form.action = url;
 
-    // 숨겨진 input 요소 생성
     var input = document.createElement('input');
     input.type = 'hidden';
-    input.name = 'pa_no'; // 서버에서 사용할 파라미터 이름
+    input.name = 'pa_no'; 
     input.value = pa_no;
 
-    // 폼에 input 추가
     form.appendChild(input);
 
-    // 폼을 문서에 추가하고 제출
     document.body.appendChild(form);
     form.submit();
 }
@@ -278,10 +299,11 @@ function today() {
 }
 
 function checkForm() {
-	if(!date.value){
+	if(!document.getElementById("date").value){
 		alert("날짜를 선택해주세요.")
 		return false;
 	}
+	 return true;
 }
 
 // 페이징 색상처리
@@ -320,22 +342,21 @@ $(document).ready(function() {
 });
 
 function checkStatus(pa_checkStatus){
+	var url = '/pa/pa';
 	
-var url = '/pa';
-
-var form = document.createElement('form');
-form.method = 'GET';
-form.action = url;
-
-var input = document.createElement('input');
-input.type = 'hidden';
-input.name = 'pa_checkStatus'; 
-input.value = pa_checkStatus;
-
-form.appendChild(input);
-
-document.body.appendChild(form);
-form.submit();
+	var form = document.createElement('form');
+	form.method = 'POST';
+	form.action = url;
+	
+	var input = document.createElement('input');
+	input.type = 'hidden';
+	input.name = 'pa_checkStatus'; 
+	input.value = pa_checkStatus;
+	
+	form.appendChild(input);
+	
+	document.body.appendChild(form);
+	form.submit();
 }
 
 </script>
