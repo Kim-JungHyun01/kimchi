@@ -4,7 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +21,10 @@ import com.kr.kimchi.vo.PaginationVO;
 @Controller
 public class MaterialController {
 
-    @Autowired
+    @Inject
     private MaterialService maService;
 
+    
     // 전체 목록 조회
     @GetMapping(value = "/material/maList")
     public ModelAndView maList(@RequestParam(defaultValue = "1") int pageNum, 

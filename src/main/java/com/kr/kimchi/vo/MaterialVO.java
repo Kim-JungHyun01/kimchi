@@ -23,7 +23,9 @@ public class MaterialVO {
 	private String ma_update;
 	private int attachment_no;
 	private String io_date;
-	
+
+	// 첨부파일 경로
+	private String attachmentLocation; 	
 
 	// ma_stockValue 계산
 	public void calStockValue() {
