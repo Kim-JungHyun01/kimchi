@@ -17,65 +17,59 @@ import com.kr.kimchi.vo.transactionVO;
 
 @Service
 public class informationService {
-	
+
 	@Inject
 	private informationDAO dao;
-	
-	//ÆäÀÌÂ¡ÇÏ±â
-		public List<InlistVO> pa_select(Map<String, Object> params){
-			return dao.pa_select(params);
-		}
-	
-	public List<InlistVO> in_select(){
+
+	// ï¿½ï¿½ï¿½ï¿½Â¡ï¿½Ï±ï¿½
+	public List<InlistVO> pa_select(Map<String, Object> params) {
+		return dao.pa_select(params);
+	}
+
+	public List<InlistVO> in_select() {
 		return dao.in_select();
 	}
-	
+
 	public int in_add(IOVO vo) {
-		
+
 		return dao.io_insert(vo);
 	}
-	
-	public List<ObtainVO> modar_data(){
-		
+
+	public List<ObtainVO> modar_data() {
+
 		return dao.modar_data();
 	}
-	
+
 	public ObtainVO radio_value(ObtainVO vo) {
-		
+
 		return dao.radio_value(vo);
 	}
-	
+
 	public int in_update_ob(int obtain_no) {
-		
+
 		return dao.in_update_ob(obtain_no);
 	}
-	
-	//°Ë¼ö ¿Ï·á ½Ã ÀÔ°í + °Å·¡¸í¼¼¼­ ¹ßÇà 
+
+	// ï¿½Ë¼ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ ï¿½Ô°ï¿½ + ï¿½Å·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int io_status_change(int io_id) {
-			
+
 		return dao.io_status_change(io_id);
 	}
-		
-	// °Ë¼ö ½Ã ÀÔ°í·®+ÀÚÀç·®
+
+	// ï¿½Ë¼ï¿½ ï¿½ï¿½ ï¿½Ô°ï¿½+ï¿½ï¿½ï¿½ç·®
 	public int material_io(StatusCheck value) {
-			
+
 		return dao.material_io(value);
 	}
-	
-	//°Å·¡¸í¼¼¼­ µ¥ÀÌÅÍ ºÒ·¯¿À±â
-		public transactionVO transaction_statement(int obtain_no){
+
+		// ï¿½Å·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
+		public transactionVO transaction_statement(int obtain_no) {
 			return dao.transaction_statement(obtain_no);
 		}
-
-		
-		public IemailVo email_serch(int value){
-			
+	
+		public IemailVo email_serch(int value) {
+	
 			return dao.email_serch(value);
 		}
-
-	
-	
-	
-	
 
 }
