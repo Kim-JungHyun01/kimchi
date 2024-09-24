@@ -19,8 +19,8 @@ public class AttachmentService {
 	public List<AttachmentVO> attachmentAll() {
 		return attdao.attachmentAll();
 	}//end
-	public AttachmentVO attachmentSelect(int item_no) {
-		return attdao.attachmentSelect(item_no);
+	public AttachmentVO attachmentSelect(int attachment_no) {
+		return attdao.attachmentSelect(attachment_no);
 	}//end
 	
 //	첨부파일 추가

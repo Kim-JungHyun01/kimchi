@@ -52,6 +52,7 @@ public class PdfService {
 		Document document = new Document(PageSize.A4, 20, 20, 20, 20);
 		String filename = code_name + ".PDF";//파일이름_pdf로 꼭 지정
 		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//파일저장위치
+//		String filePath = "src/main/webapp/resources/pdf/" + filename; // 파일 저장 위치
 		File file = new File(filePath);
 
 		try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -88,11 +89,9 @@ public class PdfService {
 	                tmp.add(con.getContracts_quantity());
 	                tmp.add(con.getContracts_price());
 	                tmp.add(con.getContracts_deliveryDate());
-	                System.out.println("tmp 데이터: " + tmp);
 
 	                for (Object it : tmp) {
 	                    String itemString = (it instanceof Integer) ? String.valueOf(it) : (String) it;
-	                    System.out.println("추가할 셀 내용: " + itemString); // 셀에 추가할 내용 출력
 	                    PdfPCell content = new PdfPCell(new Paragraph(itemString, contentFont));
 	                    content.setHorizontalAlignment(Element.ALIGN_CENTER);
 	                    table.addCell(content);
