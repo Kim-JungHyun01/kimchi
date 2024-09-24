@@ -72,5 +72,18 @@
 			AND io_id = #{io_id}
 		</if>
 	</select>
+	<!-- 물품별 계약량과 계약금액_누적 -->
+	<select id="totalitemChart" parameterType="Map" resultType="com.kr.kimchi.vo.ChartVO">
+		SELECT
+		i.item_name,
+		SUM(c.contracts_quantity) AS totalcon_quantity,
+		SUM(c.contracts_price) AS totalcon_price
+		FROM
+		contracts c
+		JOIN
+		item i ON c.item_no = i.item_no
+		GROUP BY
+		c.item_no, i.item_name;
+	</select>
 	
 </mapper>

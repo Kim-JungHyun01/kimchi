@@ -35,4 +35,10 @@ public class ChartService {
         return chartdao.outChart();
     }
     //====================================
+    
+//  물품별 계약수량, 계약금액_누적
+    public List<Map<String, Object>> totalitemChart() throws SQLException{
+    	return chartdao.totalitemChart();
+    }//end
+    
 }

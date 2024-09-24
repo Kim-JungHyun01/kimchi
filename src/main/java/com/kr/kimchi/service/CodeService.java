@@ -65,7 +65,7 @@ public class CodeService {
 		String year = formattedDate.substring(0, 4);//yyyy
 		String monthDay = formattedDate.substring(5, 7) + formattedDate.substring(8, 10);//MMdd
 //		ca_id : 1 : 계약서 2:  거래명세서 3 : 구매 발주서
-		code.setCa_id(3);
+		code.setCa_id(2);
 //		code_name = (년)(계약서id)(생산계획id)(조달계획id)(월)(일)
 		String conid = Integer.toString(pro.getContracts_no());
 		String proid = Integer.toString(obtain.getProduction_no());

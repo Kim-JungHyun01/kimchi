@@ -25,11 +25,12 @@ public class UserDAO {
 	}//end
 	
 //	사용자 전체 + 페이징
-	public List<UserVO> userAll(int startRow, int pageSize, String user_name){
+	public List<UserVO> userAll(int startRow, int pageSize, String user_name, String user_department){
 		Map<String, Object> params = new HashMap<>();
 			params.put("startRow", startRow);
 	        params.put("pageSize", pageSize);
 	        params.put("user_name", user_name);
+	        params.put("user_department", user_department);
 	        
 		    // SQL 쿼리에서 페이지 정보 + 검색 조건 사용 
 		return session.selectList(namespace+".userAll", params);
@@ -41,14 +42,16 @@ public class UserDAO {
 	} //end
 	
 //	검색 이후 페이지 수 계산
-	public Integer userSearch(int pageSize, String user_id) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("user_id", user_id);
-		Integer totalCount = session.selectOne(namespace +".userSearch", params);
-		if(totalCount == null || totalCount == 0) {
-			return 0;
-		}
-		return (int)Math.ceil((double) totalCount / pageSize);
+	public Integer userSearch(int pageSize, String user_name, String user_department) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("user_name", user_name);
+	    params.put("user_department", user_department); // department 추가
+
+	    Integer totalCount = session.selectOne(namespace + ".userSearch", params);
+	    if (totalCount == null || totalCount == 0) {
+	        return 0;
+	    }
+	    return (int) Math.ceil((double) totalCount / pageSize);
 	}//end
 	
 //	사용자 상세

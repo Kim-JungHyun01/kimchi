@@ -136,7 +136,7 @@
 	function submitCheck(production_status) {
 		
 		if (!confirm(production_status+'하시겠습니까?')) {
-	        location.href = "production/productionSelect?production_no="+${pro.production_no};
+	        location.href = "${contextPath}/production/productionSelect?production_no="+${pro.production_no};
 	        return;
 	    }//end
 		

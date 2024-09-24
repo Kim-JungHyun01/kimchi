@@ -26,17 +26,18 @@ public class UserController {
 //	사용자 전체+페이징+서치
 	@GetMapping(value = "user/userAll")
 	public ModelAndView userAll(@RequestParam(defaultValue = "1") int pageNum,
-								@RequestParam(required = false) String user_name) {
+								@RequestParam(required = false) String user_name,
+								@RequestParam(required = false) String user_department) {
 		
 		int pageSize = 10; // 한 페이지에 보여줄 갯수 
 	    int pageNavSize = 5; // 페이지 네비 크기
 	    
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 	    
-		List<UserVO> userlist = userservice.userAll(startRow, pageSize, user_name);
+		List<UserVO> userlist = userservice.userAll(startRow, pageSize, user_name, user_department);
 		
 		Integer totalCount = userservice.getTotalCount(); // 총 레코드 수 가져옴
-		Integer totalPages = userservice.userSearch(pageSize, user_name); // 검색 이후 ㄹㅔ코드수 계산
+		Integer totalPages = userservice.userSearch(pageSize, user_name, null); // 검색 이후 ㄹㅔ코드수 계산
 		
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		

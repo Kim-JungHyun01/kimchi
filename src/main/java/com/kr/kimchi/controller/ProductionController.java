@@ -25,6 +25,8 @@ public class ProductionController {
 	private UserService userservice;
 	@Inject
 	private Bom_maService bom_maservice;
+	@Inject
+	private ModalpagingService pageservice;
 	
 //	생산계획 보기_전체
 	@GetMapping(value = "production/productionAll")
@@ -34,13 +36,15 @@ public class ProductionController {
 	    
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 		
-		List<ProductionVO> prolist = proservice.productionAll(startRow, pageSize);
-		List<UserVO> userlist = userservice.userAll(0, 100, null);
+		List<ProductionVO> prolist = proservice.productionAll(startRow, pageSize);//페이징
+		//생산담당자명출력용
+		List<UserVO> userlist = userservice.userAll(0, 100, null, null);
+		//item명을 출력하기 위한 용도
 		List<ContractsVO> conlist = conservice.contractsAll(0, 100);
 		List<ItemVO> itemlist = itemservice.itemAll(0, 100, null);
 		
 		Integer totalCount = proservice.getTotalCount(); // 총 레코드 수 가져옴
-		 Integer totalPages = itemservice.itemSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
+		Integer totalPages = (int) Math.ceil((double) totalCount / pageSize);//검색이 없기에 따로 계산
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		
 		ModelAndView mav = new ModelAndView();
@@ -76,17 +80,26 @@ public class ProductionController {
 	
 //	생산계획 추가
 	@GetMapping(value = "production/productionInsertForm")
-	public ModelAndView productionInsertForm() {
-		List<ContractsVO> conlist = conservice.contractsAll(0,100);
-		List<UserVO> userlist = userservice.userAll(0,100, null);
-		List<ItemVO> itemlist = itemservice.itemAll(0,100, null);
+	public ModelAndView productionInsertForm(@RequestParam(defaultValue = "1") int pageNum,
+											@RequestParam(required = false) String user_name, 
+											@RequestParam(required = false) String user_department) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("conlist", conlist);
-		mav.addObject("userlist", userlist);
+
+		// 계약페이징
+		ModelAndView conMav = pageservice.contractspaging(pageNum);
+		mav.addAllObjects(conMav.getModel());
+
+		// 계약물품명을 보기위한 것_페이징x
+		List<ItemVO> itemlist = itemservice.itemAll(0, 100, null);
+
+		// 담당자 페이징
+		ModelAndView userMav = pageservice.userpaging(pageNum, user_name, user_department);
+		mav.addAllObjects(userMav.getModel());
+
 		mav.addObject("itemlist", itemlist);
 		mav.setViewName("production/productionInsertForm");
 		return mav;
-	}//end
+	}// end
 	
 	@PostMapping(value = "production/productionInsert")
 	public String productionInsert(ProductionVO pro) {

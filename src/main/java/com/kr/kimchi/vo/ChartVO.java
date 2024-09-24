@@ -23,4 +23,10 @@ public class ChartVO {
     private long outValue; // 출고 총액
     private long inValue; // 출고 총액
     //====================
+    //물품별 계약량과 계약금액을 차트로 표시
+    private String item_no;//물품코드
+    private String item_name;//물품명
+    private Long totalcon_quantity;//총계약량
+    private Long totalcon_price;//총계약금액
+  //====================
 }
