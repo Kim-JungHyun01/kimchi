@@ -19,6 +19,9 @@
 			<if test="user_name != null and user_name != ''">
 				AND user_name LIKE CONCAT('%', #{user_name}, '%')
 			</if>
+			<if test="user_department != null and user_department != ''">
+				AND user_department LIKE CONCAT('%', #{user_department}, '%')
+			</if>
 		</where>
 		LIMIT #{startRow}, #{pageSize}
 	</select>
@@ -33,7 +36,10 @@
 		SELECT COUNT(*) FROM user
 		<where>
 			<if test="user_name != null and user_name != ''">
-				AND user_id LIKE CONCAT('%', #{user_name}, '%')
+				AND user_name LIKE CONCAT('%', #{user_name}, '%')
+			</if>
+			<if test="user_department != null and user_department != ''">
+				AND user_department LIKE CONCAT('%', #{user_department}, '%')
 			</if>
 		</where>
 	</select>

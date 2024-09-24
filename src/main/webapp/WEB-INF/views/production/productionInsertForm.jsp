@@ -119,6 +119,15 @@
 	        alertAndReset(form.production_deliveryDate, "계약날짜 이전의 날짜여야 합니다.");
 	        return;
 	    }
+	    
+	    //계약날짜보다 3일전에 생산완료
+	    const threeDaysBeforeContractDate = new Date(contracts_deliveryDate);
+	    threeDaysBeforeContractDate.setDate(threeDaysBeforeContractDate.getDate() - 4);
+	    if (production_deliveryDate > threeDaysBeforeContractDate) {
+	        alertAndReset(form.production_deliveryDate, "계약날짜 3일 전까지의 날짜여야 합니다.");
+	        return;
+	    }
+	    
 	}//checkdate
 	
 	

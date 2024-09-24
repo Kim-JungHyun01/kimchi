@@ -4,8 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.inject.Inject;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,173 +28,237 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kr.kimchi.service.informationService;
-import com.kr.kimchi.vo.IOVO;
-import com.kr.kimchi.vo.InlistVO;
-import com.kr.kimchi.vo.ObtainVO;
-import com.kr.kimchi.vo.PaPageVO;
-import com.kr.kimchi.vo.StatusCheck;
-import com.kr.kimchi.vo.inPageLIst;
-import com.kr.kimchi.vo.transactionVO;
+import com.kr.kimchi.vo.*;
 
 @Controller
 public class ioController {
-	
+
 	@Inject
 	informationService service;
 
 	private static final Logger logger = LoggerFactory.getLogger(ioController.class);
-	
-	@RequestMapping(value="information", method = RequestMethod.GET)
+
+	@RequestMapping(value = "information", method = RequestMethod.GET)
 	public ModelAndView io_imformation(@RequestParam(defaultValue = "1") int pageNum) {
 		ModelAndView mav = new ModelAndView();
-		List<ObtainVO> list= service.modar_data();
-		List<InlistVO> in_list=service.in_select();
-		
+		List<ObtainVO> list = service.modar_data();
+		List<InlistVO> in_list = service.in_select();
+
 		PaPageVO pageVO = new PaPageVO(pageNum, in_list.size());
-		
+
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
 		params.put("count", pageVO.getListcnt());
-		
-		
-		List<InlistVO> pageAllList = service.pa_select(params);
-		
-		inPageLIst in = new inPageLIst(pageAllList,pageVO);
-		System.out.println(in);
-		
-		//������ ����
+
+		List<InlistVO> pageAllList = service.pa_select(params); // 페이징 리스트
+
+		inPageLIst in = new inPageLIst(pageAllList, pageVO);
+//      System.out.println(in);
+
+		// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 		int startIndex = (in.getPageVO().getPageNum() - 1) * in.getPageVO().getListcnt() + 1;
-		
-		
+
 		mav.addObject("startIndex", startIndex);
 		mav.addObject("in", in);
 		mav.addObject("list", list);
-		
-		
-		
+
 		mav.setViewName("io/information");
-		
+
 		return mav;
-	}
-	
+	}// end
+
+	@RequestMapping(value = "inselect", method = RequestMethod.GET)
+	public ModelAndView inselect(@RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(required = false) String io_status,
+			@RequestParam(required = false) String partner_companyname) {
+		ModelAndView mav = new ModelAndView();
+		List<ObtainVO> list = service.modar_data();
+		List<InlistVO> in_list = service.in_select();
+
+		PaPageVO pageVO = new PaPageVO(pageNum, in_list.size());
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("start", (pageVO.getPageNum() - 1) * pageVO.getListcnt());
+		params.put("count", pageVO.getListcnt());
+		params.put("io_status", io_status);
+		params.put("partner_companyname", partner_companyname);
+
+		List<InlistVO> pageAllList = service.pa_select(params); // 페이징 리스트
+//      System.out.println("inselect : "+pageAllList);
+
+		inPageLIst in = new inPageLIst(pageAllList, pageVO);
+//      System.out.println("inselect : "+in);
+
+		// 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+		int startIndex = (in.getPageVO().getPageNum() - 1) * in.getPageVO().getListcnt() + 1;
+
+		mav.addObject("startIndex", startIndex);
+		mav.addObject("in", in);
+		mav.addObject("list", list);
+
+		mav.setViewName("io/information");
+
+		return mav;
+	}// end
+
 	@PostMapping(value = "insert_io")
 	public String IN_io_imformation(IOVO vo, RedirectAttributes rttr) {
-	    
-		vo.setIo_status("�԰���");
-	    
-	    System.out.println(vo);
 
-	    int obtain_no = vo.getObtain_no();
-	    System.out.println(obtain_no);
+		vo.setIo_status("입고중");
 
-	    int result = service.in_add(vo);
-	    int result2 = service.in_update_ob(obtain_no);
+		System.out.println(vo);
 
-	    if (result > 0 && result2 > 0) {
-	        rttr.addFlashAttribute("msg", "success");
-	    }
+		int obtain_no = vo.getObtain_no();
+		System.out.println(obtain_no);
 
-	    return "redirect:/information"; 
+		int result = service.in_add(vo);
+		int result2 = service.in_update_ob(obtain_no);
+
+		if (result > 0 && result2 > 0) {
+			rttr.addFlashAttribute("msg", "success");
+		}
+
+		return "redirect:/information";
 	}
-	
+
 	@PostMapping("io_status_ch")
-	public String handleFormSubmit(@RequestParam(value = "iocheck", required = false) List<String> iocheck , RedirectAttributes rttr) {
-	    List<StatusCheck> dataList = new ArrayList<>();
-	    
-	    if (iocheck != null) {
-	        for (String item : iocheck) {
-	            try {
-	                String[] parts = item.split(",");
-	                if (parts.length == 5) {
-	                    StatusCheck dataObject = new StatusCheck();
-	                    dataObject.setIo_id(parseInteger(parts[0]));
-	                    dataObject.setObtain_no(parseInteger(parts[1]));
-	                    dataObject.setIo_status(parts[2]);
-	                    dataObject.setIo_quantity(parseInteger(parts[3]));
-	                    dataObject.setMa_id(parseInteger(parts[4]));
-	                    dataList.add(dataObject);
-	                }
-	            } catch (Exception e) {
-	                // ���� ó�� ����
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+	public String handleFormSubmit(@RequestParam(value = "iocheck", required = false) List<String> iocheck,
+			RedirectAttributes rttr) {
+		List<StatusCheck> dataList = new ArrayList<>();
 
-	    // ������ ó�� ����
-	    System.out.println("------"+dataList);
-	    
-	    
-	    for(int i=0 ; i < dataList.size();i++) {
-	    	
-	    	int status_done=service.io_status_change(dataList.get(i).getIo_id());
-	    	int material_plus=service.material_io(dataList.get(i));
-	    	
-	    	if(status_done < 0 || material_plus < 0) {
-	    		break;
-	    	}
-	    }
-	    
-	    rttr.addFlashAttribute("msg", "plus");
-	    
-	    
-	    
+		if (iocheck != null) {
+			for (String item : iocheck) {
+				try {
+					String[] parts = item.split(",");
+					if (parts.length == 5) {
+						StatusCheck dataObject = new StatusCheck();
+						dataObject.setIo_id(parseInteger(parts[0]));
+						dataObject.setObtain_no(parseInteger(parts[1]));
+						dataObject.setIo_status(parts[2]);
+						dataObject.setIo_quantity(parseInteger(parts[3]));
+						dataObject.setMa_id(parseInteger(parts[4]));
+						dataList.add(dataObject);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					rttr.addFlashAttribute("msg", "hu");
+					return "redirect:/information";
+				}
+			}
+		}
 
-	    return "redirect:/information"; // �����̷�Ʈ�� ������ �Ǵ� �� �̸�
+		System.out.println("------" + dataList);
+
+		for (StatusCheck statusCheck : dataList) {
+			int status_done = service.io_status_change(statusCheck.getIo_id());
+			int material_plus = service.material_io(statusCheck);
+
+			IemailVo data = service.email_serch(statusCheck.getObtain_no());
+			System.out.println(data);
+			// null 체크 추가
+			if (data != null) {
+				sendEmail3(data.getMa_name(), data.getObtain_no(), data.getUser_email());
+			} else {
+				rttr.addFlashAttribute("msg", "Email data not found for obtain_no: " + statusCheck.getObtain_no());
+				return "redirect:/information";
+			}
+
+			if (status_done < 0 || material_plus < 0) {
+				rttr.addFlashAttribute("msg", "hu");
+				return "redirect:/information";
+			}
+		}
+
+		rttr.addFlashAttribute("msg", "success");
+		return "redirect:/information";
 	}
 
 	private Integer parseInteger(String value) {
-	    try {
-	        return value == null || value.isEmpty() ? null : Integer.parseInt(value);
-	    } catch (NumberFormatException e) {
-	        // ���� ��ȯ ���� �� null�� ��ȯ
-	        return null;
-	    }
+		try {
+			return value == null || value.isEmpty() ? null : Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
-	
+
 	@GetMapping(value = "transaction")
-    public String transaction(@RequestParam(value = "obtain_no", required = false)  String obtainNo,
-                              RedirectAttributes rttr, Model model) {
+	public String transaction(@RequestParam(value = "obtain_no", required = false) String obtainNo,
+			RedirectAttributes rttr, Model model) {
 
-		  if (obtainNo != null) {
-		        try {
-		            Integer obtainNoInt = parseInteger(obtainNo);
-		            StatusCheck dataObject = new StatusCheck();
-		            dataObject.setObtain_no(obtainNoInt);
-		            
-		            // ������ ó�� ����
-		            transactionVO statement = service.transaction_statement(obtainNoInt);
-		            System.out.println(statement);
-		            model.addAttribute("val	ue", statement);
+		if (obtainNo != null) {
+			try {
+				Integer obtainNoInt = parseInteger(obtainNo);
+				StatusCheck dataObject = new StatusCheck();
+				dataObject.setObtain_no(obtainNoInt);
 
-		            // ��ȯ�ϴ� �� �̸�
-		            return "/io/transaction";
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		            // ���� ó��
-		            return "/error";
-		        }
-		    }
+				transactionVO statement = service.transaction_statement(obtainNoInt);
+				System.out.println(statement);
+				model.addAttribute("value", statement);
 
-		    return "/error"; // �߸��� ��û ó��
-    }
+				// 占쏙옙환占싹댐옙 占쏙옙 占싱몌옙
+				return "/io/transaction";
+			} catch (Exception e) {
+				e.printStackTrace();
+				// 占쏙옙占쏙옙 처占쏙옙
+				return "/error";
+			}
+		}
 
-    private Integer parseIntegers(String value) {
-        try {
-            return value == null || value.isEmpty() ? null : Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            // ���� ��ȯ ���� �� null�� ��ȯ
-            return null;
-        }
-    }
-		
-	    
-	
-		
+		return "/error"; // 占쌩몌옙占쏙옙 占쏙옙청 처占쏙옙
 	}
-		
-		
-	
-	
-	
 
+	private Integer parseIntegers(String value) {
+		try {
+			return value == null || value.isEmpty() ? null : Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			// 占쏙옙占쏙옙 占쏙옙환 占쏙옙占쏙옙 占쏙옙 null占쏙옙 占쏙옙환
+			return null;
+		}
+	}
+
+	public static void sendEmail3(String ma_name, int obtain_no, String receivedMail) {
+		// 구글 이메일
+		String user_email = "jae1hyun31@gmail.com";
+		// 구글 비번
+		String user_pw = "ppjd pgrx jzhe geng";
+
+		String smtp_host = "smtp.gmail.com";
+		int smtp_port = 465; // TLS : 587, SSL : 465
+
+		Properties props = System.getProperties();
+		props.put("mail.smtp.host", smtp_host);
+		props.put("mail.smtp.port", smtp_port);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust", smtp_host);
+
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user_email, user_pw);
+			}
+		});
+
+		try {
+			receivedMail = "jae1hyun31@gmail.com";
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(user_email));
+
+			// 받는 이메일
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receivedMail));
+
+			// 제목
+			message.setSubject("입고 관련 메일입니다.");
+
+			// 내용
+			message.setText("안녕하세요. (주)삼김신조입니다. \n" + "코드 ob-" + obtain_no + " 조달번호인 " + "자재 " + ma_name + "에 "
+					+ "입고가 완료되어서 메일 발송드립니다. \n");
+
+			// 발송
+			Transport.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	}
+
+}

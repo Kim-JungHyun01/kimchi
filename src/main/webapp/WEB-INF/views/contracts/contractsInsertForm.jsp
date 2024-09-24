@@ -83,7 +83,6 @@
 		</form>
 	</div>
 </div>
-<%@include file="../include/footer.jsp"%>
 <!-- 물품 모달창 -->
 <jsp:include page="../item/itemModal.jsp" />
 <!-- 협력회사 모달창 -->
@@ -185,3 +184,4 @@
 
 	}//btnsumbit
 </script>
+<%@include file="../include/footer.jsp"%>

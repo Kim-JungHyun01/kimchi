@@ -46,7 +46,7 @@
 			</div>
 			<div class="input-group">	
 				<label>자재단가</label> <input name="ma_price" id="ma_price" type="number" placeholder="자재선택"  oninput="calculate()"><br>
-				<label>자재최소필요량</label> <input name="ma_min" id="ma_min" type="number" onkeyup="calnum()" readonly>
+				<label>자재최소필요량</label> <input name="ma_min" id="ma_min" type="number" value="0" onkeyup="calnum()" readonly>
 			</div>
 			<hr>
 			<div>
@@ -218,7 +218,7 @@
 		
 		if (!confirm('조달계획을 등록하시겠습니까?')) {
 			alert("조달계획등록이 취소되었습니다.");
-			location.href = "/obtain/obtainAll";
+			location.href = "/production/productionSelect?production_no="+${pro.production_no};
 			return;
 		}//end
 		

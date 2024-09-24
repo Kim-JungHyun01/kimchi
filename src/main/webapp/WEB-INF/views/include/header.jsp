@@ -13,7 +13,7 @@
 <title>kimchi</title>
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16"
-	href="${contextPath}/resources/images/favicon.png">
+	href="${contextPath}/resources/images/favicon.ico">
 <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
 <link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <script

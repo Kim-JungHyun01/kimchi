@@ -41,7 +41,7 @@
 <%@include file="../include/header.jsp"%>
 <div class="content-body">
 	<div style="margin-left: 20px;">
-		<h3>사용자 상세목록</h3>
+		<h3>사용자 상세정보</h3>
 		<table class="table">
 			<tr>
 				<td>사용자 email</td>

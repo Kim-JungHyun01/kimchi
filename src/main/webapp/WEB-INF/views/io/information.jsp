@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-
+  
   <%@include file="../include/header.jsp" %>
   
   
@@ -16,7 +16,6 @@
         ***********************************-->
         
         
-  <%@include file="../include/nav.jsp" %>
         
         <!--**********************************
             Sidebar end
@@ -31,14 +30,14 @@
       			<div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>입출고 정보 Page</h4>
-                            <span class="ml-1">입고/출고</span>
+                            <h4>입고 정보 Page</h4>
+                            <span class="ml-1">입고</span>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">홈</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">입출고정보</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">입고정보</a></li>
                         </ol>
                     </div>
                 </div>
@@ -52,57 +51,86 @@
                 	</div>
                 	
                 	<div class="col-lg-12">
-                        <div id="informationCard" class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">입고</h4>
-                                <label onclick="resetForm()">초기화</label>
-                            </div>
-                            <div id="informBody" class="card-body">
-                                <div class="table-responsive">
-                                <form id="insert_in" action="insert_io" method="post">
-                                 <table class="table table-bordered verticle-middle table-responsive-sm">
-    							    <tr>
-            							<td style="width:300px">입출고코드</td>
-            							<td><label for="inp-1">io-</label><input type="int" id="inp-1" name="io_id" readonly="readonly"></td>
-           	 							<td style="width:300px">입출고 상태</td>
-            							<td><input type="text" id="io_status" name="io_status" readonly="readonly"></td>
-            							<td style="width:300px">입고일</td>
-            							<td><input type="date" name="io_date" id="in_date"></td>
-        							</tr>
-        							<tr>
-            							<td>제품명</td>
-            							<td><input type="text" id="ma_name" name="ma_name" readonly="readonly"></td>
-            							<td>수량</td>
-            							<td><input type="text" id="io_quantity" name="io_quantity" readonly="readonly"></td>
-            							<td>단가(원)</td>
-            							<td><input type="text" id="ma_price" name="ma_price" readonly="readonly"></td>
-        							</tr>
-        							<tr>
-            							<td>거래명세서여부</td>
-            							<td><input type="text" id="invoice_issuance_status" name="invoice_issuance_status" readonly="readonly"></td>
-            							<td>상세정보</td>
-            							<td colspan="3" align="center">
-                						<textarea rows="2" cols="50px" style="resize: none;" id="io_information" name="io_information"></textarea>
-            							</td>
-            							<td  style="display:none;"><input type="int" id="ma_id" name="ma_id" ></td>
-            							<td  style="display:none;"><input type="int" id="production_no" name="production_no" ></td>
-            							<td  style="display:none;"><input type="int" id="obtain_no" name="obtain_no"></td>
-        							</tr>
-    							</table>
-								</form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+								    <div id="informationCard" class="card">
+								        <div class="card-header">
+								            <h4 class="card-title">입고</h4>
+								            <label onclick="resetForm()">초기화</label>
+								        </div>
+								        <div id="informBody" class="card-body">
+								            <div class="table-responsive">
+								                <form id="insert_in" action="insert_io" method="post">
+								                    <table class="table table-bordered verticle-middle table-responsive-sm" style="table-layout: fixed;">
+								                        <tr>
+								                            <td style="width:300px; text-align: center;">입고코드</td>
+								                            <td style="text-align: center; overflow: hidden;">
+								                                <label for="inp-1">io-</label>
+								                                <input type="int" id="inp-1" name="io_id" readonly="readonly" style="text-align: center; width: 90%;">
+								                            </td>
+								                            <td style="width:300px; text-align: center;">입고 상태</td>
+								                            <td style="text-align: center; overflow: hidden;">
+								                                <input type="text" id="io_status" name="io_status" readonly="readonly" style="text-align: center; width: 90%;">
+								                            </td>
+								                            <td style="width:300px; text-align: center;">입고일</td>
+								                            <td style="text-align: center; overflow: hidden;">
+								                                <input type="date" name="io_date" id="in_date" style="text-align: center; width: 90%; margin-left: 20px; margin-right: 20px;">
+								                            </td>
+								                        </tr>
+								                        <tr>
+								                            <td style="text-align: center;">제품명</td>
+								                            <td style="text-align: center; overflow: hidden;">
+								                                <input type="text" id="ma_name" name="ma_name" readonly="readonly" style="text-align: center; width: 90%;">
+								                            </td>
+								                            <td style="text-align: center;">수량</td>
+								                            <td style="text-align: center; overflow: hidden;">
+								                                <input type="text" id="io_quantity" name="io_quantity" readonly="readonly" style="text-align: center; width: 90%;">
+								                            </td>
+								                            <td style="text-align: center;">단가(원)</td>
+								                            <td style="text-align: center; overflow: hidden;">
+								                                <input type="text" id="ma_price" name="ma_price" readonly="readonly" style="text-align: center; width: 90%;">
+								                            </td>
+								                        </tr>
+								                        <tr>
+								                            <td style="text-align: center;">거래명세서여부</td>
+								                            <td style="text-align: center; overflow: hidden;">
+								                                <input type="text" id="invoice_issuance_status" name="invoice_issuance_status" readonly="readonly" style="text-align: center; width: 90%;">
+								                            </td>
+								                            <td style="text-align: center;">상세정보</td>
+								                            <td colspan="3" align="center" style="overflow: hidden;">
+								                                <textarea rows="2" style="resize: none; text-align: center; width: 90%;" id="io_information" name="io_information"></textarea>
+								                            </td>
+								                            <td style="display:none;"><input type="int" id="ma_id" name="ma_id"></td>
+								                            <td style="display:none;"><input type="int" id="production_no" name="production_no"></td>
+								                            <td style="display:none;"><input type="int" id="obtain_no" name="obtain_no"></td>
+								                        </tr>
+								                    </table>
+								                </form>
+								            </div>
+								        </div>
+								    </div>
+								</div>
+
                 	
-                	<div class="col-12">
+                	<div class="col-12" id="information">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">입고현황</h4>
                             </div>
+                            	<div class="card-search">
+ 									 <select id="selectstatus"	class="custom-select mr-sm-2" style="width: 98px;">
+ 									 	<option value="">전체</option>
+ 									 	<option value="입고중">입고중</option>
+ 									 	<option value="입고완료">입고완료</option>
+ 									 </select>
+ 								
+ 									<span class="select-part"> <input type="text" id="searchCompanyname" placeholder="회사명을 입력해주세요" class="form-control input-default " style=" height:35.19px; width: 200px; "></span>
+ 									
+ 									 <button type="button" onclick="searchio(1)" class="btn  btn-square btn-outline-dark" style=" margin-right: 5px;">검색</button>                       	
+ 									 <button type="button" onclick="resetsearch()" class="btn  btn-square btn-outline-dark">초기화</button>                       	
+                            	</div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                 	<div id="example_wrapper" class="dataTables_wrapper">
+                                		
                                 	<form action="io_status_ch" method="post" id="io_check_status">
                                     <table id="example" class="display dataTable" style="min-width: 845px" role="grid" aria-describedby="example_info">
                                         <thead>
@@ -140,8 +168,8 @@
 													style="width: 169.438px;">거래명세서여부</th>
                                             </tr>
                                         </thead>
-                                        <c:forEach items="${in.inList}" var="in" varStatus="num">
                                         <tbody>
+                                        <c:forEach items="${in.inList}" var="in" varStatus="num">
                                                <tr class="odd" role="row">
                                             	<td class="sorting_1"><input type="checkbox" name="iocheck" value="${in.io_id},${in.obtain_no},${in.io_status},${in.io_quantity},${in.ma_id}"></td>
                                             	<td>${startIndex + num.index}</td>
@@ -150,7 +178,7 @@
                                                 <td>${in.io_information}</td>
                                                 <td>${in.io_quantity}</td>
                                                 <td>${in.io_date}</td>
-                                                <td>${empty in.io_retrun_date ? '-': in.io_retrun_date}</td>
+                                                <td>${in.io_retrun_date ? in.io_retrun_date : '-'}</td>
                                                 <td>${in.io_status}</td>
                                                 <td><a onclick=" billing('${in.invoice_issuance_status}','${in.obtain_no}')">${in.invoice_issuance_status}</a></td>
                                             </tr>
@@ -271,7 +299,7 @@
       							</div>
       							<div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary" onclick="getlist()">Save changes</button>
+                                                    <button type="button" class="btn btn-primary" onclick="getlist()">Submit</button>
                                                 </div>
     							</div>
     						</div>
@@ -324,6 +352,22 @@
     <script src="${contextPath}/resources/vendor/highlightjs/highlight.pack.min.js"></script>
     <!-- Circle progress -->
     <style>
+  .select-part{
+ 	margin-left: 20px;
+ 	margin-right: 5px;
+ 	
+  }
+
+  .card-search{
+       border-color: #eaeaea;
+    	position: relative;
+    	background: transparent;
+   	 	padding: 1.25rem 1.25rem 5px;
+    	display: flex;
+    	align-items: center;
+    	border: 0px;
+  }
+  
   .modal-lg {
     max-width: 64%; /* 원하는 너비로 조정 */
 	}
@@ -341,59 +385,7 @@
        }
      
        
-		.dialog {
-  display:none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.dialog>.tb {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.dialog>.tb .inner {
-  width: 100%;
-  padding: 20px;
-  background: #fff;
-  border-radius: 16px;
-}
-
-.dialog .top {
-  display: flex;
-  align-item: center;
-  border-bottom: 1px solid #ddd;
-  justify-content: space-between;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
-}
-
-.dialog .title {
-  font-weight: bold;
-  height: 90px;
-}
-
-.dialog .ct {
-  max-height: 60vh;
-  height: 60vh;
-  overflow-y: auto;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background-color: #fff;
- }
- 
-  
- .t1 {
-  border: 1px solid black;
-  border-collapse: collapse;
+	
   
   /*paging css*/
   
@@ -468,6 +460,7 @@
 	    .modal-content {
 	        max-height: 80vh; /* Maximum height of the modal content */
 	        overflow-y: auto; /* Scroll vertically if content overflows */
+	        width: auto;
 	    }
 	    
 	    .btn-outline-success {
@@ -631,7 +624,7 @@
 
         if (imformation.value.trim() === '' || date.value.trim() === '' || input.value.trim() === '') {
             if (input.value.trim() === '') {
-                input.focus();
+                alert("조달데이터를 불러와주세요");
             } else if (date.value.trim() === '') {
                 date.focus();
             } else {
@@ -640,6 +633,7 @@
             alert("빈 값을 채워주세요.");
         } else {
             document.getElementById("insert_in").submit();
+            document.getElementById('insert_in').reset();
         }
     }
 
@@ -677,7 +671,11 @@
         alert("입고처리 되었습니다. 리스트 목록을 확인해주세요");
     } else if (result === 'plus') {
         alert("입고완료");
+    }else if (result === 'hu') {
+        alert("입고실패!! 데이터가 잘 전달되지 못했습니다.");
     }
+    	
+    
     
     function resetForm() {
         document.getElementById('insert_in').reset();
@@ -693,12 +691,50 @@
         actionForm.submit();
     });
 });
+    <!-- io_status와 회사명에 다른 필터링  -->
+    var iostatus = ''; // 입고상태 체크하는 변수
 
-    
-</script>
-    
-</script>
+    // 입고상태의 value 받는 함수
+    document.getElementById('selectstatus').addEventListener('change', function() {
+        iostatus = this.value; // 선택된 값을 iostatus 변수에 저장
+    });
 
+    // 검색
+    function searchio(pageNum) {
+        const iostatus = $('#selectstatus').val();
+        const companyname = $('#searchCompanyname').val();
+        loadio(pageNum, iostatus, companyname);
+    }//end
+
+    // 초기화 함수
+    function resetsearch() {
+        $('#selectstatus').val('');
+        $('#searchCompanyname').val('');
+        loadio(1, '', ''); // 첫 페이지로 초기화
+    } 
+    
+    // 페이징 로드 pageNum: 값을 가지고 올때 시작페이지
+function loadio(pageNum, iostatus, companyname) {
+    $.ajax({
+        url: '<c:url value="inselect" />',
+        type: 'GET',
+        data: { pageNum: pageNum, io_status: iostatus, partner_companyname: companyname }, 
+        success: function(data) {
+            const pagination = $(data).find('.col-12').html();
+            $('.col-12').html(pagination);
+            //console.log($('#informatio tbody').html()); // 업데이트된 내용 확인
+            //입력한 값유지
+            $('#selectstatus').val(iostatus);
+            $('#searchCompanyname').val(companyname);
+            
+        },
+        error: function() {
+            alert('오류가 발생했습니다.');
+        }
+    });
+}
+    
+</script> 
 </body>
 
 </html>

@@ -40,4 +40,27 @@ public class ChartController {
         return "calender/start"; 
         //======================
     }
-}
+    
+//    itemmodal창에서
+    @GetMapping("item/itemchart")
+    public String totalitemChart(Model model) throws SQLException, JsonProcessingException{
+    	
+    	//계약량 데이터 조회
+    	List<Map<String, Object>> chartData = chartService.totalitemChart();
+    	
+    	// ObjectMapper 생성
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+     // 모델에 JSON 문자열 추가
+        String jsonChartData = objectMapper.writeValueAsString(chartData);
+        
+        model.addAttribute("chartData", jsonChartData);
+    	
+    	return "item/itemchart";
+    }//end
+    
+    
+    
+    
+    
+}//end class

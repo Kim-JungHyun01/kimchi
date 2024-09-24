@@ -13,188 +13,127 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class EmailSend {
-	
-	//ÀÚÈ¸»ç
-	@PostMapping(value="/mail")
-	public ModelAndView mail(@RequestParam("date") String date, @RequestParam("parthner") String parthner,@RequestParam("receivedMail") String receivedMail) {
-		ModelAndView mav = new ModelAndView();
-		sendEmail(date, parthner,receivedMail);
-		mav.setViewName("pa/paDetail");
-		return mav;
-	}
+   
+   //ìíšŒì‚¬
+   @ResponseBody
+   @PostMapping(value="pa/mail")
+   public void mail(@RequestParam("date") String date, @RequestParam("partner") String partner,@RequestParam("receivedMail") String receivedMail) {
+      sendEmail(date, partner,receivedMail);
+   }
 
-	@PostMapping(value="/mail2")
-	public ModelAndView mail2(@RequestParam("date") String date, @RequestParam("notes") String notes,@RequestParam("receivedMail") String receivedMail) {
-		ModelAndView mav = new ModelAndView();
-		sendEmail2(date, notes,receivedMail);
-		mav.setViewName("pa/paDetail");
-		return mav;
-	}
+   @ResponseBody
+   @PostMapping(value="pa/mail2")
+   public void mail2(@RequestParam("date") String date, @RequestParam("notes") String notes,@RequestParam("receivedMail") String receivedMail) {
+      sendEmail2(date, notes,receivedMail);
+   }
 
-	@PostMapping(value="/mail3")
-	public ModelAndView mail3(@RequestParam("receivedMail") String receivedMail) {
-		ModelAndView mav = new ModelAndView();
-		sendEmail3(receivedMail);
-		mav.setViewName("redirecet:information");
-		return mav;
-	}
-	
-	public static void sendEmail(String date, String parthner, String receivedMail) {
-		// ±¸±Û ÀÌ¸ŞÀÏ
-		String user_email= "";
-		// ±¸±Û ºñ¹ø
-		String user_pw = "";
-		
-		String smtp_host = "smtp.gmail.com";
-		int smtp_port = 465;  // TLS : 587, SSL : 465
-		
-	        Properties props = System.getProperties();
-	        props.put("mail.smtp.host", smtp_host); 
-	        props.put("mail.smtp.port", smtp_port); 
-	        props.put("mail.smtp.auth", "true"); 
-	        props.put("mail.smtp.ssl.enable", "true"); 
-	        props.put("mail.smtp.ssl.trust", smtp_host);
-	        
-	        Session session = Session.getInstance(props,
-	                new javax.mail.Authenticator() {
-	                    protected PasswordAuthentication getPasswordAuthentication() {
-	                        return new PasswordAuthentication(user_email, user_pw);
-	                    }
-	                });
-	        
-	        try {
+      
+   public static void sendEmail(String date, String parthner, String receivedMail) {
+      // êµ¬ê¸€ ì´ë©”ì¼
+      String user_email= "";
+      // êµ¬ê¸€ ë¹„ë²ˆ
+      String user_pw = "";
+      
+      String smtp_host = "smtp.gmail.com";
+      int smtp_port = 465;  // TLS : 587, SSL : 465
+      
+           Properties props = System.getProperties();
+           props.put("mail.smtp.host", smtp_host); 
+           props.put("mail.smtp.port", smtp_port); 
+           props.put("mail.smtp.auth", "true"); 
+           props.put("mail.smtp.ssl.enable", "true"); 
+           props.put("mail.smtp.ssl.trust", smtp_host);
+           
+           Session session = Session.getInstance(props,
+                   new javax.mail.Authenticator() {
+                       protected PasswordAuthentication getPasswordAuthentication() {
+                           return new PasswordAuthentication(user_email, user_pw);
+                       }
+                   });
+           
+           try {
 
-	            Message message = new MimeMessage(session);
-	            message.setFrom(new InternetAddress(user_email));
+               Message message = new MimeMessage(session);
+               message.setFrom(new InternetAddress(user_email));
 
-	           // ¹Ş´Â ÀÌ¸ŞÀÏ
-	            message.setRecipients(
-	                    Message.RecipientType.TO,
-	                    InternetAddress.parse(receivedMail)    
-	            );
-		
-		  // Á¦¸ñ
-	            message.setSubject("ÁøÃ´°Ë¼öÀÏÁ¤ °ü·Ã ¸ŞÀÏÀÔ´Ï´Ù."); 
-		  
-		   // ³»¿ë
-	            message.setText(
-	            		"¾È³çÇÏ¼¼¿ä. (ÁÖ)»ï±è½ÅÁ¶ÀÔ´Ï´Ù. \n"
-	            		+ date + "ÀÇ °Ë¼öÀÏÁ¤ÀÌ ÀâÇû½À´Ï´Ù. \n"
-	            		+ " \n"
-	            		+ parthner +"ÀÇ °Ë¼ö ÀÏÁ¤ÀÌ´Ï È®ÀÎºÎÅ¹µå¸³´Ï´Ù.\n");
+              // ë°›ëŠ” ì´ë©”ì¼
+               message.setRecipients(
+                       Message.RecipientType.TO,
+                       InternetAddress.parse(receivedMail)    
+               );
+      
+        // ì œëª©
+               message.setSubject("ì§„ì²™ê²€ìˆ˜ì¼ì • ê´€ë ¨ ë©”ì¼ì…ë‹ˆë‹¤."); 
+        
+         // ë‚´ìš©
+               message.setText(
+                     "ì•ˆë…•í•˜ì„¸ìš”. (ì£¼)ì‚¼ê¹€ì‹ ì¡°ìœ ì…ë‹ˆë‹¤. \n"
+                     + date + "ì˜ ê²€ìˆ˜ì¼ì •ì´ ì¡í˜”ìŠµë‹ˆë‹¤. \n"
+                     + " \n"
+                     + parthner +"ì˜ ê²€ìˆ˜ ì¼ì •ì´ë‹ˆ í™•ì¸ë¶€íƒë“œë¦½ë‹ˆë‹¤.\n");
 
-	            // ¹ß¼Û
-	            Transport.send(message);
-	        } catch (MessagingException e) {
-	            e.printStackTrace();
-	            System.out.println(e.getMessage());
-	        }
-	    }
-	
-	public static void sendEmail2(String date, String notes,String receivedMail) {
-		// ±¸±Û ÀÌ¸ŞÀÏ
-		String user_email= "";
-		// ±¸±Û ºñ¹ø
-		String user_pw = "";
-		
-		String smtp_host = "smtp.gmail.com";
-		int smtp_port = 465;  // TLS : 587, SSL : 465
-		
-	        Properties props = System.getProperties();
-	        props.put("mail.smtp.host", smtp_host); 
-	        props.put("mail.smtp.port", smtp_port); 
-	        props.put("mail.smtp.auth", "true"); 
-	        props.put("mail.smtp.ssl.enable", "true"); 
-	        props.put("mail.smtp.ssl.trust", smtp_host);
-	        
-	        Session session = Session.getInstance(props,
-	                new javax.mail.Authenticator() {
-	                    protected PasswordAuthentication getPasswordAuthentication() {
-	                        return new PasswordAuthentication(user_email, user_pw);
-	                    }
-	                });
-	        
-	        try {
+               // ë°œì†¡
+               Transport.send(message);
+           } catch (MessagingException e) {
+               e.printStackTrace();
+               System.out.println(e.getMessage());
+           }
+       }
+   
+   public static void sendEmail2(String date, String notes,String receivedMail) {
+      // êµ¬ê¸€ ì´ë©”ì¼
+      String user_email= "";
+      // êµ¬ê¸€ ë¹„ë²ˆ
+      String user_pw = "";
+      
+      String smtp_host = "smtp.gmail.com";
+      int smtp_port = 465;  // TLS : 587, SSL : 465
+      
+           Properties props = System.getProperties();
+           props.put("mail.smtp.host", smtp_host); 
+           props.put("mail.smtp.port", smtp_port); 
+           props.put("mail.smtp.auth", "true"); 
+           props.put("mail.smtp.ssl.enable", "true"); 
+           props.put("mail.smtp.ssl.trust", smtp_host);
+           
+           Session session = Session.getInstance(props,
+                   new javax.mail.Authenticator() {
+                       protected PasswordAuthentication getPasswordAuthentication() {
+                           return new PasswordAuthentication(user_email, user_pw);
+                       }
+                   });
+           
+           try {
 
-	            Message message = new MimeMessage(session);
-	            message.setFrom(new InternetAddress(user_email));
+               Message message = new MimeMessage(session);
+               message.setFrom(new InternetAddress(user_email));
 
-	           // ¹Ş´Â ÀÌ¸ŞÀÏ
-	            message.setRecipients(
-	                    Message.RecipientType.TO,
-	                    InternetAddress.parse(receivedMail)    
-	            );
-		
-		  // Á¦¸ñ
-	            message.setSubject("ÁøÃ´°Ë¼öÀÏÁ¤ °ü·Ã ¸ŞÀÏÀÔ´Ï´Ù."); 
-		  
-		   // ³»¿ë
-	            message.setText(
-	            		"¾È³çÇÏ¼¼¿ä. (ÁÖ)»ï±è½ÅÁ¶ÀÔ´Ï´Ù. \n"
-	            		+ date + "ÀÇ °Ë¼öÀÏÁ¤¿¡ ´ëÇØ º¸¿Ï»çÇ×ÀÌ ÀÖ¾î ¸ŞÀÏµå¸³´Ï´Ù \n"
-	            		+ "º¸¿Ï³»¿ë \n"
-	            		+ notes +"\n" 
-	            		+ "ÀßºÎÅ¹µå¸³´Ï´Ù.");
+              // ë°›ëŠ” ì´ë©”ì¼
+               message.setRecipients(
+                       Message.RecipientType.TO,
+                       InternetAddress.parse(receivedMail)    
+               );
+      
+        // ì œëª©
+               message.setSubject("ì§„ì²™ê²€ìˆ˜ì¼ì • ê´€ë ¨ ë©”ì¼ì…ë‹ˆë‹¤."); 
+        
+         // ë‚´ìš©
+               message.setText(
+                     "ì•ˆë…•í•˜ì„¸ìš”. (ì£¼)ì‚¼ê¹€ì‹ ì¡°ìœ ì…ë‹ˆë‹¤. \n"
+                     + date + "ì˜ ê²€ìˆ˜ì¼ì •ì— ëŒ€í•´ ë³´ì™„ì‚¬í•­ì´ ìˆì–´ ë©”ì¼ë“œë¦½ë‹ˆë‹¤ \n"
+                     + "ë³´ì™„ë‚´ìš© \n"
+                     + notes +"\n" 
+                     + "ì˜ë¶€íƒë“œë¦½ë‹ˆë‹¤.");
 
-	            // ¹ß¼Û
-	            Transport.send(message);
-	        } catch (MessagingException e) {
-	            e.printStackTrace();
-	            System.out.println(e.getMessage());
-	        }
-	    }
-	
-	public static void sendEmail3(String receivedMail) {
-		// ±¸±Û ÀÌ¸ŞÀÏ
-		String user_email= "";
-		// ±¸±Û ºñ¹ø
-		String user_pw = "";
-		
-		String smtp_host = "smtp.gmail.com";
-		int smtp_port = 465;  // TLS : 587, SSL : 465
-		
-		Properties props = System.getProperties();
-		props.put("mail.smtp.host", smtp_host); 
-		props.put("mail.smtp.port", smtp_port); 
-		props.put("mail.smtp.auth", "true"); 
-		props.put("mail.smtp.ssl.enable", "true"); 
-		props.put("mail.smtp.ssl.trust", smtp_host);
-		
-		Session session = Session.getInstance(props,
-				new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user_email, user_pw);
-			}
-		});
-		
-		try {
-			
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(user_email));
-			
-			// ¹Ş´Â ÀÌ¸ŞÀÏ
-			message.setRecipients(
-					Message.RecipientType.TO,
-					InternetAddress.parse(receivedMail)    
-					);
-			
-			// Á¦¸ñ
-			message.setSubject("ÀÔ°í °ü·Ã ¸ŞÀÏÀÔ´Ï´Ù."); 
-			
-			// ³»¿ë
-			message.setText(
-					"¾È³çÇÏ¼¼¿ä. (ÁÖ)»ï±è½ÅÁ¶ÀÔ´Ï´Ù. \n"
-							+ "ÀÔ°í°¡ ¿Ï·áµÇ¾î¼­ ¸ŞÀÏ ¹ß¼Ûµå¸³´Ï´Ù. \n");
-			
-			// ¹ß¼Û
-			Transport.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		}
-	}
+               // ë°œì†¡
+               Transport.send(message);
+           } catch (MessagingException e) {
+               e.printStackTrace();
+               System.out.println(e.getMessage());
+           }
+       }
 }

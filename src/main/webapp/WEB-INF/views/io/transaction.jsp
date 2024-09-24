@@ -2,6 +2,7 @@
    pageEncoding="UTF-8"%>
  <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
    
 <HTML>
 <HEAD>
@@ -118,7 +119,7 @@ p{
         <td width="38%" bgcolor="#E2EFDA" style="font-weight: bold"><div   id="is1" style="padding:3px;">${value.partner_companyname}</div></td>
         <td width="10%" align="center" bgcolor="#E2EFDA">관리번호</td><!--현재 날짜 추가  -->
         <td width="2%" align="center" bgcolor="#E2EFDA">:</td>
-        <td width="38%" bgcolor="#E2EFDA"><div tms_edit  id="docno" style="padding:3px;"> io-${value.obtain_no}<%=formattedDate %></div></td>
+        <td width="38%" bgcolor="#E2EFDA"><div tms_edit  id="docno" style="padding:3px;"> io-${value.obtain_no}</div></td>
       </tr>
       <tr>
         <td height="25" align="center" bgcolor="#E2EFDA">Phone</td>
@@ -134,7 +135,7 @@ p{
         <td bgcolor="#E2EFDA"><div   id="is3" style="padding:3px;">${value.partner_fax }</div></td>
         <td align="center" bgcolor="#E2EFDA">주소</td>
         <td align="center" bgcolor="#E2EFDA">:</td>
-        <td bgcolor="#E2EFDA"><div class="inputBox" id="w_date6" style="padding:2px;cursor:hand;" ></div></td>
+        <td bgcolor="#E2EFDA"><div class="inputBox" id="w_date6" style="padding:2px;cursor:hand;" >${value.partner_add}</div></td>
         </tr>
     </table></td>
   </tr>
@@ -179,10 +180,10 @@ p{
 <tr>
   <td height="30" align="center" >1</td>
   <td align="center" ><div  tms_edit id="aa1" style="padding:3px;" onDblClick="javascript:pum_code(this);">${value.ma_name }</div></td>
-  <td align="center" ><div  tms_edit id="bb1" style="padding:3px;" ></div>${value.ma_specifications}(${value.ma_weight })</td>
+  <td align="center" ><div  tms_edit id="bb1" style="padding:3px;" ></div>${value.ma_specifications}(${value.ma_weight }${value.ma_unit})</td>
   <td align="right" ><div  tms_edit id="ee1" onBlur="calc_value1(this, 'dd', 'ff')" onFocus="del_focus(this)" style="padding:3px;">${value.obtain_quantity }</div></td>
   <td align="center" ><div  tms_edit id="cc1" style="padding:3px;" >${value.ma_unit}</div></td>
-  <td align="right" ><div  tms_edit id="dd1" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;">${value.ma_price}</div></td>
+  <td align="right" ><div  tms_edit id="dd1" onBlur="calc_value1(this, 'ee', 'ff')" onFocus="del_focus(this)" style="padding:3px;"><fmt:formatNumber value="${value.ma_price }" type="number" pattern="###,###,###,###"/>원</div></td>
   <td align="center" ><div  tms_edit id="gg1" style="padding:3px;" ></div></td>
   <td align="center" colspan="2" ><div  tms_edit id="gg16" style="padding:3px;" ></div></td>
   </tr>
@@ -329,12 +330,13 @@ p{
 <tr>
   <td height="30" colspan="6" align="center" bgcolor="#E2EFDA" style="font-weight: bold" >총  금  액</td>
   <td align="right" bgcolor="#F8F8F8" style="font-weight: bold" ><div  id="sum_ff" style="padding:3px;"></div></td>
-  <td align="right" style="font-weight: bold" colspan="2">${value.ma_price*value.obtain_quantity}</td>
+  <td align="right" style="font-weight: bold" colspan="2"><fmt:formatNumber value="${value.ma_price*value.obtain_quantity}" type="number" pattern="###,###,###,###"/>원</td>
 </tr>
   <tr>
-    <td height="30" colspan="9" align="left" style="font-weight: bold" ><div  tms_edit id="gg31" style="padding:3px;line-height:25px" >1. 납품주소 : 경기 수원시 팔달구 덕영대로 899 세진브론즈빌 지하 "${value.ma_storage}" <br>
-      2. 납 기 일 : "${value.obtain_deliveryDate}"<br>
-      3. 금 액 : <br>
+  	<fmt:parseDate var="parsedDate" value="${value.obtain_deliveryDate}" pattern="yyyy-MM-dd"/>
+    <td height="30" colspan="9" align="left" style="font-weight: bold" ><div  tms_edit id="gg31" style="padding:3px;line-height:25px" >1. 납품주소 : 경기 수원시 팔달구 덕영대로 899 세진브론즈빌 지하 ${value.ma_storage} <br>
+      2. 납 기 일 : <fmt:formatDate value="${parsedDate}" pattern="yyyy년 MM월 dd일"/><br>
+      3. 금 액 : <fmt:formatNumber value="${value.ma_price*value.obtain_quantity}" type="number" pattern="###,###,###,###"/>원 <br>
       <span style="color: #0033FF">문의사항) 메일주소 mbcacademy@kimchi.co.kr</span></div></td>
   </tr>
   

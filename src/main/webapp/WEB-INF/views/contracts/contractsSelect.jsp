@@ -158,7 +158,7 @@
 	//계약승인 & 취소
 	function submitCheck(contracts_status) {
 
-		if (!confirm('계약을' + contracts_status + '하시겠습니까?')) {
+		if (!confirm(contracts_status + ' 하시겠습니까?')) {
 			location.href = "/contracts/contractsSelect?contracts_no=" + ${con.contracts_no};
 			return;
 		}//end
