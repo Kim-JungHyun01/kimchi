@@ -47,7 +47,7 @@ public class HomeController {
 		}
 		// 캘린더 부분
 		List<CalenderVO> list = service.calenderList();
-		System.out.println("list : " + list);
+//		System.out.println("list : " + list);
 		model.addAttribute("list", list);
 
 		// 전체 재고 정보

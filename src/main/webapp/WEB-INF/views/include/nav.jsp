@@ -9,8 +9,8 @@
 			<c:if
 				test="${userlogin.user_department eq '개발부서' || userlogin.user_department eq '관리자'}">
 				<!-- 물품관리 -->
-				<li><a class="has-arrow" href="javascript:void()"
-					aria-expanded="false"> <i class="themify-icons ti-shopping-cart-full"></i> <span class="nav-text">물품관리</span></a>
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i class="themify-icons ti-shopping-cart-full"></i> <span class="nav-text">  물품관리</span></a>
 					<ul aria-expanded="true">
 						<li><a href="${contextPath}/item/itemAll">물품리스트</a></li>
 						<li><a href="${contextPath}/item/itemInsertForm">물품등록</a></li>
@@ -20,20 +20,20 @@
 			<c:if
 				test="${userlogin.user_department eq '자재부서' || userlogin.user_department eq '구매부서' || userlogin.user_department eq '관리자'}">
 				<!-- 자재관리 -->
-				<li><a class="has-arrow" href="javascript:void()"
-					aria-expanded="false"> <i class="themify-icons ti-package"></i><span class="nav-text">자재관리</span></a>
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				 <i class="themify-icons ti-package"></i><span class="nav-text">  자재관리</span></a>
 					<ul aria-expanded="false">
 						<li><a href="${contextPath}/material/maList">자재리스트</a></li>
 						<li><a href="${contextPath}/material/maAdd">자재등록</a></li>
 					</ul></li>
 				<!-- 자재조달관리_입고  -->
 				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-				<i class="icon icon-app-store"></i><span class="nav-text">입고 및 출고관리</span></a>
+				<i class="icon icon-app-store"></i><span class="nav-text">  입고 및 출고관리</span></a>
 					<ul aria-expanded="false">
-						 <li><a href="${contextPath}/material/maList">재고현황</a></li>
+						<li><a href="${contextPath}/material/maList">재고현황</a></li>
 						<li><a href="${contextPath}/information">입고정보</a></li>
-						 <li><a href="${contextPath}/out/outList">출고목록</a></li>
-              				<li><a href="${contextPath}/material/maReport">금액현황조회</a></li>
+						<li><a href="${contextPath}/out/outList">출고목록</a></li>
+						<li><a href="${contextPath}/material/maReport">금액현황조회</a></li>
 					</ul></li>
 			</c:if>
 
@@ -59,7 +59,7 @@
 					</ul></li>
 			</c:if>
 			
-			<!-- 조달계획 관리 (모든 부서에서 한 번씩만 출력) -->
+				<!-- 조달계획 관리 (모든 부서에서 한 번씩만 출력) -->
 			<c:if test="${userlogin.user_department eq '관리자' || userlogin.user_department eq '자재부서' || userlogin.user_department eq '구매부서' || userlogin.user_department eq '생산부서'}">
 				<li><a class="has-arrow" href="javascript:void()"
 					aria-expanded="false"> <i class="themify-icons ti-truck"></i>
@@ -69,20 +69,28 @@
 					</ul></li>
 			</c:if>
 			
-			<!-- 발주검수관리 -->
-			<c:if test="${partlogin != null || userlogin.user_department eq '관리자'}">
-				 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                  <i class="fas fa-shopping-cart"></i>
-                  <span class="nav-text">발주관리</span></a>
+				<!-- 발주검수관리 -->
+			<c:if test="${userlogin.user_department eq '관리자' || userlogin.user_department eq '자재부서' || userlogin.user_department eq '구매부서'}">
+					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                  <i class="fas fa-shopping-cart"></i><span class="nav-text">  발주관리</span></a>
                   <ul aria-expanded="false">
                      <li><a href="javascript:void(0)" onclick="postToURL('${contextPath}/pa/pa')" >발주목록</a></li>
                        <li><a href="${contextPath}/pa/paInsert">발주등록</a></li>
                   </ul></li>
 			</c:if>
+			
+			<!-- 협력회사 -->
+			<c:if test="${partlogin != null}">
+			<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i class="fas fa-shopping-cart"></i> <span class="nav-text">출하준비</span></a>
+					<ul aria-expanded="false">
+						<li><a href="${contextPath}/pcsp">출하검수관리</a></li>
+					</ul></li>
+			</c:if>
 
 			<!-- 게시판 -->
-			<li><a class="has-arrow" href="javascript:void()"
-				aria-expanded="false"><i class="themify-icons ti-comment-alt"></i><span class="nav-text">게시판</span></a>
+			<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+			 <i class="themify-icons ti-comment-alt"></i><span class="nav-text">  게시판</span></a>
 				<ul aria-expanded="false">
 					<li><a href="${contextPath}/sboard/list">게시판목록</a></li>
 				</ul></li>
@@ -97,7 +105,6 @@
 						<li><a href="${contextPath}/partner/partnerAll">협력사목록</a></li>
 					</ul></li>
 			</c:if>
-
 		</ul>
 	</div>
 </div>

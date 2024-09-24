@@ -74,6 +74,25 @@ canvas {
 #product-stock-chart, #overall-stock-chart #in-stock-chart, #out-stock-chart {
     margin-bottom: 40px !important;
 }
+
+/* 캘린더 */
+.fc-event-time{
+   display : none;
+}
+
+.fc-event-title{
+   font-size : 12px;
+}
+.fc-event,
+.fc-event-draggable,
+.fc-event-resizable,
+.fc-event-start,
+.fc-event-end,
+.fc-event-today,
+.fc-daygrid-event,
+.fc-daygrid-dot-event {
+    padding: 2px;
+}
 </style>
 
 <!-- 캘린더 -->
