@@ -42,9 +42,9 @@ public class EmailSend {
 	
 	public static void sendEmail(String date, String parthner, String receivedMail) {
 		// 구글 이메일
-		String user_email= "dohyun9160@gmail.com";
+		String user_email= "";
 		// 구글 비번
-		String user_pw = "lxrd avnm mucs wtds";
+		String user_pw = "";
 		
 		String smtp_host = "smtp.gmail.com";
 		int smtp_port = 465;  // TLS : 587, SSL : 465
@@ -79,7 +79,7 @@ public class EmailSend {
 		  
 		   // 내용
 	            message.setText(
-	            		"안녕하세요. (주)삼김신조입니다. \n"
+	            		"안녕하세요. (주)삼김신조유입니다. \n"
 	            		+ date + "의 검수일정이 잡혔습니다. \n"
 	            		+ " \n"
 	            		+ parthner +"의 검수 일정이니 확인부탁드립니다.\n");
@@ -94,9 +94,9 @@ public class EmailSend {
 	
 	public static void sendEmail2(String date, String notes,String receivedMail) {
 		// 구글 이메일
-		String user_email= "dohyun9160@gmail.com";
+		String user_email= "";
 		// 구글 비번
-		String user_pw = "lxrd avnm mucs wtds";
+		String user_pw = "";
 		
 		String smtp_host = "smtp.gmail.com";
 		int smtp_port = 465;  // TLS : 587, SSL : 465
@@ -131,7 +131,7 @@ public class EmailSend {
 		  
 		   // 내용
 	            message.setText(
-	            		"안녕하세요. (주)삼김신조입니다. \n"
+	            		"안녕하세요. (주)삼김신조유입니다. \n"
 	            		+ date + "의 검수일정에 대해 보완사항이 있어 메일드립니다 \n"
 	            		+ "보완내용 \n"
 	            		+ notes +"\n" 
@@ -184,7 +184,7 @@ public class EmailSend {
 			
 			// 내용
 			message.setText(
-					"안녕하세요. (주)삼김신조입니다. \n"
+					"안녕하세요. (주)삼김신조류입니다. \n"
 							+ "입고가 완료되어서 메일 발송드립니다. \n");
 			
 			// 발송
