@@ -26,6 +26,15 @@
 						<li><a href="${contextPath}/material/maList">자재리스트</a></li>
 						<li><a href="${contextPath}/material/maAdd">자재등록</a></li>
 					</ul></li>
+				<!-- 자재조달관리_입고  -->
+				<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+				<i class="icon icon-app-store"></i><span class="nav-text">입고 및 출고관리</span></a>
+					<ul aria-expanded="false">
+						 <li><a href="${contextPath}/material/maList">재고현황</a></li>
+						<li><a href="${contextPath}/information">입고정보</a></li>
+						 <li><a href="${contextPath}/out/outList">출고목록</a></li>
+              				<li><a href="${contextPath}/material/maReport">금액현황조회</a></li>
+					</ul></li>
 			</c:if>
 
 			<c:if
@@ -62,11 +71,13 @@
 			
 			<!-- 발주검수관리 -->
 			<c:if test="${partlogin != null || userlogin.user_department eq '관리자'}">
-				<li><a class="has-arrow" href="javascript:void()"
-					aria-expanded="false"> <i class="themify-icons ti-check-box"></i> <span class="nav-text">발주검수관리</span></a>
-					<ul aria-expanded="false">
-						<li><a href="${contextPath}/pcsp">발주검수관리</a></li>
-					</ul></li>
+				 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span class="nav-text">발주관리</span></a>
+                  <ul aria-expanded="false">
+                     <li><a href="javascript:void(0)" onclick="postToURL('${contextPath}/pa/pa')" >발주목록</a></li>
+                       <li><a href="${contextPath}/pa/paInsert">발주등록</a></li>
+                  </ul></li>
 			</c:if>
 
 			<!-- 게시판 -->
@@ -91,11 +102,11 @@
 	</div>
 </div>
 <script>
-	function postToURL(url) {
-	    const form = document.createElement('form');
-	    form.method = 'POST';
-	    form.action = url;
-	    document.body.appendChild(form);
-	    form.submit();
-	}
+   function postToURL(url) {
+       const form = document.createElement('form');
+       form.method = 'POST';
+       form.action = url;
+       document.body.appendChild(form);
+       form.submit();
+   }
 </script>

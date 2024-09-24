@@ -28,7 +28,8 @@
 
 	<context:component-scan
 		base-package="com.kr.kimchi" />
-
+	
+	<!-- 파일 업로드 muti-part  -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</beans:bean>
