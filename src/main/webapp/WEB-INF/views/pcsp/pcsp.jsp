@@ -31,7 +31,7 @@
 								</tr>
 								<c:forEach var = "pcsp"  items="${list }" >
 								<tr>
-									<td>(주)삼김신조</td>
+									<td>(주)삼김신조유</td>
 									<td>${pcsp.code_name }</td>
 									<td>${pcsp.pcsp_date }</td>
 									<td>${pcsp.pcsp_notes }</td>
@@ -48,7 +48,7 @@
 	<div class ="modal">
 		<div class="modal-content">
 			<div class="modal-header">
-			<h2>출하준비 검수</h2>
+			<h2>출하준비</h2>
 			<span class = "close">&times;</span>
 			</div>
 			<div class="modal-body">
@@ -63,17 +63,17 @@
 			        </div>
 			        <div class="form-group">
 			            <label for="partner" style="font-size: 15px; text-align: left;">협력회사</label>
-			            <input type="text"  value="(주)삼김팩토리" readonly>
+			            <input type="text"  value="(주)삼김신조유" readonly>
 			        </div>
 			        <div class="form-group">
 			            <label for="pcsp_notes" style="font-size: 15px;, text-align: left;"></label>
 			            <textarea name="pcsp_notes" id="pcsp_notes" style="text-align: left; margin-left: 5px; " placeholder="비고"></textarea>
 			        </div>
-			  <input type="hidden" name="token" value="${token}" />
-				<input type="hidden" name="partner_taxid" value="${partner_taxid}" />
-				<div class="modal-footer">
-					<button class="link-button">저장</button>
-				</div>
+					<input type="hidden" name="token" value="${token}" />
+					<input type="hidden" name="partner_taxid" value="${partner_taxid}" />
+					<div class="modal-footer">
+						<button class="link-button">저장</button>
+					</div>
 			    </form>
 			</div>
 		</div>

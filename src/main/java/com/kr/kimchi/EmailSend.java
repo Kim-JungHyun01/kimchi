@@ -14,6 +14,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,21 +23,17 @@ import com.kr.kimchi.vo.IemailVo;
 @Controller
 public class EmailSend {
 	
-	//ÀÚÈ¸»ç
-	@PostMapping(value="/mail")
-	public ModelAndView mail(@RequestParam("date") String date, @RequestParam("parthner") String parthner,@RequestParam("receivedMail") String receivedMail) {
-		ModelAndView mav = new ModelAndView();
-		sendEmail(date, parthner,receivedMail);
-		mav.setViewName("pa/paDetail");
-		return mav;
+	//ï¿½ï¿½È¸ï¿½ï¿½
+	@ResponseBody
+	@PostMapping(value="pa/mail")
+	public void mail(@RequestParam("date") String date, @RequestParam("partner") String partner,@RequestParam("receivedMail") String receivedMail) {
+		sendEmail(date, partner,receivedMail);
 	}
 
-	@PostMapping(value="/mail2")
-	public ModelAndView mail2(@RequestParam("date") String date, @RequestParam("notes") String notes,@RequestParam("receivedMail") String receivedMail) {
-		ModelAndView mav = new ModelAndView();
+	@ResponseBody
+	@PostMapping(value="pa/mail2")
+	public void mail2(@RequestParam("date") String date, @RequestParam("notes") String notes,@RequestParam("receivedMail") String receivedMail) {
 		sendEmail2(date, notes,receivedMail);
-		mav.setViewName("pa/paDetail");
-		return mav;
 	}
 
 	@PostMapping(value="/mail3")
@@ -60,9 +57,9 @@ public class EmailSend {
 	}
 	
 	public static void sendEmail(String date, String parthner, String receivedMail) {
-		// ±¸±Û ÀÌ¸ÞÀÏ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
 		String user_email= "";
-		// ±¸±Û ºñ¹ø
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		String user_pw = "";
 		
 		String smtp_host = "smtp.gmail.com";
@@ -87,23 +84,23 @@ public class EmailSend {
 	            Message message = new MimeMessage(session);
 	            message.setFrom(new InternetAddress(user_email));
 
-	           // ¹Þ´Â ÀÌ¸ÞÀÏ
+	           // ï¿½Þ´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
 	            message.setRecipients(
 	                    Message.RecipientType.TO,
 	                    InternetAddress.parse(receivedMail)    
 	            );
 		
-		  // Á¦¸ñ
-	            message.setSubject("ÁøÃ´°Ë¼öÀÏÁ¤ °ü·Ã ¸ÞÀÏÀÔ´Ï´Ù."); 
+		  // ï¿½ï¿½ï¿½ï¿½
+	            message.setSubject("ï¿½ï¿½Ã´ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½."); 
 		  
-		   // ³»¿ë
+		   // ï¿½ï¿½ï¿½ï¿½
 	            message.setText(
-	            		"¾È³çÇÏ¼¼¿ä. (ÁÖ)»ï±è½ÅÁ¶ÀÔ´Ï´Ù. \n"
-	            		+ date + "ÀÇ °Ë¼öÀÏÁ¤ÀÌ ÀâÇû½À´Ï´Ù. \n"
+	            		"ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. (ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. \n"
+	            		+ date + "ï¿½ï¿½ ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. \n"
 	            		+ " \n"
-	            		+ parthner +"ÀÇ °Ë¼ö ÀÏÁ¤ÀÌ´Ï È®ÀÎºÎÅ¹µå¸³´Ï´Ù.\n");
+	            		+ parthner +"ï¿½ï¿½ ï¿½Ë¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ È®ï¿½Îºï¿½Å¹ï¿½å¸³ï¿½Ï´ï¿½.\n");
 
-	            // ¹ß¼Û
+	            // ï¿½ß¼ï¿½
 	            Transport.send(message);
 	        } catch (MessagingException e) {
 	            e.printStackTrace();
@@ -112,9 +109,9 @@ public class EmailSend {
 	    }
 	
 	public static void sendEmail2(String date, String notes,String receivedMail) {
-		// ±¸±Û ÀÌ¸ÞÀÏ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
 		String user_email= "";
-		// ±¸±Û ºñ¹ø
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		String user_pw = "";
 		
 		String smtp_host = "smtp.gmail.com";
@@ -139,24 +136,24 @@ public class EmailSend {
 	            Message message = new MimeMessage(session);
 	            message.setFrom(new InternetAddress(user_email));
 
-	           // ¹Þ´Â ÀÌ¸ÞÀÏ
+	           // ï¿½Þ´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
 	            message.setRecipients(
 	                    Message.RecipientType.TO,
 	                    InternetAddress.parse(receivedMail)    
 	            );
 		
-		  // Á¦¸ñ
-	            message.setSubject("ÁøÃ´°Ë¼öÀÏÁ¤ °ü·Ã ¸ÞÀÏÀÔ´Ï´Ù."); 
+		  // ï¿½ï¿½ï¿½ï¿½
+	            message.setSubject("ï¿½ï¿½Ã´ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½."); 
 		  
-		   // ³»¿ë
+		   // ï¿½ï¿½ï¿½ï¿½
 	            message.setText(
-	            		"¾È³çÇÏ¼¼¿ä. (ÁÖ)»ï±è½ÅÁ¶ÀÔ´Ï´Ù. \n"
-	            		+ date + "ÀÇ °Ë¼öÀÏÁ¤¿¡ ´ëÇØ º¸¿Ï»çÇ×ÀÌ ÀÖ¾î ¸ÞÀÏµå¸³´Ï´Ù \n"
-	            		+ "º¸¿Ï³»¿ë \n"
+	            		"ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. (ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. \n"
+	            		+ date + "ï¿½ï¿½ ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½ï¿½ï¿½Ïµå¸³ï¿½Ï´ï¿½ \n"
+	            		+ "ï¿½ï¿½ï¿½Ï³ï¿½ï¿½ï¿½ \n"
 	            		+ notes +"\n" 
-	            		+ "ÀßºÎÅ¹µå¸³´Ï´Ù.");
+	            		+ "ï¿½ßºï¿½Å¹ï¿½å¸³ï¿½Ï´ï¿½.");
 
-	            // ¹ß¼Û
+	            // ï¿½ß¼ï¿½
 	            Transport.send(message);
 	        } catch (MessagingException e) {
 	            e.printStackTrace();
@@ -165,9 +162,9 @@ public class EmailSend {
 	    }
 	
 	public static void sendEmail3(String ma_name,int obtain_no,String receivedMail) {
-		// ±¸±Û ÀÌ¸ÞÀÏ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
 		String user_email= "jae1hyun31@gmail.com";
-		// ±¸±Û ºñ¹ø
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		String user_pw = "jae1hyun31)cho";
 		
 		String smtp_host = "smtp.gmail.com";
@@ -192,22 +189,22 @@ public class EmailSend {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user_email));
 			
-			// ¹Þ´Â ÀÌ¸ÞÀÏ
+			// ï¿½Þ´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
 			message.setRecipients(
 					Message.RecipientType.TO,
 					InternetAddress.parse(receivedMail)    
 					);
 			
-			// Á¦¸ñ
-			message.setSubject("ÀÔ°í °ü·Ã ¸ÞÀÏÀÔ´Ï´Ù."); 
+			// ï¿½ï¿½ï¿½ï¿½
+			message.setSubject("ï¿½Ô°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½."); 
 			
-			// ³»¿ë
+			// ï¿½ï¿½ï¿½ï¿½
 			message.setText(
-					"¾È³çÇÏ¼¼¿ä. (ÁÖ)»ï±è½ÅÁ¶ÀÔ´Ï´Ù. \n"+
-							"ob-"+obtain_no+"Á¶´Þ¹øÈ£ÀÎ"+"ÀÚÀç"+ma_name+"ÀÌ"
-							+ "ÀÔ°í°¡ ¿Ï·áµÇ¾î¼­ ¸ÞÀÏ ¹ß¼Ûµå¸³´Ï´Ù. \n");
+					"ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. (ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. \n"+
+							"ob-"+obtain_no+"ï¿½ï¿½ï¿½Þ¹ï¿½È£ï¿½ï¿½"+"ï¿½ï¿½ï¿½ï¿½"+ma_name+"ï¿½ï¿½"
+							+ "ï¿½Ô°ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½Ç¾î¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½ß¼Ûµå¸³ï¿½Ï´ï¿½. \n");
 			
-			// ¹ß¼Û
+			// ï¿½ß¼ï¿½
 			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();

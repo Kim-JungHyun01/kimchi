@@ -1,15 +1,15 @@
 package com.kr.kimchi.vo;
 
 public class PaPageVO {
-	private int startPage;	// ����������
-	private int endPage;	// ������ ������
+	private int startPage;	
+	private int endPage;	
 	private boolean prev, next;
-	private int pageNum; // ���� ������
-	private int total; // �� ������
+	private int pageNum; 
+	private int total; 
 	
-	private int start = 1; //����¡ ����
-	private int end = 5; //�ѹ��� ������ ����¡ ��ȣ ���� basic : 5
-	private int listcnt = 5; //���������� ������ ����Ʈ �� basic : 10
+	private int start = 1; 
+	private int end = 5; 
+	private int listcnt = 5; 
 	
 	
 	public PaPageVO(int pageNum, int list) {

@@ -10,7 +10,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <%Map<String, Object> userlogin = (Map<String, Object>) session.getAttribute("userlogin");%>
-
+<script type="text/javascript">
+    var email = '<%= session.getAttribute("email") == null ? "" : session.getAttribute("email").toString() %>';
+    if (email) {
+        alert("진척 검수자에게 일정을 발송했습니다.");
+    }
+    <% session.removeAttribute("email"); %>
+</script>
 
 		<div class="content-body">
 			<div class="row">
@@ -84,8 +90,9 @@
 							<h2>진척계획</h2>
 							<div class="header-buttons">
 								<button onclick="showModal()" class="link-button">추가</button>
-								<form action="/prpFinsh" method="post">
+								<form action="/pa/pa" method="post">
 									<input type="hidden" name="pa_no" value="${paVO.pa_no}">
+									<input type="hidden" name="prpFinsh" value="1">
 									<button class="link-button">완료</button>
 								</form>
 							</div>
@@ -100,7 +107,7 @@
 										<th>보완내용</th>
 									</tr>
 									<tr>
-										<td><button class="link-button" data-prp_no=${prpList.prp_no } onclick="prpPop(this)" >작성</button></td>
+										<td><button class="link-button" data-prp_no=${prpList.prp_no } onclick="prpUpdatePop(this)" >작성</button></td>
 										<td><button class="link-button" onclick="mailSend2('${prpList.prp_issueDate}','${prpList.prp_notes}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_email}')">발송</button></td>
 									</tr>
 								</table>
@@ -121,7 +128,9 @@
 									<tr>
 										<td>검수자</td>
 										<td style="padding-left: 15px;">${prpList.userVO.user_name }
-											<i class="fas fa-envelope" onclick="mailSend('${prpList.prp_issueDate}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}','${prpList.userVO.user_email }')"></i>
+											<i class="fas fa-envelope" 
+											onclick="mailSend('${prpList.prp_issueDate}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}','${prpList.userVO.user_email }')" 
+											style="cursor: pointer;"></i>
 											<!-- 아이콘으로 대체 
 											<button onclick="mailSend('${prpList.prp_issueDate}','${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}','${prpList.userVO.user_email }')" ></button>
 											-->
@@ -150,9 +159,9 @@
 						<span class = "close">&times;</span>
 					</div>
 					<div class="modal-body">
-						<form action="/paDetailUpdate" method="post" onsubmit="return checkForm()">
+						<form onsubmit="return checkForm()">
 							<div class="form-group">
-								<label for="date">납기 일자 : </label> 
+								<label for="date">검수 일자 : </label> 
 								<input type="date" name="prp_issueDate" id="date" min="" style="width: 170px;margin-left: 0;"> <br/>
 							</div>
 							<div class="form-group">
@@ -166,17 +175,17 @@
 							</div>
 							<div class="form-group">
 								<label for="prp_notes">결과 및 보완내용</label>
-								<textarea id="prp_notes" name="prp_notes" style="margin-left: 0;"></textarea>
+								<textarea id="prp_notes" name="prp_notes" style="margin-left: 0; text-align: left;"></textarea>
 							</div>
 			
-							<input type="hidden" name ="user_id" value="<%=userlogin.get("user_id")%>" readonly> <br/>
+					        <input type="hidden" name="user_id" id="user_id" value="<%=userlogin.get("user_id")%>" readonly>
 							<input type="hidden" name ="pa_no" id="pa_no" value="${pa_no }"> 
 							<input type="hidden" name="token" value="${token}" />
-							<input type="hidden" name="parthner" value="${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}">
-							<input type="hidden" name="email" value="${paVO.userVO.user_email }">
+							<input type="hidden" name="partner" id="partner" value="${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}">
+							<input type="hidden" name="email" id="email" value="${paVO.userVO.user_email }">
 							
 							<div class="modal-footer">
-								<button class="link-button">저장</button>
+								<button type="button" class="link-button" onclick="insertModal()">저장</button>
 							</div>
 						</form>
 					</div>
@@ -195,14 +204,38 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+function insertModal(){
+	const formData = {
+        prp_issueDate: $('#date').val(),
+        prp_progress: $('input[name="prp_progress"]').val(),
+        prp_notes: $('#prp_notes').val(),
+        user_id: $('#user_id').val(),
+        pa_no: $('#pa_no').val(),
+        token: $('input[name="token"]').val(),
+        partner: $('#partner').val(),
+        email: $('#email').val()
+    };
+	$.ajax({
+        type: 'POST',
+        url: 'modal',
+        data: formData,
+        success: function(response) {
+            // 페이지 새로고침
+            location.reload();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("서버 오류:", textStatus, errorThrown);
+        }
+    });
+}
+
 function showSliderValue(slider) {
     var value = slider.value;
     document.querySelector('input[name="prp_progress"]').value = value;
 }
 
 function receiveData(prp_no, prp_revisionDate, prp_progress, prp_notes, pa_no) {
-    $.ajax({
-   	    	 
+    $.ajax({   	    	 
         type: 'POST',
         url: 'prpUpdate',
         data: {
@@ -222,29 +255,16 @@ function receiveData(prp_no, prp_revisionDate, prp_progress, prp_notes, pa_no) {
     });
 }
 
-/*
-작동 안되면 다시 열기
-class PrpVo {
-	 PrpVo(user_id, pa_no, prp_issueDate, prp_progress, prp_notes) {
-        this.user_id = user_id;
-        this.pa_no = pa_no;
-        this.prp_issueDate = prp_issueDate;
-        this.prp_progress = prp_progress;
-        this.prp_notes = prp_notes;
-    }
-} 
-*/
- 
-function prpPop(button){
+function prpUpdatePop(button){
 	var prp_no = button.getAttribute("data-prp_no");
-	var url = "prpDetailPop";
+	var url = "prpUpdatePop";
 
 	var pa_no = document.getElementById("pa_no").value;
 	
 	var form = document.createElement("form");
 	form.action= url;
 	form.method="get";
-	form.target="prpDetailPop";
+	form.target="prpUpdatePop";
 	
 	var input = document.createElement("input");
 	input.type = "hidden";
@@ -258,7 +278,7 @@ function prpPop(button){
 	inputPa_no.value = pa_no;
 	form.appendChild(inputPa_no);
 	
-	window.open('', 'prpDetailPop', 'width=610,height=550,left=700,top=250');
+	window.open('', 'prpUpdatePop', 'width=500,height=450,left=700,top=250');
 	
 	document.body.appendChild(form);
 	form.submit();
@@ -298,14 +318,14 @@ function checkForm() {
 	}
 }
 
-function mailSend(date,parthner,receivedMail) {
+function mailSend(date,partner,receivedMail) {
 	alert("메일을 전송했습니다.");
     $.ajax({
         type: 'POST',
         url: 'mail',
         data: {
         	date : date,
-        	parthner : parthner,
+        	partner : partner,
         	receivedMail : receivedMail
         },
         success: function(response) {

@@ -3,7 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="content-body">
-	  	<button onclick="a()" class="btn">인쇄</button> 	
+	  	<div style="display: flex;">
+		    <button onclick="a()" class="btn" style="margin-left: auto;">인쇄</button>
+		</div> 	
   		<div class ="paper" id="print">
 		<table width="680"  border="0"  cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border-collapse:collapse;table-layout:" align="center" >
 		  <tr>
@@ -18,7 +20,7 @@
 		      <tr>
 		        <td width="10%" height="25" align="center" bgcolor="#E2EFDA" style="font-weight: bold">회사명</td>
 		        <td width="2%" align="center" bgcolor="#E2EFDA" style="font-weight: bold">:</td>
-		        <td width="38%" bgcolor="#E2EFDA" style="font-weight: bold"><div   id="is1" style="padding:3px;">(주)삼김팩토리</div></td>
+		        <td width="38%" bgcolor="#E2EFDA" style="font-weight: bold"><div   id="is1" style="padding:3px;">(주)삼김신조유</div></td>
 		        <td width="10%" align="center" bgcolor="#E2EFDA">발주번호</td>
 		        <td width="2%" align="center" bgcolor="#E2EFDA">:</td>
 		        <td width="38%" bgcolor="#E2EFDA"><div tms_edit  id="docno" style="padding:3px;">${paVO.codeVo.code_name}</div></td>
@@ -37,7 +39,7 @@
 		        <td bgcolor="#E2EFDA"><div   id="is3" style="padding:3px;">${paVO.userVO.user_name }</div></td>
 		        <td align="center" bgcolor="#E2EFDA">작성일자</td>
 		        <td align="center" bgcolor="#E2EFDA">:</td>
-		        <td bgcolor="#E2EFDA"><div class="inputBox" id="w_date6" style="padding:2px;cursor:hand;" ><fmt:formatDate value="${paVO.pa_issueDate}" pattern="yyyy-MM-dd HH:mm:ss" /></div></td>
+		        <td bgcolor="#E2EFDA"><div class="inputBox" id="w_date6" style="padding:2px;cursor:hand;" ><fmt:formatDate value="${paVO.pa_issueDate}" pattern="yyyy-MM-dd" /></div></td>
 		        </tr>
 	          <tr>
 		        <td height="25" align="center" bgcolor="#E2EFDA">Phone</td>
@@ -66,12 +68,12 @@
 		    <td width="163" align="center" style="font-weight: bold" >FAX</td>
 		  </tr>
 		  <tr>
-		    <td height="25" align="center" ><div tms_edit id="cn1">${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}</div></td>
-		    <td align="center" ><div tms_edit id="cn2" >${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_taxid}</div></td>
-		    <td align="center" ><div tms_edit id="cn3" >${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_ownername}</div></td>
-		    <td align="center" ><div tms_edit id="cn4" >${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_number}</div></td>
-		    <td align="center" ><div tms_edit id="cn5" >${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_email}</div></td>
-		    <td align="center" ><div tms_edit id="cn6" >${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_fax}</div></td>
+		    <td height="25" align="center" ><div tms_edit id="cn1" style="font-size: 14px;">${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_companyname}</div></td>
+		    <td align="center" ><div tms_edit id="cn2" style="font-size: 14px;">${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_taxid}</div></td>
+		    <td align="center" ><div tms_edit id="cn3" style="font-size: 14px;">${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_ownername}</div></td>
+		    <td align="center" ><div tms_edit id="cn4" style="font-size: 14px;">${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_number}</div></td>
+		    <td align="center" ><div tms_edit id="cn5" style="font-size: 14px;">${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_email}</div></td>
+		    <td align="center" ><div tms_edit id="cn6" style="font-size: 14px;">${paVO.obtainVo.productionVO.contractsVO.partnerVO.partner_fax}</div></td>
 		  </tr>
 		</table>
 		<table width="680"  border="0"  cellspacing="0" cellpadding="0" bordercolor="#ffffff" style="border-collapse:collapse;table-layout:fixed" align="center" class="f10">
@@ -93,14 +95,14 @@
 		  </tr>
 		<tr>
 		  <td height="30" align="center" >1</td>
-		  <td align="center" ><div  tms_edit id="aa1" style="padding:3px;" >${paVO.obtainVo.materialVO.ma_name}</div></td>
-		  <td align="center" ><div  tms_edit id="aa1" style="padding:3px;" >${paVO.obtainVo.materialVO.ma_origin}</div></td>
-		  <td align="center" ><div  tms_edit id="bb1" style="padding:3px;" >${paVO.obtainVo.materialVO.ma_specifications}</div></td>
-		  <td align="right" ><div  tms_edit id="ee1" onBlur="calc_value1(this, 'dd', 'ff')" style="padding:3px;">${paVO.obtainVo.obtain_quantity}</div></td>
-		  <td align="center" ><div  tms_edit id="cc1" style="padding:3px;" >${paVO.obtainVo.materialVO.ma_unit}</div></td>
-		  <td align="right" ><div  tms_edit id="dd1" onBlur="calc_value1(this, 'ee', 'ff')" style="padding:3px;"><fmt:formatNumber value="${paVO.obtainVo.materialVO.ma_price}" pattern="###,###,###,###" />원</div></td>
-		  <td align="right" ><div  id="ff1" style="padding:3px;" ><fmt:formatNumber value="${paVO.obtainVo.materialVO.ma_price}" pattern="###,###,###,###" />원</div></td>
-		  <td align="right" bgcolor="#F8F8F8" ><div  id="ff1" style="padding:3px;" ><fmt:formatNumber value="${paVO.obtainVo.materialVO.ma_price * paVO.obtainVo.obtain_quantity}" pattern="###,###,###,###" />원</div></td>
+		  <td align="center" ><div  tms_edit id="aa1" style="padding:3px; font-size: 14px;" >${paVO.obtainVo.materialVO.ma_name}</div></td>
+		  <td align="center" ><div  tms_edit id="aa1" style="padding:3px; font-size: 14px;" >${paVO.obtainVo.materialVO.ma_origin}</div></td>
+		  <td align="center" ><div  tms_edit id="bb1" style="padding:3px; font-size: 14px;">${paVO.obtainVo.materialVO.ma_specifications}</div></td>
+		  <td align="right" ><div  tms_edit id="ee1" onBlur="calc_value1(this, 'dd', 'ff')" style="padding:3px; font-size: 14px;">${paVO.obtainVo.obtain_quantity}</div></td>
+		  <td align="center" ><div  tms_edit id="cc1" style="padding:3px; font-size: 14px;" >${paVO.obtainVo.materialVO.ma_unit}</div></td>
+		  <td align="right" ><div  tms_edit id="dd1" onBlur="calc_value1(this, 'ee', 'ff')" style="padding:3px; font-size: 14px;"><fmt:formatNumber value="${paVO.obtainVo.materialVO.ma_price}" pattern="###,###,###,###" />원</div></td>
+		  <td align="right" ><div  id="ff1" style="padding:3px; font-size: 14px;" ><fmt:formatNumber value="${paVO.obtainVo.materialVO.ma_price}" pattern="###,###,###,###" />원</div></td>
+		  <td align="right" bgcolor="#F8F8F8" ><div  id="ff1" style="padding:3px; font-size: 14px;" ><fmt:formatNumber value="${paVO.obtainVo.materialVO.ma_price * paVO.obtainVo.obtain_quantity}" pattern="###,###,###,###" />원</div></td>
 		  </tr>
 		<tr>
 		  <td height="30" align="center" >2</td>
@@ -262,8 +264,9 @@
 		 
 		</tr>
 		  <tr>
-		    <td height="30" colspan="9" align="left" style="font-weight: bold" ><div  tms_edit id="gg31" style="padding:3px;line-height:25px" >1. 납품주소 : 경기 수원시 팔달구 덕영대로 899 세진브론즈빌 3층 MBC아카데미컴퓨터교육센터수원<br>
-		      2. 납 기 일 : <fmt:formatDate value="${paVO.obtainVo.obtain_deliveryDate}" pattern="yyyy년 MM월 dd일 " /><br>
+		    <td height="30" colspan="9" align="left" style="font-weight: bold" ><div  tms_edit id="gg31" style="padding:3px;line-height:25px" >1. 납품주소 : <br/>
+		    경기 수원시 팔달구 덕영대로 899 세진브론즈빌 3층 MBC아카데미컴퓨터교육센터수원<br>
+		      2. 납 기 일 : ${paVO.obtainVo.obtain_deliveryDate}<br>
 		      3. 비고: ${paVO.pa_notes} <br>
 		      <span style="color: #0033FF">전자세금계산서 발행용 메일주소 goodjob@goodapp.co.kr</span></div></td>
 		  </tr>

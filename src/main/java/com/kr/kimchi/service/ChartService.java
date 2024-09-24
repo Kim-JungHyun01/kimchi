@@ -4,7 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import com.kr.kimchi.dao.ChartDAO;
@@ -14,6 +15,11 @@ public class ChartService {
 
     @Autowired
     private ChartDAO chartdao;
+
+    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
+    public void updateChartData() {
+        // 데이터 갱신 로직
+    }
 
     // 전체 재고 정보 조회
     public List<Map<String, Object>> chartData() throws SQLException {
@@ -40,5 +46,4 @@ public class ChartService {
     public List<Map<String, Object>> totalitemChart() throws SQLException{
     	return chartdao.totalitemChart();
     }//end
-    
 }

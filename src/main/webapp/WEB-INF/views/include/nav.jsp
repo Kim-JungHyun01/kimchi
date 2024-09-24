@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div class="quixnav">
 	<div class="quixnav-scroll">
 		<ul class="metismenu" id="menu">
@@ -89,3 +90,12 @@
 		</ul>
 	</div>
 </div>
+<script>
+	function postToURL(url) {
+	    const form = document.createElement('form');
+	    form.method = 'POST';
+	    form.action = url;
+	    document.body.appendChild(form);
+	    form.submit();
+	}
+</script>

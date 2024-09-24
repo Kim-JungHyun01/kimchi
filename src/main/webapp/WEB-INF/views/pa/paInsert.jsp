@@ -38,7 +38,7 @@
 										<td>${oblist.obtain_deliveryDate}</td>
 										<td><fmt:formatDate value="${oblist.obtain_registrationDate}" pattern="yyyy-MM-dd" /></td>
 										<td>${oblist.userVO.user_name}</td>
-										<td><button data-obtain_no="${oblist.obtain_no}" onclick="prpPop(this)">등록</button></td>
+										<td><button data-obtain_no="${oblist.obtain_no}" onclick="obPaPop(this)">등록</button></td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -62,7 +62,7 @@
 function receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no,notes) {
 	$.ajax({
         type: 'POST',
-        url: 'paUpdate',
+        url: 'paInsert',
         data: {
         	pa_referenceNo : pa_referenceNo,
         	user_id : user_id,
@@ -82,9 +82,9 @@ function receiveData(pa_referenceNo,user_id,pa_issueDate,code,obtain_no,notes) {
     });
 }
 
-function prpPop(button){
+function obPaPop(button){
 	var obtain_no = button.getAttribute("data-obtain_no");
-	var url = "/paObPop";
+	var url = "/obPaPop";
 
 	var form = document.createElement("form");
 	form.action= url;
