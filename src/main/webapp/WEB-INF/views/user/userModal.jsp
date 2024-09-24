@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 
 <script>
 	var partcheck;
@@ -52,10 +53,10 @@
 		<div class="modal-body">
 			<table class="modal-table">
 				<tr>
-					<th>담당자 명</th>
-					<th>담당자 전화번호</th>
-					<th>담당자 이메일</th>
-					<th>담당자 부서</th>
+					<td>담당자 명</td>
+					<td>담당자 전화번호</td>
+					<td>담당자 이메일</td>
+					<td>담당자 부서</td>
 				</tr>
 				<c:forEach var="userlist" items="${userlist}">
 					<c:if

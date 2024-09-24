@@ -2,12 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
-<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>"
-	rel='stylesheet' />
-	
 <style>
 .modal-table th, .modal-table td {
  padding: 5px; /* 패딩을 줄임 */
+}
+
+.modal-table input[type="number"] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 0 !important; /* 또는 원하는 값 */
+    font-size: 16px;
 }
 </style>
 <script>
@@ -244,11 +252,11 @@
 					<input type="hidden" name="item_no" value="${item.item_no}" id="item_no" />
 					<table id="bomInsertTable" class="modal-table">
 						<tr>
-							<th>번호</th>
-							<th>자재코드</th>
-							<th>분류</th>
-							<th>자재명</th>
-							<th>원산지</th>
+							<td>번호</td>
+							<td>자재코드</td>
+							<td>분류</td>
+							<td>자재명</td>
+							<td>원산지</td>
 							<td>자재단위</td>
 							<td>자재무게</td>
 							<td>소요자재량</td>

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kr.kimchi.dao.MaterialDAO;
+import com.kr.kimchi.vo.AttachmentVO;
 import com.kr.kimchi.vo.MaterialVO;
 
 @Service
@@ -16,10 +17,21 @@ public class MaterialService {
 
     @Inject
     private MaterialDAO madao;
+    
+    @Inject
+    private AttachmentService attachmentService;
 
     // 전체 + 페이징 + 검색
     public List<MaterialVO> maList(int startRow, int pageSize, String ma_name) {
-        return madao.maList(startRow, pageSize, ma_name); 
+        List<MaterialVO> materials = madao.maList(startRow, pageSize, ma_name);
+        for (MaterialVO material : materials) {
+            // 첨부파일 정보 가져오기
+            AttachmentVO attachment = attachmentService.attachmentSelect(material.getAttachment_no());
+            if (attachment != null) {
+                material.setAttachmentLocation(attachment.getAttachment_location()); 
+            }
+        }
+        return materials; 
     }
     
     // 전체 레코드 수
@@ -34,7 +46,13 @@ public class MaterialService {
 
     // 선택
     public MaterialVO maView(int ma_id) {
-        return madao.maView(ma_id);
+        MaterialVO material = madao.maView(ma_id);
+        // 첨부파일 정보 가져오기
+        AttachmentVO attachment = attachmentService.attachmentSelect(material.getAttachment_no());
+        if (attachment != null) {
+            material.setAttachmentLocation(attachment.getAttachment_location()); 
+        }
+        return material;
     }
     
     // 추가

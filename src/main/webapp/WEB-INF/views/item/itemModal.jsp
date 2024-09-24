@@ -33,7 +33,7 @@
 					<td>물룸 분류</td>
 					<td>물품명</td>
 					<td>물품 단가</td>
-					<td>제조소료일</td>
+					<td>제조소요일</td>
 				</tr>
 				<c:forEach var="itemlist" items="${itemlist}">
 					<c:if test="${itemlist.item_bomRegistered eq 1}">

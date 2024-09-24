@@ -37,6 +37,7 @@
 								<tr>
 									<th>분류명</th>
 									<th>재료명</th>
+									<th>이미지</th>
 									<th>원산지</th>
 									<th>유통기한</th>
 									<th>무게</th>
@@ -53,6 +54,8 @@
 								<tr>
 									<td>${ma.ma_category}</td>
 									<td>${ma.ma_name}</td>
+									<td><img src="${ma.attachmentLocation}" 
+										 style="width: 100px; height: 100px;" /></td>
 									<td>${ma.ma_origin}</td>
 									<td>${ma.ma_expiryDate}</td>
 									<td class="ma_weight">${ma.ma_weight}</td>

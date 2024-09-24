@@ -415,10 +415,15 @@ document.addEventListener('DOMContentLoaded', function() {
    window.onload = checkapp;
 </script>
 
-<!-- 로그인 input -->
+<!-- 캘린더 -->
+<!-- <div class="content-body">
+   <div id='calendar'></div>
+</div> -->
+
+<!-- login input -->
 <input value="${partlogin.partner_approval }" type="hidden"
-    id="login_partner_approval" name="login_partner_approval">
+   id="login_partner_approval" name="login_partner_approval">
 <input value="${userlogin.user_approval }" type="hidden"
-    id="login_user_approval" name="login_user_approval">
+   id="login_user_approval" name="login_user_approval">
 
 <%@ include file="../include/footer.jsp"%>

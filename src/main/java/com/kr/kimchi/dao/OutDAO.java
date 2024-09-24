@@ -51,7 +51,7 @@ public class OutDAO {
         return session.selectOne(nameSpace + ".outView", io_id);
     }
     
-    // 출고 정보 삽입
+    // 출고
     public void outAdd(IOVO out) {
         session.insert(nameSpace + ".outAdd", out);
     }

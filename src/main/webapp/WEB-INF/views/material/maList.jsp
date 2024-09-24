@@ -37,7 +37,7 @@
                                 <th>포장규격</th>
                                 <th>단가액</th>
                                 <th>총금액</th>
-                                <th>첨부파일번호</th>
+                                <th>첨부파일</th>
                             </tr>
 
                             <c:forEach var="ma" items="${list}">
@@ -52,7 +52,8 @@
                                     <td>${ma.ma_specifications}</td>
                                     <td class="price">${ma.ma_price}</td>
                                     <td class="stockValue">${ma.ma_stockValue}</td>
-                                    <td>${ma.attachment_no}</td>
+                                    <td><img src="${ma.attachmentLocation}" 
+                                    	style="width: 50px; height: 50px;" /></td>
                                 </tr>
                             </c:forEach>
                         </table>
