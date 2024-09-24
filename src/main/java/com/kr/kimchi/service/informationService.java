@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kr.kimchi.dao.informationDAO;
 import com.kr.kimchi.vo.IOVO;
+import com.kr.kimchi.vo.IemailVo;
 import com.kr.kimchi.vo.InlistVO;
 import com.kr.kimchi.vo.ObtainVO;
 import com.kr.kimchi.vo.StatusCheck;
@@ -66,6 +67,11 @@ public class informationService {
 			return dao.transaction_statement(obtain_no);
 		}
 
+		
+		public IemailVo email_serch(int value){
+			
+			return dao.email_serch(value);
+		}
 
 	
 	

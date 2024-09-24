@@ -9,10 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kr.kimchi.vo.IOVO;
+import com.kr.kimchi.vo.IemailVo;
 import com.kr.kimchi.vo.InlistVO;
 import com.kr.kimchi.vo.ObtainVO;
 import com.kr.kimchi.vo.StatusCheck;
-import com.kr.kimchi.vo.UserVO;
 import com.kr.kimchi.vo.transactionVO;
 
 @Repository
@@ -25,12 +25,15 @@ public class informationDAO {
 	
 	//페이징하기
 	public List<InlistVO> pa_select(Map<String, Object> params){
+		
+		
+		
 		return Session.selectList(namespaces+".io-list-paging", params);
 	}
 	
 	//입출고 정보 리스트 조회
 	public List<InlistVO> in_select(){
-		return Session.selectList(namespaces+".io-list all");
+		return Session.selectList(namespaces+".io-list-all");
 	}
 	
 	//입고 추가
@@ -68,9 +71,9 @@ public class informationDAO {
 	}
 	
 	//검수 완료 시 거래명세서 담장자에게 이메일 발송
-	public UserVO email_serch(int value){
+	public IemailVo email_serch(int obtain_no){
 		
-		return Session.selectOne(namespaces+".io_OK_email", value);
+		return Session.selectOne(namespaces+".io_OK_email", obtain_no);
 	}
 	
 	//거래명세서 데이터 불러오기

@@ -26,4 +26,7 @@ public class transactionVO {
 	private String partner_number;
 	private String partner_ownername;
 	private String partner_fax;
+	private String partner_add;
+	
+
 }

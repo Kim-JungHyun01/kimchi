@@ -1,5 +1,6 @@
 package com.kr.kimchi;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.kr.kimchi.vo.IemailVo;
 
 @Controller
 public class EmailSend {
@@ -36,11 +40,23 @@ public class EmailSend {
 	}
 
 	@PostMapping(value="/mail3")
-	public ModelAndView mail3(@RequestParam("receivedMail") String receivedMail) {
+	public ModelAndView mail3(@RequestParam("receivedMail") List<IemailVo> receivedMail,RedirectAttributes rttr) {
 		ModelAndView mav = new ModelAndView();
-		sendEmail3(receivedMail);
-		mav.setViewName("redirecet:information");
-		return mav;
+		if(receivedMail != null) {
+			
+			for(IemailVo vo : receivedMail){
+				sendEmail3(vo.getMa_name(), vo.getObtain_no(), vo.getUser_email());
+				
+			}
+			rttr.addFlashAttribute("msg", "success");
+			mav.setViewName("redirecet:information");
+			return mav;
+		}else {
+			rttr.addFlashAttribute("msg", "hu");
+			mav.setViewName("redirecet:information");
+			return mav;
+		}
+		
 	}
 	
 	public static void sendEmail(String date, String parthner, String receivedMail) {
@@ -148,11 +164,11 @@ public class EmailSend {
 	        }
 	    }
 	
-	public static void sendEmail3(String receivedMail) {
+	public static void sendEmail3(String ma_name,int obtain_no,String receivedMail) {
 		// 구글 이메일
-		String user_email= "";
+		String user_email= "jae1hyun31@gmail.com";
 		// 구글 비번
-		String user_pw = "";
+		String user_pw = "jae1hyun31)cho";
 		
 		String smtp_host = "smtp.gmail.com";
 		int smtp_port = 465;  // TLS : 587, SSL : 465
@@ -172,7 +188,7 @@ public class EmailSend {
 		});
 		
 		try {
-			
+			receivedMail="jae1hyun31@gmail.com";
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user_email));
 			
@@ -187,7 +203,8 @@ public class EmailSend {
 			
 			// 내용
 			message.setText(
-					"안녕하세요. (주)삼김신조입니다. \n"
+					"안녕하세요. (주)삼김신조입니다. \n"+
+							"ob-"+obtain_no+"조달번호인"+"자재"+ma_name+"이"
 							+ "입고가 완료되어서 메일 발송드립니다. \n");
 			
 			// 발송
