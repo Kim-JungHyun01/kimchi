@@ -6,6 +6,7 @@
 	<!-- 첨부파일 보기 -->
 	<select id="attachmentAll" resultType="com.kr.kimchi.vo.AttachmentVO">
 		select * from attachment 
+		ORDER BY attachment_no DESC
 	</select>
 
 	<!-- 첨부파일 보기 -->

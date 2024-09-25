@@ -34,15 +34,13 @@
 								<td>물품 규격</td>
 								<td>물품 bom등록여부</td>
 								<td>물품 재고수량</td>
-								<td>물품 가용재고</td>
 								<td>물품 기본재고</td>
 								<td>물품 저장고</td>
 								<td>물품 생산일</td>
+								<td>이미지</td>
 							</tr>
 							<c:forEach var="itemlist" items="${itemlist}">
-								<tr
-									onclick="location.href='${contextPath}/item/itemSelect?item_no=${itemlist.item_no}'"
-									style="cursor: pointer;">
+								<tr onclick="location.href='${contextPath}/item/itemSelect?item_no=${itemlist.item_no}'" style="cursor: pointer;">
 									<td>${itemlist.item_no}</td>
 									<td>${itemlist.item_category}</td>
 									<td>${itemlist.item_name}</td>
@@ -59,10 +57,14 @@
 											    </c:when>
 										</c:choose></td>
 									<td>${itemlist.item_stockquantity}</td>
-									<td>${itemlist.item_availablestock}</td>
 									<td>${itemlist.item_basicstock}</td>
 									<td>${itemlist.item_storage}</td>
 									<td>${itemlist.item_productionDate}</td>
+									<c:forEach var = "attlist" items="${attlist }">
+										<c:if test='${itemlist.attachment_no != null && itemlist.attachment_no == attlist.attachment_no}'>
+											<td><img src="${attlist.attachment_location}" style="width: 50px; height: 50px;"></td>
+										</c:if>
+									</c:forEach>
 								</tr>
 							</c:forEach>
 						</table>

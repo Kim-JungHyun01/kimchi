@@ -35,10 +35,13 @@ public class ItemController {
 		int pageSize = 5; // 한 페이지에 보여줄 갯수 
 	    int pageNavSize = 5; // 페이지 네비 크기
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
-		List<ItemVO> itemlist = itemservice.itemAll(startRow, pageSize, item_name);
+		List<ItemVO> itemlist = itemservice.itemAll(startRow, pageSize, item_name);//물품리스트
 		Integer totalCount = itemservice.getTotalCount(); // 총 레코드 수 가져옴
 		Integer totalPages = itemservice.itemSearch(pageSize, item_name); // 검색 이후 ㄹㅔ코드수 계산
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
+		
+		//첨부파일 리스트
+		List<AttachmentVO> attlist = attservice.attachmentAll();
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pagination", pagination);
@@ -46,6 +49,7 @@ public class ItemController {
 	    mav.addObject("totalPages", totalPages);
 	    
 		mav.addObject("itemlist", itemlist);
+		mav.addObject("attlist", attlist);
 		mav.setViewName("item/itemAll");
 		return mav;
 	}// end

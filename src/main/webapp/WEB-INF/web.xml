@@ -27,8 +27,10 @@
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- 파일업로드 muti-part -->
 		<multipart-config>
-			<location>C:\Users\A9\Desktop\연습용</location><!-- 파일 임시저장위치 -->
+		<location>../../../../../../../../kimchi/src/main/webapp/resources/images/kimchi/attachment</location>
+			<!-- <location>C:/Users/A9/Desktop/연습용/</location> -->
 			<max-file-size>20971520</max-file-size> <!-- 최대크기 20M -->
 			<max-request-size>41943040</max-request-size> <!-- 한번에 올릴 최대 크기 40M -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 메모리 -->

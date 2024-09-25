@@ -134,7 +134,6 @@ public class ContractsController {
 //	계약 승인 & 취소 체크
 	@PostMapping(value = "contracts/contractsCheck")
 	public String contractsCheck(ContractsVO con) throws ParseException {
-		conservice.contractsCheck(con); // 계약서 승인/취소 수정
 		// 계약 승인 시 서류 발급
 		if (con.getContracts_status().equals("계약승인")) {
 			ContractsVO incon = conservice.contractsSelect(con.getContracts_no());
@@ -147,6 +146,7 @@ public class ContractsController {
 			int result = pdfService.createContract(con.getContracts_no(), insertedCode.getCode_name());
 
 			if (result == 1) {
+				conservice.contractsCheck(con); // 계약서 승인/취소 수정 => 서류완성되면 실행
 				// pa 추가
 				PaVO pa = new PaVO();
 				pa.setUser_id(incon.getUser_id());
@@ -178,10 +178,12 @@ public class ContractsController {
 		paservice.paCheck(pa.getPa_no());
 
 		String filename = pa.getCodeVo().getCode_name() + ".PDF";
-		System.out.println(filename);
 //	    String filePath = "C:/KJH/springworkspaces/practive/src/main/webapp/resources/pdf/" + filename;
-		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//절대경로
+		String filePath = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/" + filename;//절대경로
 		File file = new File(filePath);
+		
+		// 파일의 절대 경로 출력
+	    System.out.println("파일의 절대 경로: " + file.getAbsolutePath());
 		if (!file.exists()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

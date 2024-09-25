@@ -49,12 +49,29 @@ public class PdfService {
 		PartnerVO part = partservice.partnerSelect(con.getPartner_taxid());
 
 		int result = -1;
-		Document document = new Document(PageSize.A4, 20, 20, 20, 20);
+		
 		String filename = code_name + ".PDF";//파일이름_pdf로 꼭 지정
-		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//파일저장위치
-//		String filePath = "src/main/webapp/resources/pdf/" + filename; // 파일 저장 위치
+//		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//파일저장위치
+		String Path = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/contract";//파일 저장 위치
+		String filePath =  Path+ filename; // 파일 저장 위치
+		
+		// 폴더가 존재하지 않으면 생성
+		File pdfDir = new File(Path);
+		if (!pdfDir.exists()) {
+		    pdfDir.mkdir();
+		}
+		
+		//파일 존재시 중복확인
 		File file = new File(filePath);
-
+	    int count = 1;
+	    while (file.exists()) {
+	        String newFilename = code_name + " (" + count + ").PDF"; // 새로운 파일 이름 생성
+	        filePath = Path + newFilename; // 파일 저장 위치
+	        file = new File(filePath);
+	        count++;
+	    }
+	    
+	    Document document = new Document(PageSize.A4, 20, 20, 20, 20);//서류 생성
 		try (FileOutputStream fos = new FileOutputStream(file)) {
 			PdfWriter writer = PdfWriter.getInstance(document, fos);//사용하기는 않지만 필요
 			document.open();
@@ -252,17 +269,25 @@ public class PdfService {
 
 	    // 파일 정보 지정
 	    String filename = code_name + ".PDF"; // 파일이름_pdf로 꼭 지정
-	    String filePath = "C:/Users/A9/Desktop/pdf/" + filename; // 파일저장위치
-
+//	    String filePath = "C:/Users/A9/Desktop/pdf/" + filename; // 임시 절대경로
+	    String Path = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/statement/";
+	    String filePath = Path + filename; // 파일저장위치
+	    
+		// 폴더가 존재하지 않으면 생성
+		File pdfDir = new File(Path);
+		if (!pdfDir.exists()) {
+			pdfDir.mkdir();
+		}//end
+	    
 	    // 파일 이름 중복 체크 및 수정
 	    File file = new File(filePath);
 	    int count = 1;
 	    while (file.exists()) {
 	        String newFilename = code_name + " (" + count + ").PDF"; // 새로운 파일 이름 생성
-	        filePath = "C:/Users/A9/Desktop/pdf/" + newFilename; // 새로운 파일 저장 위치
+	        filePath = Path + newFilename; // 새로운 파일 저장 위치
 	        file = new File(filePath);
 	        count++;
-	    }
+	    }//end
 
 	    int result = -1;
 
@@ -273,7 +298,8 @@ public class PdfService {
 	        document.open();//서류 열기
 
 	        // 이미지 추가
-	        String imagePath = "C:/Users/A9/Desktop/거래명세서.jpg"; // 이미지 파일 경로
+//	        String imagePath = "C:/Users/A9/Desktop/거래명세서.jpg"; // 이미지 파일 경로
+	        String imagePath = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/거래명세서.jpg"; // 이미지 파일 경로
 	        Image img = Image.getInstance(imagePath);
 
 	        // 이미지 크기 조정_사용 가능한 너비: 210mm - 25mm(좌측) - 25mm(우측) = 160mm | 사용 가능한 높이: 297mm - 30mm(상단) - 25mm(하단) = 242mm
