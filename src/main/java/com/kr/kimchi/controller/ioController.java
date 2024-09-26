@@ -208,7 +208,7 @@ public class ioController {
 		            StatusCheck dataObject = new StatusCheck();
 		            dataObject.setObtain_no(obtainNoInt);
 		            
-		            // ������ ó�� ����
+		            
 		            transactionVO statement = service.transaction_statement(obtainNoInt);
 		            System.out.println(statement);
 		            model.addAttribute("value", statement);
