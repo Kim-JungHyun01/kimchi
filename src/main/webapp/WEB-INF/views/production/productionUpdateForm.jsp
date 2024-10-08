@@ -118,7 +118,7 @@
 	    }
 	    
 	    today.setDate(today.getDate() + bom_schedule);
-	    maxDate.setDate(maxDate.getDate() - 3);
+	    maxDate.setDate(maxDate.getDate() - 4);
 	    
 	    // 제작 소요일에 따라 오늘 날짜를 업데이트 계약일보다 3일 전까지 생산완료
 	    if (!(today < production_deliveryDate && production_deliveryDate < maxDate)) {

@@ -30,14 +30,14 @@
       			<div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>입출고 정보 Page</h4>
-                            <span class="ml-1">입고/출고</span>
+                            <h4>입고 정보 Page</h4>
+                            <span class="ml-1">입고</span>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">홈</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">입출고정보</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">입고정보</a></li>
                         </ol>
                     </div>
                 </div>
@@ -61,12 +61,12 @@
 								                <form id="insert_in" action="insert_io" method="post">
 								                    <table class="table table-bordered verticle-middle table-responsive-sm" style="table-layout: fixed;">
 								                        <tr>
-								                            <td style="width:300px; text-align: center;">입출고코드</td>
+								                            <td style="width:300px; text-align: center;">입고코드</td>
 								                            <td style="text-align: center; overflow: hidden;">
 								                                <label for="inp-1">io-</label>
 								                                <input type="int" id="inp-1" name="io_id" readonly="readonly" style="text-align: center; width: 90%;">
 								                            </td>
-								                            <td style="width:300px; text-align: center;">입출고 상태</td>
+								                            <td style="width:300px; text-align: center;">입고 상태</td>
 								                            <td style="text-align: center; overflow: hidden;">
 								                                <input type="text" id="io_status" name="io_status" readonly="readonly" style="text-align: center; width: 90%;">
 								                            </td>

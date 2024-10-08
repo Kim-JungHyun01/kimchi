@@ -27,26 +27,33 @@
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<location>C:\Users\A9\Desktop\연습용</location><!-- 파일 임시저장위치 -->
+			<max-file-size>20971520</max-file-size> <!-- 최대크기 20M -->
+			<max-request-size>41943040</max-request-size> <!-- 한번에 올릴 최대 크기 40M -->
+			<file-size-threshold>20971520</file-size-threshold> <!-- 메모리 -->
+		</multipart-config>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-   <!-- 한글 깨짐 방지 -->
-   <filter>
-      <filter-name>characterEncodingFilter</filter-name>
-      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-      <init-param>
-         <param-name>encoding</param-name>
-         <param-value>UTF-8</param-value>
-      </init-param> 
-   </filter>
-   <filter-mapping>
-      <filter-name>characterEncodingFilter</filter-name>
-      <url-pattern>/*</url-pattern>
-   </filter-mapping>
+
+	<!-- 한글 깨짐 방지 -->
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 
 </web-app>

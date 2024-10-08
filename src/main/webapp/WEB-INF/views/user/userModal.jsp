@@ -38,13 +38,13 @@
 
     // 특정 부서 선택
     function filterDepartment(department) {
-       if (department === '전체') {
+    	if (department === '전체') {
             // 검색 입력값 초기화
             departmentcheck = '';
             loadUser(1, '', departmentcheck);
             return;
         }
-       departmentcheck = department;
+    	departmentcheck = department;
         loadUser(1, '', departmentcheck);
     }
 

@@ -191,7 +191,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- 파일 업로드 의존성 -->
+			<!-- 파일 업로드 의존성 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>

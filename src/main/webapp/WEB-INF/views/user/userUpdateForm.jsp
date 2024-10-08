@@ -64,7 +64,7 @@ function submitCheck() {
 
     if (!confirm('회원정보를 수정하시겠습니까?')) {
         alert("회원정보 수정이 취소되었습니다.");
-        location.href = "/user/userSelect?user_id="+${user.user_id };
+        location.href = `/user/userSelect?user_id=${user.user_id}`;
         return;
     }//end
     
@@ -74,7 +74,7 @@ function submitCheck() {
 </script>
 <%@include file="../include/header.jsp"%>
 <div class="content-body">
-	<h2>사용자 수정목록</h2>
+	<h2>사원 수정화면</h2>
 	<hr>
 	<div class="input-container">
 		<form action="userUpdate" method = post id = "userUpdateForm" name = "userUpdateForm">

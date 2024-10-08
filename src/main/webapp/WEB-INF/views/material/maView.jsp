@@ -7,53 +7,19 @@
 <%@include file="../include/header.jsp"%>
 
 <style>
-/* 버튼들 모양 */
-
-.link-container {
-	display: flex;
-	justify-content: flex-end; /* 오른쪽 정렬 */
-	margin-bottom: 10px; /* 아래쪽 여백 */
-	margin-top: 10px; /* 위쪽 여백 추가 */
-}
 
 .list-button {
 	display: inline-block;
 	padding: 10px 10px;
-	margin-left: 10px; /* 좌측 마진 추가 */
-	margin-right: 10px; /* 우측 마진 20px */
+	margin-top: 10px;
+	margin-left: 10px; /* 좌측 */
+	margin-right: 10px; /* 우측  */
 	border: none;
 	border-radius: 5px;
 	background-color: #5892d1; /* 버튼 배경색 */
 	color: white; /* 글자색 */
 	cursor: pointer;
 	transition: background-color 0.3s; /* 배경색 전환 효과 */
-}
-
-.link-button {
-	display: inline-block;
-	padding: 10px 10px;
-	margin-left: 10px; /* 좌측 마진 추가 */
-	margin-bottom: 5px; /* 아래쪽 여백 5px */
-	border: none;
-	border-radius: 5px;
-	background-color: #5892d1; /* 버튼 배경색 */
-	color: white; /* 글자색 */
-	cursor: pointer;
-	transition: background-color 0.3s; /* 배경색 전환 효과 */
-}
-
-.link-button:hover {
-	background-color: #0056b3; /* 호버 시 배경색 변경 */
-	color: white; /* 글자색을 흰색으로 유지 */
-}
-
-.link-button:active {
-	transform: scale(0.95);
-	outline: 2px solid white; /* 아웃라인 추가 */
-}
-
-.table th, .table td {
-	text-align: center; /* 가운데 정렬 */
 }
 </style>
 
@@ -71,6 +37,7 @@
 								<tr>
 									<th>분류명</th>
 									<th>재료명</th>
+									<th>이미지</th>
 									<th>원산지</th>
 									<th>유통기한</th>
 									<th>무게</th>
@@ -87,6 +54,8 @@
 								<tr>
 									<td>${ma.ma_category}</td>
 									<td>${ma.ma_name}</td>
+									<td><img src="${ma.attachmentLocation}" 
+										 style="width: 100px; height: 100px;" /></td>
 									<td>${ma.ma_origin}</td>
 									<td>${ma.ma_expiryDate}</td>
 									<td class="ma_weight">${ma.ma_weight}</td>

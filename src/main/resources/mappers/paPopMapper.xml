@@ -76,7 +76,7 @@
 			g.partner_ownername,
 			g.partner_number,
 			g.partner_email,
-			g.partner_fax ,
+			g.partner_fax,
 			h.code_name
 		from pa a
 		join obtain b on b.obtain_no = a.pa_referenceNo
@@ -84,7 +84,7 @@
 		join user d on a.user_id = d.user_id
 		join production e on b.production_no = e.production_no
 		join contracts f on  e.contracts_no = f.contracts_no
-		join partner g on f.partner_taxid = g.partner_taxid 
+		join partner g on b.partner_taxid = g.partner_taxid 
 		join code h on a.code_id = h.code_id
 		where a.pa_no =#{pa_no};
 	</select>

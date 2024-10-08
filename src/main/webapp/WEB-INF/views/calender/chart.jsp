@@ -1,180 +1,135 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page session="true"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        
-        h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        #startDate, #endDate {
-            padding: 8px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        
-        #loadChart {
-            padding: 8px 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        #loadChart:hover {
-            background-color: #0056b3;
-        }
-        
-        #myChart {
-            width: 100%;
-            height: 400px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 </head>
 <body>
-    <h1>자재 차트</h1>
-    <input type="date" id="startDate" name="startDate">
-    <input type="date" id="endDate" name="endDate">
-    <button id="loadChart">차트 업데이트</button>
-    <canvas id="myChart"></canvas>
+    <div class="container">
+
+        <!-- 품목별 재고 및 총액 차트 -->
+        <canvas id="product-stock-chart" style="margin-top: 50px; width:10%; height:30%;"></canvas>
+
+        <!-- 날짜별 전체 재고 총액 차트 -->
+        <canvas id="overall-stock-chart" style="margin-top: 50px; width:10%; height:30%;"></canvas>
+    </div>
 
     <script>
-    let myChart; // 전역 변수로 차트 인스턴스 유지
+        // JSON 데이터는 문자열로 그대로 삽입합니다.
+        const productChartData = JSON.parse('${chartData}');
+        const overallStockData = JSON.parse('${totalStock}');
 
-    function fetchData(startDate, endDate) {
-        $.ajax({
-            url: '/calender/chart',
-            data: { startDate: startDate, endDate: endDate },
-            success: function(chartData) {
-                console.log(chartData); // 데이터 확인
-                
-                // 데이터 매핑
-                const labels = chartData.map(c => c.ma_date);
-                const totalQuantity = chartData.map(c => c.totalQuantity);
-                const totalValue = chartData.map(c => c.totalValue);
+        console.log('chartData:', productChartData);
+        console.log('totalStock:', overallStockData);
 
-                // 데이터 설정
-                const data = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: '총 재고 수량',
-                            data: totalQuantity,
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderWidth: 1,
-                            yAxisID: 'y1'
-                        },
-                        {
-                            label: '총 재고 금액',
-                            data: totalValue,
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderWidth: 1,
-                            yAxisID: 'y2'
-                        }
-                    ]
-                };
+        // 품목별 재고 및 총액 차트 데이터
+        const productNames = productChartData.map(item => item.ma_name); // 상품명 추출
+        const stockQuantities = productChartData.map(item => item.totalQuantity); // 재고량 추출
+        const stockValues = productChartData.map(item => item.totalValue); // 총액 추출
 
-                // 차트 옵션 설정
-                const options = {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    const datasetLabel = tooltipItem.dataset.label || '';
-                                    const value = tooltipItem.raw;
-                                    return `${datasetLabel}: ${value}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            type: 'time', // 날짜를 위한 time scale 설정
-                            time: {
-                                unit: 'day'
-                            },
-                            title: {
-                                display: true,
-                                text: '날짜'
-                            }
-                        },
-                        y1: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '총 재고 수량'
-                            },
-                            position: 'left'
-                        },
-                        y2: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '총 재고 금액'
-                            },
-                            position: 'right'
-                        }
-                    }
-                };
-
-                // 차트 생성
-                const ctx = document.getElementById('myChart').getContext('2d');
-
-                // 차트를 새로 생성하기 전에 기존 차트가 있는지 확인하고 제거합니다.
-                if (myChart) {
-                    myChart.destroy();
+        const ctx1 = document.getElementById('product-stock-chart').getContext('2d');
+        
+        const data1 = {
+            labels: productNames, // 상품명
+            datasets: [
+                {
+                    type: 'bar',
+                    label: '각 상품별 재고량',
+                    data: stockQuantities, // 각 상품의 재고량
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    type: 'bar',
+                    label: '각 상품별 총액',
+                    data: stockValues, // 총액
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
                 }
+            ]
+        };
 
-                myChart = new Chart(ctx, {
-                    type: 'line', // 차트 유형 설정
-                    data: data,
-                    options: options
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX 요청 오류:", status, error);
-                alert("데이터를 가져오는 데 문제가 발생했습니다.");
+        const options1 = {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '재고량 및 총액'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '상품명'
+                    }
+                }
             }
+        };
+
+        new Chart(ctx1, {
+            type: 'bar',
+            data: data1,
+            options: options1
         });
-    }
 
-    // 초기 데이터 로드
-    $(document).ready(function() {
-        fetchData(null, null); // 초기값으로 전체 데이터 로드
-    });
+        // 날짜별 전체 재고 총액 차트
+        const ctx2 = document.getElementById('overall-stock-chart').getContext('2d');
 
-    // 차트 업데이트 버튼 클릭 이벤트
-    $('#loadChart').click(function() {
-        const startDate = $('#startDate').val();
-        const endDate = $('#endDate').val();
-        fetchData(startDate, endDate);
-    });
+        // 날짜 레이블과 총액 데이터를 분리
+        const dateLabels = overallStockData.map(item => {
+            const date = new Date(item.date);
+            return date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+        });
+        const stockValuesData = overallStockData.map(item => item.totalValue);
+
+        const data2 = {
+            labels: dateLabels, // 날짜 레이블
+            datasets: [
+                {
+                    type: 'line',
+                    label: '전체 재고 총액',
+                    data: stockValuesData, // 전체 재고의 총액
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.1
+                }
+            ]
+        };
+
+        const options2 = {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '총액'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '날짜'
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx2, {
+            type: 'line',
+            data: data2,
+            options: options2
+        });
     </script>
 </body>
 </html>

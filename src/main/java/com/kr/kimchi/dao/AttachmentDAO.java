@@ -21,8 +21,8 @@ public class AttachmentDAO {
 	public List<AttachmentVO> attachmentAll() {
 		return session.selectList(namespace+".attachmentAll");
 	}//end
-	public AttachmentVO attachmentSelect(int item_no) {
-		return session.selectOne(namespace+".attachmentSelect", item_no);
+	public AttachmentVO attachmentSelect(int attachment_no) {
+		return session.selectOne(namespace+".attachmentSelect", attachment_no);
 	}//end
 	
 //	첨부파일 추가

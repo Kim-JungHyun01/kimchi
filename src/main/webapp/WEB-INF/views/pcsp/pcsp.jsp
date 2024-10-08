@@ -31,7 +31,7 @@
 								</tr>
 								<c:forEach var = "pcsp"  items="${list }" >
 								<tr>
-									<td>(주)삼김신조</td>
+									<td>(주)삼김신조유</td>
 									<td>${pcsp.code_name }</td>
 									<td>${pcsp.pcsp_date }</td>
 									<td>${pcsp.pcsp_notes }</td>
@@ -48,34 +48,32 @@
 	<div class ="modal">
 		<div class="modal-content">
 			<div class="modal-header">
-			<h2>출하준비 검수</h2>
+			<h2>출하준비</h2>
 			<span class = "close">&times;</span>
 			</div>
 			<div class="modal-body">
 			    <form action="/pcsp" method="post" onsubmit="return checkForm()">
 			        <div class="form-group">
-			            <label for="date">검수 일자</label>
-			            <input type="date" name="pcsp_date" id="date" min="" style="width: 170px;">
+			            <label for="date" style="font-size: 15px; text-align: left;">검수 일자</label>
+			            <input type="date" name="pcsp_date" id="date" min="" style="width: 170px; margin-left: 0;">
 			        </div>
 			        <div class="form-group">
-			            <label for="code">발주번호</label>
+			            <label for="code" style="font-size: 15px; text-align: left;">발주번호</label>
 			            <input type="text" name="code_name" id="code">
 			        </div>
 			        <div class="form-group">
-			            <label for="partner">협력회사</label>
-			            <input type="text"  value="(주)삼김팩토리" readonly>
+			            <label for="partner" style="font-size: 15px; text-align: left;">협력회사</label>
+			            <input type="text"  value="(주)삼김신조유" readonly>
 			        </div>
 			        <div class="form-group">
-			        	<!-- 임시삭제 
-			            <label for="pcsp_notes">비고</label>
-			        	-->
-			            <textarea name="pcsp_notes" id="pcsp_notes" >비고</textarea>
+			            <label for="pcsp_notes" style="font-size: 15px;, text-align: left;"></label>
+			            <textarea name="pcsp_notes" id="pcsp_notes" style="text-align: left; margin-left: 5px; " placeholder="비고"></textarea>
 			        </div>
-			  <input type="hidden" name="token" value="${token}" />
-				<input type="hidden" name="partner_taxid" value="${partner_taxid}" />
-				<div class="modal-footer">
-					<button class="link-button">저장</button>
-				</div>
+					<input type="hidden" name="token" value="${token}" />
+					<input type="hidden" name="partner_taxid" value="${partner_taxid}" />
+					<div class="modal-footer">
+						<button class="link-button">저장</button>
+					</div>
 			    </form>
 			</div>
 		</div>
@@ -180,7 +178,7 @@ function checkForm() {
 
 .modal-content {
 	width: 30%;
-	height: 53%;
+	height: 55%;
 	position: relative;
     top: 20%;
     left: 40%;

@@ -39,7 +39,9 @@ public class ContractsController {
 	@Inject
 	private PartnerService partservice;
 	@Inject
-	PdfService pdfService;
+	private PdfService pdfService;
+	@Inject
+	private ModalpagingService pageservice;
 
 //	계약 보기_전체
 	@GetMapping(value = "contracts/contractsAll")
@@ -50,11 +52,11 @@ public class ContractsController {
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
 	    
 	    List<ContractsVO> conlist = conservice.contractsAll(startRow, pageSize);
-	    List<UserVO> userlist = userservice.userAll(0, 100, null);
+	    List<UserVO> userlist = userservice.userAll(0, 100, null, "생산부서");
 	    List<ItemVO> itemlist =itemservice.itemAll(0, 100, null);
 	    
 	    Integer totalCount = conservice.getTotalCount(); // 총 레코드 수 가져옴
-	    Integer totalPages = itemservice.itemSearch(pageSize, null); // 검색지만 전체페이지를 위해 적음
+	    Integer totalPages = (int) Math.ceil((double) totalCount / pageSize);//검색이 없기에 따로 계산
 	    
 	    PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
 		ModelAndView mav = new ModelAndView();
@@ -83,18 +85,28 @@ public class ContractsController {
 		mav.addObject("partner", partner);
 		mav.setViewName("contracts/contractsSelect");
 		return mav;
-	}// end
+	}// end	
 
 //	계약 추가
 	@GetMapping(value = "contracts/contractsInsertForm")
-	public ModelAndView contractsInsertForm() {
-		List<ItemVO> itemlist = itemservice.itemAll(0, 100, null);
-		List<PartnerVO> partnerlist = partservice.partnerAll(0, 100,null);
-		List<UserVO> userlist = userservice.userAll(0,100,null);
+	public ModelAndView contractsInsertForm(@RequestParam(defaultValue = "1") int pageNum,
+											@RequestParam(required = false) String item_name,
+											@RequestParam(required = false) String user_name,
+											@RequestParam(required = false) String user_department,
+											@RequestParam(required = false) String partner_companyname) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("itemlist", itemlist);
-		mav.addObject("partnerlist", partnerlist);
-		mav.addObject("userlist", userlist);
+		// item 페이징
+	    ModelAndView itemMav = pageservice.itempaging(pageNum, item_name);
+	    mav.addAllObjects(itemMav.getModel());
+
+	    // partner 페이징
+	    ModelAndView partnerMav = pageservice.partnerpaging(pageNum, partner_companyname);
+	    mav.addAllObjects(partnerMav.getModel());
+		
+//		user 페이징
+	    ModelAndView userMav = pageservice.userpaging(pageNum, user_name, user_department);
+	    mav.addAllObjects(userMav.getModel());
+	    
 		mav.setViewName("contracts/contractsInsertForm");
 		return mav;
 	}// end
@@ -131,6 +143,7 @@ public class ContractsController {
 			// 여기서 codeInsert 메서드의 반환 값을 사용하여 code_id를 가져옵니다.
 			CodeVO insertedCode = codeservice.codeInsert(code);
 			int code_id = insertedCode.getCode_id(); // 올바르게 설정된 code_id 사용
+//			계약서 작성
 			int result = pdfService.createContract(con.getContracts_no(), insertedCode.getCode_name());
 
 			if (result == 1) {
@@ -152,8 +165,6 @@ public class ContractsController {
 		return "redirect:/contracts/contractsSelect?contracts_no=" + con.getContracts_no();
 	}// end
 
-//	계약서 작성
-
 // 계약서 보기
 	@GetMapping(value = "contracts/documentView")
 	public ResponseEntity<FileSystemResource> documentView(int ca_id, int pa_referenceNo) {
@@ -169,7 +180,7 @@ public class ContractsController {
 		String filename = pa.getCodeVo().getCode_name() + ".PDF";
 		System.out.println(filename);
 //	    String filePath = "C:/KJH/springworkspaces/practive/src/main/webapp/resources/pdf/" + filename;
-		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;
+		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//절대경로
 		File file = new File(filePath);
 		if (!file.exists()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
