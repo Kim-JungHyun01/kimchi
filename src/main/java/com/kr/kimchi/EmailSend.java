@@ -85,10 +85,10 @@ public class EmailSend {
        }
    
    public static void sendEmail2(String date, String notes,String receivedMail) {
-      // 구글 이메일
-      String user_email= "";
-      // 구글 비번
-      String user_pw = "";
+	   // 구글 이메일
+	      String user_email= "";
+	      // 구글 비번
+	      String user_pw = "";
       
       String smtp_host = "smtp.gmail.com";
       int smtp_port = 465;  // TLS : 587, SSL : 465

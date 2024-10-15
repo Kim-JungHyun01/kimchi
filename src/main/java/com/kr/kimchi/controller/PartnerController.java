@@ -109,9 +109,8 @@ public class PartnerController {
 
 //	협력회사 승인
 	@PostMapping(value = "partner/partnerApproval")
-	public String partnerApproval(PartnerVO part) {
+	public void partnerApproval(PartnerVO part) {
 		partservice.partnerApproval(part);
-		return "redirect:/partner/partnerSelect?partner_taxid=" + part.getPartner_taxid();
 	}// end
 
 }// end class

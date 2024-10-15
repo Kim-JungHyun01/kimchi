@@ -94,6 +94,16 @@
 				<ul aria-expanded="false">
 					<li><a href="${contextPath}/sboard/list">게시판목록</a></li>
 				</ul></li>
+			<!-- 수요예측 -->
+			<li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+			 <i class="themify-icons ti-comment-alt"></i><span class="nav-text">  수요예측</span></a>
+				<ul aria-expanded="false">
+					<li><a href="${contextPath}/forecast/MULTIPLE_LINEAR_REGRESSION">다중선형회귀모형</a></li>
+					<li><a href="${contextPath}/forecast/linear_regression">직선회귀모형</a></li>
+					<li><a href="${contextPath}/forecast/Kneighbors_Regressor">K근접모델</a></li>
+					<li><a href="${contextPath}/forecast/Ensemble_Learning">앙상블 모델</a></li>
+			</ul>
+			</li>
 
 			<c:if test="${userlogin.user_department eq '관리자'}">
 				<!-- 승인관리 -->

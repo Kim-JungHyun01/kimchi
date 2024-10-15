@@ -156,11 +156,14 @@ public class ContractsController {
 				pa.setPa_issueDate(pa_issueDate);
 				pa.setPa_referenceNo(incon.getContracts_no());
 				paservice.paInsert(pa);
+				
 			} else if (result == 0) {
 				codeservice.codeDelete(code_id);
 			} // end
 
-		} // end if
+		}else {
+			conservice.contractsCheck(con);
+		}// end if
 
 		return "redirect:/contracts/contractsSelect?contracts_no=" + con.getContracts_no();
 	}// end
@@ -178,8 +181,7 @@ public class ContractsController {
 		paservice.paCheck(pa.getPa_no());
 
 		String filename = pa.getCodeVo().getCode_name() + ".PDF";
-//	    String filePath = "C:/KJH/springworkspaces/practive/src/main/webapp/resources/pdf/" + filename;
-		String filePath = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/" + filename;//절대경로
+		String filePath = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/contract/" + filename;//상대경로
 		File file = new File(filePath);
 		
 		// 파일의 절대 경로 출력

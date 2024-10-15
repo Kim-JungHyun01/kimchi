@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
-<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>"
-	rel='stylesheet' />
+<link href="<c:url value="${contextPath}/resources/css/mystyle.css"/>" rel='stylesheet' />
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <%@include file="../include/header.jsp"%>
 <div class="content-body">
@@ -17,11 +16,11 @@
 						<!-- 흰박스 헤더 -->
 						<h2>물품 리스트</h2>
 						<form action="?pageNum=1" method="get" class="search-form">
-							<input type="text" name="item_name" placeholder="물품명 검색"
-								value="${param.item_name}" class="search-input" />
+							<input type="text" name="item_name" placeholder="물품명 검색" value="${param.item_name}" class="search-input" />
 							<button type="submit" class="search-button">검색</button>
 						</form>
 					</div>
+					<hr>
 					<div class="col-12" style="margin-left: 20px;">
 						<table class="table">
 							<tr>

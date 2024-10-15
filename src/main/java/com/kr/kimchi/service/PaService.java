@@ -45,18 +45,22 @@ public class PaService {
 		padao.prpIng(pa_no);
 	}
 	
+//	페이퍼 추가
 	public void paInsert(PaVO pa) {
 		padao.paInsert(pa);
 	}//end
 	
+//	페이퍼 수정
 	public void paUpdate(PaVO pa) {
 		padao.paUpdate(pa);
 	}//end
 	
+//	페이처 확인체크
 	public void paCheck(int pa_no) {
 		padao.paCheck(pa_no);
 	}//end
 	
+//	페이처 선택
 	public PaVO paSelect(Map<String, Object> params){
 		return padao.paSelect(params);
 	}//end

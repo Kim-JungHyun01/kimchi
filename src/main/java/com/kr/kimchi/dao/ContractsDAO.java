@@ -52,7 +52,7 @@ public class ContractsDAO {
 		session.selectOne(namespace+".contractsCheck", contr);
 	}//end
 	
-//	계약서 보기
+//	서류보기_계약서 & 거래명세서
 	public String documentView(int ca_id, int pa_referenceNo) {
 		return session.selectOne(namespace+".documentView");
 	}//end

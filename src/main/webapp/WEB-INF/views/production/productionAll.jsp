@@ -18,6 +18,7 @@
 					</div>
 					<div class="col-12" style="margin-left: 20px;">
 						<h2>생산계획 목록</h2>
+						<hr style="margin-right: 50px;">
 						<table class="table">
 							<tr>
 								<td>생산계획코드</td>
