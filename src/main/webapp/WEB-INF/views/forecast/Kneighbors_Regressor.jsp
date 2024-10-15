@@ -17,7 +17,22 @@
                     </div>
                     <hr>
                     <!-- 내용 시작 -->
-                    <canvas id="myChart" width="400" height="200"></canvas>
+                    <div class="container">
+						<div class="categoria">
+						</div>
+						<div class="charts">
+							<canvas id="myChart" width="400" height="200"></canvas>
+						</div>
+						<!-- MSE와 RMSE 출력 -->
+						<div class="results">
+							<p>
+								평균 제곱 오차 (MSE): <span id="mseValue"><c:out value="${mse}" /></span>
+							</p>
+							<p>
+								제곱근 평균 제곱 오차 (RMSE): <span id="rmseValue"><c:out value="${rmse}" /></span>
+							</p>
+						</div>
+					</div>
                     <script>
                         // y_test와 y_pred를 JSON 형식으로 가져오기
                         const y_test = JSON.parse('${fn:escapeXml(y_test)}'); // y_test 데이터를 JSP에서 가져옴
@@ -55,12 +70,6 @@
                         });
                     </script>
                     <!-- 내용 끝 -->
-
-                    <!-- MSE와 RMSE 출력 -->
-                    <div class="results">
-                        <p>평균 제곱 오차 (MSE): <c:out value="${mse}"/></p>
-                        <p>제곱근 평균 제곱 오차 (RMSE): <c:out value="${rmse}"/></p>
-                    </div>
                 </div>
             </div>
         </div>

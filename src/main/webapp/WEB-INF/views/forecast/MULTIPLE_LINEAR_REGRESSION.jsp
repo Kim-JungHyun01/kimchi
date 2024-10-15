@@ -20,12 +20,6 @@
 					<!-- 내용 시작 -->
 					<div class="container">
 						<div class="categoria">
-							<select name="categoriaSelect" id="categoriaSelect" required
-								class="input-field" onchange="loadchart(this.value)">
-								<option value="Categoria1">Categoria 1</option>
-								<option value="Categoria2">Categoria 2</option>
-								<option value="Categoria3" selected>Categoria 3</option>
-							</select>
 						</div>
 						<div class="charts">
 							<canvas id="myChart" width="400" height="200"></canvas>
@@ -76,37 +70,6 @@
                         }
                     });
 				
-                    </script>
-                    <script>
-                    function loadchart(categoria) {
-                    	alert(categoria);
-                        $.ajax({
-                            url: '<c:url value="/forecast/MULTIPLE_LINEAR_REGRESSION" />',
-                            type: 'GET',
-                            data: { categoria: categoria},
-                            success: function(data) {
-                            	 console.log(data); // 전체 응답 출력
-                            	 alert(data.mse);
-                                // MSE와 RMSE 업데이트
-                                //$('#mseValue').text(data.mse);
-                                //$('#rmseValue').text(data.rmse);
-                                
-                                // 차트 데이터 업데이트
-                                //if (Array.isArray(data.chartData)) {
-                                //    myChart.data.datasets[0].data = data.chartData; // 서버에서 전달된 차트 데이터
-                                //} else {
-                                //    console.error("차트 데이터 형식 오류: ", data.chartData);
-                                //}
-                                
-                                //myChart.update(); // 차트 업데이트
-                            },
-                            error: function(xhr) {
-                                console.error("AJAX 요청 오류: ", xhr);
-                                alert(categoria + ' 데이터 불러오기 실패: ' + xhr.responseText);
-                            }
-                        }); 
-                    }
-                   
                     </script>
 					<!-- 내용 끝 -->
 				</div>
