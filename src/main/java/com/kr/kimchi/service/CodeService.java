@@ -34,6 +34,7 @@ public class CodeService {
 		codedao.codeDelete(code_id);
 	}// end
 
+//	계약서 코드생성
 	public CodeVO contractsCode(ContractsVO con) {
 		CodeVO code = new CodeVO();
 		String inputDate = con.getContracts_registrationDate();
@@ -53,6 +54,7 @@ public class CodeService {
 		return code;
 	}// end
 
+//	거래명세서 코드생성
 	public CodeVO obtainCode(ObtainVO obtain) {
 		ProductionVO pro = proservice.productionSelect(obtain.getProduction_no());
 		

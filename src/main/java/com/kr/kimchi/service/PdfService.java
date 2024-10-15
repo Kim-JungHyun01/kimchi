@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +48,29 @@ public class PdfService {
 		PartnerVO part = partservice.partnerSelect(con.getPartner_taxid());
 
 		int result = -1;
-		Document document = new Document(PageSize.A4, 20, 20, 20, 20);
+		
 		String filename = code_name + ".PDF";//파일이름_pdf로 꼭 지정
-		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//파일저장위치
-//		String filePath = "src/main/webapp/resources/pdf/" + filename; // 파일 저장 위치
+//		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//파일저장위치
+		String Path = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/contract/";//파일 저장 위치
+		String filePath =  Path+ filename; // 파일 저장 위치
+		
+		// 폴더가 존재하지 않으면 생성
+		File pdfDir = new File(Path);
+		if (!pdfDir.exists()) {
+		    pdfDir.mkdir();
+		}
+		
+		//파일 존재시 중복확인
 		File file = new File(filePath);
-
+	    int count = 1;
+	    while (file.exists()) {
+	        String newFilename = code_name + " (" + count + ").PDF"; // 새로운 파일 이름 생성
+	        filePath = Path + newFilename; // 파일 저장 위치
+	        file = new File(filePath);
+	        count++;
+	    }
+	    
+	    Document document = new Document(PageSize.A4, 20, 20, 20, 20);//서류 생성
 		try (FileOutputStream fos = new FileOutputStream(file)) {
 			PdfWriter writer = PdfWriter.getInstance(document, fos);//사용하기는 않지만 필요
 			document.open();
@@ -148,8 +164,10 @@ public class PdfService {
 				+ " ④ \"을\"은 \"갑\"이 발주한 품목을 \"갑\"이 지정한 시간과 장소(\"갑\"의 검수장소)에 납품하는 것을 원칙으로 하고 \"갑\"의 요청 또는 \"갑\"과 \"을\"이 합의하는 경우 분할 공급하거나 시간 및 장소를 변경할 수 있다.\r\n");
 
 		Food.put(9, "제 5조 [검수]\r\n"
-				+ " ① \"갑\" 또는 \"갑\"이 지정한 자는 \"을\"로부터 식자재를 인도받는 즉시 \"을\"의 입회하에 \"갑\"이 발주시 제시한 식품규격 및 검사명세서에 의거 검수를 실시한다. 단, 쌍방이 합의하는 경우 \"을\"은 검수에 입회하지 아니할 수 있다.\r\n"
-				+ " ② 검수시 품질불량, 수량부족, 규격상이, 파손 등 하자가 있을 경우에는 \"갑\"은 인도 당일 \"을\"에게 이의를 제기하여야 하며, \"을\"은 즉시 교체 및 보충하여야 한다. 다만, 즉시 발견할 수 없는 하자가 있는 경우에는 인수 후 그 다음 날까지 이의를 제기할 수 있다.\r\n");
+				+ " ① \"갑\" 또는 \"갑\"이 지정한 자는 \"을\"로부터 식자재를 인도받는 즉시 \"을\"의 입회하에 \"갑\"이 발주시 제시한 식품규격 및 검사명세서에 의거 검수를 실시한다. "
+				+ "단, 쌍방이 합의하는 경우 \"을\"은 검수에 입회하지 아니할 수 있다.\r\n"
+				+ " ② 검수시 품질불량, 수량부족, 규격상이, 파손 등 하자가 있을 경우에는 \"갑\"은 인도 당일 \"을\"에게 이의를 제기하여야 하며, \"을\"은 즉시 교체 및 보충하여야 한다. "
+				+ "다만, 즉시 발견할 수 없는 하자가 있는 경우에는 인수 후 그 다음 날까지 이의를 제기할 수 있다.\r\n");
 
 		Food.put(10, "제 6조 [납품]\r\n"
 				+ " ① \"갑\"은 \"을\"에게 품목의 종류, 수량, 주문일, 공급기일 및 공급장소 등을 명시한 발주서에 의해 전산 또는 FAX로 발주한다.\r\n"
@@ -168,8 +186,10 @@ public class PdfService {
 						+ "	3. 기타 :\r\n");
 
 		Food.put(14,
-				" ③ \"갑\"이 변제하거나 \"을\"이 상계함으로써 변제충당을 하려는 경우에 \"갑\"의 채무 전액을 소멸시키기에 부족한 경우에는, \"을\"의 모든 채권의 안전하고 확실한 보전을 위하여 상당하다고 인정되는 순서와 방법으로 \"을\"이 따로 정하는 바에 의하여 변제나 상계에 충당할 채무를 지정하기로 하며, 담보있는 채무와 담보없는 채무가 있을 때에는 변제기 도래 여부를 불문하고 담보없는 채무의 변제에 충당하기로 한다.\r\n"
-						+ " ④ \"갑\"이 대금의 지급을 지연하는 경우에는 그 지연일로부터 완제일까지 지연금 총액의 연 10%의 비율에 의한 지연손해금을 감안하여 지급하여야 한다.\r\n");
+				" ③ \"갑\"이 변제하거나 \"을\"이 상계함으로써 변제충당을 하려는 경우에 \"갑\"의 채무 전액을 소멸시키기에 부족한 경우에는,"
+				+ " \"을\"의 모든 채권의 안전하고 확실한 보전을 위하여 상당하다고 인정되는 순서와 방법으로 \"을\"이 따로 정하는 바에 의하여 변제나 상계에 충당할 채무를 지정하기로 하며, "
+				+ "담보있는 채무와 담보없는 채무가 있을 때에는 변제기 도래 여부를 불문하고 담보없는 채무의 변제에 충당하기로 한다.\r\n"
+				+ " ④ \"갑\"이 대금의 지급을 지연하는 경우에는 그 지연일로부터 완제일까지 지연금 총액의 연 10%의 비율에 의한 지연손해금을 감안하여 지급하여야 한다.\r\n");
 
 		Food.put(15, "제 9조 [담보]\r\n"
 				+ " ① \"갑\"은 본 계약과 관련된 채무이행을 담보하기 위하여 부동산 근저당 또는 은행, 보증보험사의 지급보증 등 \"을\"이 인정하는 담보를 제공한다.\r\n"
@@ -195,9 +215,10 @@ public class PdfService {
 				+ " \"을\"이 \"갑\"에게 공급한 상품중 다음 각호의 사유가 발생한 때에는 \"을\"은 \"갑\"에게 발생된 문제를 처리하기 위한 일체의 비용 및 손해배상액을 \"갑\" 또는 \"갑\"의 고객에게 지불하여야 한다.");
 
 		Food.put(21,
-				"1. \"을\"이 \"갑\"에게 공급한 식재료 및 상품을 가지고 \"갑\"이 운영하는 사업장내에서 \"갑\"이 고용한 직원에 의해 조리, 제공한 음식물을 취식 후 위생사고, 클레임이 발생했을 시 해당 사건에 대해 명백한 \"을\"의 귀책사유로 인한 부분에 대해서 \"을\"은 \"갑\" 및 \"갑\"의 고객에게 정신적 물질적 피해를 보상한다.\r\n"
-						+ "	2. 위생사고 및 클레임에 대한 귀책사유가 명확히 구분되지 않을 경우에는 발생, 소요비용에 대해 \"을\"이 선처리 후, 최종 비용분담은 \"갑\"과 협의하여 분담한다.\r\n"
-						+ "	3. \"을\"의 상품 공급 차질로 인해 발생된 \"갑\"의 실 손실액에 대해 \"을\"은 \"갑\"이 요청한 계좌로 현금 입금한다. 단,\"갑\"의 실 손실액 측정에 대해서는 \"을\"과 협의하여 판단한다.\r\n");
+				"1. \"을\"이 \"갑\"에게 공급한 식재료 및 상품을 가지고 \"갑\"이 운영하는 사업장내에서 \"갑\"이 고용한 직원에 의해 조리, 제공한 음식물을 취식 후 위생사고, "
+				+ "클레임이 발생했을 시 해당 사건에 대해 명백한 \"을\"의 귀책사유로 인한 부분에 대해서 \"을\"은 \"갑\" 및 \"갑\"의 고객에게 정신적 물질적 피해를 보상한다.\r\n"
+				+ "	2. 위생사고 및 클레임에 대한 귀책사유가 명확히 구분되지 않을 경우에는 발생, 소요비용에 대해 \"을\"이 선처리 후, 최종 비용분담은 \"갑\"과 협의하여 분담한다.\r\n"
+				+ "	3. \"을\"의 상품 공급 차질로 인해 발생된 \"갑\"의 실 손실액에 대해 \"을\"은 \"갑\"이 요청한 계좌로 현금 입금한다. 단,\"갑\"의 실 손실액 측정에 대해서는 \"을\"과 협의하여 판단한다.\r\n");
 
 		Food.put(22, "제 13조 [불가항력]\r\n"
 				+ " 천재지변, 전쟁, 폭동, 법령제정·개폐, 정부규제 등 불가항력적인 사유로 인하여 \"갑\" 또는 \"을\"에게 손해가 발생하거나 본 계약을 이행할 수 없는 경우 양 당사자는 이와 관련하여 상대방에게 책임을 묻지 아니한다.\r\n");
@@ -208,7 +229,8 @@ public class PdfService {
 				+ " \"갑\"과 \"을\"은 상대방의 사전 서면 승인없이 본 계약의 권리, 의무를 제3자에게 양도 또는 담보로 제공할 수 없다.\r\n");
 
 		Food.put(25, "제 16조 [영업비밀유지]\r\n"
-				+ " ① \"갑\"과 \"을\"및 그 임직원은 상호간의 거래로 인하여 알게 된 상대방의 영업비밀을 계약기간 동안은 물론 계약종료 후에도 제3자에게 누설하지 아니한다. 다만, 다른 법령에 근거한 정부 또는 공공기관의 요청에 따르거나 법원의 판결에 따른 경우에는 예외로 한다.\r\n"
+				+ " ① \"갑\"과 \"을\"및 그 임직원은 상호간의 거래로 인하여 알게 된 상대방의 영업비밀을 계약기간 동안은 물론 계약종료 후에도 제3자에게 누설하지 아니한다."
+				+ " 다만, 다른 법령에 근거한 정부 또는 공공기관의 요청에 따르거나 법원의 판결에 따른 경우에는 예외로 한다.\r\n"
 				+ " ② 어느 일방이 전항의 의무를 위반하여 상대방에게 손해가 발생하였을 경우에는 그 손해를 배상하여야 한다.\r\n");
 
 		Food.put(26, "제 17조 [통보]\r\n" + " \"갑\"과 \"을\"은 사업자등록증에 관한 사항 중 중요 사항이 변경된 경우 상대방에게 통보하여야 한다.\r\n");
@@ -217,7 +239,8 @@ public class PdfService {
 				+ " 본 계약에 정하지 아니한 사항 또는 각 조항의 해석상 \"갑\", \"을\"간에 이견이 있는 부분에 관하여는 상호 협의하여 결정하는 것을 원칙으로 하되, 협의가 되지 않는 부분에 관하여는 관련 법령 및 상관례에 따른다.\r\n");
 
 		Food.put(28, "제 19조 [분쟁의 해결]\r\n"
-				+ " 본 계약과 관련하여 분쟁이 발생하는 경우 \"갑\"과 \"을\"은 상호 신뢰를 바탕으로 원만히 해결하기로 하되 합의가 이루어지지 아니하여 \"갑\" 또는 \"을\" 사이에 소송의 필요가 생긴 때에는 \"갑\" 또는 \"을\"의 주된 사무소 소재지 관할 법원에 소송을 제기할 수 있다.\r\n");
+				+ " 본 계약과 관련하여 분쟁이 발생하는 경우 \"갑\"과 \"을\"은 상호 신뢰를 바탕으로 원만히 해결하기로 하되"
+				+ " 합의가 이루어지지 아니하여 \"갑\" 또는 \"을\" 사이에 소송의 필요가 생긴 때에는 \"갑\" 또는 \"을\"의 주된 사무소 소재지 관할 법원에 소송을 제기할 수 있다.\r\n");
 
 		Food.put(29, "본 계약을 증명하기 위하여 계약서 2부를 작성 \"갑\"과 \"을\"이 각각 1부씩 보관한다.\r\n");
 		
@@ -252,17 +275,25 @@ public class PdfService {
 
 	    // 파일 정보 지정
 	    String filename = code_name + ".PDF"; // 파일이름_pdf로 꼭 지정
-	    String filePath = "C:/Users/A9/Desktop/pdf/" + filename; // 파일저장위치
-
+//	    String filePath = "C:/Users/A9/Desktop/pdf/" + filename; // 임시 절대경로
+	    String Path = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/statement/";
+	    String filePath = Path + filename; // 파일저장위치
+	    
+		// 폴더가 존재하지 않으면 생성
+		File pdfDir = new File(Path);
+		if (!pdfDir.exists()) {
+			pdfDir.mkdir();
+		}//end
+	    
 	    // 파일 이름 중복 체크 및 수정
 	    File file = new File(filePath);
 	    int count = 1;
 	    while (file.exists()) {
 	        String newFilename = code_name + " (" + count + ").PDF"; // 새로운 파일 이름 생성
-	        filePath = "C:/Users/A9/Desktop/pdf/" + newFilename; // 새로운 파일 저장 위치
+	        filePath = Path + newFilename; // 새로운 파일 저장 위치
 	        file = new File(filePath);
 	        count++;
-	    }
+	    }//end
 
 	    int result = -1;
 
@@ -273,7 +304,8 @@ public class PdfService {
 	        document.open();//서류 열기
 
 	        // 이미지 추가
-	        String imagePath = "C:/Users/A9/Desktop/거래명세서.jpg"; // 이미지 파일 경로
+//	        String imagePath = "C:/Users/A9/Desktop/거래명세서.jpg"; // 이미지 파일 경로
+	        String imagePath = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/거래명세서.jpg"; // 이미지 파일 경로
 	        Image img = Image.getInstance(imagePath);
 
 	        // 이미지 크기 조정_사용 가능한 너비: 210mm - 25mm(좌측) - 25mm(우측) = 160mm | 사용 가능한 높이: 297mm - 30mm(상단) - 25mm(하단) = 242mm

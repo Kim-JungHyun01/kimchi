@@ -37,7 +37,7 @@
                                 <th>포장규격</th>
                                 <th>단가액</th>
                                 <th>총금액</th>
-                                <th>첨부파일</th>
+                                <th>사진</th>
                             </tr>
 
                             <c:forEach var="ma" items="${list}">

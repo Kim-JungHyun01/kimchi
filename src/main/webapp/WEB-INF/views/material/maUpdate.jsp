@@ -20,8 +20,8 @@
 </style>
 
 <div class="content-body">
-    <div>
-        <h2>수정</h2>
+    <div style="margin-left: 20px;">
+        <h2> 자재 정보 수정 </h2>
     </div>
     <form action="${contextPath}/material/maUpdate" method="post"> 
     
@@ -96,7 +96,7 @@
     <tr>
         <td>보관위치</td>
         <td> <select name="ma_storage" required> 
-                	 <option value="" disabled selected>보관위치를 선택</option>
+                    <option value="" disabled selected>보관위치를 선택</option>
                      <option value="냉장창고">냉장창고</option>
                      <option value="냉동창고">냉동창고</option>
                      <option value="물류창고">물류창고</option>

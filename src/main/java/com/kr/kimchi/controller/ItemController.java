@@ -35,10 +35,13 @@ public class ItemController {
 		int pageSize = 5; // 한 페이지에 보여줄 갯수 
 	    int pageNavSize = 5; // 페이지 네비 크기
 	    int startRow = (pageNum - 1) * pageSize; //시작페이지 계산
-		List<ItemVO> itemlist = itemservice.itemAll(startRow, pageSize, item_name);
+		List<ItemVO> itemlist = itemservice.itemAll(startRow, pageSize, item_name);//물품리스트
 		Integer totalCount = itemservice.getTotalCount(); // 총 레코드 수 가져옴
 		Integer totalPages = itemservice.itemSearch(pageSize, item_name); // 검색 이후 ㄹㅔ코드수 계산
 		PaginationVO pagination = new PaginationVO(pageNum, totalCount, pageSize, pageNavSize);
+		
+		//첨부파일 리스트
+		List<AttachmentVO> attlist = attservice.attachmentAll();
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pagination", pagination);
@@ -46,6 +49,7 @@ public class ItemController {
 	    mav.addObject("totalPages", totalPages);
 	    
 		mav.addObject("itemlist", itemlist);
+		mav.addObject("attlist", attlist);
 		mav.setViewName("item/itemAll");
 		return mav;
 	}// end
@@ -114,12 +118,63 @@ public class ItemController {
 		return "redirect:/item/itemSelect?item_no=" + bom.getItem_no();
 	}// end
 
+//	bom정보_자재 추가
+	@PostMapping(value = "item/bom_maInsert")
+	public String bom_maInsert(@RequestParam List<Integer> ma_id,
+								@RequestParam List<Integer> bom_ma_amount,
+								@RequestParam List<String> bom_ma_process,
+								@RequestParam int item_no) {
+
+		List<Bom_maVO> bom_malist = new ArrayList<Bom_maVO>();
+		for (int i = 0; i < ma_id.size(); i++) {
+			if (ma_id.get(i) != null) {
+				Bom_maVO bom = new Bom_maVO();
+				bom.setItem_no(item_no);
+				bom.setMa_id(ma_id.get(i));
+				bom.setBom_ma_amount(bom_ma_amount.get(i));
+				bom.setBom_ma_process(bom_ma_process.get(i));
+				bom_malist.add(bom);
+			}
+		} // end for
+		bom_maservice.bom_maInsert(bom_malist);
+		
+		ItemVO item = new ItemVO();
+		item.setItem_no(item_no);
+		item.setItem_bomRegistered(1);
+		itemservice.bomCheck(item);
+		return "redirect:/item/itemSelect?item_no=" + item_no;
+	}// end
+	
 //	bom 정보수정
 	@PostMapping(value = "item/bomUpdate")
 	public String bomUpdate(BomVO bom) {
 		bomservice.bomUpdate(bom);
 		return "redirect:/item/itemSelect?item_no=" + bom.getItem_no();
 	}// end
+
+//	bom정보_자재 수정
+	@PostMapping(value = "item/bom_maUpdate")
+	public String bom_maUpdate(@RequestParam List<Integer> ma_id,
+								@RequestParam List<Integer> bom_ma_amount,
+								@RequestParam List<String> bom_ma_process,
+								@RequestParam int item_no) {
+		
+		bom_maservice.bom_maDeleteAll(item_no);
+		
+		List<Bom_maVO> bom_malist = new ArrayList<Bom_maVO>();
+		for (int i = 0; i < ma_id.size(); i++) {
+			if (ma_id.get(i) != null) {
+				Bom_maVO bom = new Bom_maVO();
+				bom.setItem_no(item_no);
+				bom.setMa_id(ma_id.get(i));
+				bom.setBom_ma_amount(bom_ma_amount.get(i));
+				bom.setBom_ma_process(bom_ma_process.get(i));
+				bom_malist.add(bom);
+			}
+		} // end for
+		bom_maservice.bom_maInsert(bom_malist);
+		return "redirect:/item/itemSelect?item_no=" + item_no;
+	}//end
 
 //	bom정보_스케줄 삭제
 	@GetMapping(value = "item/bomDelete")
@@ -128,57 +183,5 @@ public class ItemController {
 		bomservice.bomDelete(item_no);
 		return "redirect:/item/itemSelect?item_no=" + item_no;
 	}// end
-
-//	bom정보_자재 추가
-	@PostMapping(value = "item/bom_maInsert")
-	public String bom_maInsert(@RequestParam List<Integer> ma_id, @RequestParam List<Integer> bom_ma_amount,
-			@RequestParam List<String> bom_ma_process, @RequestParam int item_no) {
-
-		List<Bom_maVO> bom_malist = new ArrayList<Bom_maVO>();
-		for (int i = 0; i < ma_id.size(); i++) {
-			if (ma_id.get(i) != null) {
-				Bom_maVO bom = new Bom_maVO();
-				bom.setItem_no(item_no);
-				bom.setMa_id(ma_id.get(i));
-				bom.setBom_ma_amount(bom_ma_amount.get(i));
-				bom.setBom_ma_process(bom_ma_process.get(i));
-				bom_malist.add(bom);
-			}
-		} // end for
-
-		bom_maservice.bom_maInsert(bom_malist);
-
-		ItemVO item = new ItemVO();
-		item.setItem_no(item_no);
-		item.setItem_bomRegistered(1);
-		itemservice.bomCheck(item);
-		return "redirect:/item/itemSelect?item_no=" + item_no;
-	}// end
-
-//	bom정보_자재 수정
-	@PostMapping(value = "item/bom_maUpdate")
-	public String bom_maUpdate(@RequestParam List<Integer> ma_id, @RequestParam List<Integer> bom_ma_amount,
-			@RequestParam List<String> bom_ma_process, @RequestParam int item_no) {
-		
-		bom_maservice.bom_maDeleteAll(item_no);
-		
-		List<Bom_maVO> bom_malist = new ArrayList<Bom_maVO>();
-		for (int i = 0; i < ma_id.size(); i++) {
-			if (ma_id.get(i) != null) {
-				Bom_maVO bom = new Bom_maVO();
-				bom.setItem_no(item_no);
-				bom.setMa_id(ma_id.get(i));
-				bom.setBom_ma_amount(bom_ma_amount.get(i));
-				bom.setBom_ma_process(bom_ma_process.get(i));
-				bom_malist.add(bom);
-			}
-		} // end for
-
-		bom_maservice.bom_maInsert(bom_malist);
-		
-		
-		return "redirect:/item/itemSelect?item_no=" + item_no;
-	}//end
-	
 	
 }//end class

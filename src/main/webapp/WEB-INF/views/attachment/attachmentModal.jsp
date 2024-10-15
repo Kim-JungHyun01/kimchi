@@ -83,30 +83,27 @@
 <!-- attSelectModal_첨부파일 선택모달 -->
 <div id="attSelectModal" class="modal-long">
 	<div class="modal-content">
-			<div class="modal-header">
-				<h3>첨부파일목록</h3>
-			</div>
-			<div class="modal-body">
-				<table class="modal-table">
-					<tr>
-						<td>첨부파일 코드</td>
-						<td>첨부파일 명</td>
-					</tr>
-					<c:forEach var="attlist" items="${attlist}">
-						<tr
-							onclick="selectAttachmentCode('${attlist.attachment_no}', '${attlist.attachment_name}')">
-							<td>${attlist.attachment_no}</td>
-							<td>${attlist.attachment_name}</td>
-						</tr>
-					</c:forEach>
-				</table>
-				<div class="modal-footer">
-					<button type="button" class="filter-button"
-						onclick="openAttInsertModel()">파일 추가</button>
-					<button type="button" class="filter-button" onclick="closeattSelectModal()">닫기</button>
-				</div>
-			</div>
+		<div class="modal-header">
+			<h3>첨부파일목록</h3>
+			<button type="button" class="filter-button" onclick="openAttInsertModel()" style="margin-left: 70%;">파일 추가</button>
+			<button type="button" class="filter-button" onclick="closeattSelectModal()">닫기</button>
 		</div>
+		<div class="modal-body">
+			<table class="modal-table">
+				<tr>
+					<td>첨부파일 코드</td>
+					<td>첨부파일 명</td>
+				</tr>
+				<c:forEach var="attlist" items="${attlist}">
+					<tr
+						onclick="selectAttachmentCode('${attlist.attachment_no}', '${attlist.attachment_name}')">
+						<td>${attlist.attachment_no}</td>
+						<td>${attlist.attachment_name}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
 </div>
 <!-- attInsertModal_첨부파일 추가 모달 -->
 <div id="attInsertModal" class="modal-long">
