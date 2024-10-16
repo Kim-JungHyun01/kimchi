@@ -19,10 +19,100 @@
 </style>
 
 <div class="content-body">
-	<div style="margin-left: 20px;">
-		<h2>자재 정보 수정</h2>
-	</div>
-	<form action="${contextPath}/material/maUpdate" method="post">
+    <div style="margin-left: 20px;">
+        <h2> 자재 정보 수정 </h2>
+    </div>
+    <form action="${contextPath}/material/maUpdate" method="post"> 
+    
+        <table class="table">
+    <tr>        
+        <td>분류명 </td>
+        <td> <select name="ma_category" required>
+        <option value="" disabled selected>분류 선택</option>
+        <option value="주재료">주재료</option>
+        <option value="부재료">부재료</option>
+        <option value="향신료">향신료</option>
+        <option value="조미료">조미료</option>
+        <option value="부자재">부자재</option>
+               </td>
+    </tr>
+    
+    <tr>
+        <td>재료명</td>
+        <td><input type="text" name="ma_name" value="${ma.ma_name}"></td>
+    </tr>
+    
+    <tr>
+        <td>원산지</td>
+        <td><input type="text" name="ma_origin" value="${ma.ma_origin}" readOnly></td>
+    </tr>
+    
+    <tr>
+        <td>유통기한</td>
+        <td><input type="date" name="ma_expiryDate" value="${ma.ma_expiryDate}" readOnly></td>
+    </tr>
+    
+    <tr>
+        <td>재고수량</td>
+        <td><input type="number" name="ma_stockQuantity" value="${ma.ma_stockQuantity}" id="ma_stockQuantity"></td>
+    </tr>
+    
+    <tr>
+        <td>무게</td>
+        <td><input type="text" name="ma_weight" value="${ma.ma_weight}"></td>
+    </tr>
+    
+    <tr>
+        <td>단위</td>
+        <td><input type="text" name="ma_unit" value="${ma.ma_unit}" readOnly></td>
+    </tr>
+    
+    <tr>
+        <td>포장규격</td>
+        <td><input type="text" name="ma_specifications" value="${ma.ma_specifications}" readOnly></td>
+    </tr>
+    
+    <tr>
+        <td>가용재고량</td>
+        <td><input type="number" name="ma_availableStock" value="${ma.ma_availableStock}" readOnly></td>
+    </tr>
+    
+    <tr>
+        <td>기본재고량</td>
+        <td><input type="number" name="ma_basicStock" value="${ma.ma_basicStock}" readOnly></td>
+    </tr>
+    
+    <tr>
+        <td>단가액</td>
+        <td><input type="number" name="ma_price" value="${ma.ma_price}" id="ma_price"></td>
+    </tr>
+    
+    <tr>
+        <td>총금액</td>
+        <td><input type="number" name="ma_stockValue" value="${ma.ma_stockValue}" readOnly id="ma_stockValue"></td>
+    </tr>
+    
+    <tr>
+        <td>보관위치</td>
+        <td> <select name="ma_storage" required> 
+                    <option value="" disabled selected>보관위치를 선택</option>
+                     <option value="냉장창고">냉장창고</option>
+                     <option value="냉동창고">냉동창고</option>
+                     <option value="물류창고">물류창고</option>
+               </td>
+    </tr>
+    
+    <tr>
+        <td>수정일</td>
+        <td><input type="date" name="ma_update" id="ma_update"></td>
+    </tr>
+    
+    <tr>
+        <td>첨부파일번호</td>
+        <td><input type="number" name="attachment_no" value="${ma.attachment_no}"></td>
+    </tr>
+    <td><input type="hidden" name="ma_id" id="ma_id" value="${ma.ma_id}"></td>
+</table>
 
 		<table class="table">
 			<tr>

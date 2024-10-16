@@ -158,7 +158,7 @@
 	    
 	    // 계약 날짜와 비교 (contracts_deliveryDate와 비교해야 함)
 	    if (obtain_deliveryDate > production_deliveryDate) {
-	        alertAndReset(form.production_deliveryDate, "생산계획납기일 이전의 날짜여야 합니다.");
+	        alertAndReset(form.obtain_deliveryDate, "생산계획납기일 이전의 날짜여야 합니다.");
 	        return;
 	    }
 	    

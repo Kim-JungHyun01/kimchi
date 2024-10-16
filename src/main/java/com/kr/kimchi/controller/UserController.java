@@ -61,12 +61,6 @@ public class UserController {
 		mav.setViewName("user/userSelect");
 		return mav;
 	}// end
-
-//	사용자 회원가입
-	@GetMapping(value = "user/userInsertForm")
-	public String userInsertForm() {
-		return "user/userInsertForm";
-	}// end
 	
 //	사용자 id 중복확인
 	@GetMapping(value = "user/userIdCheck")
@@ -80,6 +74,12 @@ public class UserController {
 	    }
 	    return ResponseEntity.ok(response);
 	}
+	
+//	사용자 회원가입
+	@GetMapping(value = "user/userInsertForm")
+	public String userInsertForm() {
+		return "user/userInsertForm";
+	}// end
 
 	@PostMapping(value = "user/userInsert")
 	public String userInsert(UserVO user) {
@@ -107,7 +107,7 @@ public class UserController {
 	@PostMapping(value = "user/userApproval")
 	public String userApproval(UserVO user) {
 		userservice.userApproval(user);
-		return "redirect:/user/userSelect?user_id=" + user.getUser_id();
+		return "redirect:/user/userAll";
 	}//end
 
 }// end class

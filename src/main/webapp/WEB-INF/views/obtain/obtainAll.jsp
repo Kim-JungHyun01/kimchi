@@ -15,9 +15,10 @@
 					<!-- 흰박스 -->
 					<div class="card-header">
 						<!-- 흰박스 헤더 -->
-					</div>
-					<div class="col-12" style="margin-left: 20px;">
 						<h2>조달계획 목록</h2>
+					</div>
+						<hr>
+					<div class="col-12" style="margin-left: 20px;">
 						<table class="table">
 							<tr>
 								<td>조달계획코드</td>

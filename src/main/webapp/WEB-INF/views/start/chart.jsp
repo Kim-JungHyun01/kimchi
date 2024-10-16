@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- 차트 사용 필수요소 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +10,7 @@
 <canvas id="inventoryChart" width="400" height="200"></canvas>
 
 <h3 id="totalPriceDisplay"></h3> <!-- 총합계액을 표시할 요소 -->
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- 차트 사용 필수요소 -->
 <script>
     var totalQuantity = ${ma_totalQuantity}; // JSP EL을 통해 값 가져오기
     var totalPrice = ${totalPrice + ma.totalValue}; // 총합계액 계산

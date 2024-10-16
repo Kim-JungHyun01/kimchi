@@ -50,19 +50,22 @@ public class PaDAO {
 		session.selectOne(namespace+".prpIng", pa_no);
 	}
 	
-	
+//	페이퍼추가
 	public void paInsert(PaVO pa) {
 		session.selectOne(namespace+".paInsert", pa);
 	}//end
 	
+//	페이처수정
 	public void paUpdate(PaVO pa) {
 		session.selectOne(namespace+".paUpdate", pa);
 	}//end
 	
+//	페이퍼 확인체크
 	public void paCheck(int pa_no) {
 		session.selectOne(namespace+".paCheck", pa_no);
 	}//end
 	
+//	페이퍼 선택
 	public PaVO paSelect(Map<String, Object> params){
 		return session.selectOne(namespace+".paSelect", params);
 	}//end

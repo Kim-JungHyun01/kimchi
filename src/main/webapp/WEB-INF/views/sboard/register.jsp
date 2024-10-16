@@ -41,8 +41,8 @@
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
 						<div>
-						<input name="user_id" id = "user_id" value="${userlogin.user_id }" type="text">
-						<input name="attachment_no" id = "attachment_no"  type="number">
+						<input name="user_id" id = "user_id" value="${userlogin.user_id }" type="hidden">
+						<input name="attachment_no" id = "attachment_no"  type="hidden">
 						</div>
 					</form>
 				</div>

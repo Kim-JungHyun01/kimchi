@@ -218,9 +218,9 @@ public class ioController {
 
 	public static void sendEmail3(String ma_name, int obtain_no, String receivedMail) {
 		// 구글 이메일
-		String user_email = "jae1hyun31@gmail.com";
-		// 구글 비번
-		String user_pw = "ppjd pgrx jzhe geng";
+	      String user_email= "";
+	      // 구글 비번
+	      String user_pw = "";
 
 		String smtp_host = "smtp.gmail.com";
 		int smtp_port = 465; // TLS : 587, SSL : 465

@@ -94,10 +94,11 @@ public class ObtainController {
 
 //	조달계획 추가
 	@GetMapping(value = "obtain/obtainInsertForm")
-	public ModelAndView obtainInsertForm(int production_no, @RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(required = false) String item_name, @RequestParam(required = false) String user_name,
-			@RequestParam(required = false) String user_department,
-			@RequestParam(required = false) String partner_companyname) {
+	public ModelAndView obtainInsertForm(int production_no, 
+										@RequestParam(defaultValue = "1") int pageNum,
+										@RequestParam(required = false) String user_name,
+										@RequestParam(required = false) String user_department,
+										@RequestParam(required = false) String partner_companyname) {
 		ModelAndView mav = new ModelAndView();
 		// 생산계획에서 조달계획으로 이동하기 위한 것
 		ProductionVO pro = proservice.productionSelect(production_no);
@@ -157,7 +158,7 @@ public class ObtainController {
 //	조달계획 승인 
 	@PostMapping(value = "obtain/obtainCheck")
 	public String obtainCheck(ObtainVO ob) {
-		obtservice.obtainCheck(ob);
+		
 		// 계약 승인 시 거래명세서 발급
 		if (ob.getObtain_status().equals("조달계획확인완료")) {
 			ObtainVO inobtain = obtservice.obtainSelect(ob.getObtain_no());//조달담당자
@@ -169,6 +170,7 @@ public class ObtainController {
 			//거래명세서 작성
 			int result = pdfservice.createStatement(ob.getObtain_no(), insertedCode.getCode_name());
 			if (result == 1) {//파일생성성공시
+				obtservice.obtainCheck(ob);
 				// pa 추가
 				PaVO pa = new PaVO();
 				pa.setUser_id(inobtain.getUser_id());
@@ -181,7 +183,9 @@ public class ObtainController {
 				codeservice.codeDelete(code_id);
 			} // end if
 			
-		} // end if
+		}else {
+			obtservice.obtainCheck(ob);
+		}// end if
 
 		return "redirect:/obtain/obtainSelect?obtain_no=" + ob.getObtain_no();
 	}// end
@@ -199,9 +203,7 @@ public class ObtainController {
 		paservice.paCheck(pa.getPa_no());
 
 		String filename = pa.getCodeVo().getCode_name() + ".PDF";
-		System.out.println(filename);
-//	    String filePath = "C:/KJH/springworkspaces/practive/src/main/webapp/resources/pdf/" + filename;
-		String filePath = "C:/Users/A9/Desktop/pdf/" + filename;//절대경로
+		String filePath = "../../../../springworkspaces/kimchi/src/main/webapp/resources/pdf/statement/" + filename;//상대경로
 		File file = new File(filePath);
 		if (!file.exists()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
