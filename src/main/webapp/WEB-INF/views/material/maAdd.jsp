@@ -133,9 +133,31 @@
             </tr>
             
             <tr>
-                <td>첨부파일번호</td>
-                <td><input type="number" name="attachment_no"></td>
-            </tr>            
+			    <td>첨부파일번호</td>
+			    <td>
+			        <select name="attachment_no" required>
+			            <option value="" disabled selected>첨부파일 선택</option>
+			            <option value="100">배추</option>
+			            <option value="101">무</option>
+			            <option value="102">갓</option>
+			            <option value="103">알타리</option>
+			            <option value="104">열무</option>
+			            <option value="105">오이</option>
+			            <option value="106">파</option>
+			            <option value="107">찹쌀</option>
+			            <option value="108">소금</option>
+			            <option value="109">설탕</option>
+			            <option value="110">배</option>
+			            <option value="111">생강</option>
+			            <option value="112">새우젓</option>
+			            <option value="113">멸치액젓</option>
+			            <option value="114">고춧가루</option>
+			            <option value="115">고추</option>
+			            <option value="116">쪽파</option>
+			        </select>
+			    </td>
+			</tr>
+        
         </table>
         
         <center><input type="submit" value="추가완료"></center>

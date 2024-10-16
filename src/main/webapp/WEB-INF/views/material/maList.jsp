@@ -13,7 +13,7 @@
             <div class="col-lg-12"> <!-- 자간 -->
                 <div class="card"> <!-- 흰박스 -->
                     <div class="card-header"> <!-- 흰박스 헤더 -->
-                        <h2>전체 자재 조회</h2>
+                        <h2>전체 자재 조회  </h2>
                         <form action="${contextPath}/material/maList" method="get" class="search-form">
                             <input type="text" name="ma_name" placeholder="재료명 검색" value="${param.ma_name}" class="search-input" />
                             <button type="submit" class="search-button">검색</button>
@@ -30,6 +30,7 @@
                                 <th>품목코드</th>
                                 <th>분류명</th>
                                 <th>재료명</th>
+                                <th>첨부파일</th>
                                 <th>원산지</th>
                                 <th>재고수량</th>
                                 <th>무게</th>
@@ -37,7 +38,6 @@
                                 <th>포장규격</th>
                                 <th>단가액</th>
                                 <th>총금액</th>
-                                <th>첨부파일</th>
                             </tr>
 
                             <c:forEach var="ma" items="${list}">
@@ -45,6 +45,8 @@
                                     <td>${ma.ma_id}</td>
                                     <td>${ma.ma_category}</td>
                                     <td><a href="maView?ma_id=${ma.ma_id}">${ma.ma_name}</a></td>
+                                    <td><img src="${ma.attachmentLocation}" 
+                                    	style="width: 50px; height: 50px;" /></td>
                                     <td>${ma.ma_origin}</td>
                                     <td class="ma_stockQuantity">${ma.ma_stockQuantity}</td>
                                     <td class="ma_weight">${ma.ma_weight}</td>
@@ -52,8 +54,6 @@
                                     <td>${ma.ma_specifications}</td>
                                     <td class="price">${ma.ma_price}</td>
                                     <td class="stockValue">${ma.ma_stockValue}</td>
-                                    <td><img src="${ma.attachmentLocation}" 
-                                    	style="width: 50px; height: 50px;" /></td>
                                 </tr>
                             </c:forEach>
                         </table>

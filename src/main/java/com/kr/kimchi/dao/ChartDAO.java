@@ -31,12 +31,12 @@ public class ChartDAO {
     public List<Map<String, Object>> outChart() throws SQLException {
         return session.selectList(namespace + ".outChart");
     }
-    //===========================
 
     // 전체 재고 총액 정보 (날짜별 총액)
     public List<Map<String, Object>> totalStockChart() throws SQLException {
         return session.selectList(namespace + ".totalStockChart");
     }
+    //===========================
     
 //    물품별 계약수량, 계약금액_누적
     public List<Map<String, Object>> totalitemChart() throws SQLException{
